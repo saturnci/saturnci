@@ -1,6 +1,10 @@
 require 'droplet_kit'
 
 class JobMachineRequest
+  # This is the ID of the snapshot of the image
+  # that we want to use for a job.
+  SNAPSHOT_IMAGE_ID = '150149463'
+
   def initialize(job:, github_installation_id:)
     @job = job
     @github_installation_id = github_installation_id
@@ -12,7 +16,7 @@ class JobMachineRequest
     droplet = DropletKit::Droplet.new(
       name: droplet_name,
       region: 'nyc1',
-      image: 'ubuntu-20-04-x64',
+      image: IMAGE_ID,
       size: 's-4vcpu-8gb',
       user_data: user_data,
       tags: ['saturnci'],

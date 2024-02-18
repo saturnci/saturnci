@@ -4,9 +4,11 @@ include APIAuthenticationHelper
 RSpec.describe "job machine instances", type: :request do
   describe "PUT /api/v1/job_machine_images/:id" do
     before do
+      # This stub corresponds to the snapshot request
       stub_request(:post, "https://api.digitalocean.com/v2/droplets/123456/actions")
         .to_return(status: 200, body: "{}", headers: {})      
 
+      # This stub corresponds to the status check
       stub_request(:get, "https://api.digitalocean.com/v2/droplets/123456")
         .to_return(
           status: 200,
