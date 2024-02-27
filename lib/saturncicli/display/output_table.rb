@@ -7,7 +7,7 @@ module SaturnCICLI
     class OutputTable
       SPACER = "  "
 
-      HEADING_DEFINITIONS = {
+      COLUMN_DEFINITIONS = {
         "id" => {
           label: "Build ID",
           format: -> (value) { value[0..7] }
@@ -31,8 +31,9 @@ module SaturnCICLI
         }
       }
 
-      def initialize(items)
+      def initialize(items, options = {})
         @items = items
+        @options = options
       end
 
       def to_s
@@ -45,8 +46,14 @@ module SaturnCICLI
         columns.map(&:formatted_heading).join.strip
       end
 
+      def formatted_items
+        @items.map do |item|
+          OutputTableRow.new(item, columns).formatted
+        end
+      end
+
       def columns
-        HEADING_DEFINITIONS.map do |attribute, definition|
+        included_column_definitions.map do |attribute, definition|
           OutputTableColumn.new(
             attribute: attribute,
             label: definition[:label],
@@ -57,9 +64,9 @@ module SaturnCICLI
         end
       end
 
-      def formatted_items
-        @items.map do |item|
-          OutputTableRow.new(item, columns).formatted
+      def included_column_definitions
+        COLUMN_DEFINITIONS.select do |attribute, _|
+          @options[:columns].nil? || @options[:columns].include?(attribute)
         end
       end
     end

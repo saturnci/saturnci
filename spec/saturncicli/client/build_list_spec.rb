@@ -39,6 +39,8 @@ describe "build list" do
     saturnci-client  f8244ef3  Make output more elegant.
     OUTPUT
 
-    expect { client.builds }.to output(expected_output).to_stdout
+    expect {
+      client.builds(columns: %w[branch_name commit_hash commit_message])
+    }.to output(expected_output).to_stdout
   end
 end

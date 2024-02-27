@@ -11,7 +11,10 @@ describe "table" do
         },
       ]
 
-      SaturnCICLI::Display::OutputTable.new(items)
+      SaturnCICLI::Display::OutputTable.new(
+        items,
+        columns: %w[branch_name commit_hash commit_message]
+      )
     end
 
     it "does not get truncated" do
@@ -40,7 +43,10 @@ describe "table" do
         },
       ]
 
-      SaturnCICLI::Display::OutputTable.new(items)
+      SaturnCICLI::Display::OutputTable.new(
+        items,
+        columns: %w[branch_name commit_hash commit_message]
+      )
     end
 
     it "gets truncated" do
@@ -69,7 +75,10 @@ commit...
         },
       ]
 
-      SaturnCICLI::Display::OutputTable.new(items)
+      SaturnCICLI::Display::OutputTable.new(
+        items,
+        columns: %w[branch_name commit_hash commit_message]
+      )
     end
 
     it "gets the newlines compressed" do

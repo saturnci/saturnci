@@ -15,10 +15,10 @@ module SaturnCICLI
       request("builds")
     end
 
-    def builds
+    def builds(options)
       response = request("builds")
       builds = JSON.parse(response.body)[0..DEFAULT_NUMBER_OF_BUILDS_TO_SHOW]
-      puts Display::OutputTable.new(builds).to_s
+      puts Display::OutputTable.new(builds, options).to_s
     end
 
     private
