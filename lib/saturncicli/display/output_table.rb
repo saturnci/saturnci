@@ -1,3 +1,4 @@
+require "date"
 require_relative "output_table_row"
 require_relative "output_table_column"
 
@@ -7,6 +8,16 @@ module SaturnCICLI
       SPACER = "  "
 
       HEADING_DEFINITIONS = {
+        "id" => {
+          label: "Build ID",
+          format: -> (value) { value[0..7] }
+        },
+
+        "created_at" => {
+          label: "Created",
+          format: -> (value) { DateTime.parse(value).strftime("%Y-%m-%d %H:%M:%S") }
+        },
+
         "branch_name" => { label: "Branch" },
 
         "commit_hash" => {
