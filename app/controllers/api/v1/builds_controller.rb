@@ -2,7 +2,7 @@ module API
   module V1
     class BuildsController < APIController
       def index
-        render json: Build.all
+        render json: Build.order("created_at desc")
       end
     end
   end
