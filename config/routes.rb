@@ -25,6 +25,8 @@ Rails.application.routes.draw do
         resource :job_machine, only: :destroy
       end
 
+      resources :builds, only: :index
+
       resources :github_events
       resources :github_tokens, only: :create
       resources :job_machine_images, only: :update

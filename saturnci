@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+require_relative 'lib/saturncicli/client'
+
+begin
+  client = SaturnCICLI::Client.new(
+    username: ENV["SATURNCI_API_USERNAME"],
+    password: ENV["SATURNCI_API_PASSWORD"]
+  )
+
+  client.builds
+rescue StandardError => e
+  puts e.message
+  exit
+end
