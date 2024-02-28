@@ -1,5 +1,3 @@
-require_relative "../cli_helpers"
-
 module SaturnCICLI
   module Display
     class OutputTableRow

@@ -1,4 +1,5 @@
 require "date"
+require_relative "helpers"
 require_relative "output_table_row"
 require_relative "output_table_column"
 
@@ -10,7 +11,7 @@ module SaturnCICLI
       COLUMN_DEFINITIONS = {
         "id" => {
           label: "Build ID",
-          format: -> (value) { value[0..7] }
+          format: -> (hash) { Helpers.truncated_hash(hash) }
         },
 
         "created_at" => {
@@ -22,7 +23,7 @@ module SaturnCICLI
 
         "commit_hash" => {
           label: "Commit",
-          format: -> (value) { value[0..7] }
+          format: -> (hash) { Helpers.truncated_hash(hash) }
         },
 
         "commit_message" => {

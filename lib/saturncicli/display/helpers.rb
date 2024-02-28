@@ -8,6 +8,10 @@ module SaturnCICLI
         "#{text[0..DEFAULT_TRUNCATION_THRESHOLD].strip}..."
       end
 
+      def self.truncated_hash(hash)
+        hash[0..7]
+      end
+
       def self.squish(text)
         text.gsub(/\s+/, " ").strip
       end
