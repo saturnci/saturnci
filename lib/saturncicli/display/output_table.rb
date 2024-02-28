@@ -1,4 +1,3 @@
-require "date"
 require_relative "helpers"
 require_relative "output_table_row"
 require_relative "output_table_column"
@@ -16,7 +15,7 @@ module SaturnCICLI
 
         "created_at" => {
           label: "Created",
-          format: -> (value) { DateTime.parse(value).strftime("%Y-%m-%d %H:%M:%S") }
+          format: -> (value) { Helpers.formatted_datetime(value) }
         },
 
         "branch_name" => { label: "Branch" },

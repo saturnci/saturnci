@@ -1,3 +1,5 @@
+require "date"
+
 module SaturnCICLI
   module Display
     module Helpers
@@ -14,6 +16,10 @@ module SaturnCICLI
 
       def self.squish(text)
         text.gsub(/\s+/, " ").strip
+      end
+
+      def self.formatted_datetime(value)
+        DateTime.parse(value).strftime("%Y-%m-%d %H:%M:%S")
       end
     end
   end
