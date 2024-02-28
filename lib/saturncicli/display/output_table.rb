@@ -27,7 +27,7 @@ module SaturnCICLI
 
         "commit_message" => {
           label: "Commit message",
-          format: -> (value) { CLIHelpers.truncate(CLIHelpers.squish(value)) }
+          format: -> (value) { Helpers.truncate(Helpers.squish(value)) }
         }
       }
 
