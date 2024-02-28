@@ -12,8 +12,11 @@ describe "table" do
       ]
 
       SaturnCICLI::Display::Table.new(
-        items,
-        columns: %w[branch_name commit_hash commit_message]
+        column_definitions: :build,
+        items: items,
+        options: {
+          columns: %w[branch_name commit_hash commit_message]
+        }
       )
     end
 
@@ -44,8 +47,11 @@ describe "table" do
       ]
 
       SaturnCICLI::Display::Table.new(
-        items,
-        columns: %w[branch_name commit_hash commit_message]
+        column_definitions: :build,
+        items: items,
+        options: {
+          columns: %w[branch_name commit_hash commit_message]
+        }
       )
     end
 
@@ -76,8 +82,11 @@ commit...
       ]
 
       SaturnCICLI::Display::Table.new(
-        items,
-        columns: %w[branch_name commit_hash commit_message]
+        column_definitions: :build,
+        items: items,
+        options: {
+          columns: %w[branch_name commit_hash commit_message]
+        }
       )
     end
 

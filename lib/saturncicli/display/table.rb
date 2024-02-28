@@ -1,39 +1,17 @@
 require_relative "helpers"
 require_relative "row"
 require_relative "column"
+require_relative "build_table_column_definitions"
 
 module SaturnCICLI
   module Display
     class Table
       SPACER = "  "
 
-      COLUMN_DEFINITIONS = {
-        "id" => {
-          label: "Build ID",
-          format: -> (hash) { Helpers.truncated_hash(hash) }
-        },
+      def initialize(items:, options: {}, column_definitions:)
+        class_name = "SaturnCICLI::Display::#{column_definitions.to_s.capitalize}TableColumnDefinitions"
+        @column_definitions = Object.const_get(class_name).new
 
-        "created_at" => {
-          label: "Created",
-          format: -> (value) { Helpers.formatted_datetime(value) }
-        },
-
-        "branch_name" => { label: "Branch" },
-
-        "commit_hash" => {
-          label: "Commit",
-          format: -> (hash) { Helpers.truncated_hash(hash) }
-        },
-
-        "commit_message" => {
-          label: "Commit message",
-          format: -> (value) { Helpers.truncate(Helpers.squish(value)) }
-        },
-
-        "status" => { label: "Status" },
-      }
-
-      def initialize(items, options = {})
         @items = items
         @options = options
       end
@@ -67,7 +45,7 @@ module SaturnCICLI
       end
 
       def included_column_definitions
-        COLUMN_DEFINITIONS.select do |attribute, _|
+        @column_definitions.select do |attribute, _|
           @options[:columns].nil? || @options[:columns].include?(attribute)
         end
       end

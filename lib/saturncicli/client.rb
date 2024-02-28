@@ -17,7 +17,12 @@ module SaturnCICLI
     def builds(options = {})
       response = request("builds")
       builds = JSON.parse(response.body)
-      puts Display::Table.new(builds, options).to_s
+
+      puts Display::Table.new(
+        column_definitions: :build,
+        items: builds,
+        options: options
+      )
     end
 
     private
