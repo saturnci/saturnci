@@ -1,10 +1,10 @@
 require_relative "helpers"
-require_relative "output_table_row"
-require_relative "output_table_column"
+require_relative "row"
+require_relative "column"
 
 module SaturnCICLI
   module Display
-    class OutputTable
+    class Table
       SPACER = "  "
 
       COLUMN_DEFINITIONS = {
@@ -50,13 +50,13 @@ module SaturnCICLI
 
       def formatted_items
         @items.map do |item|
-          OutputTableRow.new(item, columns).formatted
+          Row.new(item, columns).formatted
         end
       end
 
       def columns
         included_column_definitions.map do |attribute, definition|
-          OutputTableColumn.new(
+          Column.new(
             attribute: attribute,
             label: definition[:label],
             formatter: definition[:format],

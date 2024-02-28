@@ -1,8 +1,8 @@
-require_relative "../../../lib/saturncicli/display/output_table"
+require_relative "../../../lib/saturncicli/display/table"
 
 describe "table" do
   context "short commit message" do
-    let!(:output_table) do
+    let!(:table) do
       items = [
         {
           "branch_name" => "saturnci-client",
@@ -11,7 +11,7 @@ describe "table" do
         },
       ]
 
-      SaturnCICLI::Display::OutputTable.new(
+      SaturnCICLI::Display::Table.new(
         items,
         columns: %w[branch_name commit_hash commit_message]
       )
@@ -23,12 +23,12 @@ describe "table" do
       saturnci-client  7f8c8132  This commit message is pretty short.
       OUTPUT
 
-      expect(output_table.to_s).to eq(expected_output.strip)
+      expect(table.to_s).to eq(expected_output.strip)
     end
   end
 
   context "long commit message" do
-    let!(:output_table) do
+    let!(:table) do
       long_commit_message = <<~TEXT
       This is an extremely long commit message which spans multiple lines
       and is entirely too verbose to be reasonably shown as a value in a
@@ -43,7 +43,7 @@ describe "table" do
         },
       ]
 
-      SaturnCICLI::Display::OutputTable.new(
+      SaturnCICLI::Display::Table.new(
         items,
         columns: %w[branch_name commit_hash commit_message]
       )
@@ -55,12 +55,12 @@ describe "table" do
       saturnci-client  7f8c8132  This is an extremely long commit message...
       OUTPUT
 
-      expect(output_table.to_s).to eq(expected_output.strip)
+      expect(table.to_s).to eq(expected_output.strip)
     end
   end
 
   context "commit message with newlines" do
-    let!(:output_table) do
+    let!(:table) do
       commit_message = <<~TEXT
 Squashed commit of the following:                                                      
                                                                    
@@ -75,7 +75,7 @@ commit...
         },
       ]
 
-      SaturnCICLI::Display::OutputTable.new(
+      SaturnCICLI::Display::Table.new(
         items,
         columns: %w[branch_name commit_hash commit_message]
       )
@@ -87,7 +87,7 @@ commit...
       main    2126d876  Squashed commit of the following: commit....
       OUTPUT
 
-      expect(output_table.to_s).to eq(expected_output.strip)
+      expect(table.to_s).to eq(expected_output.strip)
     end
   end
 end

@@ -1,6 +1,6 @@
 module SaturnCICLI
   module Display
-    class OutputTableRow
+    class Row
       def initialize(values, columns)
         @values = values
         @columns = columns

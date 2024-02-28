@@ -1,6 +1,6 @@
 module SaturnCICLI
   module Display
-    class OutputTableColumn
+    class Column
       attr_accessor :attribute
 
       def initialize(attribute:, label:, formatter:, values:, spacer:)
