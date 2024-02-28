@@ -2,7 +2,8 @@ module API
   module V1
     class BuildsController < APIController
       def index
-        render json: Build.order("created_at desc")
+        builds = Build.order("created_at DESC").as_json(methods: :status)
+        render json: builds
       end
     end
   end

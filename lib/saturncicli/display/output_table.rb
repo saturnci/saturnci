@@ -28,7 +28,9 @@ module SaturnCICLI
         "commit_message" => {
           label: "Commit message",
           format: -> (value) { Helpers.truncate(Helpers.squish(value)) }
-        }
+        },
+
+        "status" => { label: "Status" },
       }
 
       def initialize(items, options = {})
