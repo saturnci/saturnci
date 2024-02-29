@@ -21,7 +21,7 @@ module SaturnCICLI
       when "builds"
         builds
       else
-        builds
+        raise "Unknown argument \"#{argument}\""
       end
     end
 
