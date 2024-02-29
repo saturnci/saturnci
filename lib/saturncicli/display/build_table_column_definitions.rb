@@ -28,6 +28,7 @@ module SaturnCICLI
           },
 
           "status" => { label: "Status" },
+          "duration_formatted" => { label: "Duration" },
         }
       end
     end

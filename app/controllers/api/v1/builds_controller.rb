@@ -6,7 +6,7 @@ module API
       def index
         builds = Build.order("created_at DESC")
           .limit(DEFAULT_LIMIT)
-          .as_json(methods: :status)
+          .as_json(methods: %w[status duration_formatted])
 
         render json: builds
       end
