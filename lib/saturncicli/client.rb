@@ -20,6 +20,8 @@ module SaturnCICLI
         jobs
       when "builds"
         builds
+      when nil
+        builds
       else
         raise "Unknown argument \"#{argument}\""
       end
