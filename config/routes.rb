@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :jobs, only: [] do
+      resources :jobs, only: :index do
         resources :system_logs, only: :create
         resources :test_reports, only: :create
         resource :test_output, only: :create

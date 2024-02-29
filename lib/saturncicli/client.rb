@@ -14,13 +14,35 @@ module SaturnCICLI
       request("builds")
     end
 
+    def execute(argument)
+      case argument
+      when "jobs"
+        jobs
+      when "builds"
+        builds
+      else
+        builds
+      end
+    end
+
     def builds(options = {})
       response = request("builds")
       builds = JSON.parse(response.body)
 
       puts Display::Table.new(
-        column_definitions: :build,
+        resource_name: :build,
         items: builds,
+        options: options
+      )
+    end
+
+    def jobs(options = {})
+      response = request("jobs")
+      jobs = JSON.parse(response.body)
+
+      puts Display::Table.new(
+        resource_name: :job,
+        items: jobs,
         options: options
       )
     end

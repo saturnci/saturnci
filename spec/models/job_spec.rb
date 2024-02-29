@@ -63,6 +63,24 @@ RSpec.describe Job, type: :model do
     end
   end
 
+  describe "#running" do
+    let!(:running_job) do
+      create(:job, test_report: nil)
+    end
+
+    let!(:finished_job) do
+      create(:job, test_report: "success")
+    end
+
+    it "by default includes the running job" do
+      expect(Job.running).to include(running_job)
+    end
+
+    it "by default does not include the finished job" do
+      expect(Job.running).not_to include(finished_job)
+    end
+  end
+
   def success
     <<~RESULTS
 example_id                                                 | status | run_time        |

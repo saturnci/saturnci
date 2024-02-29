@@ -4,6 +4,10 @@ class Job < ApplicationRecord
   alias_attribute :started_at, :created_at
   default_scope -> { order(:order_index) }
 
+  scope :running, -> do
+    where("test_report is null or test_report = ''")
+  end
+
   def start!
     job_events.create!(type: :job_machine_requested)
     job_machine_request.create!
@@ -14,7 +18,7 @@ class Job < ApplicationRecord
   end
 
   def status
-    return "Running" if test_report.to_s.length == 0
+    return "Running" if self.class.running.include?(self)
     return "Passed" if !test_report.include?("failed")
     "Failed"
   end

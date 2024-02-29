@@ -1,19 +1,17 @@
 require_relative "helpers"
 require_relative "row"
 require_relative "column"
-require_relative "build_table_column_definitions"
+require_relative "column_definition"
 
 module SaturnCICLI
   module Display
     class Table
       SPACER = "  "
 
-      def initialize(items:, options: {}, column_definitions:)
-        class_name = "SaturnCICLI::Display::#{column_definitions.to_s.capitalize}TableColumnDefinitions"
-        @column_definitions = Object.const_get(class_name).new
-
+      def initialize(items:, options: {}, resource_name:)
         @items = items
         @options = options
+        @column_definitions = ColumnDefinition.find(resource_name)
       end
 
       def to_s

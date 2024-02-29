@@ -20,6 +20,7 @@ module SaturnCICLI
       end
 
       def formatted_value(value)
+        value = value.to_s
         @formatter ? @formatter.call(value) : value
       end
 
