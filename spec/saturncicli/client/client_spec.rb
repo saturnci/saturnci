@@ -1,6 +1,6 @@
-require_relative "../../lib/saturncicli/client"
-require_relative "helpers/authentication_helper"
-require_relative "helpers/api_helper"
+require_relative "../../../lib/saturncicli/client"
+require_relative "../helpers/authentication_helper"
+require_relative "../helpers/api_helper"
 
 describe "client" do
   describe "jobs" do
