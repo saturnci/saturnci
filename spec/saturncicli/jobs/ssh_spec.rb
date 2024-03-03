@@ -1,4 +1,3 @@
-require "rails_helper"
 require_relative "../helpers/authentication_helper"
 require_relative "../helpers/api_helper"
 require_relative "../../../lib/saturncicli/client"
@@ -11,9 +10,7 @@ describe "ssh" do
       password: "valid_password"
     )
 
-    APIHelper.stub_body("api/v1/job/abc123", {
-      id: "abc123"
-    }.to_json)
+    APIHelper.stub_body("api/v1/job/abc123", { id: "abc123" })
 
     expect {
       command = "--job abc123 ssh"

@@ -36,7 +36,7 @@ describe "client" do
           "status" => "Passed",
           "build_commit_message" => "Did similar but different stuff",
         }
-      ].to_json
+      ]
 
       APIHelper.stub_body("api/v1/jobs", body)
     end
