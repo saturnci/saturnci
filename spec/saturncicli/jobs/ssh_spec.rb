@@ -3,15 +3,19 @@ require_relative "../helpers/api_helper"
 require_relative "../../../lib/saturncicli/client"
 
 describe "ssh" do
-  it "works" do
+  before do
     AuthenticationHelper.stub_authentication_request
-    client = SaturnCICLI::Client.new(
+    APIHelper.stub_body("api/v1/job/abc123", { id: "abc123" })
+  end
+
+  let!(:client) do
+    SaturnCICLI::Client.new(
       username: "valid_username",
       password: "valid_password"
     )
+  end
 
-    APIHelper.stub_body("api/v1/job/abc123", { id: "abc123" })
-
+  it "outputs the job id" do
     expect {
       command = "--job abc123 ssh"
       client.execute(command)
