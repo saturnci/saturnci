@@ -53,7 +53,7 @@ module SaturnCICLI
     end
 
     def ssh(job_id)
-      response = request("job/#{job_id}")
+      response = request("jobs/#{job_id}")
       job = JSON.parse(response.body)
       puts job["id"]
     end

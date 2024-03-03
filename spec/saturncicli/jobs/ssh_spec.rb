@@ -5,7 +5,7 @@ require_relative "../../../lib/saturncicli/client"
 describe "ssh" do
   before do
     AuthenticationHelper.stub_authentication_request
-    APIHelper.stub_body("api/v1/job/abc123", { id: "abc123" })
+    APIHelper.stub_body("api/v1/jobs/abc123", { id: "abc123" })
   end
 
   let!(:client) do
