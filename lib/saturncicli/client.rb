@@ -18,8 +18,7 @@ module SaturnCICLI
       case argument
       when /--job\s+(\S+)/
         job_id = argument.split(" ")[1]
-        job = Job.find(job_id)
-        puts job.id
+        ssh(job_id)
       when "jobs"
         jobs
       when "builds"
@@ -51,6 +50,12 @@ module SaturnCICLI
         items: jobs,
         options: options
       )
+    end
+
+    def ssh(job_id)
+      response = request("job/#{job_id}")
+      job = JSON.parse(response.body)
+      puts job["id"]
     end
 
     private
