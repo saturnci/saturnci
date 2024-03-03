@@ -11,5 +11,4 @@ begin
   client.execute(ARGV.join(" "))
 rescue StandardError => e
   puts e.message
-  exit
 end

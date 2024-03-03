@@ -10,7 +10,7 @@ module SaturnCICLI
 
     def response
       send_request.tap do |response|
-        raise "Bad credentials." if response.code != "200"
+        raise "Bad credentials." if response.code == "401"
       end
     end
 
