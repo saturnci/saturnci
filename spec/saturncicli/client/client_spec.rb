@@ -7,7 +7,6 @@ describe "client" do
     before do
       AuthenticationHelper.stub_authentication_request
 
-
       body = [
         {
           "id" => "cdbe84c7",

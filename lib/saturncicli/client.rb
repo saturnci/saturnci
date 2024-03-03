@@ -16,6 +16,10 @@ module SaturnCICLI
 
     def execute(argument)
       case argument
+      when /--job\s+(\S+)/
+        job_id = argument.split(" ")[1]
+        job = Job.find(job_id)
+        puts job.id
       when "jobs"
         jobs
       when "builds"
