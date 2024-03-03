@@ -6,7 +6,8 @@ module API
       end
 
       def show
-        render json: Job.find(params[:id])
+        job = Job.find(params[:id])
+        render json: job.as_json.merge({ ip_address: job.ip_address })
       end
     end
   end
