@@ -5,8 +5,19 @@ RSpec.describe "job", type: :request do
   let!(:job) { create(:job) }
 
   before do
-    allow(job).to receive(:ip_address).and_return("225.218.120.138")
-    allow(Job).to receive(:find).and_return(job)
+    allow_any_instance_of(Job).to receive(:ip_address).and_return("")
+  end
+
+  describe "finding by abbreviated hash" do
+    it "finds the job" do
+      extend ApplicationHelper
+
+      get(
+        api_v1_job_path(abbreviated_hash(job.id)),
+        headers: api_authorization_headers
+      )
+      expect(response).to have_http_status(200)
+    end
   end
 
   describe "GET /api/v1/job/:id" do
