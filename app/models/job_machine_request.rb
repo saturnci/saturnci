@@ -11,8 +11,6 @@ class JobMachineRequest
   end
 
   def create!
-    client = DropletKit::Client.new(access_token: ENV['DIGITALOCEAN_ACCESS_TOKEN'])
-
     droplet = DropletKit::Droplet.new(
       name: droplet_name,
       region: 'nyc1',
@@ -21,8 +19,10 @@ class JobMachineRequest
       user_data: user_data,
       tags: ['saturnci'],
       ssh_keys: []
+      #ssh_keys: [JobMachineSSHKey.create(@job).id]
     )
 
+    client = DropletKitClientFactory.client
     droplet_request = client.droplets.create(droplet)
     @job.update!(job_machine_id: droplet_request.id)
   end

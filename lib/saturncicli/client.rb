@@ -55,7 +55,10 @@ module SaturnCICLI
     def ssh(job_id)
       response = request("jobs/#{job_id}")
       job = JSON.parse(response.body)
-      puts job
+
+      response = request("jobs/#{job_id}/ssh_key")
+      ssh_key = JSON.parse(response.body)
+      puts ssh_key
     end
 
     private

@@ -17,4 +17,6 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym "GitHub"
   inflect.acronym "ANSI"
   inflect.acronym "HTML"
+  inflect.acronym "SSH"
+  inflect.acronym "RSA"
 end

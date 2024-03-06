@@ -23,6 +23,8 @@ Rails.application.routes.draw do
         resources :job_events, only: :create
         resources :test_suite_finished_events, only: :create
         resource :job_machine, only: :destroy
+
+        resource :ssh_key, only: :show
       end
 
       resources :builds, only: :index
