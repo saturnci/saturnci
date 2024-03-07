@@ -1,7 +1,7 @@
 class SSHSession
-  def initialize(rsa_file_path, ip_address)
-    @rsa_file_path = rsa_file_path
+  def initialize(ip_address, rsa_file_path)
     @ip_address = ip_address
+    @rsa_file_path = rsa_file_path
   end
 
   def connect

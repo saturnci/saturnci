@@ -36,7 +36,11 @@ class JobMachineRequest
     )
 
     droplet_request = client.droplets.create(droplet)
-    @job.update!(job_machine_id: droplet_request.id)
+
+    @job.update!(
+      job_machine_id: droplet_request.id,
+      job_machine_rsa_key_path: rsa_key.file_path
+    )
   end
 
   private

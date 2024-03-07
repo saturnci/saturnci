@@ -5,7 +5,7 @@ require_relative "../../../lib/saturncicli/client"
 describe "ssh" do
   let!(:body) do
     {
-      "id" => "abc123",
+      "job_machine_rsa_key_path" => "/tmp/saturnci/job-abc123",
       "ip_address" => "111.11.11.1"
     }
   end
