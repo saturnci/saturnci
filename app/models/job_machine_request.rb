@@ -11,6 +11,20 @@ class JobMachineRequest
   end
 
   def create!
+    client = DropletKitClientFactory.client
+    rsa_key = JobMachineRSAKey.new(@job)
+
+    droplet_kit_ssh_key = DropletKit::SSHKey.new(
+      name: rsa_key.filename,
+      public_key: File.read("#{rsa_key.file_path}.pub")
+    )
+
+    ssh_key = client.ssh_keys.create(droplet_kit_ssh_key)
+
+    unless ssh_key.id.present?
+      raise "SSH key creation not successful"
+    end
+
     droplet = DropletKit::Droplet.new(
       name: droplet_name,
       region: 'nyc1',
@@ -18,16 +32,24 @@ class JobMachineRequest
       size: 's-4vcpu-8gb',
       user_data: user_data,
       tags: ['saturnci'],
-      ssh_keys: []
-      #ssh_keys: [JobMachineSSHKey.create(@job).id]
+      ssh_keys: [ssh_key.id]
     )
 
-    client = DropletKitClientFactory.client
     droplet_request = client.droplets.create(droplet)
     @job.update!(job_machine_id: droplet_request.id)
   end
 
   private
+
+  def wait_for_droplet(client, droplet_id)
+    loop do
+      droplet = client.droplets.find(id: droplet_id)
+      return droplet if droplet.status == 'active'
+
+      puts "Waiting for Droplet to become active..."
+      sleep 5
+    end
+  end
 
   def droplet_name
     "#{@job.build.project.name.gsub("/", "-")}-job-#{@job.id}"

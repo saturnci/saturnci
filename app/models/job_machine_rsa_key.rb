@@ -5,16 +5,21 @@ class JobMachineRSAKey
   TMP_DIR_NAME = "/tmp/saturnci"
   attr_reader :filename
 
-  def initialize(job, tmp_dir_name = TMP_DIR_NAME)
+  # tmp_dir_name is configurable so that a different directory
+  # can be used in the test environment as to not conflict with
+  # the development environment
+  def initialize(job)
     @job = job
-    @tmp_dir_name = tmp_dir_name
-    @filename = "job-#{@job.id}-#{SecureRandom.hex}"
 
-    FileUtils.mkdir_p(@tmp_dir_name)
+    FileUtils.mkdir_p(TMP_DIR_NAME)
     system("ssh-keygen -t rsa -b 4096 -N '' -f #{file_path} > /dev/null")
   end
 
   def file_path
-    "#{@tmp_dir_name}/#{filename}"
+    "#{TMP_DIR_NAME}/#{filename}"
+  end
+
+  def filename
+    "job-#{@job.id}"
   end
 end

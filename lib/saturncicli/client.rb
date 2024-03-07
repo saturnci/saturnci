@@ -1,6 +1,7 @@
 require "json"
 require_relative "api_request"
 require_relative "display/table"
+require_relative "ssh_session"
 
 module SaturnCICLI
   class Client
@@ -56,9 +57,10 @@ module SaturnCICLI
       response = request("jobs/#{job_id}")
       job = JSON.parse(response.body)
 
-      #response = request("jobs/#{job_id}/ssh_key")
-      #ssh_key = JSON.parse(response.body)
-      puts job
+      rsa_file_path = "/tmp/saturnci/job-#{job["id"]}"
+      ssh_session = SSHSession.new(rsa_file_path, job["ip_address"])
+      ssh_session.connect
+      puts ssh_session.command
     end
 
     private

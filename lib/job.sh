@@ -106,4 +106,4 @@ send_content_to_api "jobs/$JOB_ID/test_reports" "text/plain" "$TEST_RESULTS_FILE
 #--------------------------------------------------------------------------------
 
 echo "Deleting job machine"
-#api_request "DELETE" "jobs/$JOB_ID/job_machine"
+api_request "DELETE" "jobs/$JOB_ID/job_machine"
