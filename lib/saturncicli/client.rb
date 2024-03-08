@@ -54,19 +54,24 @@ module SaturnCICLI
     end
 
     def ssh(job_id)
-      response = request("jobs/#{job_id}")
-      job = JSON.parse(response.body)
-
-      while job["ip_address"].nil? do
+      while connection_details(job_id)[:ip_address].nil? do
         print "."
         sleep(5)
-        response = request("jobs/#{job_id}")
-        job = JSON.parse(response.body)
       end
 
-      ssh_session = SSHSession.new(job["ip_address"], job["job_machine_rsa_key_path"])
+      ssh_session = SSHSession.new(**connection_details(job_id))
+
       ssh_session.connect
       puts ssh_session.command
+    end
+
+    def connection_details(job_id)
+      response = request("jobs/#{job_id}")
+      job = JSON.parse(response.body)
+      connection_details = {
+        ip_address: job["ip_address"],
+        rsa_key_path: job["job_machine_rsa_key_path"]
+      }
     end
 
     private

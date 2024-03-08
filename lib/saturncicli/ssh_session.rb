@@ -1,7 +1,7 @@
 class SSHSession
-  def initialize(ip_address, rsa_file_path)
+  def initialize(ip_address:, rsa_key_path:)
     @ip_address = ip_address
-    @rsa_file_path = rsa_file_path
+    @rsa_key_path = rsa_key_path
   end
 
   def connect
@@ -9,6 +9,6 @@ class SSHSession
   end
 
   def command
-    "ssh -o StrictHostKeyChecking=no -i #{@rsa_file_path} root@#{@ip_address}"
+    "ssh -o StrictHostKeyChecking=no -i #{@rsa_key_path} root@#{@ip_address}"
   end
 end
