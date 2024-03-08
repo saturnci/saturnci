@@ -45,16 +45,6 @@ class JobMachineRequest
 
   private
 
-  def wait_for_droplet(client, droplet_id)
-    loop do
-      droplet = client.droplets.find(id: droplet_id)
-      return droplet if droplet.status == 'active'
-
-      puts "Waiting for Droplet to become active..."
-      sleep 5
-    end
-  end
-
   def droplet_name
     "#{@job.build.project.name.gsub("/", "-")}-job-#{@job.id}"
   end

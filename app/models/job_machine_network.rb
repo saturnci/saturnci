@@ -1,4 +1,8 @@
-module JobNetworking
+class JobMachineNetwork
+  def initialize(job)
+    @job = job
+  end
+
   def ip_address
     network(droplet).ip_address
   end
@@ -10,7 +14,7 @@ module JobNetworking
   end
 
   def droplet
-    client.droplets.find(id: job_machine_id)
+    client.droplets.find(id: @job.job_machine_id)
   end
 
   def client

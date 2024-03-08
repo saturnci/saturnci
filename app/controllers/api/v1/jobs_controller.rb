@@ -7,7 +7,7 @@ module API
 
       def show
         job = Job.find_by_abbreviated_hash(params[:id])
-        render json: job.as_json.merge(ip_address: job.ip_address)
+        render json: job.as_json.merge(ip_address: JobMachineNetwork.new(job).ip_address)
       end
     end
   end

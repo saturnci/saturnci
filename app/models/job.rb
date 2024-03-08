@@ -2,7 +2,6 @@ class Job < ApplicationRecord
   belongs_to :build
   has_many :job_events, dependent: :destroy
   alias_attribute :started_at, :created_at
-  include JobNetworking
 
   scope :running, -> do
     joins(:build)
