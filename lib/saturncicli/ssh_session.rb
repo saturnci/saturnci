@@ -9,6 +9,6 @@ class SSHSession
   end
 
   def command
-    "ssh -i #{@rsa_file_path} root@#{@ip_address}"
+    "ssh -o StrictHostKeyChecking=no -i #{@rsa_file_path} root@#{@ip_address}"
   end
 end
