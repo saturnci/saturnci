@@ -57,11 +57,13 @@ module SaturnCICLI
       response = request("jobs/#{job_id}")
       job = JSON.parse(response.body)
 
-      # If you try to SSH into a job machine before the machine
-      # is ready to accept connections, you get a raw error. We
-      # should make it so that instead, it waits and polls the
-      # machine periodically until it's ready and then SSHes into
-      # the machine at that time.
+      while job["ip_address"].nil? do
+        print "."
+        sleep(5)
+        response = request("jobs/#{job_id}")
+        job = JSON.parse(response.body)
+      end
+
       ssh_session = SSHSession.new(job["ip_address"], job["job_machine_rsa_key_path"])
       ssh_session.connect
       puts ssh_session.command
