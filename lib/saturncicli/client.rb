@@ -2,6 +2,7 @@ require "json"
 require_relative "api_request"
 require_relative "display/table"
 require_relative "ssh_session"
+require_relative "connection_details"
 
 module SaturnCICLI
   class Client
@@ -54,24 +55,18 @@ module SaturnCICLI
     end
 
     def ssh(job_id)
-      while connection_details(job_id)[:ip_address].nil? do
+      connection_details = ConnectionDetails.new(
+        request: -> { request("jobs/#{job_id}") }
+      )
+
+      while connection_details.refresh[:ip_address].nil? do
         print "."
-        sleep(5)
+        sleep(ConnectionDetails::WAIT_INTERVAL_IN_SECONDS)
       end
 
-      ssh_session = SSHSession.new(**connection_details(job_id))
-
+      ssh_session = SSHSession.new(**connection_details.refresh)
       ssh_session.connect
       puts ssh_session.command
-    end
-
-    def connection_details(job_id)
-      response = request("jobs/#{job_id}")
-      job = JSON.parse(response.body)
-      connection_details = {
-        ip_address: job["ip_address"],
-        rsa_key_path: job["job_machine_rsa_key_path"]
-      }
     end
 
     private
