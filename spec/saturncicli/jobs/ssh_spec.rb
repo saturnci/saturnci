@@ -35,11 +35,10 @@ describe "ssh" do
 
   context "remote machine does not yet have an IP address" do
     before do
+      APIHelper.stub_body("api/v1/jobs/abc123", {})
       stub_const('ConnectionDetails::WAIT_INTERVAL_IN_SECONDS', 0)
-
-      allow_any_instance_of(ConnectionDetails).to receive(:refresh)
-        .and_return({ ip_address: nil, rsa_key_path: "/tmp/saturnci/job-abc123" },
-                    { ip_address: "111.11.11.1", rsa_key_path: "/tmp/saturnci/job-abc123" })
+      allow_any_instance_of(ConnectionDetails).to receive(:ip_address).and_return(nil, "111.11.11.1")
+      allow_any_instance_of(ConnectionDetails).to receive(:rsa_key_path).and_return("/tmp/saturnci/job-abc123")
     end
 
     it "outputs a dot" do

@@ -7,11 +7,15 @@ class ConnectionDetails
 
   def refresh
     response = @request.call
-    job = JSON.parse(response.body)
+    @job = JSON.parse(response.body)
+    self
+  end
 
-    connection_details = {
-      ip_address: job["ip_address"],
-      rsa_key_path: job["job_machine_rsa_key_path"]
-    }
+  def ip_address
+    @job["ip_address"]
+  end
+
+  def rsa_key_path
+    @job["job_machine_rsa_key_path"]
   end
 end

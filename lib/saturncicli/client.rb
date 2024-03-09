@@ -59,12 +59,16 @@ module SaturnCICLI
         request: -> { request("jobs/#{job_id}") }
       )
 
-      while connection_details.refresh[:ip_address].nil? do
+      until connection_details.refresh.ip_address.present? do
         print "."
         sleep(ConnectionDetails::WAIT_INTERVAL_IN_SECONDS)
       end
 
-      ssh_session = SSHSession.new(**connection_details.refresh)
+      ssh_session = SSHSession.new(
+        ip_address: connection_details.ip_address,
+        rsa_key_path: connection_details.rsa_key_path
+      )
+
       ssh_session.connect
       puts ssh_session.command
     end
