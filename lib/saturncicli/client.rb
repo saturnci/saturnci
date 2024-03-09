@@ -59,7 +59,7 @@ module SaturnCICLI
         request: -> { request("jobs/#{job_id}") }
       )
 
-      until connection_details.refresh.ip_address.present? do
+      until connection_details.refresh.ip_address do
         print "."
         sleep(ConnectionDetails::WAIT_INTERVAL_IN_SECONDS)
       end
