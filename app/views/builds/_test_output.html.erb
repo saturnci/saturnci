@@ -1,13 +1,13 @@
 <div class="terminal-container">
   <%= terminal_tag do %>
     <% @build.jobs.each do |job| %>
-      <% if job.test_output.present? %>
-        <%= job_container @current_tab_name, job do %>
-          <%= ascii_job_heading(job.order_index) %>
+      <%= job_container @current_tab_name, job do %>
+        <%= ascii_job_heading(job.order_index) %>
+        <% if job.test_output.present? %>
           <%= ansi_to_html(job.test_output) %>
+        <% else %>
+          Nothing here yet<br>
         <% end %>
-      <% else %>
-        Nothing here yet<br>
       <% end %>
     <% end %>
   <% end %>
