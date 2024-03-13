@@ -2,10 +2,9 @@
   <%= terminal_tag do %>
     <% @build.jobs.each do |job| %>
       <% if job.test_report.present? %>
-        <div id="<%= dom_id(job, @current_tab_name) %>">
+        <%= job_container @current_tab_name, job do %>
           <%= BuildReport.new(job.test_report).to_s.html_safe %>
-        </div>
-        <br>
+        <% end %>
       <% else %>
         Nothing here yet<br>
       <% end %>

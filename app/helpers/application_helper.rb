@@ -19,4 +19,8 @@ module ApplicationHelper
       concat("#{line}<br><br>".html_safe)
     end
   end
+
+  def job_container(current_tab_name, job, &block)
+    content_tag(:div, id: dom_id(job, current_tab_name), &block)
+  end
 end
