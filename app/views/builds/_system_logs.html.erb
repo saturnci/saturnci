@@ -3,9 +3,7 @@
     <% @build.jobs.each do |job| %>
       <% if job.system_logs.present? %>
         <div id="<%= dom_id(job, @partial) %>">
-          <%= "-" * 40 %><br>
-          Job <%= job.order_index %><br>
-          <%= "-" * 40 %><br><br>
+          <%= ascii_job_heading(job.order_index) %>
           <%= ansi_to_html(job.system_logs) %>
         </div>
         <br>
