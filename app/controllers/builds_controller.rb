@@ -13,7 +13,7 @@ class BuildsController < ApplicationController
     @build = Build.find(params[:id])
     @project = @build.project
     @build_list = BuildList.new(@build, branch_name: params[:branch_name])
-    @partial = params[:partial] || DEFAULT_PARTIAL
+    @current_tab_name = params[:partial] || DEFAULT_PARTIAL
   end
 
   def destroy

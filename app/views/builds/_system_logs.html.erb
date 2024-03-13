@@ -2,7 +2,7 @@
   <%= terminal_tag do %>
     <% @build.jobs.each do |job| %>
       <% if job.system_logs.present? %>
-        <div id="<%= dom_id(job, @partial) %>">
+        <div id="<%= dom_id(job, @current_tab_name) %>">
           <%= ascii_job_heading(job.order_index) %>
           <%= ansi_to_html(job.system_logs) %>
         </div>
