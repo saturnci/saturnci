@@ -1,0 +1,11 @@
+<%= terminal_output do %>
+  <% @build.jobs.each do |job| %>
+    <%= job_container @current_tab_name, job do %>
+      <% job.job_events.each do |job_event| %>
+        <div>
+          <%= job_event.type %>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
