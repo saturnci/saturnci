@@ -1,6 +1,6 @@
 class BuildReport
   def initialize(content)
-    @content = content
+    @content = content || ""
   end
 
   def to_s
