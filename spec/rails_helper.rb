@@ -71,6 +71,8 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
+  RSpec::Expectations.configuration.on_potential_false_positives = :nothing
+
   config.include Warden::Test::Helpers, type: :system
   config.include Warden::Test::Helpers, type: :request
 
