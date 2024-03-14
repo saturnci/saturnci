@@ -2,11 +2,7 @@
   <%= terminal_tag do %>
     <% @build.jobs.each do |job| %>
       <%= job_container @current_tab_name, job do %>
-        <% if job.system_logs.present? %>
-          <%= ansi_to_html(job.system_logs) %>
-        <% else %>
-          Nothing here yet<br>
-        <% end %>
+        <%= ansi_to_html(job.system_logs) %>
       <% end %>
     <% end %>
   <% end %>

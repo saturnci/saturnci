@@ -21,6 +21,11 @@ module ApplicationHelper
   end
 
   def job_container(current_tab_name, job, &block)
-    ascii_job_heading(job.order_index) + content_tag(:div, id: dom_id(job, current_tab_name), &block)
+    if block.call.blank?
+      return content_tag(:div, "Nothing here yet")
+    end
+
+    ascii_job_heading(job.order_index) +
+      content_tag(:div, id: dom_id(job, current_tab_name), &block)
   end
 end

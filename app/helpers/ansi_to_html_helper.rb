@@ -15,6 +15,8 @@ module ANSIToHTMLHelper
   }
 
   def ansi_to_html(ansi_string)
+    return unless ansi_string.present?
+
     html_string = CGI.escapeHTML(ansi_string)
 
     RULES.each do |ansi, html|
