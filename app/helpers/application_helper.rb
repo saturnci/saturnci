@@ -21,6 +21,6 @@ module ApplicationHelper
   end
 
   def job_container(current_tab_name, job, &block)
-    content_tag(:div, id: dom_id(job, current_tab_name), &block)
+    ascii_job_heading(job.order_index) + content_tag(:div, id: dom_id(job, current_tab_name), &block)
   end
 end
