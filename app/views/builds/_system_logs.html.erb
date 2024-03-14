@@ -1,9 +1,7 @@
-<div class="terminal-container">
-  <%= terminal_tag do %>
-    <% @build.jobs.each do |job| %>
-      <%= job_container @current_tab_name, job do %>
-        <%= ansi_to_html(job.system_logs) %>
-      <% end %>
+<%= terminal_output do %>
+  <% @build.jobs.each do |job| %>
+    <%= job_container @current_tab_name, job do %>
+      <%= ansi_to_html(job.system_logs) %>
     <% end %>
   <% end %>
-</div>
+<% end %>

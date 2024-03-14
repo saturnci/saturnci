@@ -3,12 +3,13 @@ module ApplicationHelper
     hash[0..7]
   end
 
-  def terminal_tag
+  def terminal_output
     content = capture { yield }
     return unless content.present?
 
     compressed_content = content.gsub(/\n\s+/, "").html_safe
-    content_tag(:pre, compressed_content, class: "terminal")
+    terminal_content = content_tag(:pre, compressed_content, class: "terminal")
+    content_tag(:div, terminal_content, class: "terminal-container")
   end
 
   def ascii_job_heading(job_order_index)

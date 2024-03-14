@@ -1,9 +1,7 @@
-<div class="terminal-container">
-  <%= terminal_tag do %>
-    <% @build.jobs.each do |job| %>
-      <%= job_container @current_tab_name, job do %>
-        <%= BuildReport.new(job.test_report).to_s.html_safe %>
-      <% end %>
+<%= terminal_output do %>
+  <% @build.jobs.each do |job| %>
+    <%= job_container @current_tab_name, job do %>
+      <%= BuildReport.new(job.test_report).to_s.html_safe %>
     <% end %>
   <% end %>
-</div>
+<% end %>
