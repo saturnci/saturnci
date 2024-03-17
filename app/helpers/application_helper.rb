@@ -9,7 +9,7 @@ module ApplicationHelper
 
     compressed_content = content.gsub(/\n\s+/, "").html_safe
     terminal_content = content_tag(:pre, compressed_content, class: "terminal")
-    content_tag(:div, terminal_content, class: "terminal-container")
+    content_tag(:div, terminal_content, class: "job-info-container")
   end
 
   def ascii_job_heading(job_order_index)

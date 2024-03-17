@@ -1,4 +1,4 @@
-<%= terminal_output do %>
+<div class="job-info-container non-terminal-job-info">
   <% @build.jobs.each do |job| %>
     <%= job_container @current_tab_name, job do %>
       <table border>
@@ -21,4 +21,4 @@
       </table>
     <% end %>
   <% end %>
-<% end %>
+</div>
