@@ -2,9 +2,10 @@ class Job < ApplicationRecord
   belongs_to :build
   has_many :job_events, dependent: :destroy
   alias_attribute :started_at, :created_at
+  default_scope -> { order("order_index") }
 
   scope :running, -> do
-    joins(:build)
+    unscoped.joins(:build)
       .where("test_report is null or test_report = ''")
       .order("builds.created_at desc")
   end
