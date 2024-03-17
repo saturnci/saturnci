@@ -58,3 +58,9 @@ pre {
   min-height: 0;
   width: 450px;
 }
+
+.number {
+  font-family: 'Courier New';
+  font-size: 80%;
+  text-align: right;
+}
