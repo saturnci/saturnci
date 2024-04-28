@@ -49,11 +49,12 @@ git checkout $COMMIT_HASH
 
 #--------------------------------------------------------------------------------
 
+# To do next: change all instances of registrycache.saturnci.com to registrycache.saturnci.com
 echo "Configuring Docker to use the registry cache"
 sudo mkdir -p /etc/docker
 echo '{
-  "registry-mirrors": ["http://146.190.66.111:5000"],
-  "insecure-registries": ["146.190.66.111:5000"]
+  "registry-mirrors": ["http://registrycache.saturnci.com:5000"],
+  "insecure-registries": ["registrycache.saturnci.com:5000"]
 }' | sudo tee /etc/docker/daemon.json
 
 sudo systemctl restart docker
@@ -61,7 +62,7 @@ sudo systemctl restart docker
 #--------------------------------------------------------------------------------
 
 echo "Attempting to pull the existing image to avoid rebuilding if possible"
-sudo docker pull 146.190.66.111:5000/saturn_test_app:latest || true
+sudo docker pull registrycache.saturnci.com:5000/saturn_test_app:latest || true
 
 #--------------------------------------------------------------------------------
 
@@ -115,7 +116,7 @@ send_content_to_api "jobs/$JOB_ID/test_reports" "text/plain" "$TEST_RESULTS_FILE
 #--------------------------------------------------------------------------------
 
 echo "Performing docker push"
-sudo docker push 146.190.66.111:5000/saturn_test_app:latest
+sudo docker push registrycache.saturnci.com:5000/saturn_test_app:latest
 echo "Docker push finished"
 
 #--------------------------------------------------------------------------------
