@@ -53,8 +53,7 @@ git checkout $COMMIT_HASH
 echo "Configuring Docker to use the registry cache"
 sudo mkdir -p /etc/docker
 echo '{
-  "registry-mirrors": ["http://registrycache.saturnci.com:5000"],
-  "insecure-registries": ["registrycache.saturnci.com:5000"]
+  "registry-mirrors": ["https://registrycache.saturnci.com:5000"],
 }' | sudo tee /etc/docker/daemon.json
 
 sudo systemctl restart docker
