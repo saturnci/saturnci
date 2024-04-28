@@ -5,6 +5,7 @@ services:
     build:
       context: ../
       dockerfile: .saturnci/Dockerfile
+    image: 146.190.66.111:5000/saturn_test_app:latest
     volumes:
       - ../:/code
     depends_on:

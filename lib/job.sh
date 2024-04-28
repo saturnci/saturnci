@@ -49,10 +49,19 @@ git checkout $COMMIT_HASH
 
 #--------------------------------------------------------------------------------
 
-echo "Running docker-compose build"
-api_request "POST" "jobs/$JOB_ID/job_events" '{"type":"image_build_started"}'
-sudo docker-compose -f .saturnci/docker-compose.yml build
-api_request "POST" "jobs/$JOB_ID/job_events" '{"type":"image_build_finished"}'
+echo "Configuring Docker to use the registry cache"
+sudo mkdir -p /etc/docker
+echo '{
+  "registry-mirrors": ["http://146.190.66.111:5000"],
+  "insecure-registries": ["146.190.66.111:5000"]
+}' | sudo tee /etc/docker/daemon.json
+
+sudo systemctl restart docker
+
+#--------------------------------------------------------------------------------
+
+echo "Attempting to pull the existing image to avoid rebuilding if possible"
+sudo docker pull 146.190.66.111:5000/saturn_test_app:latest || true
 
 #--------------------------------------------------------------------------------
 
@@ -102,6 +111,12 @@ send_content_to_api "jobs/$JOB_ID/test_output" "text/plain" "$TEST_OUTPUT_FILENA
 
 echo "Sending report"
 send_content_to_api "jobs/$JOB_ID/test_reports" "text/plain" "$TEST_RESULTS_FILENAME"
+
+#--------------------------------------------------------------------------------
+
+echo "Performing docker push"
+sudo docker push 146.190.66.111:5000/saturn_test_app:latest
+echo "Docker push finished"
 
 #--------------------------------------------------------------------------------
 

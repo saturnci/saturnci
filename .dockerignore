@@ -1,0 +1,58 @@
+# Version control
+.git/
+.gitignore
+
+# Logs and temp files
+log/*
+tmp/*
+!tmp/.keep
+
+# Dependency directories
+vendor/bundle
+node_modules/
+
+# Configuration files
+.env*
+config/master.key
+
+# Test, development, and CI/CD files
+spec/
+test/
+tests/
+coverage/
+config/deploy/
+.circleci/
+.github/
+.gitlab/
+.travis.yml
+
+# Documentation
+README.md
+doc/
+docs/
+*.md
+
+# Database files
+*.sqlite3
+db/*.sqlite3
+db/*.sqlite3-journal
+
+# Editor and IDE settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Non-essential files
+*.pdf
+*.gz
+*.zip
+
+# Compiled asset files
+public/assets
+public/packs
+public/uploads
