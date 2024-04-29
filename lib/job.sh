@@ -38,7 +38,7 @@ api_request "POST" "jobs/$JOB_ID/job_events" '{"type":"job_machine_ready"}'
 echo "Configuring Docker to use the registry cache"
 sudo mkdir -p /etc/docker
 echo '{
-  "registry-mirrors": ["https://registrycache.saturnci.com:5000"],
+  "registry-mirrors": ["https://registrycache.saturnci.com:5000"]
 }' | sudo tee /etc/docker/daemon.json
 
 sudo systemctl restart docker
