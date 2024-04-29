@@ -49,7 +49,6 @@ git checkout $COMMIT_HASH
 
 #--------------------------------------------------------------------------------
 
-# To do next: change all instances of registrycache.saturnci.com to registrycache.saturnci.com
 echo "Configuring Docker to use the registry cache"
 sudo mkdir -p /etc/docker
 echo '{
@@ -59,6 +58,9 @@ echo '{
 sudo systemctl restart docker
 
 #--------------------------------------------------------------------------------
+
+echo "Authenticating to Docker registry"
+sudo docker login registrycache.saturnci.com:5000 -u myusername -p mypassword
 
 echo "Attempting to pull the existing image to avoid rebuilding if possible"
 sudo docker pull registrycache.saturnci.com:5000/saturn_test_app:latest || true
