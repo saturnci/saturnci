@@ -28,6 +28,13 @@ function send_content_to_api() {
         --data-binary "@$file_path" "$HOST/api/v1/$api_path"
 }
 
+function clone_user_repo() {
+  TOKEN=$(api_request "POST" "github_tokens" "{\"github_installation_id\":\"$GITHUB_INSTALLATION_ID\"}")
+  git clone https://x-access-token:$TOKEN@github.com/$GITHUB_REPO_FULL_NAME $PROJECT_DIR
+  cd $PROJECT_DIR
+  mkdir tmp
+}
+
 #--------------------------------------------------------------------------------
 
 echo "Job machine ready"
@@ -36,10 +43,7 @@ api_request "POST" "jobs/$JOB_ID/job_events" '{"type":"job_machine_ready"}'
 #--------------------------------------------------------------------------------
 
 echo "Cloning user repo"
-TOKEN=$(api_request "POST" "github_tokens" "{\"github_installation_id\":\"$GITHUB_INSTALLATION_ID\"}")
-git clone https://x-access-token:$TOKEN@github.com/$GITHUB_REPO_FULL_NAME $PROJECT_DIR
-cd $PROJECT_DIR
-mkdir tmp
+clone_user_repo
 api_request "POST" "jobs/$JOB_ID/job_events" '{"type":"repository_cloned"}'
 
 #--------------------------------------------------------------------------------
