@@ -35,6 +35,29 @@ function clone_user_repo() {
   mkdir tmp
 }
 
+function run_pre_script() {
+  sudo chmod 755 .saturnci/pre.sh
+  sudo docker-compose -f .saturnci/docker-compose.yml run saturn_test_app ./.saturnci/pre.sh
+}
+
+function start_test_suite() {
+  cat <<EOF > ./example_status_persistence.rb
+RSpec.configure do |config|
+  config.example_status_persistence_file_path = '$TEST_RESULTS_FILENAME'
+end
+EOF
+
+  TEST_FILES=$(find spec -name '*_spec.rb')
+  TEST_GROUP=$(expr ${JOB_ORDER_INDEX} % ${NUMBER_OF_CONCURRENT_JOBS})
+  SELECTED_TESTS=$(echo "${TEST_FILES}" | awk "NR % ${NUMBER_OF_CONCURRENT_JOBS} == ${TEST_GROUP}")
+  echo $SELECTED_TESTS
+
+  script -c "sudo docker-compose -f .saturnci/docker-compose.yml run saturn_test_app \
+    bundle exec rspec --require ./example_status_persistence.rb \
+    --format=documentation --order rand:$RSPEC_SEED $(echo $SELECTED_TESTS)" \
+    -f "$TEST_OUTPUT_FILENAME"
+}
+
 #--------------------------------------------------------------------------------
 
 echo "Job machine ready"
@@ -63,30 +86,14 @@ sudo docker pull registrycache.saturnci.com:5000/saturn_test_app:latest || true
 
 echo "Running pre.sh"
 api_request "POST" "jobs/$JOB_ID/job_events" '{"type":"pre_script_started"}'
-sudo chmod 755 .saturnci/pre.sh
-sudo docker-compose -f .saturnci/docker-compose.yml run saturn_test_app ./.saturnci/pre.sh
+run_pre_script
 api_request "POST" "jobs/$JOB_ID/job_events" '{"type":"pre_script_finished"}'
 
 #--------------------------------------------------------------------------------
 
 echo "Running tests"
 api_request "POST" "jobs/$JOB_ID/job_events" '{"type":"test_suite_started"}'
-
-cat <<EOF > ./example_status_persistence.rb
-RSpec.configure do |config|
-  config.example_status_persistence_file_path = '$TEST_RESULTS_FILENAME'
-end
-EOF
-
-TEST_FILES=$(find spec -name '*_spec.rb')
-TEST_GROUP=$(expr ${JOB_ORDER_INDEX} % ${NUMBER_OF_CONCURRENT_JOBS})
-SELECTED_TESTS=$(echo "${TEST_FILES}" | awk "NR % ${NUMBER_OF_CONCURRENT_JOBS} == ${TEST_GROUP}")
-echo $SELECTED_TESTS
-
-script -c "sudo docker-compose -f .saturnci/docker-compose.yml run saturn_test_app \
-  bundle exec rspec --require ./example_status_persistence.rb \
-  --format=documentation --order rand:$RSPEC_SEED $(echo $SELECTED_TESTS)" \
-  -f "$TEST_OUTPUT_FILENAME"
+start_test_suite
 
 #--------------------------------------------------------------------------------
 
