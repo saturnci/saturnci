@@ -2,6 +2,7 @@
 
 USER_DIR=/home/ubuntu
 PROJECT_DIR=$USER_DIR/project
+SYSTEM_LOG_FILENAME=/var/log/syslog
 TEST_OUTPUT_FILENAME=tmp/test_output.txt
 TEST_RESULTS_FILENAME=tmp/test_results.txt
 
@@ -70,17 +71,17 @@ EOF
 }
 
 function stream_logs() {
-    local log_file="/var/log/syslog"
-    local last_line=100
+    local api_path=$1
+    local log_file_path=$2
+    local last_line=0
     local log_sending_interval_in_seconds=1
-    send_content_to_api "jobs/$JOB_ID/system_logs" "text/plain" "$(head -n $last_line $log_file)"
 
     while true; do
-        local new_last_line=$(wc -l < $log_file)
-        if [ $new_last_line -gt $last_line ]; then
-            local content=$(sed -n "$(($last_line + 1)),$new_last_line p" $log_file)
-            send_content_to_api "jobs/$JOB_ID/system_logs" "text/plain" "$content"
-            last_line=$new_last_line
+        local current_number_of_lines_in_log_file=$(wc -l < $log_file_path)
+        if [ $current_number_of_lines_in_log_file -gt $last_line ]; then
+            local content=$(sed -n "$(($last_line + 1)),$current_number_of_lines_in_log_file p" $log_file_path)
+            send_content_to_api $api_path "text/plain" "$content"
+            last_line=$current_number_of_lines_in_log_file
         fi
         sleep $log_sending_interval_in_seconds
     done
@@ -89,7 +90,7 @@ function stream_logs() {
 #--------------------------------------------------------------------------------
 
 echo "Starting to stream logs"
-stream_logs &
+stream_logs "jobs/$JOB_ID/system_logs" $SYSTEM_LOG_FILENAME &
 
 #--------------------------------------------------------------------------------
 
@@ -124,19 +125,21 @@ api_request "POST" "jobs/$JOB_ID/job_events" '{"type":"pre_script_finished"}'
 
 #--------------------------------------------------------------------------------
 
+echo "Starting to stream test output"
+touch $TEST_OUTPUT_FILENAME
+stream_logs "jobs/$JOB_ID/test_output" "$TEST_OUTPUT_FILENAME" &
+
 echo "Running tests"
 api_request "POST" "jobs/$JOB_ID/job_events" '{"type":"test_suite_started"}'
 start_test_suite
 
 #--------------------------------------------------------------------------------
 
-echo "Test suite finished"
-api_request "POST" "jobs/$JOB_ID/test_suite_finished_events"
 
 #--------------------------------------------------------------------------------
 
-echo "Sending test output"
-send_file_content_to_api "jobs/$JOB_ID/test_output" "text/plain" "$TEST_OUTPUT_FILENAME"
+echo "Test suite finished"
+api_request "POST" "jobs/$JOB_ID/test_suite_finished_events"
 
 #--------------------------------------------------------------------------------
 

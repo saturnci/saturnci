@@ -4,7 +4,8 @@ module API
       def create
         job = Job.find(params[:job_id])
         request.body.rewind
-        job.update!(test_output: request.body.read)
+        log_chunk = request.body.read
+        job.update!(test_output: job.test_output.to_s + log_chunk)
 
         head :ok
       end
