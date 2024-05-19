@@ -17,7 +17,7 @@
 
   <%= turbo_frame_tag "build_details", class: "build-details", data: { turbo_action: "advance" } do %>
     <div class="build-navigation">
-      <% build_navigation(@build, @current_tab_name) do |nav| %>
+      <% build_navigation(@build, current_tab_name) do |nav| %>
         <%= nav.item "System Logs", "system_logs" %>
         <%= nav.item "Events", "events" %>
         <%= nav.item "Test Report", "test_report" %>
@@ -30,7 +30,7 @@
         <% @build.jobs.each do |job| %>
           <li>
             <%= link_to "Job #{job.order_index}",
-              "##{dom_id(job, @current_tab_name)}",
+              "##{dom_id(job, current_tab_name)}",
               data: { turbo: false } %>
           </li>
         <% end %>
@@ -38,7 +38,7 @@
     </div>
 
     <div class="build-details-content">
-      <%= render @current_tab_name %>
+      <%= render current_tab_name %>
     </div>
   <% end %>
 <% end %>
