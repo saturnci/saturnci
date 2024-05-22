@@ -2,8 +2,8 @@ require "rails_helper"
 
 describe "Active link", type: :system do
   let!(:project) { create(:project) }
-  let!(:build_1) { create(:build, project: project) }
-  let!(:build_2) { create(:build, project: project) }
+  let!(:build_1) { create(:build, :with_job, project: project) }
+  let!(:build_2) { create(:build, :with_job, project: project) }
 
   before do
     user = create(:user)

@@ -8,7 +8,7 @@ class BuildNavigation
   def item(text, slug)
     @view_context.link_to(
       text,
-      @view_context.build_detail_content_project_build_path(@build.project, @build, slug),
+      @view_context.job_detail_content_project_build_job_path(@build.project, @build, @build.jobs.first, slug),
       class: @partial == slug ? "active" : "",
       data: { turbo_frame: "build_details" }
     )

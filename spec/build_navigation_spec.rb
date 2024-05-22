@@ -1,8 +1,8 @@
 require "rails_helper"
 
 describe "Build navigation", type: :system do
-  let!(:first_build) { create(:build) }
-  let!(:second_build) { create(:build, project: first_build.project) }
+  let!(:first_build) { create(:build, :with_job) }
+  let!(:second_build) { create(:build, :with_job, project: first_build.project) }
 
   before do
     login_as(first_build.project.user, scope: :user)

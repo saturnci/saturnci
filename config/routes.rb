@@ -3,6 +3,10 @@ Rails.application.routes.draw do
 
   resources :projects do
     resources :builds, only: %i(show create destroy) do
+      resources :jobs, only: :show do
+        get ":partial", to: "jobs#show", on: :member, as: "job_detail_content"
+      end
+
       get ":partial", to: "builds#show", on: :member, as: "build_detail_content"
     end
   end

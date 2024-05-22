@@ -11,9 +11,13 @@ class BuildsController < ApplicationController
 
   def show
     @build = Build.find(params[:id])
-    @project = @build.project
-    @build_list = BuildList.new(@build, branch_name: params[:branch_name])
-    @current_tab_name = params[:partial] || DEFAULT_PARTIAL
+
+    redirect_to job_detail_content_project_build_job_path(
+      @build.project,
+      @build,
+      @build.jobs.first,
+      DEFAULT_PARTIAL
+    )
   end
 
   def destroy

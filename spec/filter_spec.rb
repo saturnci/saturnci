@@ -4,8 +4,8 @@ describe "Filter", type: :system do
   let!(:project) { create(:project) }
 
   before do
-    create(:build, project: project, branch_name: "main", commit_message: "Main commit")
-    create(:build, project: project, branch_name: "filters", commit_message: "Filter commit")
+    create(:build, :with_job, project: project, branch_name: "main", commit_message: "Main commit")
+    create(:build, :with_job, project: project, branch_name: "filters", commit_message: "Filter commit")
 
     user = create(:user)
     login_as(user, scope: :user)

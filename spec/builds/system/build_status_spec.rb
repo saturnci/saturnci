@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "Build status", type: :system do
-  let!(:build) { create(:build) }
+  let!(:job) { create(:job) }
 
   before do
     user = create(:user)
@@ -10,13 +10,13 @@ describe "Build status", type: :system do
 
   context "build goes from running to passed" do
     it "shows the most current status" do
-      visit project_build_path(id: build.id, project_id: build.project.id)
+      visit project_build_path(id: job.build.id, project_id: job.build.project.id)
       expect(page).to have_content("Running")
 
-      create(:job, build: build, test_report: "good")
-      build.update!(finished_at: Time.zone.now)
+      job.update!(test_report: "good")
+      job.build.update!(finished_at: Time.zone.now)
 
-      visit project_build_path(id: build.id, project_id: build.project.id)
+      visit project_build_path(id: job.build.id, project_id: job.build.project.id)
       expect(page).to have_content("Passed")
     end
   end
