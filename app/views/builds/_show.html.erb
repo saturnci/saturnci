@@ -30,8 +30,7 @@
         <% @build.jobs.each do |job| %>
           <li>
             <%= link_to "Job #{job.order_index}",
-              "##{dom_id(job, current_tab_name)}",
-              data: { turbo: false } %>
+              job_detail_content_project_build_job_path(@build.project, @build, job, current_tab_name) %>
           </li>
         <% end %>
       </ul>
