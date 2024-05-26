@@ -1,24 +1,22 @@
 <div class="job-info-container non-terminal-job-info">
-  <% @build.jobs.each do |job| %>
-    <%= job_container @current_tab_name, job do %>
-      <table border>
+  <%= job_container @current_tab_name, @job do %>
+    <table border>
+      <tr>
+        <th>Event</th>
+        <th>Timestamp</th>
+        <th>Duration (s)</th>
+      </tr>
+      <% @job.job_events.each_with_index do |job_event, index| %>
         <tr>
-          <th>Event</th>
-          <th>Timestamp</th>
-          <th>Duration (s)</th>
+          <td><%= job_event.type %></td>
+          <td><%= job_event.created_at %></td>
+          <td class="number">
+            <% if index > 0 %>
+              <%= (job_event.created_at - @job.job_events[index - 1].created_at).round(2) %>
+            <% end %>
+          </td>
         </tr>
-        <% job.job_events.each_with_index do |job_event, index| %>
-          <tr>
-            <td><%= job_event.type %></td>
-            <td><%= job_event.created_at %></td>
-            <td class="number">
-              <% if index > 0 %>
-                <%= (job_event.created_at - job.job_events[index - 1].created_at).round(2) %>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-      </table>
-    <% end %>
+      <% end %>
+    </table>
   <% end %>
 </div>
