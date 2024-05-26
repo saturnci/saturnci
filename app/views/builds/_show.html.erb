@@ -30,7 +30,8 @@
         <% @build.jobs.each do |job| %>
           <li>
             <%= link_to "Job #{job.order_index}",
-              job_detail_content_project_build_job_path(@build.project, @build, job, current_tab_name) %>
+              job_detail_content_project_build_job_path(@build.project, @build, job, current_tab_name),
+              class: job == @job ? "active" : "" %>
           </li>
         <% end %>
       </ul>

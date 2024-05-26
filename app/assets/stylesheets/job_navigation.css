@@ -1,0 +1,26 @@
+.job-menu-container {
+  display: flex;
+  background-color: #777;
+  padding: 0;
+}
+
+ul.job-menu {
+  display: flex;
+  text-align: center;
+  padding: 14px 0 0 20px;
+  margin: 0;
+  list-style: none;
+}
+
+ul.job-menu li a {
+  padding: 6px 12px;
+  margin: 0;
+  display: block;
+  text-decoration: none;
+  color: #DDD;
+  background-color: #555;
+}
+
+ul.job-menu li a.active {
+  background-color: #000;
+}
