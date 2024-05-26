@@ -38,7 +38,7 @@
     </div>
 
     <div class="build-details-content">
-      <%= render current_tab_name %>
+      <%= render current_tab_name, current_tab_name: @current_tab_name, job: @job %>
     </div>
   <% end %>
 <% end %>

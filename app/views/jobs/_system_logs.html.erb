@@ -1,5 +1,5 @@
 <%= terminal_output do %>
-  <%= job_container @current_tab_name, @job do %>
-    <%= ansi_to_html(@job.system_logs) %>
+  <%= job_container current_tab_name, job do %>
+    <%= ansi_to_html(job.system_logs) %>
   <% end %>
 <% end %>
