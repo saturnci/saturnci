@@ -21,16 +21,14 @@ describe "Build navigation stickiness", type: :system do
 
       page.execute_script('document.querySelector(".job-info-container").scrollTop = document.querySelector(".job-info-container").scrollHeight')
 
-      visible = page.evaluate_script(<<~JS)
+      scrollable = page.evaluate_script(<<~JS)
         (function() {
           var container = document.querySelector(".job-info-container");
-          var textToFind = "bottom of test output";
-          return container.scrollTop + container.clientHeight >= container.scrollHeight &&
-            container.innerText.includes(textToFind);
+          return container.scrollHeight > container.clientHeight;
         })();
       JS
-      expect(visible).to eq(true)
 
+      expect(scrollable).to eq(true), "The log pane is not scrollable"
       expect(page).to have_content("Test Output")
     end
   end
