@@ -25,7 +25,8 @@ describe "Build navigation stickiness", type: :system do
         (function() {
           var container = document.querySelector(".job-info-container");
           var textToFind = "bottom of test output";
-          return container.scrollTop + container.clientHeight >= container.scrollHeight && container.innerText.includes(textToFind);
+          return container.scrollTop + container.clientHeight >= container.scrollHeight &&
+            container.innerText.includes(textToFind);
         })();
       JS
       expect(visible).to eq(true)
