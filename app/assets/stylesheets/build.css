@@ -25,10 +25,8 @@
   overflow-y: auto;
 }
 
-.build-details-content {
-  flex-grow: 1;
+.build-details-content-container {
   overflow-y: auto;
-  display: flex;
 }
 
 .job-info-container {
