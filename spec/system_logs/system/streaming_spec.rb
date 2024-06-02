@@ -1,6 +1,8 @@
 require "rails_helper"
+require "net/http"
 
 describe "Streaming", type: :system do
+  include APIAuthenticationHelper
   let!(:job) { create(:job) }
 
   before do
@@ -15,7 +17,18 @@ describe "Streaming", type: :system do
       "system_logs"
     )
 
-    # somehow cause the job's system logs to get updated
-    # assert that we see the updated contents on the page (without refreshing)
+    # Get the Capybara server host and port
+    server_url = Capybara.current_session.server_url
+    uri = URI("#{server_url}#{api_v1_job_system_logs_path(job_id: job.id, format: :json)}")
+
+    # Simulate updating the job's system logs via the API using Net::HTTP
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = uri.scheme == "https"
+    request = Net::HTTP::Post.new(uri.request_uri, api_authorization_headers.merge("Content-Type" => "text/plain"))
+    request.body = "new log content"
+    http.request(request)
+
+    # Assert that the updated contents appear on the page without refreshing
+    expect(page).to have_content("new log content", wait: 10)
   end
 end

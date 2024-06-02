@@ -44,3 +44,5 @@
     </div>
   <% end %>
 <% end %>
+
+<%= turbo_stream_from "job_#{@job.id}_system_logs" %>
