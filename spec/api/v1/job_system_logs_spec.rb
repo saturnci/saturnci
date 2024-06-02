@@ -7,7 +7,7 @@ RSpec.describe "system logs", type: :request do
   describe "POST /api/v1/jobs/:id/system_logs" do
     it "adds system logs to a job" do
       post(
-        api_v1_job_system_logs_path(job_id: job.id),
+        api_v1_job_system_logs_path(job_id: job.id, format: :json),
         params: "system log content",
         headers: api_authorization_headers.merge({ "CONTENT_TYPE" => "text/plain" })
       )
@@ -19,13 +19,13 @@ RSpec.describe "system logs", type: :request do
   describe "appending" do
     it "appends anything new to the end of the logs rather than replacing the log content entirely" do
       post(
-        api_v1_job_system_logs_path(job_id: job.id),
+        api_v1_job_system_logs_path(job_id: job.id, format: :json),
         params: "first chunk ",
         headers: api_authorization_headers.merge({ "CONTENT_TYPE" => "text/plain" })
       )
 
       post(
-        api_v1_job_system_logs_path(job_id: job.id),
+        api_v1_job_system_logs_path(job_id: job.id, format: :json),
         params: "second chunk",
         headers: api_authorization_headers.merge({ "CONTENT_TYPE" => "text/plain" })
       )
