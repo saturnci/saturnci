@@ -3,32 +3,46 @@ require "net/http"
 
 describe "Streaming", type: :system do
   include APIAuthenticationHelper
-  let!(:job) { create(:job) }
+
+  let!(:job) do
+    create(:job, system_logs: "original system log content")
+  end
 
   before do
     login_as(job.build.project.user, scope: :user)
-  end
 
-  it "streams" do
     visit job_detail_content_project_build_job_path(
       job.build.project,
       job.build,
       job,
       "system_logs"
     )
+  end
 
-    # Get the Capybara server host and port
-    server_url = Capybara.current_session.server_url
-    uri = URI("#{server_url}#{api_v1_job_system_logs_path(job_id: job.id, format: :json)}")
+  context "before log update occurs" do
+    it "shows the original content" do
+      expect(page).to have_content("original system log content")
+    end
+  end
 
-    # Simulate updating the job's system logs via the API using Net::HTTP
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = uri.scheme == "https"
-    request = Net::HTTP::Post.new(uri.request_uri, api_authorization_headers.merge("Content-Type" => "text/plain"))
-    request.body = "new log content"
-    http.request(request)
+  context "after log update occurs" do
+    before do
+      server_url = Capybara.current_session.server_url
+      uri = URI("#{server_url}#{api_v1_job_system_logs_path(job_id: job.id, format: :json)}")
 
-    # Assert that the updated contents appear on the page without refreshing
-    expect(page).to have_content("new log content", wait: 10)
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = uri.scheme == "https"
+      request = Net::HTTP::Post.new(uri.request_uri, api_authorization_headers.merge("Content-Type" => "text/plain"))
+      request.body = "new log content"
+      http.request(request)
+    end
+
+    it "shows the new content" do
+      expect(page).to have_content("new log content")
+    end
+
+    it "does not show the old content" do
+      expect(page).to have_content("original system log content", count: 1)
+    end
   end
 end

@@ -1,4 +1,3 @@
-# app/controllers/api/v1/system_logs_controller.rb
 module API
   module V1
     class SystemLogsController < APIController
@@ -8,7 +7,7 @@ module API
         log_chunk = request.body.read
         job.update!(system_logs: job.system_logs.to_s + log_chunk)
 
-        Turbo::StreamsChannel.broadcast_append_to(
+        Turbo::StreamsChannel.broadcast_replace_to(
           "job_#{job.id}_system_logs",
           target: "build-details-content",
           partial: "jobs/system_logs",
