@@ -1,7 +1,7 @@
 require "rails_helper"
 require "net/http"
 
-describe "Streaming", type: :system do
+describe "System log streaming", type: :system do
   include APIAuthenticationHelper
   include SaturnAPIHelper
 
