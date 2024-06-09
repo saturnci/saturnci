@@ -9,7 +9,7 @@ module API
 
         Turbo::StreamsChannel.broadcast_replace_to(
           "job_#{job.id}_system_logs",
-          target: "build-details-content",
+          target: "build_details_content_system_logs",
           partial: "jobs/system_logs",
           locals: { job: job, current_tab_name: "system_logs" }
         )

@@ -26,21 +26,46 @@ describe "Streaming", type: :system do
     end
   end
 
-  context "after log update occurs" do
-    before do
-      http_request(
-        api_authorization_headers: api_authorization_headers,
-        path: api_v1_job_system_logs_path(job_id: job.id, format: :json),
-        body: "new log content"
-      )
-    end
+  context "staying on system log tab" do
+    context "after log update occurs" do
+      before do
+        http_request(
+          api_authorization_headers: api_authorization_headers,
+          path: api_v1_job_system_logs_path(job_id: job.id, format: :json),
+          body: "new system log content"
+        )
+      end
 
-    it "shows the new content" do
-      expect(page).to have_content("new log content")
-    end
+      it "shows the new content" do
+        expect(page).to have_content("new system log content")
+      end
 
-    it "does not show the old content" do
-      expect(page).to have_content("original system log content", count: 1)
+      it "does not show the old content" do
+        expect(page).to have_content("original system log content", count: 1)
+      end
+    end
+  end
+
+  context "visiting a different tab" do
+    context "after log update occurs" do
+      before do
+        visit job_detail_content_project_build_job_path(
+          job.build.project,
+          job.build,
+          job,
+          "test_output"
+        )
+
+        http_request(
+          api_authorization_headers: api_authorization_headers,
+          path: api_v1_job_system_logs_path(job_id: job.id, format: :json),
+          body: "new system log content"
+        )
+      end
+
+      it "does not show the system log content" do
+        expect(page).not_to have_content("new system log content")
+      end
     end
   end
 end

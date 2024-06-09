@@ -38,7 +38,7 @@
     </div>
 
     <div class="build-details-content-container">
-      <%= turbo_frame_tag "build-details-content" do %>
+      <%= turbo_frame_tag "build_details_content_#{@current_tab_name}" do %>
         <%= render current_tab_name, current_tab_name: @current_tab_name, job: @job %>
       <% end %>
     </div>
