@@ -11,7 +11,7 @@
 
     <div class="build-action-buttons">
       <%= button_to "Rerun", rebuilds_path(build_id: @build.id), method: :post, data: { turbo: false } %>
-      <%= button_to "Delete", project_build_path(id: @build.id), method: :delete, data: { turbo: false } %>
+      <%= button_to "Delete", project_build_path(id: @build.id, project_id: @build.project_id), method: :delete, data: { turbo: false } %>
     </div>
   </div>
 
@@ -30,7 +30,7 @@
         <% @build.jobs.each do |job| %>
           <li>
             <%= link_to "Job #{job.order_index}",
-              job_detail_content_project_build_job_path(@build.project, @build, job, current_tab_name),
+              job_path(job, current_tab_name),
               class: job == @job ? "active" : "" %>
           </li>
         <% end %>

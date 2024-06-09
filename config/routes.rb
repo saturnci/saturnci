@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
 
+  get "jobs/:id/:partial", to: "jobs#show", as: "job"
+
   resources :projects do
     resources :builds, only: %i(show create destroy) do
       resources :jobs, only: :show do

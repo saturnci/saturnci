@@ -11,13 +11,7 @@ describe "Streaming", type: :system do
 
   before do
     login_as(job.build.project.user, scope: :user)
-
-    visit job_detail_content_project_build_job_path(
-      job.build.project,
-      job.build,
-      job,
-      "system_logs"
-    )
+    visit job_path(job, "system_logs")
   end
 
   context "before log update occurs" do

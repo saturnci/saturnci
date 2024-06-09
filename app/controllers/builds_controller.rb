@@ -12,9 +12,7 @@ class BuildsController < ApplicationController
   def show
     @build = Build.find(params[:id])
 
-    redirect_to job_detail_content_project_build_job_path(
-      @build.project,
-      @build,
+    redirect_to job_path(
       @build.jobs.first,
       DEFAULT_PARTIAL
     )
