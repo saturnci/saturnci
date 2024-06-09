@@ -21,7 +21,7 @@ describe "System log streaming", type: :system do
   end
 
   context "staying on system log tab" do
-    context "after log update occurs" do
+    context "after the first log update occurs" do
       before do
         http_request(
           api_authorization_headers: api_authorization_headers,
@@ -36,6 +36,20 @@ describe "System log streaming", type: :system do
 
       it "does not show the old content" do
         expect(page).to have_content("original system log content", count: 1)
+      end
+
+      context "after a second log update occurs" do
+        before do
+          http_request(
+            api_authorization_headers: api_authorization_headers,
+            path: api_v1_job_system_logs_path(job_id: job.id, format: :json),
+            body: "second system log update"
+          )
+        end
+
+        it "shows the new content" do
+          expect(page).to have_content("second system log update")
+        end
       end
     end
   end

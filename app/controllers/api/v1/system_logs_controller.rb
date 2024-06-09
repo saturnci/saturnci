@@ -7,7 +7,7 @@ module API
         log_chunk = request.body.read
         job.update!(system_logs: job.system_logs.to_s + log_chunk)
 
-        Turbo::StreamsChannel.broadcast_replace_to(
+        Turbo::StreamsChannel.broadcast_update_to(
           "job_#{job.id}_system_logs",
           target: "build_details_content_system_logs",
           partial: "jobs/system_logs",
