@@ -27,14 +27,10 @@ describe "Streaming", type: :system do
 
   context "after log update occurs" do
     before do
-      server_url = Capybara.current_session.server_url
-      uri = URI("#{server_url}#{api_v1_job_system_logs_path(job_id: job.id, format: :json)}")
-
-      http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl = uri.scheme == "https"
-      request = Net::HTTP::Post.new(uri.request_uri, api_authorization_headers.merge("Content-Type" => "text/plain"))
-      request.body = "new log content"
-      http.request(request)
+      http_request(
+        path: api_v1_job_system_logs_path(job_id: job.id, format: :json),
+        body: "new log content"
+      )
     end
 
     it "shows the new content" do
@@ -44,5 +40,15 @@ describe "Streaming", type: :system do
     it "does not show the old content" do
       expect(page).to have_content("original system log content", count: 1)
     end
+  end
+
+  def http_request(path:, body:)
+    uri = URI("#{Capybara.current_session.server_url}#{path}")
+
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = uri.scheme == "https"
+    request = Net::HTTP::Post.new(uri.request_uri, api_authorization_headers.merge("Content-Type" => "text/plain"))
+    request.body = body
+    http.request(request)
   end
 end
