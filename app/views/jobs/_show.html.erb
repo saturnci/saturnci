@@ -38,11 +38,11 @@
     </div>
 
     <div class="build-details-content-container">
-      <div id="build_details_content_<%= @current_tab_name %>">
+      <div id="<%= @job_output_stream.target %>">
         <%= render current_tab_name, current_tab_name: @current_tab_name, job: @job %>
       </div>
     </div>
   <% end %>
 <% end %>
 
-<%= turbo_stream_from "job_#{@job.id}_system_logs" %>
+<%= turbo_stream_from @job_output_stream.name %>

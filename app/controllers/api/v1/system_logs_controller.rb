@@ -1,22 +1,18 @@
 module API
   module V1
     class SystemLogsController < APIController
+      TAB_NAME = "system_logs"
+
       def create
         job = Job.find(params[:job_id])
-        request.body.rewind
-        log_chunk = request.body.read
-        job.update!(system_logs: job.system_logs.to_s + log_chunk)
+        job.update!(TAB_NAME => job.attributes[TAB_NAME].to_s + request.body.read)
 
-        Turbo::StreamsChannel.broadcast_update_to(
-          "job_#{job.id}_system_logs",
-          target: "build_details_content_system_logs",
-          partial: "jobs/system_logs",
-          locals: { job: job, current_tab_name: "system_logs" }
-        )
+        Streaming::JobOutputStream.new(
+          job: job,
+          tab_name: TAB_NAME
+        ).broadcast
 
-        respond_to do |format|
-          format.json { head :ok }
-        end
+        head :ok
       end
     end
   end

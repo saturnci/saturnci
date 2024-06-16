@@ -1,3 +1,5 @@
+require "net/http"
+
 module SaturnAPIHelper
   def http_request(api_authorization_headers:, path:, body:)
     uri = URI("#{Capybara.current_session.server_url}#{path}")

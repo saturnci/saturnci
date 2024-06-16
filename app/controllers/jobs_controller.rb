@@ -5,5 +5,10 @@ class JobsController < ApplicationController
     @project = @build.project
     @build_list = BuildList.new(@build, branch_name: params[:branch_name])
     @current_tab_name = params[:partial] || DEFAULT_PARTIAL
+
+    @job_output_stream = Streaming::JobOutputStream.new(
+      job: @job,
+      tab_name: @current_tab_name
+    )
   end
 end

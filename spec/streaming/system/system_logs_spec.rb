@@ -1,5 +1,4 @@
 require "rails_helper"
-require "net/http"
 
 describe "System log streaming", type: :system do
   include APIAuthenticationHelper
