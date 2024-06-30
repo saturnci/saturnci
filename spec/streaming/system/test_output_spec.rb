@@ -21,6 +21,8 @@ describe "Test output streaming", type: :system do
 
   context "after the first log update occurs" do
     before do
+      expect(page).to have_content("original test output content") # To prevent race condition
+
       http_request(
         api_authorization_headers: api_authorization_headers,
         path: api_v1_job_test_output_path(job_id: job.id, format: :json),
