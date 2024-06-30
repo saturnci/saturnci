@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "System log streaming", type: :system do
+describe "Visiting different build", type: :system do
   include APIAuthenticationHelper
   include SaturnAPIHelper
 

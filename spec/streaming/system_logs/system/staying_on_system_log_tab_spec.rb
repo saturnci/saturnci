@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "System log streaming", type: :system do
+describe "Staying on system log tab", type: :system do
   include APIAuthenticationHelper
   include SaturnAPIHelper
 
