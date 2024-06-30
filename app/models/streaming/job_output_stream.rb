@@ -10,7 +10,7 @@ module Streaming
     end
 
     def target
-      "build_details_content_#{@tab_name}"
+      "build_details_content_#{@job.id}_#{@tab_name}"
     end
 
     def broadcast
