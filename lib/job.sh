@@ -49,7 +49,9 @@ function clone_user_repo() {
 
 function run_pre_script() {
   sudo chmod 755 .saturnci/pre.sh
-  sudo docker-compose -f .saturnci/docker-compose.yml run saturn_test_app ./.saturnci/pre.sh
+
+  sudo SATURN_TEST_APP_IMAGE_URL=$REGISTRY_CACHE_IMAGE_URL docker-compose \
+    -f .saturnci/docker-compose.yml run saturn_test_app ./.saturnci/pre.sh
 }
 
 function start_test_suite() {
@@ -64,7 +66,8 @@ EOF
   SELECTED_TESTS=$(echo "${TEST_FILES}" | awk "NR % ${NUMBER_OF_CONCURRENT_JOBS} == ${TEST_GROUP}")
   echo $SELECTED_TESTS
 
-  script -c "sudo docker-compose -f .saturnci/docker-compose.yml run saturn_test_app \
+  script -c "sudo SATURN_TEST_APP_IMAGE_URL=$REGISTRY_CACHE_IMAGE_URL docker-compose \
+    -f .saturnci/docker-compose.yml run saturn_test_app \
     bundle exec rspec --require ./example_status_persistence.rb \
     --format=documentation --order rand:$RSPEC_SEED $(echo $SELECTED_TESTS)" \
     -f "$TEST_OUTPUT_FILENAME"
@@ -110,11 +113,17 @@ git checkout $COMMIT_HASH
 
 #--------------------------------------------------------------------------------
 
-echo "Authenticating to Docker registry"
-sudo docker login registrycache.saturnci.com:5000 -u myusername -p mypassword
+GEMFILE_LOCK_CHECKSUM=$(sha256sum Gemfile.lock | awk '{ print $1 }')
+REGISTRY_CACHE_URL=registrycache.saturnci.com:5000
+REGISTRY_CACHE_IMAGE_URL=$REGISTRY_CACHE_URL/saturn_test_app:$GEMFILE_LOCK_CHECKSUM
+echo "Registry cache image URL: $REGISTRY_CACHE_IMAGE_URL"
 
-echo "Attempting to pull the existing image to avoid rebuilding if possible"
-sudo docker pull registrycache.saturnci.com:5000/saturn_test_app:latest || true
+echo "Authenticating to Docker registry"
+sudo docker login $REGISTRY_CACHE_URL -u myusername -p mypassword
+
+echo "Gemfile.lock checksum: $GEMFILE_LOCK_CHECKSUM"
+echo "Pulling the existing image to avoid rebuilding if possible"
+sudo docker pull $REGISTRY_CACHE_IMAGE_URL || true
 
 #--------------------------------------------------------------------------------
 
@@ -135,9 +144,6 @@ start_test_suite
 
 #--------------------------------------------------------------------------------
 
-
-#--------------------------------------------------------------------------------
-
 echo "Test suite finished"
 api_request "POST" "jobs/$JOB_ID/test_suite_finished_events"
 
@@ -148,8 +154,11 @@ send_file_content_to_api "jobs/$JOB_ID/test_reports" "text/plain" "$TEST_RESULTS
 
 #--------------------------------------------------------------------------------
 
-echo "Performing docker push"
-sudo docker push registrycache.saturnci.com:5000/saturn_test_app:latest
+echo $(sudo docker image ls)
+
+echo "Performing docker tag and push"
+sudo docker tag $REGISTRY_CACHE_URL/saturn_test_app $REGISTRY_CACHE_IMAGE_URL
+sudo docker push $REGISTRY_CACHE_IMAGE_URL
 echo "Docker push finished"
 
 #--------------------------------------------------------------------------------
