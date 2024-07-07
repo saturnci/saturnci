@@ -26,9 +26,9 @@ describe "Visiting different build", type: :system do
 
     context "after log update occurs" do
       before do
-        visit_tab("system_logs", job: original_job)
+        visit_build_tab("system_logs", job: original_job)
         navigate_to_build(other_job.build)
-        navigate_to_tab("system_logs", job: other_job)
+        navigate_to_build_tab("system_logs", job: other_job)
         system_log_http_request(job: original_job, body: "new system log content")
       end
 
