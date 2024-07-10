@@ -29,7 +29,7 @@
       <ul class="job-menu">
         <% @build.jobs.each do |job| %>
           <li>
-            <%= link_to "Job #{job.order_index}",
+            <%= link_to job.name,
               job_path(job, current_tab_name),
               class: job == @job ? "active" : "" %>
           </li>

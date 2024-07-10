@@ -10,6 +10,10 @@ class Job < ApplicationRecord
       .order("builds.created_at desc")
   end
 
+  def name
+    "Job #{order_index}"
+  end
+
   def start!
     job_events.create!(type: :job_machine_requested)
     job_machine_request.create!
