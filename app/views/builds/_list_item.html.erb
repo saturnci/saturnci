@@ -28,7 +28,13 @@
           <%= build.status %>
         </div>
 
-        <span style="color: #999"><%= build.duration_formatted %></span>
+        <span style="color: #999" data-controller="elapsed-build-time" data-elapsed-build-time-build-created-at-datetime-value="<%= build.created_at %>">
+          <% if build.status == "Running" %>
+            <div data-elapsed-build-time-target="value"></div>
+          <% else %>
+            <%= build.duration_formatted %>
+          <% end %>
+        </span>
       </div>
     </div>
   <% end %>
