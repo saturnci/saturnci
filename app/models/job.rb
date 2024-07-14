@@ -1,5 +1,5 @@
 class Job < ApplicationRecord
-  belongs_to :build
+  belongs_to :build, touch: true
   has_many :job_events, dependent: :destroy
   alias_attribute :started_at, :created_at
   default_scope -> { order("order_index") }

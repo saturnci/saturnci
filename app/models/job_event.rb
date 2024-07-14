@@ -1,6 +1,6 @@
 class JobEvent < ApplicationRecord
   self.inheritance_column = :_type_not_used
-  belongs_to :job
+  belongs_to :job, touch: true
 
   enum type: {
     job_machine_requested: 1,
