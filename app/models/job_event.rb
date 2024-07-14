@@ -7,9 +7,10 @@ class JobEvent < ApplicationRecord
     job_machine_ready: 0,
     repository_cloned: 2,
     job_started: 3,
-    job_finished: 4,
     pre_script_started: 5,
     pre_script_finished: 6,
+    test_suite_started: 9,
+    job_finished: 4,
     image_build_started: 7,
     image_build_finished: 8
   }
