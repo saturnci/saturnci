@@ -2,8 +2,22 @@ require "rails_helper"
 
 describe "Active link", type: :system do
   let!(:project) { create(:project) }
-  let!(:build_1) { create(:build, :with_job, project: project) }
-  let!(:build_2) { create(:build, :with_job, project: project) }
+
+  let!(:build_1) do
+    create(:build, :with_job, project: project)
+  end
+
+  let!(:build_2) do
+    create(:build, :with_job, project: project)
+  end
+
+  let!(:build_link_1) do
+    PageObjects::BuildLink.new(page, build_1)
+  end
+
+  let!(:build_link_2) do
+    PageObjects::BuildLink.new(page, build_2)
+  end
 
   before do
     user = create(:user)
@@ -13,22 +27,22 @@ describe "Active link", type: :system do
 
   context "link clicked" do
     it "sets that build to active" do
-      click_on "build_link_#{build_2.id}"
-      expect(page.find("#build_link_#{build_2.id}")[:class].split).to include("active")
+      build_link_2.click
+      expect(build_link_2).to be_active
     end
 
     it "sets other builds to inactive" do
-      click_on "build_link_#{build_2.id}"
-      expect(page.find("#build_link_#{build_2.id}")[:class].split).to include("active")
+      build_link_2.click
+      expect(build_link_2).to be_active
 
-      click_on "build_link_#{build_1.id}"
-      expect(page.find("#build_link_#{build_2.id}")[:class].split).not_to include("active")
+      build_link_1.click
+      expect(build_link_2).not_to be_active
     end
   end
 
   context "page load" do
     it "sets the first build link to active" do
-      expect(page.find("#build_link_#{build_1.id}")[:class].split).to include("active")
+      expect(build_link_1).to be_active
     end
   end
 end
