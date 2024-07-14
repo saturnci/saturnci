@@ -144,8 +144,8 @@ start_test_suite
 
 #--------------------------------------------------------------------------------
 
-echo "Test suite finished"
-api_request "POST" "jobs/$JOB_ID/test_suite_finished_events"
+echo "Job finished"
+api_request "POST" "jobs/$JOB_ID/job_finished_events"
 
 #--------------------------------------------------------------------------------
 
