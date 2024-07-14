@@ -51,6 +51,7 @@ RSpec.describe Job, type: :model do
     context "report is success" do
       it "returns 'Passed'" do
         job.update!(test_report: success)
+        job.job_events.create!(type: "job_finished")
         expect(job.status).to eq("Passed")
       end
     end
@@ -58,6 +59,7 @@ RSpec.describe Job, type: :model do
     context "report is failure" do
       it "returns 'Failed'" do
         job.update!(test_report: failure)
+        job.job_events.create!(type: "job_finished")
         expect(job.status).to eq("Failed")
       end
     end

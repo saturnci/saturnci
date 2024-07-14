@@ -7,7 +7,9 @@ RSpec.describe Job, type: :model do
     end
 
     let!(:finished_job) do
-      create(:job, test_report: "success")
+      create(:job) do |j|
+        j.job_events.create!(type: "job_finished")
+      end
     end
 
     it "by default includes the running job" do

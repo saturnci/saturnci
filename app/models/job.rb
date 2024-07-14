@@ -6,8 +6,15 @@ class Job < ApplicationRecord
 
   scope :running, -> do
     unscoped.joins(:build)
-      .where("test_report is null or test_report = ''")
-      .order("builds.created_at desc")
+      .where.not(id: Job.finished.select(:id))
+      .order("builds.created_at DESC")
+  end
+
+  scope :finished, -> do
+    unscoped.joins(:build)
+      .joins(:job_events)
+      .where("job_events.type = ?", JobEvent.types[:job_finished])
+      .order("builds.created_at DESC")
   end
 
   def name
@@ -19,14 +26,18 @@ class Job < ApplicationRecord
     job_machine_request.create!
   end
 
-  def finished?
-    job_events.map(&:type).include?("job_finished")
+  def status
+    return "Running" if !finished?
+    return "Passed" if finished? && !failed?
+    "Failed"
   end
 
-  def status
-    return "Running" if self.class.running.include?(self)
-    return "Passed" if !test_report.include?("failed")
-    "Failed"
+  def finished?
+    self.class.finished.include?(self)
+  end
+
+  def failed?
+    test_report.include?("failed")
   end
 
   def job_machine_request

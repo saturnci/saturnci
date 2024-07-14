@@ -3,7 +3,7 @@
   class: build == @build ? "active" : "",
   id: "build_link_#{build.id}" do %>
 
-  <% cache [build, build.finished_at.present?] do %>
+  <% cache [build, build.status] do %>
     <div style="display: flex; justify-content: space-between">
       <div>
         <div>
