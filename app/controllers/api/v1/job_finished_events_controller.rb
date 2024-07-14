@@ -8,7 +8,6 @@ module API
           job.job_events.create!(type: "job_finished")
 
           if job.build.jobs.all?(&:finished?)
-            job.build.update!(finished_at: Time.zone.now)
           end
         end
 

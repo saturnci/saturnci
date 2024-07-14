@@ -23,23 +23,6 @@ RSpec.describe "job finished events", type: :request do
       expect(response.body).to be_empty
     end
 
-    context "all the jobs have finished" do
-      before do
-        create(:job, build: job.build, order_index: 2) do |job|
-          job.job_events.create!(type: "job_finished")
-        end
-      end
-
-      it "sets the build's finished_at value" do
-        post(
-          api_v1_job_job_finished_events_path(job),
-          headers: api_authorization_headers
-        )
-
-        expect(job.build.reload.finished_at).not_to be nil
-      end
-    end
-
     context "not all the jobs have finished" do
       before do
         create(:job, build: job.build, order_index: 2)
