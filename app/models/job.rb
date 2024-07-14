@@ -20,7 +20,7 @@ class Job < ApplicationRecord
   end
 
   def finished?
-    job_events.map(&:type).include?("test_suite_finished")
+    job_events.map(&:type).include?("job_finished")
   end
 
   def status
@@ -49,10 +49,10 @@ class Job < ApplicationRecord
   private
 
   def ended_at
-    test_suite_finished_event&.created_at
+    job_finished_event&.created_at
   end
 
-  def test_suite_finished_event
-    job_events.test_suite_finished.first
+  def job_finished_event
+    job_events.job_finished.first
   end
 end

@@ -17,9 +17,9 @@ RSpec.describe Job, type: :model do
   end
 
   describe "#finished?" do
-    context "it has a test_suite_finished event" do
+    context "it has a job_finished event" do
       before do
-        job.job_events.create!(type: "test_suite_finished")
+        job.job_events.create!(type: "job_finished")
       end
 
       it "returns true" do
@@ -27,7 +27,7 @@ RSpec.describe Job, type: :model do
       end
     end
 
-    context "it does not have a test_suite_finished event" do
+    context "it does not have a job_finished event" do
       it "returns false" do
         expect(job).not_to be_finished
       end

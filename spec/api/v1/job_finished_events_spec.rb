@@ -1,14 +1,14 @@
 require "rails_helper"
 include APIAuthenticationHelper
 
-RSpec.describe "test suite finished events", type: :request do
-  describe "POST /api/v1/jobs/:id/test_suite_finished_events" do
+RSpec.describe "job finished events", type: :request do
+  describe "POST /api/v1/jobs/:id/job_finished_events" do
     let!(:job) { create(:job) }
 
     it "increases the count of job events by 1" do
       expect {
         post(
-          api_v1_job_test_suite_finished_events_path(job),
+          api_v1_job_job_finished_events_path(job),
           headers: api_authorization_headers
         )
       }.to change(JobEvent, :count).by(1)
@@ -16,7 +16,7 @@ RSpec.describe "test suite finished events", type: :request do
 
     it "returns an empty 200 response" do
       post(
-        api_v1_job_test_suite_finished_events_path(job),
+        api_v1_job_job_finished_events_path(job),
         headers: api_authorization_headers
       )
       expect(response).to have_http_status(200)
@@ -26,13 +26,13 @@ RSpec.describe "test suite finished events", type: :request do
     context "all the jobs have finished" do
       before do
         create(:job, build: job.build, order_index: 2) do |job|
-          job.job_events.create!(type: "test_suite_finished")
+          job.job_events.create!(type: "job_finished")
         end
       end
 
       it "sets the build's finished_at value" do
         post(
-          api_v1_job_test_suite_finished_events_path(job),
+          api_v1_job_job_finished_events_path(job),
           headers: api_authorization_headers
         )
 
@@ -47,7 +47,7 @@ RSpec.describe "test suite finished events", type: :request do
 
       it "sets the build's finished_at value" do
         post(
-          api_v1_job_test_suite_finished_events_path(job),
+          api_v1_job_job_finished_events_path(job),
           headers: api_authorization_headers
         )
 

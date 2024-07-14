@@ -6,7 +6,7 @@ describe "Duration", type: :system do
 
     create(
       :job_event,
-      type: :test_suite_finished,
+      type: :job_finished,
       job: job,
       created_at: job.created_at + ((5 * 60) + 10).seconds
     )
