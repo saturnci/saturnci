@@ -15,7 +15,6 @@ describe "Build status", type: :system do
 
       job.update!(test_report: "good")
       job.job_events.create!(type: "job_finished")
-      #job.build.update!(finished_at: Time.zone.now)
 
       visit project_build_path(id: job.build.id, project_id: job.build.project.id)
       expect(page).to have_content("Passed")

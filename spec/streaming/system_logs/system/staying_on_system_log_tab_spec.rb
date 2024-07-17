@@ -1,7 +1,6 @@
 require "rails_helper"
 
 describe "Staying on system log tab", type: :system do
-  include APIAuthenticationHelper
   include SaturnAPIHelper
 
   let!(:job) do

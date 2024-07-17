@@ -1,6 +1,6 @@
-<%= link_to project_build_path(@build.project, build),
+<%= link_to project_build_path(current_build.project, build),
   data: { turbo_frame: "build", action: "click->build-list#makeActive", build_list_target: "link" },
-  class: build == @build ? "active" : "",
+  class: build == current_build ? "active" : "",
   id: "build_link_#{build.id}" do %>
 
   <% cache [build, build.updated_at] do %>
@@ -39,3 +39,5 @@
     </div>
   <% end %>
 <% end %>
+
+<%= turbo_stream_from "build_status_#{build.id}" %>

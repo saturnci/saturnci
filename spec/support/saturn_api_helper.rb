@@ -1,18 +1,20 @@
 require "net/http"
 
 module SaturnAPIHelper
-  def system_log_http_request(job:, body:)
+  include APIAuthenticationHelper
+
+  def system_log_http_request(job:, body: nil)
     http_request(
-      api_authorization_headers: api_authorization_headers,
+      api_authorization_headers:,
       path: api_v1_job_system_logs_path(job_id: job.id, format: :json),
-      body: "new system log content"
+      body:
     )
 
     # Wait for request to finish
     sleep(0.5)
   end
 
-  def http_request(api_authorization_headers:, path:, body:)
+  def http_request(api_authorization_headers:, path:, body: nil)
     uri = URI("#{Capybara.current_session.server_url}#{path}")
 
     http = Net::HTTP.new(uri.host, uri.port)

@@ -8,6 +8,12 @@ module API
           job.job_events.create!(type: "job_finished")
 
           if job.build.jobs.all?(&:finished?)
+            Turbo::StreamsChannel.broadcast_update_to(
+              "build_status_#{job.build.id}",
+              target: "build_status_#{job.build.id}",
+              partial: "builds/list_item",
+              locals: { build: job.build, current_build: job.build }
+            )
           end
         end
 

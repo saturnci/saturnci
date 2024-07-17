@@ -37,7 +37,7 @@ class Job < ApplicationRecord
   end
 
   def failed?
-    test_report.include?("failed")
+    test_report.to_s.include?("failed")
   end
 
   def job_machine_request
