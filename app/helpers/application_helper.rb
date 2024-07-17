@@ -17,7 +17,9 @@ module ApplicationHelper
     if job_info.present?
       content_tag(:div, id: dom_id(job, current_tab_name), &block)
     else
-      content_tag(:div, "Nothing here yet")
+      content_tag(:div, Quote.random) +
+        content_tag(:br) +
+        content_tag(:div, "Waiting for test suite to start...")
     end
   end
 end
