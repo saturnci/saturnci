@@ -11,15 +11,31 @@ describe "Build status", type: :system do
   end
 
   context "build goes from running to passed" do
-    it "shows the most current status" do
-      visit project_build_path(id: job.build.id, project_id: job.build.project.id)
-      expect(page).to have_content("Running")
+    context "no page refresh" do
+      it "changes the status from running to passed" do
+        visit project_build_path(id: job.build.id, project_id: job.build.project.id)
+        expect(page).to have_content("Running")
 
-      job.update!(test_report: "good")
-      job.job_events.create!(type: "job_finished")
+        http_request(
+          api_authorization_headers: api_authorization_headers,
+          path: api_v1_job_job_finished_events_path(job)
+        )
 
-      visit project_build_path(id: job.build.id, project_id: job.build.project.id)
-      expect(page).to have_content("Passed")
+        expect(page).to have_content("Passed")
+      end
+    end
+
+    context "full page refresh" do
+      it "changes the status from running to passed" do
+        visit project_build_path(id: job.build.id, project_id: job.build.project.id)
+        expect(page).to have_content("Running")
+
+        job.update!(test_report: "good")
+        job.job_events.create!(type: "job_finished")
+
+        visit project_build_path(id: job.build.id, project_id: job.build.project.id)
+        expect(page).to have_content("Passed")
+      end
     end
   end
 
