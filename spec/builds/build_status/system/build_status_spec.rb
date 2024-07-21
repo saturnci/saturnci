@@ -25,13 +25,17 @@ describe "Build status", type: :system do
       end
     end
 
-    context "full page refresh" do
-      it "changes the status from running to passed" do
+    context "full page refresh after build finishes" do
+      it "maintains the 'passed' status" do
         visit project_build_path(id: job.build.id, project_id: job.build.project.id)
         expect(page).to have_content("Running")
 
-        job.update!(test_report: "good")
-        job.job_events.create!(type: "job_finished")
+        http_request(
+          api_authorization_headers: api_authorization_headers,
+          path: api_v1_job_job_finished_events_path(job)
+        )
+
+        expect(page).to have_content("Passed") # to prevent race condition
 
         visit project_build_path(id: job.build.id, project_id: job.build.project.id)
         expect(page).to have_content("Passed")
