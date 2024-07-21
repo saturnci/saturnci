@@ -43,6 +43,26 @@ describe "Build status", type: :system do
     end
   end
 
+  describe "build list links" do
+    context "build goes from running to finished" do
+      let!(:other_build) { create(:build, project: job.build.project) }
+      let!(:other_job) { create(:job, build: other_build) }
+
+      it "maintains the currently active build" do
+        visit project_build_path(id: job.build.id, project_id: job.build.project.id)
+        expect(page).to have_content("Running", count: 2)
+
+        http_request(
+          api_authorization_headers: api_authorization_headers,
+          path: api_v1_job_job_finished_events_path(other_job)
+        )
+
+        other_job_build_link = PageObjects::BuildLink.new(page, other_build)
+        expect(other_job_build_link).not_to be_active
+      end
+    end
+  end
+
   describe "elapsed time" do
     context "running build" do
       it "does not show the elapsed build time" do

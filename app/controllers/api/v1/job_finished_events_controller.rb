@@ -12,7 +12,7 @@ module API
               "build_status_#{job.build.id}",
               target: "build_status_#{job.build.id}",
               partial: "builds/list_item",
-              locals: { build: job.build, current_build: job.build }
+              locals: { build: job.build }
             )
           end
         end

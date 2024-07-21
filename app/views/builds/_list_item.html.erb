@@ -1,43 +1,37 @@
-<%= link_to project_build_path(current_build.project, build),
-  data: { turbo_frame: "build", action: "click->build-list#makeActive", build_list_target: "link" },
-  class: build == current_build ? "active" : "",
-  id: "build_link_#{build.id}" do %>
-
-  <% cache [build, build.updated_at] do %>
-    <div style="display: flex; justify-content: space-between">
+<% cache [build, build.updated_at] do %>
+  <div style="display: flex; justify-content: space-between">
+    <div>
       <div>
-        <div>
-          <div style="line-height: 1.3; max-width: 300px;">
-            <%= build.commit_message.truncate(60) %>
-          </div>
-
-          <div style="color: #999; margin: 4px 0 10px 0">
-            <%= build.author_name %>
-            <%= build.created_at.in_time_zone.strftime("%-m/%-d/%Y %H:%M %Z") %>
-          </div>
-
-          <span class="build-commit">
-            <code><%= build.branch_name.truncate(20) %></code>
-            <code><%= abbreviated_hash(build.commit_hash) %></code>
-          </span>
-        </div>
-      </div>
-
-      <div style="width: 80px; text-align: center">
-        <div class="build-status build-status-<%= build.status.downcase %>">
-          <%= build.status %>
+        <div style="line-height: 1.3; max-width: 300px;">
+          <%= build.commit_message.truncate(60) %>
         </div>
 
-        <span style="color: #999" data-controller="elapsed-build-time" data-elapsed-build-time-build-created-at-datetime-value="<%= build.created_at %>">
-          <% if build.status == "Running" %>
-            <div data-elapsed-build-time-target="value"></div>
-          <% else %>
-            <%= build.duration_formatted %>
-          <% end %>
+        <div style="color: #999; margin: 4px 0 10px 0">
+          <%= build.author_name %>
+          <%= build.created_at.in_time_zone.strftime("%-m/%-d/%Y %H:%M %Z") %>
+        </div>
+
+        <span class="build-commit">
+          <code><%= build.branch_name.truncate(20) %></code>
+          <code><%= abbreviated_hash(build.commit_hash) %></code>
         </span>
       </div>
     </div>
-  <% end %>
+
+    <div style="width: 80px; text-align: center">
+      <div class="build-status build-status-<%= build.status.downcase %>">
+        <%= build.status %>
+      </div>
+
+      <span style="color: #999" data-controller="elapsed-build-time" data-elapsed-build-time-build-created-at-datetime-value="<%= build.created_at %>">
+        <% if build.status == "Running" %>
+          <div data-elapsed-build-time-target="value"></div>
+        <% else %>
+          <%= build.duration_formatted %>
+        <% end %>
+      </span>
+    </div>
+  </div>
 <% end %>
 
 <%= turbo_stream_from "build_status_#{build.id}" %>
