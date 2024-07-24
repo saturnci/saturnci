@@ -14,11 +14,11 @@ describe "Build navigation stickiness", type: :system do
     it "keeps the build navigation visible" do
       visit job_path(job, "test_output")
 
-      page.execute_script('document.querySelector(".build-details-content-container").scrollTop = document.querySelector(".build-details-content-container").scrollHeight')
+      page.execute_script('document.querySelector(".job-details").scrollTop = document.querySelector(".job-details").scrollHeight')
 
       scrollable = page.evaluate_script(<<~JS)
         (function() {
-          var container = document.querySelector(".build-details-content-container");
+          var container = document.querySelector(".job-details");
           return container.scrollHeight > container.clientHeight;
         })();
       JS
