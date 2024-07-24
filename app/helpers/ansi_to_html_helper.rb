@@ -23,6 +23,10 @@ module ANSIToHTMLHelper
       html_string.gsub!(ansi, html)
     end
 
-    html_string.html_safe
+    wrapped_html_string = html_string.split("\n").map do |line|
+      "<div>#{line}</div>"
+    end.join("")
+
+    wrapped_html_string.html_safe
   end
 end
