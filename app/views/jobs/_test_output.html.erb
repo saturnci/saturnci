@@ -3,3 +3,8 @@
     <%= ansi_to_html(job.test_output) %>
   <% end %>
 <% end %>
+
+<script>
+var element = document.querySelector('.build-details-content-container');
+element.scrollTop = element.scrollHeight;
+</script>

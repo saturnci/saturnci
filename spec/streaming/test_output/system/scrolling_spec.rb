@@ -1,13 +1,13 @@
 require "rails_helper"
 
-describe "System logs scrolling", type: :system do
+describe "Test output scrolling", type: :system do
   let!(:job) do
-    create(:job, system_logs: ("line\n" * 500) + "bottom line")
+    create(:job, test_output: ("line\n" * 500) + "bottom line")
   end
 
   before do
     login_as(job.build.project.user, scope: :user)
-    visit job_path(job, "system_logs")
+    visit job_path(job, "test_output")
   end
 
   it "scrolls to the bottom" do
