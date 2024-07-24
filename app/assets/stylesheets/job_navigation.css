@@ -2,6 +2,7 @@
   display: flex;
   background-color: #777;
   padding: 0;
+  border-bottom: 15px solid #000;
 }
 
 ul.job-menu {
