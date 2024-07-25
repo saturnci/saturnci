@@ -18,10 +18,10 @@
   <%= turbo_frame_tag "build_details", class: "build-details", data: { turbo_action: "advance" } do %>
     <div class="build-navigation">
       <% build_navigation(@build, current_tab_name) do |nav| %>
-        <%= nav.item "System Logs", "system_logs" %>
-        <%= nav.item "Events", "events" %>
-        <%= nav.item "Test Report", "test_report" %>
         <%= nav.item "Test Output", "test_output" %>
+        <%= nav.item "System Logs", "system_logs" %>
+        <%= nav.item "Test Report", "test_report" %>
+        <%= nav.item "Events", "events" %>
       <% end %>
     </div>
 
