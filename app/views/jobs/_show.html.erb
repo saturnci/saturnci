@@ -42,7 +42,7 @@
         <%= render current_tab_name, current_tab_name: @current_tab_name, job: @job %>
       </div>
     </div>
+
+    <%= turbo_stream_from @job_output_stream.name %>
   <% end %>
 <% end %>
-
-<%= turbo_stream_from @job_output_stream.name %>

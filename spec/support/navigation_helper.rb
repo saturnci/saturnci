@@ -12,8 +12,8 @@ module NavigationHelper
   end
 
   def navigate_to_build_tab(tab_slug, job:)
-    click_on "System Logs"
-    expect(page).to have_content(job.system_logs) # to prevent race condition
+    click_on tab_slug.titleize
+    expect(page).to have_content(job.send(tab_slug)) # to prevent race condition
   end
 
   def navigate_to_job_tab(job)

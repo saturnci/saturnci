@@ -7,11 +7,7 @@ module API
         job = Job.find(params[:job_id])
         job.update!(TAB_NAME => job.attributes[TAB_NAME].to_s + request.body.read)
 
-        Streaming::JobOutputStream.new(
-          job: job,
-          tab_name: TAB_NAME
-        ).broadcast
-
+        Streaming::JobOutputStream.new(job: job, tab_name: TAB_NAME).broadcast
         head :ok
       end
     end
