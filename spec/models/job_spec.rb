@@ -65,6 +65,15 @@ RSpec.describe Job, type: :model do
     end
   end
 
+  describe "#duration" do
+    it "gets rounded to the nearest whole number" do
+      allow(job).to receive(:ended_at).and_return(Time.zone.parse("2024-07-28 13:17:19 UTC"))
+      allow(job).to receive(:started_at).and_return(Time.zone.parse("2024-07-28 13:16:18.376176 UTC"))
+
+      expect(job.duration).to eq(61)
+    end
+  end
+
   def success
     <<~RESULTS
 example_id                                                 | status | run_time        |

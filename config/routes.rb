@@ -11,6 +11,8 @@ Rails.application.routes.draw do
 
       get ":partial", to: "builds#show", on: :member, as: "build_detail_content"
     end
+
+    resources :billing, only: :index
   end
 
   resources :saturn_installations do

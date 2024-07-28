@@ -54,7 +54,7 @@ class Job < ApplicationRecord
 
   def duration
     return unless ended_at.present?
-    ended_at - started_at
+    (ended_at - started_at).round
   end
 
   private
