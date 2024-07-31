@@ -1,5 +1,9 @@
 <h2><%= @project %></h2>
 
+<% @dates.each do |year, month| %>
+  <%= link_to "#{year}/#{month}", project_billing_path(@project.id, year:, month:) %>
+<% end %>
+
 <table border>
   <tr>
     <th>Datetime</th>

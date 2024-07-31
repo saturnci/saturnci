@@ -75,6 +75,7 @@ RSpec.configure do |config|
 
   config.include Warden::Test::Helpers, type: :system
   config.include Warden::Test::Helpers, type: :request
+  config.include ActiveSupport::Testing::TimeHelpers
 
   config.before :suite do
     Warden.test_mode!

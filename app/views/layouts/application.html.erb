@@ -17,6 +17,11 @@
           <div>
             <b><%= link_to "SaturnCI", root_path %></b>
             <%= link_to "Installations", saturn_installations_path %>
+
+            <% if @project.present? %>
+              <%= link_to "Billing", project_billing_path(@project.id) %>
+            <% end %>
+
             <%= link_to "Projects", projects_path %>
 
             <%= select_tag "project_id",
