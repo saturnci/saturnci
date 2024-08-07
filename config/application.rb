@@ -36,5 +36,7 @@ module Saturn
 
     config.hosts << "app.saturnci.com"
     config.hosts << "staging.saturnci.com"
+
+    config.charge_rate = 0.1
   end
 end

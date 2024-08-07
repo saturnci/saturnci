@@ -1,6 +1,8 @@
 class Job < ApplicationRecord
   belongs_to :build, touch: true
   has_many :job_events, dependent: :destroy
+  has_one :charge
+
   alias_attribute :started_at, :created_at
   default_scope -> { order("order_index") }
 
@@ -55,6 +57,17 @@ class Job < ApplicationRecord
   def duration
     return unless ended_at.present?
     (ended_at - started_at).round
+  end
+
+  def finish!
+    job_events.create!(type: "job_finished")
+
+    create_charge!(
+      job_duration: duration,
+      rate: Rails.configuration.charge_rate
+    )
+
+    self
   end
 
   private

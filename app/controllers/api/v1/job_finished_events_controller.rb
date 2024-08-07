@@ -5,7 +5,7 @@ module API
         job = Job.find(params[:job_id])
 
         ActiveRecord::Base.transaction do
-          job.job_events.create!(type: "job_finished")
+          job.finish!
 
           if job.build.jobs.all?(&:finished?)
             Turbo::StreamsChannel.broadcast_update_to(

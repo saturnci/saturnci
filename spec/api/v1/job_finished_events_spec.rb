@@ -22,5 +22,14 @@ RSpec.describe "job finished events", type: :request do
       expect(response).to have_http_status(200)
       expect(response.body).to be_empty
     end
+
+    it "creates a charge for the job" do
+      expect {
+        post(
+          api_v1_job_job_finished_events_path(job),
+          headers: api_authorization_headers
+        )
+      }.to change { job.reload.charge.present? }.from(false).to(true)
+    end
   end
 end

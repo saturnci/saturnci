@@ -1,0 +1,3 @@
+<% dates.each do |year, month| %>
+  <%= link_to "#{year}/#{month}", project_billing_path(@project.id, year:, month:) %>
+<% end %>

@@ -1,8 +1,6 @@
 <h2><%= @project %></h2>
 
-<% @dates.each do |year, month| %>
-  <%= link_to "#{year}/#{month}", project_billing_path(@project.id, year:, month:) %>
-<% end %>
+<%= render(@billing_navigation_component) %>
 
 <table border>
   <tr>
@@ -14,8 +12,8 @@
   <% @jobs.each do |job| %>
     <tr>
       <td><%= job.created_at %></td>
-      <td class="number"><%= job.duration %></td>
-      <td class="number"><%= number_to_currency(job.charge) %></td>
+      <td class="number"><%= job.charge.job_duration %></td>
+      <td class="number"><%= number_to_currency(job.charge.amount) %></td>
     </tr>
   <% end %>
 
@@ -23,7 +21,7 @@
     <td colspan="2">Total</td>
 
     <td class="number">
-      <%= number_to_currency(@jobs.map(&:charge_cents).compact.sum / 100.0) %>
+      <%= number_to_currency(@jobs.map(&:charge).map(&:amount_cents).compact.sum / 100.0) %>
     </td>
   </tr>
 </table>

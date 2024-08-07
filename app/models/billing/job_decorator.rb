@@ -1,7 +1,5 @@
 module Billing
   class JobDecorator < ApplicationDecorator
-    CHARGE_RATE = 0.1
-
     def charge
       return unless charge_cents.present?
 
@@ -11,7 +9,7 @@ module Billing
     def charge_cents
       return unless duration.present?
 
-      (object.duration * CHARGE_RATE).round
+      (object.duration * Rails.configuration.charge_rate).round
     end
   end
 end

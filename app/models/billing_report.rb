@@ -7,6 +7,7 @@ class BillingReport
 
   def jobs
     @project.jobs
+      .joins(:charge)
       .where(created_at: start_date..end_date)
       .order("jobs.created_at desc")
   end

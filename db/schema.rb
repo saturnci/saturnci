@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_14_140136) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_04_132638) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -27,6 +27,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_14_140136) do
     t.text "test_output"
     t.integer "seed", null: false
     t.index ["project_id"], name: "index_builds_on_project_id"
+  end
+
+  create_table "charges", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "job_id", null: false
+    t.decimal "rate", null: false
+    t.decimal "job_duration", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["job_id"], name: "index_charges_on_job_id"
+    t.index ["job_id"], name: "unique_index_on_charges_job_id", unique: true
   end
 
   create_table "job_events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -96,6 +106,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_14_140136) do
   end
 
   add_foreign_key "builds", "projects"
+  add_foreign_key "charges", "jobs"
   add_foreign_key "job_events", "jobs"
   add_foreign_key "jobs", "builds"
   add_foreign_key "projects", "saturn_installations"
