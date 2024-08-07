@@ -46,7 +46,7 @@ pre {
   padding: 0;
 }
 
-.build-wrapper {
+.dashboard {
   display: flex;
   flex-grow: 1;
   overflow: hidden;
