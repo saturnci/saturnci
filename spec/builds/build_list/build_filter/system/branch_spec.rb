@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Filter", type: :system do
+describe "Branch filtering", type: :system do
   let!(:project) { create(:project) }
 
   before do
