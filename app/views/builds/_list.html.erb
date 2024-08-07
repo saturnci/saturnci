@@ -1,25 +1,27 @@
-<div class="build-list">
+<div class="build-list-container">
   <% if @build_list.builds.any? %>
     <%= form_tag(job_path(@job, current_tab_name), method: :get, class: "build-filter-form") do %>
       <%= select_tag "branch_name", options_for_select(@build_list.branch_names), prompt: "Branch" %>
       <%= submit_tag "Apply" %>
     <% end %>
 
-    <ul data-controller="build-list">
-      <% @build_list.builds.each do |build| %>
-        <li>
-          <%= link_to project_build_path(@build.project, build),
-            data: { turbo_frame: "build", action: "click->build-list#makeActive", build_list_target: "link" },
-            class: build == @build ? "active" : "",
-            id: "build_link_#{build.id}" do %>
+    <div class="build-list">
+      <ul data-controller="build-list">
+        <% @build_list.builds.each do |build| %>
+          <li>
+            <%= link_to project_build_path(@build.project, build),
+              data: { turbo_frame: "build", action: "click->build-list#makeActive", build_list_target: "link" },
+              class: build == @build ? "active" : "",
+              id: "build_link_#{build.id}" do %>
 
-            <div id="build_status_<%= build.id %>">
-              <%= render "builds/list_item", build: build %>
-            </div>
-          <% end %>
-        </li>
-      <% end %>
-    </ul>
+              <div id="build_status_<%= build.id %>">
+                <%= render "builds/list_item", build: build %>
+              </div>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
   <% else %>
     (No builds)
   <% end %>
