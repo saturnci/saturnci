@@ -1,4 +1,7 @@
 .build-list {
+  overflow-y: auto;
+  min-height: 0;
+  width: 450px;
   border: 2px solid #DDD;
   border-right: 1px solid #DDD;
 }
