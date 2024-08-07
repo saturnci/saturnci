@@ -1,9 +1,13 @@
 .build-list-container {
-  overflow-y: auto;
-  min-height: 0;
   width: 450px;
   border: 2px solid #DDD;
   border-right: 1px solid #DDD;
+}
+
+.build-list {
+  max-height: 100%;
+  overflow-y: auto;
+  min-height: 0;
 }
 
 .build-list ul {
