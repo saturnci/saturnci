@@ -64,10 +64,7 @@ class Job < ApplicationRecord
       job_events.create!(type: "job_finished")
 
       if build.jobs == build.jobs.finished
-        puts "all jobs finished"
-        build.update!(cached_status: build.status)
-      else
-        puts "not all jobs finished"
+        build.update!(cached_status: build.calculated_status)
       end
 
       create_charge!(
