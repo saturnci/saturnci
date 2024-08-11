@@ -74,6 +74,30 @@ RSpec.describe Job, type: :model do
     end
   end
 
+  describe "#finish!" do
+    let!(:other_job) do
+      create(:job, build: job.build, order_index: 2)
+    end
+
+    context "it is not the last job to finish" do
+      it "does not update its build's cached status" do
+        expect { job.finish! }.not_to change {
+          job.build.reload.cached_status
+        }
+      end
+    end
+
+    context "it is the last job to finish" do
+      before { other_job.finish! }
+
+      it "updates its build's cached status" do
+        expect { job.finish! }.to change {
+          job.build.reload.cached_status
+        }.from(nil).to("passed")
+      end
+    end
+  end
+
   def success
     <<~RESULTS
 example_id                                                 | status | run_time        |

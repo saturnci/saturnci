@@ -60,12 +60,21 @@ class Job < ApplicationRecord
   end
 
   def finish!
-    job_events.create!(type: "job_finished")
+    ActiveRecord::Base.transaction do
+      job_events.create!(type: "job_finished")
 
-    create_charge!(
-      job_duration: duration,
-      rate: Rails.configuration.charge_rate
-    )
+      if build.jobs == build.jobs.finished
+        puts "all jobs finished"
+        build.update!(cached_status: build.status.downcase)
+      else
+        puts "not all jobs finished"
+      end
+
+      create_charge!(
+        job_duration: duration,
+        rate: Rails.configuration.charge_rate
+      )
+    end
 
     self
   end
