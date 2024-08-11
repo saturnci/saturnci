@@ -4,7 +4,7 @@ describe "Navigating from test output tab", type: :system do
   include SaturnAPIHelper
   include NavigationHelper
 
-  let!(:job) { create(:job) }
+  let!(:job) { create(:job, system_logs: "stuff") }
 
   before do
     login_as(job.build.project.user, scope: :user)

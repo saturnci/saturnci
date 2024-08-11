@@ -13,7 +13,11 @@ module NavigationHelper
 
   def navigate_to_build_tab(tab_slug, job:)
     click_on tab_slug.titleize
-    expect(page).to have_content(job.send(tab_slug)) # to prevent race condition
+
+    value = job.send(tab_slug)
+    raise "Can't use job.#{tab_slug} to prevent race condition because job.#{tab_slug} is nil" if value.nil?
+
+    expect(page).to have_content(value) # to prevent race condition
   end
 
   def navigate_to_job_tab(job)
