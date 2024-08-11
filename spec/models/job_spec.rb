@@ -93,7 +93,7 @@ RSpec.describe Job, type: :model do
       it "updates its build's cached status" do
         expect { job.finish! }.to change {
           job.build.reload.cached_status
-        }.from(nil).to("passed")
+        }.from(nil).to("Passed")
       end
     end
   end

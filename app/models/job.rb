@@ -65,7 +65,7 @@ class Job < ApplicationRecord
 
       if build.jobs == build.jobs.finished
         puts "all jobs finished"
-        build.update!(cached_status: build.status.downcase)
+        build.update!(cached_status: build.status)
       else
         puts "not all jobs finished"
       end

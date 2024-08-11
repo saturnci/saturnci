@@ -21,6 +21,7 @@ class Build < ApplicationRecord
   end
 
   def status
+    return cached_status if cached_status.present?
     return "Running" unless jobs.any?
     return "Failed" if jobs.any? { |job| job.status == "Failed" }
     return "Passed" if jobs.all? { |job| job.status == "Passed" }
