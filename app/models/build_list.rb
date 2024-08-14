@@ -1,7 +1,8 @@
 class BuildList
-  def initialize(build, branch_name:)
+  def initialize(build, branch_name:, statuses:)
     @build = build
     @branch_name = branch_name
+    @statuses = statuses
   end
 
   def builds
@@ -11,10 +12,10 @@ class BuildList
       builds = builds.where(branch_name: @branch_name)
     end
 
-    builds
-  end
+    if @statuses.present?
+      builds = builds.where("cached_status in (?)", @statuses)
+    end
 
-  def branch_names
-    @build.project.builds.map(&:branch_name).uniq
+    builds
   end
 end

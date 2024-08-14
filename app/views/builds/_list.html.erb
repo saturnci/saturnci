@@ -1,9 +1,6 @@
 <div class="build-list-container">
   <% if @build_list.builds.any? %>
-    <%= form_tag(job_path(@job, current_tab_name), method: :get, class: "build-filter-form") do %>
-      <%= select_tag "branch_name", options_for_select(@build_list.branch_names), prompt: "Branch" %>
-      <%= submit_tag "Apply" %>
-    <% end %>
+    <%= render @build_filter_component %>
 
     <div class="build-list">
       <ul data-controller="build-list">
