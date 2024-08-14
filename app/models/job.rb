@@ -63,7 +63,7 @@ class Job < ApplicationRecord
     ActiveRecord::Base.transaction do
       job_events.create!(type: "job_finished")
 
-      if build.jobs == build.jobs.finished
+      if Set.new(build.jobs) == Set.new(build.jobs.finished)
         build.update!(cached_status: build.calculated_status)
       end
 
