@@ -1,6 +1,8 @@
 <%= form_tag(job_path(@job, @current_tab_name), method: :get, class: "build-filter-form") do %>
   <div>
-    <%= select_tag "branch_name", options_for_select(branch_names), prompt: "Branch" %>
+    <%= select_tag "branch_name",
+      options_for_select(branch_names, @branch_name),
+      prompt: "Branch" %>
   </div>
 
   <div style="margin: 10px 0">

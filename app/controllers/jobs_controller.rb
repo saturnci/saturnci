@@ -19,7 +19,7 @@ class JobsController < ApplicationController
 
     @build_filter_component = BuildFilterComponent.new(
       job: @job,
-      build_list: @build_list,
+      branch_name: params[:branch_name],
       statuses: params[:statuses],
       current_tab_name: @current_tab_name
     )
