@@ -11,7 +11,7 @@ describe "Branch filtering", type: :system do
     login_as(user, scope: :user)
   end
 
-  context "main branch" do
+  context "main branch is selected" do
     it "only shows builds from the main branch" do
       visit project_path(project)
 
@@ -37,7 +37,7 @@ describe "Branch filtering", type: :system do
     end
   end
 
-  context "filters branch" do
+  context "filters branch is selected" do
     it "only shows builds from the filters branch" do
       visit project_path(project)
 
