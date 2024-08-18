@@ -1,0 +1,19 @@
+.build-filter-form {
+  background-color: #DDD;
+  padding: 8px 8px 10px 8px;
+}
+
+.build-filter-form select {
+  width: 100%;
+}
+
+.build-filter-form .checkbox-container {
+  margin-left: 6px;
+}
+
+.build-filter-form .checkbox-container input {
+  margin-left: 0;
+  margin-right: 0;
+  position: relative;
+  top: 1px;
+}

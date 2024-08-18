@@ -3,10 +3,13 @@
     <%= select_tag "branch_name", options_for_select(branch_names), prompt: "Branch" %>
   </div>
 
-  <div>
+  <div style="margin: 10px 0">
+    Build status:
     <% %w(Passed Failed).each do |status| %>
-      <%= label_tag "status_#{status.downcase}", status %>
-      <%= check_box_tag "statuses[]", status, checked?(status), id: "status_#{status.downcase}" %>
+      <span class="checkbox-container">
+        <%= label_tag "status_#{status.downcase}", status %>
+        <%= check_box_tag "statuses[]", status, checked?(status), id: "status_#{status.downcase}" %>
+      </span>
     <% end %>
   </div>
 
