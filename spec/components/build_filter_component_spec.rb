@@ -6,7 +6,7 @@ RSpec.describe BuildFilterComponent, type: :component do
   let!(:build_filter_component) do
     BuildFilterComponent.new(
       job: nil,
-      build_list: nil,
+      branch_name: nil,
       statuses: ["Passed"],
       current_tab_name: nil
     )

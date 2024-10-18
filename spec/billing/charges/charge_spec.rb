@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Charges", type: :system do
+RSpec.describe "Charges", type: :system do
   context "before a job has finished" do
     let!(:job) { create(:job) }
 

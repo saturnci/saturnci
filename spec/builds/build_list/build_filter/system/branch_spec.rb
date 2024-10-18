@@ -47,6 +47,7 @@ describe "Branch filtering", type: :system do
     end
 
     it "keeps 'main' selected" do
+      # To prevent race condition
       within ".build-list" do
         expect(page).not_to have_content("Commit from 'filter' branch")
       end
