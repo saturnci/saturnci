@@ -40,11 +40,6 @@
   color: #FFF;
 }
 
-.non-terminal-job-info {
-  background-color: #FFF;
-  color: #000;
-}
-
 .terminal, .non-terminal-job-info {
   overflow: auto;
   padding: 12px;

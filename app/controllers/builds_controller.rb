@@ -11,9 +11,10 @@ class BuildsController < ApplicationController
 
   def show
     @build = Build.find(params[:id])
+    failed_jobs = @build.jobs.select { |job| job.failed? }
 
     redirect_to job_path(
-      @build.jobs.first,
+      failed_jobs.first || @build.jobs.first,
       DEFAULT_PARTIAL
     )
   end
