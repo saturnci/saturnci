@@ -4,8 +4,8 @@ RSpec.describe BuildsController, type: :request do
   describe "GET #show" do
     context "a failed job is present" do
       let!(:build) { create(:build) }
-      let!(:unfailed_job) { create(:job, build: build, order_index: 1) }
-      let!(:failed_job) { create(:job, build: build, order_index: 2, test_report: "failed") }
+      let!(:unfailed_job) { create(:job, :passed, build: build, order_index: 1) }
+      let!(:failed_job) { create(:job, :failed, build: build, order_index: 2) }
 
       it "redirects to the first failed build" do
         login_as(build.project.user, scope: :user)

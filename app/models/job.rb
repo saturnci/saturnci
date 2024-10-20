@@ -81,8 +81,8 @@ class Job < ApplicationRecord
   end
 
   def exit_code
-    return nil unless test_report.present?
-    match = test_report.match(/COMMAND_EXIT_CODE="(\d+)"/)
+    return nil unless test_output.present?
+    match = test_output.match(/COMMAND_EXIT_CODE="(\d+)"/)
     match ? match[1].to_i : nil
   end
 

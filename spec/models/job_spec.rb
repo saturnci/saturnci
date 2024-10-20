@@ -62,14 +62,14 @@ RSpec.describe Job, type: :model do
       it "updates its build's cached status" do
         expect { job.finish! }.to change {
           job.build.reload.cached_status
-        }.from(nil).to("Passed")
+        }.from(nil).to("Failed")
       end
     end
   end
 
   describe "#exit_code" do
     before do
-      job.update!(test_report: "Script done on 2024-10-20 13:41:25+00:00 [COMMAND_EXIT_CODE=\"1\"]")
+      job.update!(test_output: "Script done on 2024-10-20 13:41:25+00:00 [COMMAND_EXIT_CODE=\"1\"]")
     end
 
     it "has an exit code of 1" do
