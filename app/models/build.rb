@@ -25,10 +25,10 @@ class Build < ApplicationRecord
   end
 
   def calculated_status
-    return "Running" unless jobs.any?
+    return "Running" if jobs.any? { |job| job.status == "Running" } || jobs.empty?
     return "Failed" if jobs.any? { |job| job.status == "Failed" }
     return "Passed" if jobs.all? { |job| job.status == "Passed" }
-    "Running"
+    "Failed"
   end
 
   def jobs_to_use
