@@ -30,7 +30,7 @@ class Job < ApplicationRecord
 
   def status
     return "Running" if !finished?
-    return "Passed" if finished? && !failed?
+    return "Passed" if finished? && passed?
     "Failed"
   end
 
@@ -38,8 +38,12 @@ class Job < ApplicationRecord
     self.class.finished.include?(self)
   end
 
+  def passed?
+    !test_report.to_s.include?("failed")
+  end
+
   def failed?
-    test_report.to_s.include?("failed")
+    !passed?
   end
 
   def job_machine_request
