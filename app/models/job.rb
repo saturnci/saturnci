@@ -80,6 +80,11 @@ class Job < ApplicationRecord
     self
   end
 
+  def exit_code
+    match = test_report.match(/COMMAND_EXIT_CODE="(\d+)"/)
+    match ? match[1].to_i : nil
+  end
+
   private
 
   def ended_at
