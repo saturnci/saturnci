@@ -15,7 +15,7 @@ RSpec.describe BuildsController, type: :request do
       end
     end
 
-    context "a failed job is not present" do
+    context "no failed job is present" do
       let!(:build) { create(:build) }
       let!(:unfailed_job) { create(:job, build: build) }
 
@@ -24,6 +24,15 @@ RSpec.describe BuildsController, type: :request do
         get project_build_path(build.project, build)
 
         expect(response).to redirect_to(job_path(unfailed_job, "test_output"))
+      end
+    end
+
+    context "no jobs are present" do
+      let!(:build) { create(:build) }
+
+      it "does not raise an error" do
+        login_as(build.project.user, scope: :user)
+        expect { get project_build_path(build.project, build) }.not_to raise_error
       end
     end
   end

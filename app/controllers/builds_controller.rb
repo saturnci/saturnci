@@ -11,6 +11,8 @@ class BuildsController < ApplicationController
 
   def show
     @build = Build.find(params[:id])
+    return unless @build.jobs.any?
+
     failed_jobs = @build.jobs.select { |job| job.failed? }
 
     redirect_to job_path(
