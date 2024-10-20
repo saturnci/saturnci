@@ -20,6 +20,7 @@ ENV DATABASE_USERNAME dummy_database_username
 ENV DATABASE_PASSWORD dummy_database_password
 ENV DATABASE_HOST localhost
 ENV DATABASE_PORT 5432
+ENV SECRET_KEY_BASE dummy_secret_key_base
 ENV RAILS_MAX_THREADS 5
 ENV RAILS_ENV production
 
