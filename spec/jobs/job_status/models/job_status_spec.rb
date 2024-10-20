@@ -10,24 +10,24 @@ RSpec.describe Job, type: :model do
       end
     end
 
-    context "report is empty" do
+    context "exit code is nil" do
       it "returns 'Running'" do
-        job.update!(test_report: "")
+        allow(job).to receive(:exit_code).and_return(nil)
         expect(job.status).to eq("Running")
       end
     end
 
-    context "report is success" do
+    context "exit code is 0" do
       it "returns 'Passed'" do
-        job.update!(test_report: success)
+        allow(job).to receive(:exit_code).and_return(0)
         job.job_events.create!(type: "job_finished")
         expect(job.status).to eq("Passed")
       end
     end
 
-    context "report is failure" do
+    context "exit code is not 0" do
       it "returns 'Failed'" do
-        job.update!(test_report: failure)
+        allow(job).to receive(:exit_code).and_return(1)
         job.job_events.create!(type: "job_finished")
         expect(job.status).to eq("Failed")
       end

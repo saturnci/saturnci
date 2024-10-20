@@ -39,7 +39,7 @@ class Job < ApplicationRecord
   end
 
   def passed?
-    !test_report.to_s.include?("failed")
+    exit_code == 0
   end
 
   def failed?
@@ -81,6 +81,7 @@ class Job < ApplicationRecord
   end
 
   def exit_code
+    return nil unless test_report.present?
     match = test_report.match(/COMMAND_EXIT_CODE="(\d+)"/)
     match ? match[1].to_i : nil
   end
