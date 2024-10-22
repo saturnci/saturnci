@@ -7,7 +7,7 @@ require_relative '../../../lib/saturncicli/client'
 describe 'ssh' do
   before do
     AuthenticationHelper.stub_authentication_request
-    allow_any_instance_of(SSHSession).to receive(:connect)
+    allow_any_instance_of(SaturnCICLI::SSHSession).to receive(:connect)
   end
 
   let!(:client) do
@@ -39,8 +39,8 @@ describe 'ssh' do
     before do
       APIHelper.stub_body('api/v1/jobs/abc123', {})
       stub_const('ConnectionDetails::WAIT_INTERVAL_IN_SECONDS', 0)
-      allow_any_instance_of(ConnectionDetails).to receive(:ip_address).and_return(nil, '111.11.11.1')
-      allow_any_instance_of(ConnectionDetails).to receive(:rsa_key_path).and_return('/tmp/saturnci/job-abc123')
+      allow_any_instance_of(SaturnCICLI::ConnectionDetails).to receive(:ip_address).and_return(nil, '111.11.11.1')
+      allow_any_instance_of(SaturnCICLI::ConnectionDetails).to receive(:rsa_key_path).and_return('/tmp/saturnci/job-abc123')
     end
 
     it 'outputs a dot' do
