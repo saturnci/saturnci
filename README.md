@@ -7,5 +7,5 @@ bin/setup
 ## ngrok
 
 ```bash
-ngrok http 3000 --domain=jason.ngrok.app
+ngrok http 3000 --domain=$(echo NGROK_URL)
 ```
