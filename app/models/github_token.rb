@@ -1,9 +1,12 @@
-require "jwt"
-require "octokit"
+# frozen_string_literal: true
+
+require 'jwt'
+require 'octokit'
 
 class GitHubToken
   def self.generate(installation_id)
-    raise "Installation ID is missing" if installation_id.blank?
+    fail 'Installation ID is missing' if installation_id.blank?
+
     token(installation_id)
   end
 
@@ -16,10 +19,10 @@ class GitHubToken
     payload = {
       iat: Time.now.to_i, # Issued-at time
       exp: Time.now.to_i + (10 * 60), # JWT expiration time
-      iss: ENV["GITHUB_APP_ID"]
+      iss: ENV.fetch('GITHUB_APP_ID', nil)
     }
 
-    jwt = JWT.encode(payload, private_key, "RS256")
+    jwt = JWT.encode(payload, private_key, 'RS256')
     client = Octokit::Client.new(bearer_token: jwt)
     installation_token = client.create_app_installation_access_token(installation_id)
     installation_token[:token]
