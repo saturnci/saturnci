@@ -6,7 +6,7 @@ metadata:
   annotations:
     service.beta.kubernetes.io/do-loadbalancer-protocol: "https"
     service.beta.kubernetes.io/do-loadbalancer-tls-ports: "443"
-    service.beta.kubernetes.io/do-loadbalancer-certificate-id: "a74433a9-451d-4871-a049-16aef30f6924"
+    service.beta.kubernetes.io/do-loadbalancer-certificate-id: "073fe537-ccec-4bf5-8c0c-3cd03b939ed1"
     service.beta.kubernetes.io/do-loadbalancer-disable-lets-encrypt-dns-records: "false"
 spec:
   type: LoadBalancer
