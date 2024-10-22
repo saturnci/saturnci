@@ -1,3 +1,9 @@
+## Setup
+
+```
+bin/setup
+```
+
 ## ngrok
 
 ```bash
