@@ -32,3 +32,5 @@
 
 .env
 .github_private_key.pem
+
+.rubocop-*

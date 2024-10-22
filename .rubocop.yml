@@ -1,0 +1,20 @@
+inherit_from:
+  - https://raw.githubusercontent.com/trobrock/style-guides/4ed16c7/ruby-style.yml
+
+require:
+  - rubocop-performance
+  - rubocop-rails
+
+Rails/OutputSafety:
+  Enabled: false
+
+AllCops:
+  NewCops: enable
+  Exclude:
+    - 'node_modules/**/*'
+    - 'vendor/**/*'
+    - 'db/**/*'
+    - db/schema.rb
+    - 'bin/**/*'
+    - Brewfile
+    - 'lib/generators/**/templates/**/*'
