@@ -5,4 +5,5 @@ test:
   adapter: test
 
 production:
-  adapter: async
+  adapter: postgresql
+  url: <%= "postgres://#{ENV['DATABASE_USERNAME']}:#{ENV['DATABASE_PASSWORD']}@#{ENV['DATABASE_HOST']}:#{ENV['DATABASE_PORT']}/#{ENV['DATABASE_NAME']}" %>
