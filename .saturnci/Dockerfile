@@ -1,5 +1,5 @@
 # Use the Ruby 3.1.2 image from Docker Hub as the base image
-FROM ruby:3.1.2
+FROM ruby:3.3.5
 
 # Use a directory called /code in which to store this application's files.
 WORKDIR /code
