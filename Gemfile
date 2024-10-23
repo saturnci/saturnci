@@ -7,7 +7,7 @@ ruby '3.3.5'
 
 gem 'rails', '~> 7.2'
 
-gem 'active_model_serializers', '~> 0.10.0'
+gem 'jbuilder'
 gem 'bootsnap', require: false
 gem 'importmap-rails'
 gem 'pg', '~> 1.1'

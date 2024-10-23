@@ -2,7 +2,8 @@ module API
   module V1
     class JobsController < APIController
       def index
-        render json: Job.running
+        @jobs = Job.running
+        render 'index', formats: [:json]
       end
 
       def show
