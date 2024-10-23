@@ -104,7 +104,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.1)
     base64 (0.2.0)
     bcrypt (3.1.20)
-    bigdecimal (3.1.7)
+    bigdecimal (3.1.8)
     bindex (0.8.1)
     bootsnap (1.13.0)
       msgpack (~> 1.2)
@@ -210,7 +210,6 @@ GEM
     net-protocol (0.2.2)
       timeout
     net-smtp (0.4.0.1)
-      net-protocol
     nio4r (2.7.0)
     nokogiri (1.16.2-aarch64-linux)
       racc (~> 1.4)
@@ -455,7 +454,7 @@ DEPENDENCIES
   webmock
 
 RUBY VERSION
-   ruby 3.1.2p20
+   ruby 3.3.5p100
 
 BUNDLED WITH
    2.3.11
