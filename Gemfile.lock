@@ -468,7 +468,6 @@ DEPENDENCIES
   sprockets-rails
   stimulus-rails
   turbo-rails (~> 1.5)
-  tzinfo-data
   view_component
   web-console
   webdrivers
