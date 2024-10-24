@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Get the first running pod
-pod=$(./run kubectl -n production get pods --field-selector=status.phase=Running -o jsonpath="{.items[0].metadata.name}")
+pod=$(kubectl -n production get pods --field-selector=status.phase=Running -o jsonpath="{.items[0].metadata.name}")
 
 # Start a shell session in the pod
-./run kubectl -n production exec -it $pod -- bash
+kubectl -n production exec -it $pod -- bash
