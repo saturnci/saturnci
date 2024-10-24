@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
+  mount ActionCable.server => '/cable'
 
   get "jobs/:id/:partial", to: "jobs#show", as: "job"
 

@@ -15,6 +15,7 @@ gem 'puma', '~> 6.0'
 gem 'sprockets-rails'
 gem 'stimulus-rails'
 gem 'turbo-rails', '~> 1.5'
+gem 'solid_cable'
 
 # For soft deletion
 gem 'paranoia'
