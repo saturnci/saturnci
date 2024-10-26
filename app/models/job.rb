@@ -66,6 +66,7 @@ class Job < ApplicationRecord
   def finish!
     ActiveRecord::Base.transaction do
       job_events.create!(type: "job_finished")
+      update!(exit_code: parsed_exit_code)
 
       if Set.new(build.jobs) == Set.new(build.jobs.finished)
         build.update!(cached_status: build.calculated_status)
@@ -80,7 +81,7 @@ class Job < ApplicationRecord
     self
   end
 
-  def exit_code
+  def parsed_exit_code
     return nil unless test_output.present?
     match = test_output.match(/COMMAND_EXIT_CODE="(\d+)"/)
     match ? match[1].to_i : nil
