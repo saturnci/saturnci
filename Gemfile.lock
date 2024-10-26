@@ -250,6 +250,7 @@ GEM
       actionpack (>= 4.2)
       omniauth (~> 2.0)
     orm_adapter (0.5.0)
+    ostruct (0.6.0)
     parallel (1.26.3)
     paranoia (3.0.0)
       activerecord (>= 6, < 8.1)
@@ -455,6 +456,7 @@ DEPENDENCIES
   octokit
   omniauth-github
   omniauth-rails_csrf_protection
+  ostruct
   paranoia
   pg (~> 1.1)
   pry
