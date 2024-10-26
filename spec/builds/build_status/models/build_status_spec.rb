@@ -43,5 +43,48 @@ RSpec.describe "build status", type: :model do
         expect(build.status).to eq("Running")
       end
     end
+
+    describe "caching" do
+      context "cache is empty" do
+        before do
+          allow(job_1).to receive(:status).and_return("Passed")
+          allow(job_2).to receive(:status).and_return("Passed")
+          allow(build).to receive(:jobs).and_return([job_1, job_2])
+        end
+
+        it "sets the cached status" do
+          expect { build.status }.to change { build.reload.cached_status }
+            .from(nil).to("Passed")
+        end
+      end
+
+      context "cached_status does not match calculated_status" do
+        before do
+          build.update!(cached_status: "Passed")
+          allow(job_1).to receive(:status).and_return("Failed")
+          allow(job_2).to receive(:status).and_return("Failed")
+          allow(build).to receive(:jobs).and_return([job_1, job_2])
+        end
+
+        it "sets the cached status" do
+          expect { build.status }.to change { build.reload.cached_status }
+            .from("Passed").to("Failed")
+        end
+      end
+
+      context "cached_status matches calculated_status" do
+        before do
+          build.update!(cached_status: "Passed")
+          allow(job_1).to receive(:status).and_return("Passed")
+          allow(job_2).to receive(:status).and_return("Passed")
+          allow(build).to receive(:jobs).and_return([job_1, job_2])
+        end
+
+        it "does not update the build" do
+          expect(build).not_to receive(:update!)
+          build.status
+        end
+      end
+    end
   end
 end
