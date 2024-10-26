@@ -72,8 +72,8 @@ RSpec.describe Job, type: :model do
       job.update!(test_output: "Script done on 2024-10-20 13:41:25+00:00 [COMMAND_EXIT_CODE=\"1\"]")
     end
 
-    it "has an exit code of 1" do
-      expect(job.exit_code).to eq(1)
+    it "gets saved upon finish" do
+      expect { job.finish! }.to change { job.reload.exit_code }.from(nil).to(1)
     end
   end
 end
