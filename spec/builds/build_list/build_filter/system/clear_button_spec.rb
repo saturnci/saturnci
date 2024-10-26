@@ -7,7 +7,7 @@ describe "Clearing filter selections", type: :system do
     before do
       create(
         :build,
-        :with_job,
+        :with_passed_job,
         project: project,
         branch_name: "main",
         commit_message: "Commit from 'main' branch"
@@ -15,7 +15,7 @@ describe "Clearing filter selections", type: :system do
 
       create(
         :build,
-        :with_job,
+        :with_passed_job,
         project: project,
         branch_name: "filters",
         commit_message: "Commit from 'filter' branch"
@@ -48,7 +48,7 @@ describe "Clearing filter selections", type: :system do
     let!(:failed_build) do
       create(
         :build,
-        :with_job,
+        :with_failed_job,
         cached_status: "Failed",
         commit_message: "This branch failed"
       )
@@ -57,7 +57,7 @@ describe "Clearing filter selections", type: :system do
     let!(:passed_build) do
       create(
         :build,
-        :with_job,
+        :with_passed_job,
         cached_status: "Passed",
         project: failed_build.project,
         commit_message: "This branch passed"

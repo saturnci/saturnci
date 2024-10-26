@@ -21,7 +21,11 @@ class Build < ApplicationRecord
   end
 
   def status
-    cached_status || calculated_status
+    if cached_status != calculated_status
+      update!(cached_status: calculated_status)
+    end
+
+    cached_status
   end
 
   def calculated_status
