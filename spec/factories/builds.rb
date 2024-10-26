@@ -11,5 +11,17 @@ FactoryBot.define do
         create(:job, build: build)
       end
     end
+
+    trait :with_passed_job do
+      after(:create) do |build|
+        create(:job, :passed, build: build)
+      end
+    end
+
+    trait :with_failed_job do
+      after(:create) do |build|
+        create(:job, :failed, build: build)
+      end
+    end
   end
 end
