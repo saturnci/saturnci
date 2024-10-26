@@ -144,7 +144,10 @@ start_test_suite
 
 #--------------------------------------------------------------------------------
 
+# Without this sleep, there's a race condition between the
+# test output stream finishing and the job_finished event
 sleep 5
+
 echo "Job finished"
 api_request "POST" "jobs/$JOB_ID/job_finished_events"
 
