@@ -144,6 +144,7 @@ start_test_suite
 
 #--------------------------------------------------------------------------------
 
+sleep 5
 echo "Job finished"
 api_request "POST" "jobs/$JOB_ID/job_finished_events"
 
