@@ -3,13 +3,11 @@ require "rails_helper"
 RSpec.describe Job, type: :model do
   describe "#running" do
     let!(:running_job) do
-      create(:job, test_report: nil)
+      create(:job, exit_code: nil)
     end
 
     let!(:finished_job) do
-      create(:job) do |j|
-        j.job_events.create!(type: "job_finished")
-      end
+      create(:job, exit_code: 0)
     end
 
     it "by default includes the running job" do

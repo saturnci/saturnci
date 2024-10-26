@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe "Duration", type: :system do
   it "displays the build duration" do
-    job = create(:job, test_report: "passed")
+    job = create(:job, :passed)
 
     create(
       :job_event,
