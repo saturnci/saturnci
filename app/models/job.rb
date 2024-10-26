@@ -13,10 +13,7 @@ class Job < ApplicationRecord
   end
 
   scope :finished, -> do
-    unscoped.joins(:build)
-      .joins(:job_events)
-      .where("job_events.type = ?", JobEvent.types[:job_finished])
-      .order("builds.created_at DESC")
+    where.not(exit_code: nil)
   end
 
   def name
@@ -66,7 +63,7 @@ class Job < ApplicationRecord
   def finish!
     ActiveRecord::Base.transaction do
       job_events.create!(type: "job_finished")
-      update!(exit_code: parsed_exit_code)
+      update!(exit_code: parsed_exit_code || 1)
 
       if Set.new(build.jobs) == Set.new(build.jobs.finished)
         build.update!(cached_status: build.calculated_status)

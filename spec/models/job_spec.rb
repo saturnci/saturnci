@@ -17,9 +17,9 @@ RSpec.describe Job, type: :model do
   end
 
   describe "#finished?" do
-    context "it has a job_finished event" do
+    context "it has an exit code" do
       before do
-        job.job_events.create!(type: "job_finished")
+        job.update!(exit_code: 0)
       end
 
       it "returns true" do
@@ -27,7 +27,7 @@ RSpec.describe Job, type: :model do
       end
     end
 
-    context "it does not have a job_finished event" do
+    context "it does not have an exit code" do
       it "returns false" do
         expect(job).not_to be_finished
       end
@@ -68,12 +68,20 @@ RSpec.describe Job, type: :model do
   end
 
   describe "#exit_code" do
-    before do
-      job.update!(test_output: "Script done on 2024-10-20 13:41:25+00:00 [COMMAND_EXIT_CODE=\"1\"]")
+    context "test_output contains COMMAND_EXIT_CODE" do
+      before do
+        job.update!(test_output: "Script done on 2024-10-20 13:41:25+00:00 [COMMAND_EXIT_CODE=\"1\"]")
+      end
+
+      it "gets saved upon finish" do
+        expect { job.finish! }.to change { job.reload.exit_code }.from(nil).to(1)
+      end
     end
 
-    it "gets saved upon finish" do
-      expect { job.finish! }.to change { job.reload.exit_code }.from(nil).to(1)
+    context "test_output does not contain COMMAND_EXIT_CODE" do
+      it "defaults to 1" do
+        expect { job.finish! }.to change { job.reload.exit_code }.from(nil).to(1)
+      end
     end
   end
 end
