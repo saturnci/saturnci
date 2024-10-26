@@ -1,19 +1,17 @@
 require "rails_helper"
 
 describe "Status filtering", type: :system do
-  let!(:passed_job) { create(:job).finish! }
+  let!(:passed_job) { create(:job, :passed) }
 
   let!(:failed_job) do
     create(
       :job,
+      :failed,
       build: create(:build, project: passed_job.build.project)
     ).finish!
   end
 
   before do
-    passed_job.build.update!(cached_status: "Passed")
-    failed_job.build.update!(cached_status: "Failed")
-
     login_as(passed_job.build.project.user, scope: :user)
     visit job_path(passed_job, "test_output")
   end
