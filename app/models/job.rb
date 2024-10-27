@@ -29,6 +29,7 @@ class Job < ApplicationRecord
 
   def cancel!
     ActiveRecord::Base.transaction do
+      delete_job_machine
       job_events.create!(type: :job_cancelled)
       finish!
     end
