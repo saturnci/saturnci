@@ -11,6 +11,7 @@
 
     <div class="build-action-buttons">
       <%= button_to "Rerun", rebuilds_path(build_id: @build.id), method: :post, data: { turbo: false } %>
+      <%= button_to "Cancel", build_cancellations_path(build_id: @build.id), method: :post, data: { turbo: false } %>
       <%= button_to "Delete", project_build_path(id: @build.id, project_id: @build.project_id), method: :delete, data: { turbo: false } %>
     </div>
   </div>

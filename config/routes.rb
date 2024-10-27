@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   end
 
   resources :rebuilds, only: :create
+  resources :build_cancellations, only: :create
   root "projects#index"
 
   namespace :api do

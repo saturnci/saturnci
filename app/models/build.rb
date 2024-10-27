@@ -20,6 +20,12 @@ class Build < ApplicationRecord
     end
   end
 
+  def cancel!
+    transaction do
+      jobs.each(&:cancel!)
+    end
+  end
+
   def status
     if cached_status != calculated_status
       update!(cached_status: calculated_status)
@@ -31,6 +37,7 @@ class Build < ApplicationRecord
   def calculated_status
     return "Running" if jobs.any? { |job| job.status == "Running" } || jobs.empty?
     return "Failed" if jobs.any? { |job| job.status == "Failed" }
+    return "Cancelled" if jobs.any? { |job| job.status == "Cancelled" }
     return "Passed" if jobs.all? { |job| job.status == "Passed" }
     "Failed"
   end

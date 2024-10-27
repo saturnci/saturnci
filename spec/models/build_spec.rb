@@ -59,4 +59,17 @@ RSpec.describe Build, type: :model do
         .to change { JobEvent.where(type: "job_machine_requested").count }.by(1)
     end
   end
+
+  describe "#cancel!" do
+    let!(:job) { create(:job) }
+
+    before do
+      stub_request(:delete, "https://api.digitalocean.com/v2/droplets/#{job.job_machine_id}").to_return(status: 200)
+    end
+
+    it "sets the status to 'Cancelled'" do
+      job.build.cancel!
+      expect(job.build.reload.status).to eq("Cancelled")
+    end
+  end
 end
