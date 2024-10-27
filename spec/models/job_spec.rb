@@ -12,7 +12,19 @@ RSpec.describe Job, type: :model do
   describe "#start!" do
     it "creates a new job_event with type job_machine_requested" do
       expect { job.start! }
-        .to change { JobEvent.where(type: "job_machine_requested").count }.by(1)
+        .to change { job.job_events.where(type: "job_machine_requested").count }.by(1)
+    end
+  end
+
+  describe "#cancel!" do
+    it "creates a new job_event with type job_cancelled" do
+      expect { job.cancel! }
+        .to change { job.job_events.where(type: "job_cancelled").count }.by(1)
+    end
+
+    it "sets the status to 'Cancelled'" do
+      job.cancel!
+      expect(job.reload.status).to eq("Cancelled")
     end
   end
 
