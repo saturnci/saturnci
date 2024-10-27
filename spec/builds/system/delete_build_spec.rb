@@ -39,6 +39,19 @@ describe "Delete build", type: :system do
         expect(page).to have_content(other_build.commit_hash)
       end
     end
+
+    context "build is finished" do
+      before do
+        job.finish!
+      end
+
+      it "still works" do
+        visit project_build_path(id: job.build.id, project_id: job.build.project.id)
+        click_on "Delete"
+        expect(page).not_to have_content(job.build.commit_hash)
+        expect(page).to have_content("SaturnCI")
+      end
+    end
   end
 
   context "job machine does not still exist on Digital Ocean" do

@@ -1,7 +1,8 @@
 class Build < ApplicationRecord
   NUMBER_OF_CONCURRENT_JOBS = 2
   belongs_to :project
-  has_many :jobs, dependent: :destroy
+  has_many :jobs
+  acts_as_paranoid
 
   after_initialize do
     self.seed ||= rand(10000)
