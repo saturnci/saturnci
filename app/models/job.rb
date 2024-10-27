@@ -21,13 +21,25 @@ class Job < ApplicationRecord
   end
 
   def start!
-    job_events.create!(type: :job_machine_requested)
-    job_machine_request.create!
+    transaction do
+      job_events.create!(type: :job_machine_requested)
+      job_machine_request.create!
+    end
+  end
+
+  def cancel!
+    transaction do
+      delete_job_machine
+      job_events.create!(type: :job_cancelled)
+      update!(test_output: "Job cancelled")
+      finish!
+    end
   end
 
   def status
     return "Running" if !finished?
     return "Passed" if finished? && passed?
+    return "Cancelled" if cancelled?
     "Failed"
   end
 
@@ -41,6 +53,10 @@ class Job < ApplicationRecord
 
   def failed?
     !passed?
+  end
+
+  def cancelled?
+    job_events.job_cancelled.any?
   end
 
   def job_machine_request
@@ -61,7 +77,7 @@ class Job < ApplicationRecord
   end
 
   def finish!
-    ActiveRecord::Base.transaction do
+    transaction do
       job_events.create!(type: "job_finished")
       update!(exit_code: parsed_exit_code || 1)
 

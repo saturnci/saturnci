@@ -58,11 +58,16 @@
   color: #000;
 }
 
+.build-status-cancelled {
+  background-color: #DDD;
+  color: #000;
+}
+
 .build-status-failed {
   background-color: #F00;
   color: #000;
 }
 
 .build-status-running {
-  background-color: #DDD;
+  background-color: #8DF;
 }
