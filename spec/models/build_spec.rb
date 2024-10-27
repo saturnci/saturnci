@@ -59,4 +59,13 @@ RSpec.describe Build, type: :model do
         .to change { JobEvent.where(type: "job_machine_requested").count }.by(1)
     end
   end
+
+  describe "#cancel!" do
+    let!(:build) { create(:build, :with_job) }
+
+    it "sets the status to 'Cancelled'" do
+      build.cancel!
+      expect(build.reload.status).to eq("Cancelled")
+    end
+  end
 end
