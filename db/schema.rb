@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_10_26_162319) do
+ActiveRecord::Schema[8.0].define(version: 2024_10_27_201813) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -27,6 +27,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_10_26_162319) do
     t.text "test_output"
     t.integer "seed", null: false
     t.string "cached_status"
+    t.datetime "deleted_at"
     t.index ["project_id"], name: "index_builds_on_project_id"
   end
 
