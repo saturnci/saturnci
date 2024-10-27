@@ -34,7 +34,7 @@ class BuildsController < ApplicationController
       end
     end
 
-    build.destroy!
+    build.destroy
     redirect_to project_path(build.project)
   end
 end
