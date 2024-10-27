@@ -21,16 +21,17 @@ class Job < ApplicationRecord
   end
 
   def start!
-    ActiveRecord::Base.transaction do
+    transaction do
       job_events.create!(type: :job_machine_requested)
       job_machine_request.create!
     end
   end
 
   def cancel!
-    ActiveRecord::Base.transaction do
+    transaction do
       delete_job_machine
       job_events.create!(type: :job_cancelled)
+      update!(test_output: "Job cancelled")
       finish!
     end
   end
@@ -76,7 +77,7 @@ class Job < ApplicationRecord
   end
 
   def finish!
-    ActiveRecord::Base.transaction do
+    transaction do
       job_events.create!(type: "job_finished")
       update!(exit_code: parsed_exit_code || 1)
 
