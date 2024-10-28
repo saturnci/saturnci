@@ -17,10 +17,3 @@ spec:
         image: registry:2
         ports:
         - containerPort: 5000
-        volumeMounts:
-        - name: registry-storage
-          mountPath: /var/lib/registry
-      volumes:
-      - name: registry-storage
-        persistentVolumeClaim:
-          claimName: registry-pvc

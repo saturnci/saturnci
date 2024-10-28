@@ -118,8 +118,12 @@ REGISTRY_CACHE_URL=registrycache.saturnci.com:5000
 REGISTRY_CACHE_IMAGE_URL=$REGISTRY_CACHE_URL/saturn_test_app:$GEMFILE_LOCK_CHECKSUM
 echo "Registry cache image URL: $REGISTRY_CACHE_IMAGE_URL"
 
-echo "Authenticating to Docker registry"
+echo "Authenticating to Docker registry ($REGISTRY_CACHE_URL)"
 sudo docker login $REGISTRY_CACHE_URL -u myusername -p mypassword
+
+if [ $? -ne 0 ]; then
+  echo "Authentication to $REGISTRY_CACHE_URL failed"
+fi
 
 echo "Gemfile.lock checksum: $GEMFILE_LOCK_CHECKSUM"
 echo "Pulling the existing image to avoid rebuilding if possible"
