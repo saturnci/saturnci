@@ -21,3 +21,10 @@ A registry cache is a way to cache Docker images on a remote server.
 When a test suite is run on SaturnCI, the project's image is fetched from the registry cache,
 which may or may not have some of its layers cached.
 After the test suite has run, the new latest image, which may differ from the cached image, is pushed to the registry cache to be used next time.
+
+The relevant Kubernetes files are located in `ops/production/registry'.
+
+Relevant:
+- https://hub.docker.com/_/registry
+- https://docs.docker.com/docker-hub/mirror/
+- https://docs.docker.com/build/cache/backends/registry/
