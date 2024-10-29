@@ -1,6 +1,6 @@
 ---
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
   name: https-with-cert
   annotations:
@@ -8,6 +8,7 @@ metadata:
     service.beta.kubernetes.io/do-loadbalancer-tls-ports: "443"
     service.beta.kubernetes.io/do-loadbalancer-certificate-id: "073fe537-ccec-4bf5-8c0c-3cd03b939ed1"
     service.beta.kubernetes.io/do-loadbalancer-disable-lets-encrypt-dns-records: "false"
+    service.beta.kubernetes.io/do-loadbalancer-name: "web"
 spec:
   type: LoadBalancer
   selector:
