@@ -4,7 +4,7 @@ class SystemLogBody
   end
 
   def scrub
-    content.gsub(/ saturnci-[\w-]+ /, " ")
+    content.to_s.gsub(/ saturnci-[\w-]+ /, " ")
   end
 
   private
