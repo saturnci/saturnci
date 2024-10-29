@@ -4,10 +4,6 @@ class SystemLogBody
   end
 
   def scrub
-    content.to_s.gsub(/ saturnci-[\w-]+ /, " ")
+    @content.to_s.gsub(/ \w+-[\w-]+ /, " ")
   end
-
-  private
-
-  attr_reader :content
 end
