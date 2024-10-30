@@ -3,6 +3,10 @@ class ProjectsController < ApplicationController
 
   def index
     @projects = current_user.projects
+
+    if @projects.count == 1
+      redirect_to project_path(@projects.first)
+    end
   end
 
   def show

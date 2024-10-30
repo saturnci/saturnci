@@ -22,7 +22,7 @@ Rails.application.routes.draw do
 
   resources :rebuilds, only: :create
   resources :build_cancellations, only: :create
-  root "projects#index"
+  root to: "projects#index"
 
   namespace :api do
     namespace :v1 do
