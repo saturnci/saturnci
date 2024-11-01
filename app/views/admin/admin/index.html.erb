@@ -1,1 +1,5 @@
 <h1>Admin</h1>
+
+<% GitHubEvent.all.each do |github_event| %>
+  <pre><%= JSON.pretty_generate(github_event.body).html_safe %></pre>
+<% end %>
