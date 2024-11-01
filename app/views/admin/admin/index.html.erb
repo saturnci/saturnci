@@ -1,5 +1,7 @@
 <h1>Admin</h1>
 
-<% GitHubEvent.order("created_at desc").each do |github_event| %>
+<h2>GitHub Events (<%= @github_events.count %>)</h2>
+
+<% @github_events.each do |github_event| %>
   <pre><%= JSON.pretty_generate(github_event.body).html_safe %></pre>
 <% end %>
