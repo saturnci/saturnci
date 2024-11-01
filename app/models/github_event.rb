@@ -1,0 +1,2 @@
+class GitHubEvent < ApplicationRecord
+end
