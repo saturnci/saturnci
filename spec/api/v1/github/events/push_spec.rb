@@ -1,7 +1,7 @@
 require "rails_helper"
 include APIAuthenticationHelper
 
-RSpec.describe "GitHub Events", type: :request do
+RSpec.describe "Push", type: :request do
   let!(:project) do
     create(:project, github_repo_full_name: "user/test") do |project|
       project.user.saturn_installations.create!(
