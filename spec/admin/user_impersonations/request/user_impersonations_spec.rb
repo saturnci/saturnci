@@ -14,6 +14,12 @@ describe "User impersonations", type: :request do
       post admin_user_impersonations_path(user_id: other_user.id)
       expect(response).to redirect_to(other_user_project)
     end
+
+    it "shows the other user's projects" do
+      post admin_user_impersonations_path(user_id: other_user.id)
+      get saturn_installations_path
+      expect(response.body).to include("Signed in as #{other_user.name}")
+    end
   end
 
   context "non-super admin" do
