@@ -1,6 +1,6 @@
 .build-list-container {
   width: 450px;
-  border-right: 2px solid #BBB;
+  border-right: 2px solid #48F;
 }
 
 .build-list {
@@ -10,13 +10,13 @@
 }
 
 .build-list ul {
-  border-bottom: 1px solid #BBB;
+  border-bottom: 1px solid #DDD;
   margin: 0;
   padding: 0;
 }
 
 .build-list li {
-  border-bottom: 2px solid #BBB;
+  border-bottom: 2px solid #DDD;
   margin: 0;
   padding: 0;
 }
@@ -29,7 +29,12 @@
 }
 
 .build-list a.active {
-  background-color: #FFF;
+  background-color: #48F;
+  color: #FFF;
+}
+
+.build-list a.active .build-author {
+  color: #FFF;
 }
 
 .build-commit {
@@ -64,4 +69,9 @@
 
 .build-status-running {
   background-color: #8DF;
+}
+
+.build-author {
+  color: #999;
+  margin: 4px 0 10px 0;
 }
