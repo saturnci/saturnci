@@ -1,11 +1,11 @@
 .build {
   flex: 1;
   min-height: 0;
-  border: 2px solid #DDD;
-  border-left: 1px solid #DDD;
+  border: 2px solid #000;
+  border-left: 1px solid #000;
   display: flex;
   background-color: #000;
-  color: #FFF;
+  color: #EEE;
 }
 
 .build a {

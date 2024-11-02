@@ -18,6 +18,7 @@ html, body {
   margin: 0;
   padding: 0 5px 0 5px;
   height: 100%;
+  background-color: #EEE;
 }
 
 body {
@@ -57,4 +58,25 @@ pre {
   font-family: 'Courier New';
   font-size: 80%;
   text-align: right;
+}
+
+.project-header {
+  border: 2px solid #000;
+  border-bottom: none;
+  background-color: #BBB;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  line-height: 36px;
+  padding: 0 10px;
+}
+
+.project-header h2 {
+  padding: 0;
+  margin: 0;
+}
+
+.project-header a {
+  display: block;
 }

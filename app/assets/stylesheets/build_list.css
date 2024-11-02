@@ -1,7 +1,8 @@
 .build-list-container {
   width: 450px;
-  border: 2px solid #DDD;
-  border-right: 1px solid #DDD;
+  border: 2px solid #000;
+  border-right: 1px solid #000;
+  background-color: #EEE;
 }
 
 .build-list {
@@ -11,13 +12,13 @@
 }
 
 .build-list ul {
-  border-bottom: 1px solid #DDD;
+  border-bottom: 1px solid #BBB;
   margin: 0;
   padding: 0;
 }
 
 .build-list li {
-  border-bottom: 2px solid #DDD;
+  border-bottom: 2px solid #BBB;
   margin: 0;
   padding: 0;
 }
@@ -30,11 +31,11 @@
 }
 
 .build-list a.active {
-  background-color: #EEE;
+  background-color: #FFF;
 }
 
 .build-filter-form {
-  background-color: #DDD;
+  background-color: #BBB;
   padding: 8px 8px 10px 8px;
 }
 
