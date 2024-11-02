@@ -1,11 +1,9 @@
 .build {
   flex: 1;
   min-height: 0;
-  border: 2px solid #DDD;
-  border-left: 1px solid #DDD;
   display: flex;
   background-color: #000;
-  color: #FFF;
+  color: #EEE;
 }
 
 .build a {
@@ -54,13 +52,14 @@
 }
 
 .build-header h2 {
-  color: #444;
+  font-size: 32px;
+  color: #000;
   margin: 0 0 2px 0;
   padding: 0;
 }
 
 .build-header h3 {
-  color: #999;
+  color: #444;
   font-weight: normal;
 }
 

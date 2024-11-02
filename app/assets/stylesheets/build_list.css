@@ -1,7 +1,6 @@
 .build-list-container {
   width: 450px;
-  border: 2px solid #DDD;
-  border-right: 1px solid #DDD;
+  border-right: 2px solid #888;
 }
 
 .build-list {
@@ -30,12 +29,12 @@
 }
 
 .build-list a.active {
-  background-color: #EEE;
+  background-color: #00F;
+  color: #FFF;
 }
 
-.build-filter-form {
-  background-color: #DDD;
-  padding: 8px 8px 10px 8px;
+.build-list a.active .build-author {
+  color: #FFF;
 }
 
 .build-commit {
@@ -70,4 +69,9 @@
 
 .build-status-running {
   background-color: #8DF;
+}
+
+.build-author {
+  color: #999;
+  margin: 4px 0 10px 0;
 }
