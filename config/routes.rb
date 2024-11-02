@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root "admin#index"
+
+    resources :github_events, only: :index
   end
 
   get "jobs/:id/:partial", to: "jobs#show", as: "job"

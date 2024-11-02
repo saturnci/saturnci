@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Admin", type: :request do
+describe "GitHub Events", type: :request do
   context "super admin" do
     let!(:super_admin_user) { create(:user, super_admin: true) }
 
@@ -10,7 +10,7 @@ describe "Admin", type: :request do
 
     describe "GET /admin" do
       it "returns a 200 response" do
-        get admin_root_path
+        get admin_github_events_path
         expect(response).to have_http_status(200)
       end
     end
@@ -25,12 +25,12 @@ describe "Admin", type: :request do
 
     describe "GET /admin" do
       it "returns a 401 response" do
-        get admin_root_path
+        get admin_github_events_path
         expect(response).to have_http_status(401)
       end
 
       it "does not render the page" do
-        get admin_root_path
+        get admin_github_events_path
         expect(response.body).to be_empty
       end
     end
