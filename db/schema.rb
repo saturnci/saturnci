@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_01_204057) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_02_231003) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -72,6 +72,16 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_01_204057) do
     t.index ["job_machine_id"], name: "index_jobs_on_job_machine_id", unique: true
   end
 
+  create_table "project_secrets", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "project_id", null: false
+    t.string "key", null: false
+    t.string "value", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id", "key"], name: "index_project_secrets_on_project_id_and_key", unique: true
+    t.index ["project_id"], name: "index_project_secrets_on_project_id"
+  end
+
   create_table "projects", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
@@ -129,6 +139,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_01_204057) do
   add_foreign_key "charges", "jobs"
   add_foreign_key "job_events", "jobs"
   add_foreign_key "jobs", "builds"
+  add_foreign_key "project_secrets", "projects"
   add_foreign_key "projects", "saturn_installations"
   add_foreign_key "projects", "users"
   add_foreign_key "saturn_installations", "users"
