@@ -67,7 +67,8 @@ pre {
 }
 
 .project-header {
-  background-color: #BBB;
+  background-color: #FFF;
+  border-bottom: 2px solid #BBB;
   padding: 0;
   margin: 0;
   display: flex;

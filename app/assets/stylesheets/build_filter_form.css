@@ -1,7 +1,6 @@
 .build-filter-form {
-  background-color: #DDD;
   border-bottom: 2px solid #BBB;
-  padding: 8px 8px 10px 8px;
+  padding: 10px 8px 10px 8px;
 }
 
 .build-filter-form select {
