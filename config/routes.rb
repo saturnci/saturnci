@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   get "jobs/:id/:partial", to: "jobs#show", as: "job"
 
   resources :projects do
+    resources :settings, only: :index
+
     resources :builds, only: %i(show create destroy) do
       resources :jobs, only: :show do
         get ":partial", to: "jobs#show", on: :member, as: "job_detail_content"
