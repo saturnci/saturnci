@@ -1,12 +1,14 @@
-<header class="project-header">
-  <h2><%= @project.name %></h2>
-  <%= link_to "Settings", "#" %>
-</header>
+<div class="project">
+  <header class="project-header">
+    <h2><%= @project.name %></h2>
+    <%= link_to "Settings", "#" %>
+  </header>
 
-<div class="dashboard">
-  <%= render "builds/list", current_tab_name: @current_tab_name %>
+  <div class="dashboard">
+    <%= render "builds/list", current_tab_name: @current_tab_name %>
 
-  <div class="build">
-    <%= render "jobs/show", current_tab_name: @current_tab_name %>
+    <div class="build">
+      <%= render "jobs/show", current_tab_name: @current_tab_name %>
+    </div>
   </div>
 </div>

@@ -1,8 +1,6 @@
 .build {
   flex: 1;
   min-height: 0;
-  border: 2px solid #000;
-  border-left: 1px solid #000;
   display: flex;
   background-color: #000;
   color: #EEE;
@@ -54,13 +52,13 @@
 }
 
 .build-header h2 {
-  color: #444;
+  color: #000;
   margin: 0 0 2px 0;
   padding: 0;
 }
 
 .build-header h3 {
-  color: #999;
+  color: #444;
   font-weight: normal;
 }
 

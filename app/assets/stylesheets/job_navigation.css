@@ -1,8 +1,15 @@
 .job-menu-container {
   display: flex;
-  background-color: #777;
   padding: 0;
   border-bottom: 15px solid #000;
+}
+
+.build-navigation a.active {
+  color: #000;
+}
+
+.job-menu-container, .build-navigation a.active {
+  background-color: #DDD;
 }
 
 ul.job-menu {
@@ -18,10 +25,11 @@ ul.job-menu li a {
   margin: 0;
   display: block;
   text-decoration: none;
-  color: #DDD;
-  background-color: #555;
+  color: #000;
+  background-color: #AAA;
 }
 
 ul.job-menu li a.active {
+  color: #DDD;
   background-color: #000;
 }

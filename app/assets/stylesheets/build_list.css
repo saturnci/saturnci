@@ -1,8 +1,7 @@
 .build-list-container {
   width: 450px;
-  border: 2px solid #000;
-  border-right: 1px solid #000;
   background-color: #EEE;
+  border-right: 2px solid #888;
 }
 
 .build-list {
@@ -32,11 +31,6 @@
 
 .build-list a.active {
   background-color: #FFF;
-}
-
-.build-filter-form {
-  background-color: #BBB;
-  padding: 8px 8px 10px 8px;
 }
 
 .build-commit {
