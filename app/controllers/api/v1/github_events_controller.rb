@@ -15,27 +15,10 @@ module API
         when "created"
           GitHubEvents::Installation.new(payload).process
         else
-          handle_push_event(payload)
+          GitHubEvents::Push.new(payload, params[:repository][:full_name]).process
         end
 
         head :ok
-      end
-
-      private
-
-      def handle_push_event(payload)
-        repo_full_name = params[:repository][:full_name]
-        ref_path = payload["ref"]
-        head_commit = payload["head_commit"]
-
-        Project.where(github_repo_full_name: repo_full_name).each do |project|
-          build = Build.new(project: project)
-          build.branch_name = ref_path.split("/").last
-          build.author_name = head_commit["author"]["name"]
-          build.commit_hash = head_commit["id"]
-          build.commit_message = head_commit["message"]
-          build.start!
-        end
       end
     end
   end
