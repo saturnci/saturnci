@@ -4,11 +4,17 @@
   <tr>
     <th>Name</th>
     <th>Email</th>
+    <th></th>
   </tr>
   <% @users.each do |user| %>
     <tr>
       <td><%= user.name %></td>
       <td><%= user.email %></td>
+      <td>
+        <%= link_to "Become",
+          admin_user_impersonations_path(user_id: user.id),
+          data: { turbo_method: :post } %>
+      </td>
     </tr>
   <% end %>
 </table>

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
     resources :github_events, only: :index
     resources :users, only: :index
+    resources :user_impersonations, only: :create
   end
 
   get "jobs/:id/:partial", to: "jobs#show", as: "job"
