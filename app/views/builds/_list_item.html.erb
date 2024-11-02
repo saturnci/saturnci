@@ -6,7 +6,7 @@
           <%= build.commit_message.truncate(60) %>
         </div>
 
-        <div style="color: #999; margin: 4px 0 10px 0">
+        <div class="build-author">
           <%= build.author_name %>
           <%= build.created_at.in_time_zone.strftime("%-m/%-d/%Y %H:%M %Z") %>
         </div>
