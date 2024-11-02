@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     root "admin#index"
 
     resources :github_events, only: :index
+    resources :users, only: :index
   end
 
   get "jobs/:id/:partial", to: "jobs#show", as: "job"
