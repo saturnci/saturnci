@@ -14,7 +14,7 @@ RSpec.describe ProjectSecretCollection, type: :model do
         }
       }
 
-      project_secret = project_secret_collection.project_secrets[0]
+      project_secret = project_secret_collection.project.project_secrets[0]
       expect(project_secret.key).to eq("DATABASE_USERNAME")
       expect(project_secret.value).to eq("steve")
     end
@@ -37,7 +37,8 @@ RSpec.describe ProjectSecretCollection, type: :model do
       end
 
       it "skips the empty attributes" do
-        expect(project_secret_collection.project_secrets.count).to eq(1)
+        project_secret_collection.save!
+        expect(project_secret_collection.project.project_secrets.count).to eq(1)
       end
     end
   end
@@ -57,7 +58,7 @@ RSpec.describe ProjectSecretCollection, type: :model do
 
       expect {
         project_secret_collection.save!
-      }.to change { ProjectSecret.count }.by(1)
+      }.to change { ProjectSecret.count }.from(0).to(1)
     end
 
     context "project secret already exists" do
@@ -80,6 +81,36 @@ RSpec.describe ProjectSecretCollection, type: :model do
         expect {
           project_secret_collection.save!
         }.not_to change { project_secret.reload.value }
+      end
+    end
+
+    context "adding a project secret" do
+      let!(:project_secret_collection) do
+        ProjectSecretCollection.new(project: create(:project))
+      end
+
+      it "creates a project secret" do
+        project_secret_collection.project_secrets_attributes = {
+          "0" => {
+            "key"=>"DATABASE_USERNAME",
+            "value"=>"steve"
+          }
+        }
+        project_secret_collection.save!
+
+        project_secret_collection.project_secrets_attributes = {
+          "0" => {
+            "key"=>"DATABASE_USERNAME",
+            "value"=>"steve"
+          },
+          "1" => {
+            "key"=>"DATABASE_PASSWORD",
+            "value"=>"mypassword"
+          }
+        }
+        project_secret_collection.save!
+
+        expect(project_secret_collection.project.project_secrets.count).to eq(2)
       end
     end
   end
