@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
   resources :projects do
     resources :settings, only: :index
+    resource :project_secret_collection, only: %i(show create destroy)
 
     resources :builds, only: %i(show create destroy) do
       resources :jobs, only: :show do
