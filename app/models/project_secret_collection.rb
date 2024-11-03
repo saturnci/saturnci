@@ -8,6 +8,7 @@ class ProjectSecretCollection
 
     attributes.each do |_index, secret_params|
       next if secret_params["key"].blank? || secret_params["value"].blank?
+      next if project.project_secrets.where(key: secret_params["key"]).any?
       project_secrets << ProjectSecret.new(secret_params)
     end
   end
