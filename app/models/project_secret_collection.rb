@@ -4,21 +4,16 @@ class ProjectSecretCollection
   attr_accessor :project_secrets
 
   def project_secrets_attributes=(attributes)
-    @project_secrets = []
+    project.project_secrets ||= []
 
-    attributes.each do |_index, secret_params|
-      next if secret_params["key"].blank? || secret_params["value"].blank?
-      next if project.project_secrets.where(key: secret_params["key"]).any?
-      project_secrets << ProjectSecret.new(secret_params)
+    attributes.each do |_index, project_secret_attributes|
+      next if project_secret_attributes["key"].blank? || project_secret_attributes["value"].blank?
+      next if project.project_secrets.where(key: project_secret_attributes["key"]).any?
+      project.project_secrets.build(project_secret_attributes)
     end
   end
 
   def save!
-    ActiveRecord::Base.transaction do
-      project_secrets.each do |project_secret|
-        project_secret.project = project
-        project_secret.save!
-      end
-    end
+    project.save!
   end
 end
