@@ -28,7 +28,10 @@ describe "Add secrets", type: :system do
 
       expect(page).to have_content("Secrets")
       expect(page).to have_field("project_secrets_0_key", with: "DATABASE_USERNAME")
+
       click_on "Save"
+      expect(page).to have_content("Secrets")
+      expect(page).to have_field("project_secrets_0_key", with: "DATABASE_USERNAME")
     end
   end
 end
