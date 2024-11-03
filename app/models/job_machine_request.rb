@@ -10,27 +10,6 @@ class JobMachineRequest
     client = DropletKitClientFactory.client
     rsa_key = JobMachineRSAKey.new(@job)
 
-    droplet = DropletKit::Droplet.new(
-      name: droplet_name,
-      region: DropletConfig::REGION,
-      image: DropletConfig::SNAPSHOT_IMAGE_ID,
-      size: DropletConfig::SIZE,
-      user_data: user_data,
-      tags: ['saturnci'],
-      ssh_keys: [ssh_key(rsa_key).id]
-    )
-
-    droplet_request = client.droplets.create(droplet)
-
-    @job.update!(
-      job_machine_id: droplet_request.id,
-      job_machine_rsa_key_path: rsa_key.file_path
-    )
-  end
-
-  private
-
-  def ssh_key(rsa_key)
     droplet_kit_ssh_key = DropletKit::SSHKey.new(
       name: rsa_key.filename,
       public_key: File.read("#{rsa_key.file_path}.pub")
@@ -42,8 +21,25 @@ class JobMachineRequest
       raise "SSH key creation not successful"
     end
 
-    ssh_key
+    droplet = DropletKit::Droplet.new(
+      name: droplet_name,
+      region: DropletConfig::REGION,
+      image: DropletConfig::SNAPSHOT_IMAGE_ID,
+      size: DropletConfig::SIZE,
+      user_data: user_data,
+      tags: ['saturnci'],
+      ssh_keys: [ssh_key.id]
+    )
+
+    droplet_request = client.droplets.create(droplet)
+
+    @job.update!(
+      job_machine_id: droplet_request.id,
+      job_machine_rsa_key_path: rsa_key.file_path
+    )
   end
+
+  private
 
   def droplet_name
     "#{@job.build.project.name.gsub("/", "-")}-job-#{@job.id}"
