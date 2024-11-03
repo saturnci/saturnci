@@ -66,14 +66,12 @@ EOF
   SELECTED_TESTS=$(echo "${TEST_FILES}" | awk "NR % ${NUMBER_OF_CONCURRENT_JOBS} == ${TEST_GROUP}")
   echo $SELECTED_TESTS
 
-  script -c "sudo docker-compose \
-    -f .saturnci/docker-compose.yml \
-    run \
-    -e ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY=hl9EuhNijClYqxOsdGCZJev9u1hn0Vba \
-    -e ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY=hJWGiKGSmeeZeUSxkB6uJOeE9mi5MRmD \
-    -e ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT=ODFkzrVr0yAgu54eFGd6xZk0VdXFXGAw \
-    -e SATURN_TEST_APP_IMAGE_URL=$REGISTRY_CACHE_IMAGE_URL \
-    saturn_test_app \
+  script -c "sudo ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY=hl9EuhNijClYqxOsdGCZJev9u1hn0Vba \
+    ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY=hJWGiKGSmeeZeUSxkB6uJOeE9mi5MRmD \
+    ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT=ODFkzrVr0yAgu54eFGd6xZk0VdXFXGAw \
+    SATURN_TEST_APP_IMAGE_URL=$REGISTRY_CACHE_IMAGE_URL \
+    docker-compose \
+    -f .saturnci/docker-compose.yml run saturn_test_app \
     bundle exec rspec --require ./example_status_persistence.rb \
     --format=documentation --order rand:$RSPEC_SEED $(echo $SELECTED_TESTS)" \
     -f "$TEST_OUTPUT_FILENAME"
