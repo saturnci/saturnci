@@ -1,9 +1,11 @@
 require "rails_helper"
 
 RSpec.describe ProjectSecretCollection, type: :model do
-  let!(:project_secret_collection) { ProjectSecretCollection.new }
-
   describe "#project_secrets_attributes=" do
+    let!(:project_secret_collection) do
+      ProjectSecretCollection.new(project: create(:project))
+    end
+
     it "creates a project secret for each key and value" do
       project_secret_collection.project_secrets_attributes = {
         "0" => {
@@ -20,6 +22,7 @@ RSpec.describe ProjectSecretCollection, type: :model do
     context "empty attributes" do
       let!(:project_secret_collection) do
         ProjectSecretCollection.new(
+          project: create(:project),
           project_secrets_attributes: {
             "0" => {
               "key"=>"DATABASE_USERNAME",
@@ -40,8 +43,11 @@ RSpec.describe ProjectSecretCollection, type: :model do
   end
 
   describe "#save!" do
+    let!(:project_secret_collection) do
+      ProjectSecretCollection.new(project: create(:project))
+    end
+
     it "creates a project secret for each key and value" do
-      project_secret_collection = ProjectSecretCollection.new
       project_secret_collection.project_secrets_attributes = {
         "0" => {
           "key"=>"DATABASE_USERNAME",
@@ -49,11 +55,32 @@ RSpec.describe ProjectSecretCollection, type: :model do
         }
       }
 
-      project_secret_collection.project = create(:project)
-
       expect {
         project_secret_collection.save!
       }.to change { ProjectSecret.count }.by(1)
+    end
+
+    context "project secret already exists" do
+      let!(:project_secret) do
+        create(:project_secret, key: "DATABASE_USERNAME", value: "steve")
+      end
+
+      before do
+        project_secret_collection.project = project_secret.project
+
+        project_secret_collection.project_secrets_attributes = {
+          "0" => {
+            "key"=>"DATABASE_USERNAME",
+            "value"=>"gleve"
+          }
+        }
+      end
+
+      it "does not overwrite the existing project secret" do
+        expect {
+          project_secret_collection.save!
+        }.not_to change { project_secret.reload.value }
+      end
     end
   end
 end
