@@ -20,7 +20,7 @@
           <%= form.password_field :value,
             name: "project_secret_collection[project_secrets_attributes][#{index}][value]",
             id: "project_secrets_#{index}_value",
-            value: project_secret.value %>
+            value: project_secret.value.present? ? "XXXXXX" : "" %>
         </td>
       </tr>
     <% end %>
