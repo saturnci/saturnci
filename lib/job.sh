@@ -119,12 +119,6 @@ stream_logs "jobs/$JOB_ID/test_output" "$TEST_OUTPUT_FILENAME" &
 echo "Running tests"
 api_request "POST" "jobs/$JOB_ID/job_events" '{"type":"test_suite_started"}'
 
-cat <<EOF > ./example_status_persistence.rb
-RSpec.configure do |config|
-  config.example_status_persistence_file_path = '$TEST_RESULTS_FILENAME'
-end
-EOF
-
 #--------------------------------------------------------------------------------
 
 cat <<EOF > ./job.rb
@@ -209,6 +203,12 @@ end
 
 client = SaturnCIAPI::Client.new(ENV["HOST"])
 
+File.open('./example_status_persistence.rb', 'w') do |file|
+  file.puts "RSpec.configure do |config|"
+  file.puts "  config.example_status_persistence_file_path = '#{ENV['TEST_RESULTS_FILENAME']}'"
+  file.puts "end"
+end
+
 test_files = Dir.glob('./spec/**/*_spec.rb')
 chunks = test_files.each_slice((test_files.size / ENV['NUMBER_OF_CONCURRENT_JOBS'].to_i.to_f).ceil).to_a
 selected_tests = chunks[ENV['JOB_ORDER_INDEX'].to_i - 1]
@@ -251,9 +251,6 @@ puts "Docker push finished"
 
 puts "Deleting job machine"
 client.delete("jobs/#{ENV["JOB_ID"]}/job_machine")
-
-puts "Response code: #{response.code}"
-puts "Response body: #{response.body}"
 EOF
 
 ruby ./job.rb
