@@ -116,11 +116,6 @@ echo "Starting to stream test output"
 touch $TEST_OUTPUT_FILENAME
 stream_logs "jobs/$JOB_ID/test_output" "$TEST_OUTPUT_FILENAME" &
 
-echo "Running tests"
-api_request "POST" "jobs/$JOB_ID/job_events" '{"type":"test_suite_started"}'
-
-#--------------------------------------------------------------------------------
-
 cat <<EOF > ./job.rb
 require 'net/http'
 require 'uri'
@@ -128,10 +123,11 @@ require 'json'
 
 module SaturnCIAPI
   class Request
-    def initialize(host, method, endpoint)
+    def initialize(host, method, endpoint, payload = nil)
       @host = host
       @method = method
       @endpoint = endpoint
+      @payload = payload
     end
 
     def execute
@@ -150,6 +146,7 @@ module SaturnCIAPI
 
       r.basic_auth(ENV["SATURNCI_API_USERNAME"], ENV["SATURNCI_API_PASSWORD"])
       r["Content-Type"] = "application/json"
+      r.body = @payload.to_json if @payload
       r
     end
 
@@ -191,17 +188,21 @@ module SaturnCIAPI
       @host = host
     end
 
-    def post(endpoint)
-      Request.new(@host, :post, endpoint).execute
+    def post(endpoint, payload)
+      Request.new(@host, :post, endpoint, payload).execute
     end
 
-    def delete(endpoint)
-      Request.new(@host, :delete, endpoint).execute
+    def delete(endpoint, payload)
+      Request.new(@host, :delete, endpoint, payload).execute
     end
   end
 end
 
 client = SaturnCIAPI::Client.new(ENV["HOST"])
+
+puts "Running tests"
+puts "jobs/#{ENV["JOB_ID"]}/test_suite_started"
+client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "test_suite_started")
 
 File.open('./example_status_persistence.rb', 'w') do |file|
   file.puts "RSpec.configure do |config|"
