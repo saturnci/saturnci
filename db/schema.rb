@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_02_231003) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_04_014827) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -67,6 +67,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_02_231003) do
     t.integer "order_index", null: false
     t.string "job_machine_rsa_key_path"
     t.integer "exit_code"
+    t.string "snapshot_image_id"
     t.index ["build_id", "order_index"], name: "index_jobs_on_build_id_and_order_index", unique: true
     t.index ["build_id"], name: "index_jobs_on_build_id"
     t.index ["job_machine_id"], name: "index_jobs_on_job_machine_id", unique: true
