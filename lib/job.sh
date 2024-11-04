@@ -1,10 +1,10 @@
 #!/bin/bash
 
-USER_DIR=/home/ubuntu
-PROJECT_DIR=$USER_DIR/project
-SYSTEM_LOG_FILENAME=/var/log/syslog
-TEST_OUTPUT_FILENAME=tmp/test_output.txt
-TEST_RESULTS_FILENAME=tmp/test_results.txt
+export USER_DIR=/home/ubuntu
+export PROJECT_DIR=$USER_DIR/project
+export SYSTEM_LOG_FILENAME=/var/log/syslog
+export TEST_OUTPUT_FILENAME=tmp/test_output.txt
+export TEST_RESULTS_FILENAME=tmp/test_results.txt
 
 function api_request() {
     local method=$1
@@ -27,17 +27,6 @@ function send_content_to_api() {
         -X POST \
         -H "Content-Type: $content_type" \
         -d "$content" "$HOST/api/v1/$api_path"
-}
-
-function send_file_content_to_api() {
-    local api_path=$1
-    local content_type=$2
-    local file_path=$3
-
-    curl -f -u $SATURNCI_API_USERNAME:$SATURNCI_API_PASSWORD \
-        -X POST \
-        -H "Content-Type: $content_type" \
-        --data-binary "@$file_path" "$HOST/api/v1/$api_path"
 }
 
 function clone_user_repo() {
@@ -163,18 +152,13 @@ api_request "POST" "jobs/$JOB_ID/job_finished_events"
 
 #--------------------------------------------------------------------------------
 
-echo "Sending report"
-send_file_content_to_api "jobs/$JOB_ID/test_reports" "text/plain" "$TEST_RESULTS_FILENAME"
-
-#--------------------------------------------------------------------------------
-
 cat <<EOF > ./job.rb
 require 'net/http'
 require 'uri'
 require 'json'
 
 module SaturnCIAPI
-  class SaturnCIAPI::DeleteJobRequest
+  class DeleteJobRequest
     def initialize(host, job_id)
       @host = host
       @job_id = job_id
@@ -196,11 +180,45 @@ module SaturnCIAPI
     end
 
     def url
-      puts "#{@host}/api/v1/jobs/#{@job_id}/job_machine"
       URI("#{@host}/api/v1/jobs/#{@job_id}/job_machine")
     end
   end
+
+  class FileContentRequest
+    def initialize(host:, api_path:, content_type:, file_path:)
+      @host = host
+      @api_path = api_path
+      @content_type = content_type
+      @file_path = file_path
+    end
+
+    def execute
+      command = <<~COMMAND
+        curl -f -u #{ENV["SATURNCI_API_USERNAME"]}:#{ENV["SATURNCI_API_PASSWORD"]} \
+            -X POST \
+            -H "Content-Type: #{@content_type}" \
+            --data-binary "@#{@file_path}" #{url}
+      COMMAND
+
+      system(command)
+    end
+
+    private
+
+    def url
+      "#{@host}/api/v1/#{@api_path}"
+    end
+  end
 end
+
+puts "Sending report"
+test_reports_request = SaturnCIAPI::FileContentRequest.new(
+  host: ENV["HOST"],
+  api_path: "jobs/#{ENV["JOB_ID"]}/test_reports",
+  content_type: "text/plain",
+  file_path: ENV["TEST_RESULTS_FILENAME"]
+)
+test_reports_request.execute
 
 puts `$(sudo docker image ls)`
 
