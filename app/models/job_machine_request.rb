@@ -8,7 +8,7 @@ class JobMachineRequest
 
   def create!
     client = DropletKitClientFactory.client
-    rsa_key = JobMachineRSAKey.new(@job)
+    rsa_key = JobMachineRSAKey.new("job-#{@job.id}")
 
     droplet_kit_ssh_key = DropletKit::SSHKey.new(
       name: rsa_key.filename,
