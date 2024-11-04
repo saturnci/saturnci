@@ -78,18 +78,8 @@ git checkout $COMMIT_HASH
 
 GEMFILE_LOCK_CHECKSUM=$(sha256sum Gemfile.lock | awk '{ print $1 }')
 REGISTRY_CACHE_DNS_NAME=registrycache.saturnci.com
-REGISTRY_CACHE_URL=$REGISTRY_CACHE_DNS_NAME:5000
+export REGISTRY_CACHE_URL=$REGISTRY_CACHE_DNS_NAME:5000
 export REGISTRY_CACHE_IMAGE_URL=$REGISTRY_CACHE_URL/saturn_test_app:$GEMFILE_LOCK_CHECKSUM
-
-# Registry cache IP is sometimes wrong without this.
-sudo systemd-resolve --flush-caches
-
-echo "Registry cache URL: $REGISTRY_CACHE_URL"
-echo "Registry cache IP: $(dig +short $REGISTRY_CACHE_DNS_NAME)"
-echo "Registry cache image URL: $REGISTRY_CACHE_IMAGE_URL"
-
-echo "Authenticating to Docker registry ($REGISTRY_CACHE_URL)"
-sudo docker login $REGISTRY_CACHE_URL -u myusername -p mypassword
 
 cat <<EOF > ./job.rb
 require 'net/http'
@@ -200,6 +190,12 @@ module SaturnCIAPI
 end
 
 client = SaturnCIAPI::Client.new(ENV["HOST"])
+
+# Registry cache IP is sometimes wrong without this.
+system("sudo systemd-resolve --flush-caches")
+
+puts "Authenticating to Docker registry (#{ENV["REGISTRY_CACHE_URL"]})"
+system("sudo docker login #{ENV["REGISTRY_CACHE_URL"]} -u myusername -p mypassword")
 
 puts "Pulling the existing image to avoid rebuilding if possible"
 system("sudo docker pull #{ENV["REGISTRY_CACHE_IMAGE_URL"]} || true")
