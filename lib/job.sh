@@ -186,22 +186,37 @@ require 'net/http'
 require 'uri'
 require 'json'
 
-def delete_job_machine(job_id)
-  url = URI("#{HOST}/api/v1/jobs/#{job_id}/job_machine")
-  http = Net::HTTP.new(url.host, url.port)
-  http.use_ssl = true if url.scheme == 'https'
+class SaturnCIAPI::DeleteJobRequest
+  def initialize(host, job_id)
+    @host = host
+    @job_id = job_id
+  end
 
-  request = Net::HTTP::Delete.new(url)
-  request.basic_auth(SATURNCI_API_USERNAME, SATURNCI_API_PASSWORD)
-  request['Content-Type'] = 'application/json'
+  def execute
+    http = Net::HTTP.new(url.host, url.port)
+    http.use_ssl = true if url.scheme == "https"
+    http.request(request)
+  end
 
-  response = http.request(request)
-  puts "Response code: #{response.code}"
-  puts "Response body: #{response.body}"
+  private
+
+  def request
+    r = Net::HTTP::Delete.new(url)
+    r.basic_auth(ENV["SATURNCI_API_USERNAME"], ENV["SATURNCI_API_PASSWORD"])
+    r["Content-Type"] = "application/json"
+    r
+  end
+
+  def url
+    URI("#{@host}/api/v1/jobs/#{@job_id}/job_machine")
+  end
 end
 
-# Usage
-delete_job_machine(JOB_ID)
+request = SaturnCIAPI::DeleteJobRequest.new(ENV["JOB_ID"])
+response = request.execute
+
+puts "Response code: #{response.code}"
+puts "Response body: #{response.body}"
 EOF
 
 ruby ./job.rb
