@@ -168,19 +168,6 @@ send_file_content_to_api "jobs/$JOB_ID/test_reports" "text/plain" "$TEST_RESULTS
 
 #--------------------------------------------------------------------------------
 
-echo $(sudo docker image ls)
-
-echo "Performing docker tag and push"
-sudo docker tag $REGISTRY_CACHE_URL/saturn_test_app $REGISTRY_CACHE_IMAGE_URL
-sudo docker push $REGISTRY_CACHE_IMAGE_URL
-echo "Docker push finished"
-
-#--------------------------------------------------------------------------------
-
-echo "Deleting job machine"
-
-# api_request "DELETE" "jobs/$JOB_ID/job_machine"
-
 cat <<EOF > ./job.rb
 require 'net/http'
 require 'uri'
@@ -209,11 +196,20 @@ module SaturnCIAPI
     end
 
     def url
+      puts "#{@host}/api/v1/jobs/#{@job_id}/job_machine"
       URI("#{@host}/api/v1/jobs/#{@job_id}/job_machine")
     end
   end
 end
 
+puts `$(sudo docker image ls)`
+
+puts "Performing docker tag and push"
+system("sudo docker tag $REGISTRY_CACHE_URL/saturn_test_app $REGISTRY_CACHE_IMAGE_URL")
+system("sudo docker push $REGISTRY_CACHE_IMAGE_URL")
+puts "Docker push finished"
+
+puts "Deleting job machine"
 request = SaturnCIAPI::DeleteJobRequest.new(ENV["HOST"], ENV["JOB_ID"])
 response = request.execute
 
