@@ -178,4 +178,30 @@ echo "Docker push finished"
 #--------------------------------------------------------------------------------
 
 echo "Deleting job machine"
-api_request "DELETE" "jobs/$JOB_ID/job_machine"
+
+# api_request "DELETE" "jobs/$JOB_ID/job_machine"
+
+cat <<EOF > ./job.rb
+require 'net/http'
+require 'uri'
+require 'json'
+
+def delete_job_machine(job_id)
+  url = URI("#{HOST}/api/v1/jobs/#{job_id}/job_machine")
+  http = Net::HTTP.new(url.host, url.port)
+  http.use_ssl = true if url.scheme == 'https'
+
+  request = Net::HTTP::Delete.new(url)
+  request.basic_auth(SATURNCI_API_USERNAME, SATURNCI_API_PASSWORD)
+  request['Content-Type'] = 'application/json'
+
+  response = http.request(request)
+  puts "Response code: #{response.code}"
+  puts "Response body: #{response.body}"
+end
+
+# Usage
+delete_job_machine(JOB_ID)
+EOF
+
+ruby ./job.rb
