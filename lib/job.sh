@@ -91,10 +91,6 @@ echo "Registry cache image URL: $REGISTRY_CACHE_IMAGE_URL"
 echo "Authenticating to Docker registry ($REGISTRY_CACHE_URL)"
 sudo docker login $REGISTRY_CACHE_URL -u myusername -p mypassword
 
-echo "Gemfile.lock checksum: $GEMFILE_LOCK_CHECKSUM"
-echo "Pulling the existing image to avoid rebuilding if possible"
-sudo docker pull $REGISTRY_CACHE_IMAGE_URL || true
-
 cat <<EOF > ./job.rb
 require 'net/http'
 require 'uri'
@@ -205,10 +201,13 @@ end
 
 client = SaturnCIAPI::Client.new(ENV["HOST"])
 
+puts "Pulling the existing image to avoid rebuilding if possible"
+system("sudo docker pull #{ENV["REGISTRY_CACHE_IMAGE_URL"]} || true")
+
 puts "Running pre.sh"
 client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "pre_script_started")
 system("sudo chmod 755 .saturnci/pre.sh")
-system("sudo SATURN_TEST_APP_IMAGE_URL=#{ENV["REGISTRY_CACHE_IMAGE_URL]} docker-compose -f .saturnci/docker-compose.yml run saturn_test_app ./.saturnci/pre.sh")
+system("sudo SATURN_TEST_APP_IMAGE_URL=#{ENV["REGISTRY_CACHE_IMAGE_URL"]} docker-compose -f .saturnci/docker-compose.yml run saturn_test_app ./.saturnci/pre.sh")
 client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "pre_script_finished")
 
 puts "Starting to stream test output"
