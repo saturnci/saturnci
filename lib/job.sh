@@ -1,10 +1,10 @@
 #!/bin/bash
 
-USER_DIR=/home/ubuntu
-PROJECT_DIR=$USER_DIR/project
-SYSTEM_LOG_FILENAME=/var/log/syslog
-TEST_OUTPUT_FILENAME=tmp/test_output.txt
-TEST_RESULTS_FILENAME=tmp/test_results.txt
+export USER_DIR=/home/ubuntu
+export PROJECT_DIR=$USER_DIR/project
+export SYSTEM_LOG_FILENAME=/var/log/syslog
+export TEST_OUTPUT_FILENAME=tmp/test_output.txt
+export TEST_RESULTS_FILENAME=tmp/test_results.txt
 
 function api_request() {
     local method=$1
@@ -27,17 +27,6 @@ function send_content_to_api() {
         -X POST \
         -H "Content-Type: $content_type" \
         -d "$content" "$HOST/api/v1/$api_path"
-}
-
-function send_file_content_to_api() {
-    local api_path=$1
-    local content_type=$2
-    local file_path=$3
-
-    curl -f -u $SATURNCI_API_USERNAME:$SATURNCI_API_PASSWORD \
-        -X POST \
-        -H "Content-Type: $content_type" \
-        --data-binary "@$file_path" "$HOST/api/v1/$api_path"
 }
 
 function clone_user_repo() {
@@ -141,9 +130,7 @@ api_request "POST" "jobs/$JOB_ID/job_events" '{"type":"pre_script_finished"}'
 
 #--------------------------------------------------------------------------------
 
-echo "Starting to stream test output!!!"
-
-ruby -e "puts 'this is coming from ruby'"
+echo "Starting to stream test output"
 
 touch $TEST_OUTPUT_FILENAME
 stream_logs "jobs/$JOB_ID/test_output" "$TEST_OUTPUT_FILENAME" &
@@ -154,28 +141,116 @@ start_test_suite
 
 #--------------------------------------------------------------------------------
 
+cat <<EOF > ./job.rb
+require 'net/http'
+require 'uri'
+require 'json'
+
+module SaturnCIAPI
+  class Request
+    def initialize(host, method, endpoint)
+      @host = host
+      @method = method
+      @endpoint = endpoint
+    end
+
+    def execute
+      http = Net::HTTP.new(url.host, url.port)
+      http.use_ssl = true if url.scheme == "https"
+      http.request(request)
+    end
+
+    def request
+      case @method
+      when :post
+        r = Net::HTTP::Post.new(url)
+      when :delete
+        r = Net::HTTP::Delete.new(url)
+      end
+
+      r.basic_auth(ENV["SATURNCI_API_USERNAME"], ENV["SATURNCI_API_PASSWORD"])
+      r["Content-Type"] = "application/json"
+      r
+    end
+
+    private
+
+    def url
+      URI("#{@host}/api/v1/#{@endpoint}")
+    end
+  end
+
+  class FileContentRequest
+    def initialize(host:, api_path:, content_type:, file_path:)
+      @host = host
+      @api_path = api_path
+      @content_type = content_type
+      @file_path = file_path
+    end
+
+    def execute
+      command = <<~COMMAND
+        curl -f -u #{ENV["SATURNCI_API_USERNAME"]}:#{ENV["SATURNCI_API_PASSWORD"]} \
+            -X POST \
+            -H "Content-Type: #{@content_type}" \
+            --data-binary "@#{@file_path}" #{url}
+      COMMAND
+
+      system(command)
+    end
+
+    private
+
+    def url
+      "#{@host}/api/v1/#{@api_path}"
+    end
+  end
+
+  class Client
+    def initialize(host)
+      @host = host
+    end
+
+    def post(endpoint)
+      Request.new(@host, :post, endpoint).execute
+    end
+
+    def delete(endpoint)
+      Request.new(@host, :delete, endpoint).execute
+    end
+  end
+end
+
+client = SaturnCIAPI::Client.new(ENV["HOST"])
+
 # Without this sleep, there's a race condition between the
 # test output stream finishing and the job_finished event
-sleep 5
+sleep(5)
 
-echo "Job finished"
-api_request "POST" "jobs/$JOB_ID/job_finished_events"
+puts "Job finished"
+client.post("jobs/#{ENV["JOB_ID"]}/job_finished_events")
 
-#--------------------------------------------------------------------------------
+puts "Sending report"
+test_reports_request = SaturnCIAPI::FileContentRequest.new(
+  host: ENV["HOST"],
+  api_path: "jobs/#{ENV["JOB_ID"]}/test_reports",
+  content_type: "text/plain",
+  file_path: ENV["TEST_RESULTS_FILENAME"]
+)
+test_reports_request.execute
 
-echo "Sending report"
-send_file_content_to_api "jobs/$JOB_ID/test_reports" "text/plain" "$TEST_RESULTS_FILENAME"
+puts `$(sudo docker image ls)`
 
-#--------------------------------------------------------------------------------
+puts "Performing docker tag and push"
+system("sudo docker tag $REGISTRY_CACHE_URL/saturn_test_app $REGISTRY_CACHE_IMAGE_URL")
+system("sudo docker push $REGISTRY_CACHE_IMAGE_URL")
+puts "Docker push finished"
 
-echo $(sudo docker image ls)
+puts "Deleting job machine"
+client.delete("jobs/#{ENV["JOB_ID"]}/job_machine")
 
-echo "Performing docker tag and push"
-sudo docker tag $REGISTRY_CACHE_URL/saturn_test_app $REGISTRY_CACHE_IMAGE_URL
-sudo docker push $REGISTRY_CACHE_IMAGE_URL
-echo "Docker push finished"
+puts "Response code: #{response.code}"
+puts "Response body: #{response.body}"
+EOF
 
-#--------------------------------------------------------------------------------
-
-echo "Deleting job machine"
-api_request "DELETE" "jobs/$JOB_ID/job_machine"
+ruby ./job.rb
