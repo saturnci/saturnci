@@ -1,7 +1,6 @@
 require "rails_helper"
 
 describe JobMachineRSAKey do
-  let!(:job) { create(:job) }
   let!(:tmp_dir_name) { Rails.root.join("tmp", "saturnci") }
 
   before do
@@ -13,7 +12,7 @@ describe JobMachineRSAKey do
   end
 
   it "creates a file" do
-    job_machine_rsa_key = JobMachineRSAKey.new(job)
+    job_machine_rsa_key = JobMachineRSAKey.new("job-123")
     expect(File.exist?(job_machine_rsa_key.file_path)).to be true
   end
 end
