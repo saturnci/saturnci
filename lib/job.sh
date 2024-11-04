@@ -186,33 +186,35 @@ require 'net/http'
 require 'uri'
 require 'json'
 
-class SaturnCIAPI::DeleteJobRequest
-  def initialize(host, job_id)
-    @host = host
-    @job_id = job_id
-  end
+module SaturnCIAPI
+  class SaturnCIAPI::DeleteJobRequest
+    def initialize(host, job_id)
+      @host = host
+      @job_id = job_id
+    end
 
-  def execute
-    http = Net::HTTP.new(url.host, url.port)
-    http.use_ssl = true if url.scheme == "https"
-    http.request(request)
-  end
+    def execute
+      http = Net::HTTP.new(url.host, url.port)
+      http.use_ssl = true if url.scheme == "https"
+      http.request(request)
+    end
 
-  private
+    private
 
-  def request
-    r = Net::HTTP::Delete.new(url)
-    r.basic_auth(ENV["SATURNCI_API_USERNAME"], ENV["SATURNCI_API_PASSWORD"])
-    r["Content-Type"] = "application/json"
-    r
-  end
+    def request
+      r = Net::HTTP::Delete.new(url)
+      r.basic_auth(ENV["SATURNCI_API_USERNAME"], ENV["SATURNCI_API_PASSWORD"])
+      r["Content-Type"] = "application/json"
+      r
+    end
 
-  def url
-    URI("#{@host}/api/v1/jobs/#{@job_id}/job_machine")
+    def url
+      URI("#{@host}/api/v1/jobs/#{@job_id}/job_machine")
+    end
   end
 end
 
-request = SaturnCIAPI::DeleteJobRequest.new(ENV["JOB_ID"])
+request = SaturnCIAPI::DeleteJobRequest.new(ENV["HOST"], ENV["JOB_ID"])
 response = request.execute
 
 puts "Response code: #{response.code}"
