@@ -76,10 +76,8 @@ git checkout $COMMIT_HASH
 
 #--------------------------------------------------------------------------------
 
-GEMFILE_LOCK_CHECKSUM=$(sha256sum Gemfile.lock | awk '{ print $1 }')
-REGISTRY_CACHE_DNS_NAME=registrycache.saturnci.com
-export REGISTRY_CACHE_URL=$REGISTRY_CACHE_DNS_NAME:5000
-export REGISTRY_CACHE_IMAGE_URL=$REGISTRY_CACHE_URL/saturn_test_app:$GEMFILE_LOCK_CHECKSUM
+export GEMFILE_LOCK_CHECKSUM=$(sha256sum Gemfile.lock | awk '{ print $1 }')
+export REGISTRY_CACHE_URL=registrycache.saturnci.com:5000
 
 cat <<EOF > ./job.rb
 require 'net/http'
@@ -191,6 +189,8 @@ end
 
 client = SaturnCIAPI::Client.new(ENV["HOST"])
 
+registry_cache_image_url = "#{ENV["REGISTRY_CACHE_URL"]}/saturn_test_app:#{ENV["GEMFILE_LOCK_CHECKSUM"]}"
+
 # Registry cache IP is sometimes wrong without this.
 system("sudo systemd-resolve --flush-caches")
 
@@ -198,12 +198,12 @@ puts "Authenticating to Docker registry (#{ENV["REGISTRY_CACHE_URL"]})"
 system("sudo docker login #{ENV["REGISTRY_CACHE_URL"]} -u myusername -p mypassword")
 
 puts "Pulling the existing image to avoid rebuilding if possible"
-system("sudo docker pull #{ENV["REGISTRY_CACHE_IMAGE_URL"]} || true")
+system("sudo docker pull #{registry_cache_image_url} || true")
 
 puts "Running pre.sh"
 client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "pre_script_started")
 system("sudo chmod 755 .saturnci/pre.sh")
-system("sudo SATURN_TEST_APP_IMAGE_URL=#{ENV["REGISTRY_CACHE_IMAGE_URL"]} docker-compose -f .saturnci/docker-compose.yml run saturn_test_app ./.saturnci/pre.sh")
+system("sudo SATURN_TEST_APP_IMAGE_URL=#{registry_cache_image_url} docker-compose -f .saturnci/docker-compose.yml run saturn_test_app ./.saturnci/pre.sh")
 client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "pre_script_finished")
 
 puts "Starting to stream test output"
@@ -249,7 +249,7 @@ selected_tests = chunks[ENV['JOB_ORDER_INDEX'].to_i - 1]
 test_files_string = selected_tests.join(' ')
 
 command = <<~COMMAND
-script -c "sudo SATURN_TEST_APP_IMAGE_URL=#{ENV["REGISTRY_CACHE_IMAGE_URL"]} docker-compose \
+script -c "sudo SATURN_TEST_APP_IMAGE_URL=#{registry_cache_image_url} docker-compose \
   -f .saturnci/docker-compose.yml run saturn_test_app \
   bundle exec rspec --require ./example_status_persistence.rb \
   --format=documentation --order rand:#{ENV["RSPEC_SEED"]} #{test_files_string}" \
