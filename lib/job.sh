@@ -109,13 +109,6 @@ api_request "POST" "jobs/$JOB_ID/job_events" '{"type":"pre_script_started"}'
 run_pre_script
 api_request "POST" "jobs/$JOB_ID/job_events" '{"type":"pre_script_finished"}'
 
-#--------------------------------------------------------------------------------
-
-echo "Starting to stream test output"
-
-touch $TEST_OUTPUT_FILENAME
-stream_logs "jobs/$JOB_ID/test_output" "$TEST_OUTPUT_FILENAME" &
-
 cat <<EOF > ./job.rb
 require 'net/http'
 require 'uri'
@@ -154,6 +147,32 @@ module SaturnCIAPI
 
     def url
       URI("#{@host}/api/v1/#{@endpoint}")
+    end
+  end
+
+  class ContentRequest
+    def initialize(host:, api_path:, content_type:, content:)
+      @host = host
+      @api_path = api_path
+      @content_type = content_type
+      @content = content
+    end
+
+    def execute
+      command = <<~COMMAND
+        curl -f -u #{ENV["SATURNCI_API_USERNAME"]}:#{ENV["SATURNCI_API_PASSWORD"]} \
+            -X POST \
+            -H "Content-Type: #{@content_type}" \
+            -d "#{@content}" #{url}
+      COMMAND
+
+      system(command)
+    end
+
+    private
+
+    def url
+      "#{@host}/api/v1/#{@api_path}"
     end
   end
 
@@ -200,6 +219,33 @@ end
 
 client = SaturnCIAPI::Client.new(ENV["HOST"])
 
+puts "Starting to stream test output"
+File.open(ENV["TEST_OUTPUT_FILENAME"], 'w') {}
+
+streaming_thread = Thread.new do
+  last_line = 0
+
+  while true
+    current_number_of_lines_in_log_file = File.read(ENV["TEST_OUTPUT_FILENAME"]).lines.count
+
+    if current_number_of_lines_in_log_file > last_line
+      content = File.readlines(ENV["TEST_OUTPUT_FILENAME"])[last_line..-1].join
+
+      test_output_request = SaturnCIAPI::FileContentRequest.new(
+        host: ENV["HOST"],
+        api_path: "jobs/#{ENV["JOB_ID"]}/test_output",
+        content_type: "text/plain",
+        file_path: ENV["TEST_OUTPUT_FILENAME"]
+      )
+      test_output_request.execute
+
+      last_line = current_number_of_lines_in_log_file
+    end
+
+    sleep(1)
+  end
+end
+
 puts "Running tests"
 puts "jobs/#{ENV["JOB_ID"]}/test_suite_started"
 client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "test_suite_started")
@@ -235,11 +281,11 @@ puts "Job finished"
 client.post("jobs/#{ENV["JOB_ID"]}/job_finished_events")
 
 puts "Sending report"
-test_reports_request = SaturnCIAPI::FileContentRequest.new(
+test_reports_request = SaturnCIAPI::ContentRequest.new(
   host: ENV["HOST"],
   api_path: "jobs/#{ENV["JOB_ID"]}/test_reports",
   content_type: "text/plain",
-  file_path: ENV["TEST_RESULTS_FILENAME"]
+  content: content
 )
 test_reports_request.execute
 
@@ -252,6 +298,8 @@ puts "Docker push finished"
 
 puts "Deleting job machine"
 client.delete("jobs/#{ENV["JOB_ID"]}/job_machine")
+
+streaming_thread.join if streaming_thread.alive?
 EOF
 
 ruby ./job.rb
