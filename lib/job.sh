@@ -141,7 +141,10 @@ api_request "POST" "jobs/$JOB_ID/job_events" '{"type":"pre_script_finished"}'
 
 #--------------------------------------------------------------------------------
 
-echo "Starting to stream test output"
+echo "Starting to stream test output!!!"
+
+ruby -e "puts 'this is coming from ruby'"
+
 touch $TEST_OUTPUT_FILENAME
 stream_logs "jobs/$JOB_ID/test_output" "$TEST_OUTPUT_FILENAME" &
 
