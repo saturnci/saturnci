@@ -130,9 +130,7 @@ api_request "POST" "jobs/$JOB_ID/job_events" '{"type":"pre_script_finished"}'
 
 #--------------------------------------------------------------------------------
 
-echo "Starting to stream test output!!!"
-
-ruby -e "puts 'this is coming from ruby'"
+echo "Starting to stream test output"
 
 touch $TEST_OUTPUT_FILENAME
 stream_logs "jobs/$JOB_ID/test_output" "$TEST_OUTPUT_FILENAME" &
@@ -158,10 +156,10 @@ require 'uri'
 require 'json'
 
 module SaturnCIAPI
-  class DeleteJobRequest
-    def initialize(host, job_id)
+  class DeleteRequest
+    def initialize(host, endpoint)
       @host = host
-      @job_id = job_id
+      @endpoint = endpoint
     end
 
     def execute
@@ -180,7 +178,7 @@ module SaturnCIAPI
     end
 
     def url
-      URI("#{@host}/api/v1/jobs/#{@job_id}/job_machine")
+      URI("#{@host}/api/v1/#{@endpoint}")
     end
   end
 
@@ -209,6 +207,16 @@ module SaturnCIAPI
       "#{@host}/api/v1/#{@api_path}"
     end
   end
+
+  class Client
+    def initialize(host)
+      @host = host
+    end
+
+    def delete(endpoint)
+      DeleteRequest.new(@host, endpoint)
+    end
+  end
 end
 
 puts "Sending report"
@@ -228,7 +236,8 @@ system("sudo docker push $REGISTRY_CACHE_IMAGE_URL")
 puts "Docker push finished"
 
 puts "Deleting job machine"
-request = SaturnCIAPI::DeleteJobRequest.new(ENV["HOST"], ENV["JOB_ID"])
+client = SaturnCIAPI::Client.new(ENV["HOST"])
+request = client.delete("jobs/#{ENV["JOB_ID"]}/job_machine")
 response = request.execute
 
 puts "Response code: #{response.code}"
