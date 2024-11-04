@@ -188,12 +188,12 @@ module SaturnCIAPI
       @host = host
     end
 
-    def post(endpoint, payload)
+    def post(endpoint, payload = nil)
       Request.new(@host, :post, endpoint, payload).execute
     end
 
-    def delete(endpoint, payload)
-      Request.new(@host, :delete, endpoint, payload).execute
+    def delete(endpoint)
+      Request.new(@host, :delete, endpoint).execute
     end
   end
 end
