@@ -36,13 +36,6 @@ function clone_user_repo() {
   mkdir tmp
 }
 
-function run_pre_script() {
-  sudo chmod 755 .saturnci/pre.sh
-
-  sudo SATURN_TEST_APP_IMAGE_URL=$REGISTRY_CACHE_IMAGE_URL docker-compose \
-    -f .saturnci/docker-compose.yml run saturn_test_app ./.saturnci/pre.sh
-}
-
 function stream_logs() {
     local api_path=$1
     local log_file_path=$2
@@ -101,13 +94,6 @@ sudo docker login $REGISTRY_CACHE_URL -u myusername -p mypassword
 echo "Gemfile.lock checksum: $GEMFILE_LOCK_CHECKSUM"
 echo "Pulling the existing image to avoid rebuilding if possible"
 sudo docker pull $REGISTRY_CACHE_IMAGE_URL || true
-
-#--------------------------------------------------------------------------------
-
-echo "Running pre.sh"
-api_request "POST" "jobs/$JOB_ID/job_events" '{"type":"pre_script_started"}'
-run_pre_script
-api_request "POST" "jobs/$JOB_ID/job_events" '{"type":"pre_script_finished"}'
 
 cat <<EOF > ./job.rb
 require 'net/http'
@@ -218,6 +204,12 @@ module SaturnCIAPI
 end
 
 client = SaturnCIAPI::Client.new(ENV["HOST"])
+
+puts "Running pre.sh"
+client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "pre_script_started")
+system("sudo chmod 755 .saturnci/pre.sh")
+system("sudo SATURN_TEST_APP_IMAGE_URL=#{ENV["REGISTRY_CACHE_IMAGE_URL]} docker-compose -f .saturnci/docker-compose.yml run saturn_test_app ./.saturnci/pre.sh")
+client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "pre_script_finished")
 
 puts "Starting to stream test output"
 File.open(ENV["TEST_OUTPUT_FILENAME"], 'w') {}
