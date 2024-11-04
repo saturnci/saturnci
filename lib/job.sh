@@ -86,7 +86,7 @@ git checkout $COMMIT_HASH
 GEMFILE_LOCK_CHECKSUM=$(sha256sum Gemfile.lock | awk '{ print $1 }')
 REGISTRY_CACHE_DNS_NAME=registrycache.saturnci.com
 REGISTRY_CACHE_URL=$REGISTRY_CACHE_DNS_NAME:5000
-REGISTRY_CACHE_IMAGE_URL=$REGISTRY_CACHE_URL/saturn_test_app:$GEMFILE_LOCK_CHECKSUM
+export REGISTRY_CACHE_IMAGE_URL=$REGISTRY_CACHE_URL/saturn_test_app:$GEMFILE_LOCK_CHECKSUM
 
 # Registry cache IP is sometimes wrong without this.
 sudo systemd-resolve --flush-caches
@@ -124,17 +124,6 @@ RSpec.configure do |config|
   config.example_status_persistence_file_path = '$TEST_RESULTS_FILENAME'
 end
 EOF
-
-TEST_FILES=$(find spec -name '*_spec.rb')
-TEST_GROUP=$(expr ${JOB_ORDER_INDEX} % ${NUMBER_OF_CONCURRENT_JOBS})
-SELECTED_TESTS=$(echo "${TEST_FILES}" | awk "NR % ${NUMBER_OF_CONCURRENT_JOBS} == ${TEST_GROUP}")
-echo $SELECTED_TESTS
-
-script -c "sudo SATURN_TEST_APP_IMAGE_URL=$REGISTRY_CACHE_IMAGE_URL docker-compose \
-  -f .saturnci/docker-compose.yml run saturn_test_app \
-  bundle exec rspec --require ./example_status_persistence.rb \
-  --format=documentation --order rand:$RSPEC_SEED $(echo $SELECTED_TESTS)" \
-  -f "$TEST_OUTPUT_FILENAME"
 
 #--------------------------------------------------------------------------------
 
@@ -219,6 +208,23 @@ module SaturnCIAPI
 end
 
 client = SaturnCIAPI::Client.new(ENV["HOST"])
+
+test_files = Dir.glob('./spec/**/*_spec.rb')
+chunks = test_files.each_slice((test_files.size / ENV['NUMBER_OF_CONCURRENT_JOBS'].to_i.to_f).ceil).to_a
+selected_tests = chunks[ENV['JOB_ORDER_INDEX'].to_i - 1]
+test_files_string = selected_tests.join(' ')
+
+command = <<~COMMAND
+script -c "sudo SATURN_TEST_APP_IMAGE_URL=#{ENV["REGISTRY_CACHE_IMAGE_URL"]} docker-compose \
+  -f .saturnci/docker-compose.yml run saturn_test_app \
+  bundle exec rspec --require ./example_status_persistence.rb \
+  --format=documentation --order rand:#{ENV["RSPEC_SEED"]} #{test_files_string}" \
+  -f "#{ENV["TEST_OUTPUT_FILENAME"]}"
+COMMAND
+
+puts command
+
+system(command)
 
 # Without this sleep, there's a race condition between the
 # test output stream finishing and the job_finished event
