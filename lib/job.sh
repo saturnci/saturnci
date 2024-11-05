@@ -46,15 +46,8 @@ function stream_logs() {
     done
 }
 
-#--------------------------------------------------------------------------------
-
 echo "Starting to stream logs"
 stream_logs "jobs/$JOB_ID/system_logs" $SYSTEM_LOG_FILENAME &
-
-#--------------------------------------------------------------------------------
-
-echo "Job machine ready"
-api_request "POST" "jobs/$JOB_ID/job_events" '{"type":"job_machine_ready"}'
 
 cat <<EOF > ./job.rb
 require "net/http"
@@ -167,6 +160,9 @@ module SaturnCIAPI
 end
 
 client = SaturnCIAPI::Client.new(ENV["HOST"])
+
+puts "Job machine ready"
+client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "job_machine_ready")
 
 token = client.post("github_tokens", github_installation_id: ENV["GITHUB_INSTALLATION_ID"]).body
 system("git clone https://x-access-token:#{token}@github.com/#{ENV['GITHUB_REPO_FULL_NAME']} #{ENV['PROJECT_DIR']}")
