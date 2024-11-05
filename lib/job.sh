@@ -74,15 +74,11 @@ api_request "POST" "jobs/$JOB_ID/job_events" '{"type":"repository_cloned"}'
 echo "Checking out commit $COMMIT_HASH"
 git checkout $COMMIT_HASH
 
-#--------------------------------------------------------------------------------
-
-export GEMFILE_LOCK_CHECKSUM=$(sha256sum Gemfile.lock | awk '{ print $1 }')
-export REGISTRY_CACHE_URL=registrycache.saturnci.com:5000
-
 cat <<EOF > ./job.rb
-require 'net/http'
-require 'uri'
-require 'json'
+require "net/http"
+require "uri"
+require "json"
+require "digest"
 
 module SaturnCIAPI
   class Request
@@ -189,13 +185,16 @@ end
 
 client = SaturnCIAPI::Client.new(ENV["HOST"])
 
-registry_cache_image_url = "#{ENV["REGISTRY_CACHE_URL"]}/saturn_test_app:#{ENV["GEMFILE_LOCK_CHECKSUM"]}"
+gemfile_lock_checksum = Digest::SHA256.file("Gemfile.lock").hexdigest
+registry_cache_url = "registrycache.saturnci.com:5000"
+
+registry_cache_image_url = "#{registry_cache_url}/saturn_test_app:#{gemfile_lock_checksum}"
 
 # Registry cache IP is sometimes wrong without this.
 system("sudo systemd-resolve --flush-caches")
 
-puts "Authenticating to Docker registry (#{ENV["REGISTRY_CACHE_URL"]})"
-system("sudo docker login #{ENV["REGISTRY_CACHE_URL"]} -u myusername -p mypassword")
+puts "Authenticating to Docker registry (#{registry_cache_url})"
+system("sudo docker login #{registry_cache_url} -u myusername -p mypassword")
 
 puts "Pulling the existing image to avoid rebuilding if possible"
 system("sudo docker pull #{registry_cache_image_url} || true")
@@ -279,8 +278,8 @@ test_reports_request.execute
 puts `$(sudo docker image ls)`
 
 puts "Performing docker tag and push"
-system("sudo docker tag #{ENV["REGISTRY_CACHE_URL"]}/saturn_test_app #{ENV["REGISTRY_CACHE_IMAGE_URL"]}")
-system("sudo docker push #{ENV["REGISTRY_CACHE_IMAGE_URL"]}")
+system("sudo docker tag #{registry_cache_url}/saturn_test_app #{registry_cache_image_url}")
+system("sudo docker push #{registry_cache_image_url}")
 puts "Docker push finished"
 
 puts "Deleting job machine"
