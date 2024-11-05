@@ -29,13 +29,6 @@ function send_content_to_api() {
         -d "$content" "$HOST/api/v1/$api_path"
 }
 
-function clone_user_repo() {
-  TOKEN=$(api_request "POST" "github_tokens" "{\"github_installation_id\":\"$GITHUB_INSTALLATION_ID\"}")
-  git clone https://x-access-token:$TOKEN@github.com/$GITHUB_REPO_FULL_NAME $PROJECT_DIR
-  cd $PROJECT_DIR
-  mkdir tmp
-}
-
 function stream_logs() {
     local api_path=$1
     local log_file_path=$2
@@ -63,16 +56,12 @@ stream_logs "jobs/$JOB_ID/system_logs" $SYSTEM_LOG_FILENAME &
 echo "Job machine ready"
 api_request "POST" "jobs/$JOB_ID/job_events" '{"type":"job_machine_ready"}'
 
-#--------------------------------------------------------------------------------
-
-echo "Cloning user repo"
-clone_user_repo
-
 cat <<EOF > ./job.rb
 require "net/http"
 require "uri"
 require "json"
 require "digest"
+require "fileutils"
 
 module SaturnCIAPI
   class Request
@@ -178,6 +167,11 @@ module SaturnCIAPI
 end
 
 client = SaturnCIAPI::Client.new(ENV["HOST"])
+
+token = client.post("github_tokens", github_installation_id: ENV["GITHUB_INSTALLATION_ID"]).body
+system("git clone https://x-access-token:#{token}@github.com/#{ENV['GITHUB_REPO_FULL_NAME']} #{ENV['PROJECT_DIR']}")
+Dir.chdir(ENV['PROJECT_DIR'])
+FileUtils.mkdir_p('tmp')
 
 client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "repository_cloned")
 
