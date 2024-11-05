@@ -54,6 +54,7 @@ Rails.application.routes.draw do
       resources :github_events
       resources :github_tokens, only: :create
       resources :job_machine_images, only: :update
+      resources :debug_messages, only: :create
     end
   end
 end
