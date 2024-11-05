@@ -268,19 +268,19 @@ puts "Job finished"
 client.post("jobs/#{ENV["JOB_ID"]}/job_finished_events")
 
 puts "Sending report"
-test_reports_request = SaturnCIAPI::ContentRequest.new(
+test_reports_request = SaturnCIAPI::FileContentRequest.new(
   host: ENV["HOST"],
   api_path: "jobs/#{ENV["JOB_ID"]}/test_reports",
   content_type: "text/plain",
-  content: content
+  file_path: ENV["TEST_RESULTS_FILENAME"]
 )
 test_reports_request.execute
 
 puts `$(sudo docker image ls)`
 
 puts "Performing docker tag and push"
-system("sudo docker tag $REGISTRY_CACHE_URL/saturn_test_app $REGISTRY_CACHE_IMAGE_URL")
-system("sudo docker push $REGISTRY_CACHE_IMAGE_URL")
+system("sudo docker tag #{ENV["REGISTRY_CACHE_URL"]}/saturn_test_app #{ENV["REGISTRY_CACHE_IMAGE_URL"]}")
+system("sudo docker push #{ENV["REGISTRY_CACHE_IMAGE_URL"]}")
 puts "Docker push finished"
 
 puts "Deleting job machine"
