@@ -91,11 +91,21 @@ RSpec.describe Job, type: :model do
   describe "#exit_code" do
     context "test_output contains COMMAND_EXIT_CODE" do
       before do
-        job.update!(test_output: "Script done on 2024-10-20 13:41:25+00:00 [COMMAND_EXIT_CODE=\"1\"]")
+        job.update!(test_output: "Script done on 2024-10-20 13:41:25+00:00 [COMMAND_EXIT_CODE=\"0\"]")
       end
 
       it "gets saved upon finish" do
-        expect { job.finish! }.to change { job.reload.exit_code }.from(nil).to(1)
+        expect { job.finish! }.to change { job.reload.exit_code }.from(nil).to(0)
+      end
+    end
+
+    context "test_output contains COMMAND_EXIT_CODE with no quotes" do
+      before do
+        job.update!(test_output: "Script done on 2023-11-05 14:10:32+00:00 [COMMAND_EXIT_CODE=0]\n")
+      end
+
+      it "gets saved upon finish" do
+        expect { job.finish! }.to change { job.reload.exit_code }.from(nil).to(0)
       end
     end
 
