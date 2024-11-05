@@ -197,29 +197,33 @@ client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "pre_script_finished")
 puts "Starting to stream test output"
 File.open(ENV["TEST_OUTPUT_FILENAME"], 'w') {}
 
-streaming_thread = Thread.new do
-  last_line = 0
+def stream(log_file_path, api_path)
+  Thread.new do
+    last_line = 0
 
-  while true
-    current_number_of_lines_in_log_file = File.read(ENV["TEST_OUTPUT_FILENAME"]).lines.count
+    while true
+      current_number_of_lines_in_log_file = File.read(log_file_path).lines.count
 
-    if current_number_of_lines_in_log_file > last_line
-      content = File.readlines(ENV["TEST_OUTPUT_FILENAME"])[last_line..-1].join
+      if current_number_of_lines_in_log_file > last_line
+        content = File.readlines(log_file_path)[last_line..-1].join
 
-      test_output_request = SaturnCIAPI::FileContentRequest.new(
-        host: ENV["HOST"],
-        api_path: "jobs/#{ENV["JOB_ID"]}/test_output",
-        content_type: "text/plain",
-        file_path: ENV["TEST_OUTPUT_FILENAME"]
-      )
-      test_output_request.execute
+        test_output_request = SaturnCIAPI::FileContentRequest.new(
+          host: ENV["HOST"],
+          api_path: api_path,
+          content_type: "text/plain",
+          file_path: log_file_path
+        )
+        test_output_request.execute
 
-      last_line = current_number_of_lines_in_log_file
+        last_line = current_number_of_lines_in_log_file
+      end
+
+      sleep(1)
     end
-
-    sleep(1)
   end
 end
+
+streaming_thread = stream(ENV["TEST_OUTPUT_FILENAME"], "jobs/#{ENV["JOB_ID"]}/test_output")
 
 puts "Running tests"
 puts "jobs/#{ENV["JOB_ID"]}/test_suite_started"
