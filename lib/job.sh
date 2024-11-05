@@ -67,12 +67,6 @@ api_request "POST" "jobs/$JOB_ID/job_events" '{"type":"job_machine_ready"}'
 
 echo "Cloning user repo"
 clone_user_repo
-api_request "POST" "jobs/$JOB_ID/job_events" '{"type":"repository_cloned"}'
-
-#--------------------------------------------------------------------------------
-
-echo "Checking out commit $COMMIT_HASH"
-git checkout $COMMIT_HASH
 
 cat <<EOF > ./job.rb
 require "net/http"
@@ -184,6 +178,11 @@ module SaturnCIAPI
 end
 
 client = SaturnCIAPI::Client.new(ENV["HOST"])
+
+client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "repository_cloned")
+
+puts "Checking out commit #{ENV["COMMIT_HASH"]}"
+system("git checkout #{ENV["COMMIT_HASH"]}")
 
 gemfile_lock_checksum = Digest::SHA256.file("Gemfile.lock").hexdigest
 registry_cache_url = "registrycache.saturnci.com:5000"
