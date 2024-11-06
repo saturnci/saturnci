@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe "job machine script" do
-  describe "RSpecCommand" do
+  describe "TestSuiteCommand" do
     let!(:rspec_command) do
-      JobMachineScript::RSpecCommand.new(
+      JobMachineScript::TestSuiteCommand.new(
         registry_cache_image_url: "registrycache.saturnci.com:5000/saturn_test_app:123456",
         test_files_string: "spec/models/github_token_spec.rb spec/rebuilds_spec.rb spec/sign_up_spec.rb spec/test_spec.rb",
         rspec_seed: "999",
