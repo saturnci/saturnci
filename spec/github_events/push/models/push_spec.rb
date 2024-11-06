@@ -40,6 +40,11 @@ RSpec.describe "push" do
   context "do not start builds automatically" do
     let!(:project) { create(:project, start_builds_automatically_on_git_push: false) }
 
+    it "saves the build" do
+      build = Build.new(project:)
+      expect { push_event.prepare_build(build) }.to change(Build, :count).by(1)
+    end
+
     it "does not start the build" do
       build = Build.new(project:)
       expect(build).not_to receive(:start!)
