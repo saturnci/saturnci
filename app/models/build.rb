@@ -36,6 +36,7 @@ class Build < ApplicationRecord
   end
 
   def calculated_status
+    return "Not Started" if jobs.empty?
     return "Running" if jobs.any? { |job| job.status == "Running" } || jobs.empty?
     return "Failed" if jobs.any? { |job| job.status == "Failed" }
     return "Cancelled" if jobs.any? { |job| job.status == "Cancelled" }
