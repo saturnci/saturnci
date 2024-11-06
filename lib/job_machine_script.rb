@@ -123,10 +123,16 @@ module JobMachineScript
     end
 
     def to_s
-      "script -f #{@test_output_filename} -c \"sudo SATURN_TEST_APP_IMAGE_URL=#{@registry_cache_image_url} #{docker_compose_command.strip}\""
+      "script -f #{@test_output_filename} -c \"sudo #{script_env_vars} #{docker_compose_command.strip}\""
     end
 
     private
+
+    def script_env_vars
+      {
+        "SATURN_TEST_APP_IMAGE_URL" => @registry_cache_image_url
+      }.map { |key, value| "#{key}=#{value}" }.join(" ")
+    end
 
     def docker_compose_command
       "docker-compose -f .saturnci/docker-compose.yml run saturn_test_app #{rspec_command}"
