@@ -47,7 +47,9 @@ class JobMachineRequest
   end
 
   def user_data
-    script_filename = File.join(Rails.root, "lib", "job.sh")
+    script_filename = File.join(Rails.root, "lib", "job_machine_script.rb")
+    script_content = File.read(script_filename)
+    encoded_script = Base64.strict_encode64(script_content)
 
     <<~SCRIPT
       #!/usr/bin/bash
@@ -62,7 +64,9 @@ class JobMachineRequest
       export GITHUB_INSTALLATION_ID=#{@github_installation_id}
       export GITHUB_REPO_FULL_NAME=#{@job.build.project.github_repo_full_name}
 
-      #{File.read(script_filename)}
+      RUBY_SCRIPT_PATH=/tmp/job_machine_script.rb
+      echo #{encoded_script} | base64 --decode > $RUBY_SCRIPT_PATH
+      ruby $RUBY_SCRIPT_PATH
     SCRIPT
   end
 end
