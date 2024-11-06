@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_04_014827) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_06_184126) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -91,6 +91,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_04_014827) do
     t.uuid "user_id", null: false
     t.uuid "saturn_installation_id"
     t.boolean "active", default: true, null: false
+    t.boolean "start_builds_automatically_on_git_push", default: true, null: false
     t.index ["saturn_installation_id"], name: "index_projects_on_saturn_installation_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
