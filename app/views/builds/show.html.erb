@@ -1,1 +1,16 @@
-Error: no this build has no jobs.
+<div class="project">
+  <header class="project-header">
+    <h2><%= @project.name %></h2>
+    <%= link_to "Settings", project_settings_path(@project) %>
+  </header>
+
+  <div class="dashboard">
+    <%= render "builds/list", current_tab_name: @current_tab_name %>
+
+    <div class="build">
+      <%= turbo_frame_tag "build", class: "build-inner", data: { turbo_action: "advance" } do %>
+        This build has no jobs.
+      <% end %>
+    </div>
+  </div>
+</div>
