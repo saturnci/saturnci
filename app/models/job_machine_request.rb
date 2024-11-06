@@ -64,6 +64,9 @@ class JobMachineRequest
       export GITHUB_INSTALLATION_ID=#{@github_installation_id}
       export GITHUB_REPO_FULL_NAME=#{@job.build.project.github_repo_full_name}
 
+      export USER_ENV_VAR_KEYS="#{@job.build.project.project_secrets.map(&:key).join(",")}"
+      #{@job.build.project.project_secrets.map { |secret| "export #{secret.key}=#{secret.value}" }.join("\n")}
+
       RUBY_SCRIPT_PATH=/tmp/job_machine_script.rb
       echo #{encoded_script} | base64 --decode > $RUBY_SCRIPT_PATH
       ruby $RUBY_SCRIPT_PATH
