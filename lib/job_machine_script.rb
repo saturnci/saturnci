@@ -113,6 +113,25 @@ module JobMachineScript
       post("debug_messages", message)
     end
   end
+
+  class RSpecCommand
+    def initialize(registry_cache_image_url:, test_files_string:, rspec_seed:, test_output_filename:)
+      @registry_cache_image_url = registry_cache_image_url
+      @test_files_string = test_files_string
+      @rspec_seed = rspec_seed
+      @test_output_filename = test_output_filename
+    end
+
+    def to_s
+      <<~COMMAND
+      script -c "sudo SATURN_TEST_APP_IMAGE_URL=#{@registry_cache_image_url} docker-compose \
+        -f .saturnci/docker-compose.yml run saturn_test_app \
+        bundle exec rspec --require ./example_status_persistence.rb \
+        --format=documentation --order rand:#{@rspec_seed} #{@test_files_string}" \
+        -f "#{@test_output_filename}"
+      COMMAND
+    end
+  end
 end
 
 def stream(log_file_path, api_path, client)
@@ -230,14 +249,12 @@ if ENV["JOB_ID"]
   selected_tests = chunks[ENV['JOB_ORDER_INDEX'].to_i - 1]
   test_files_string = selected_tests.join(' ')
 
-  command = <<~COMMAND
-  script -c "sudo SATURN_TEST_APP_IMAGE_URL=#{registry_cache_image_url} docker-compose \
-    -f .saturnci/docker-compose.yml run saturn_test_app \
-    bundle exec rspec --require ./example_status_persistence.rb \
-    --format=documentation --order rand:#{ENV["RSPEC_SEED"]} #{test_files_string}" \
-    -f "#{TEST_OUTPUT_FILENAME}"
-  COMMAND
-
+  command = JobMachineScript::RSpecCommand.new(
+    registry_cache_image_url: registry_cache_image_url,
+    test_files_string: test_files_string,
+    rspec_seed: ENV["RSPEC_SEED"],
+    test_output_filename: TEST_OUTPUT_FILENAME
+  ).to_s
   puts command
 
   system(command)
