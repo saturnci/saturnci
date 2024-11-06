@@ -2,52 +2,8 @@
 
 export USER_DIR=/home/ubuntu
 export PROJECT_DIR=$USER_DIR/project
-export SYSTEM_LOG_FILENAME=/var/log/syslog
 export TEST_OUTPUT_FILENAME=tmp/test_output.txt
 export TEST_RESULTS_FILENAME=tmp/test_results.txt
-
-function api_request() {
-    local method=$1
-    local path=$2
-    local data=$3
-
-    curl -s -f -u $SATURNCI_API_USERNAME:$SATURNCI_API_PASSWORD \
-        -X $method \
-        -H "Content-Type: application/json" \
-        -d "$data" \
-        $HOST/api/v1/$path
-}
-
-function send_content_to_api() {
-    local api_path=$1
-    local content_type=$2
-    local content=$3
-
-    curl -s -f -u $SATURNCI_API_USERNAME:$SATURNCI_API_PASSWORD \
-        -X POST \
-        -H "Content-Type: $content_type" \
-        -d "$content" "$HOST/api/v1/$api_path"
-}
-
-function stream_logs() {
-    local api_path=$1
-    local log_file_path=$2
-    local last_line=0
-    local log_sending_interval_in_seconds=1
-
-    while true; do
-        local current_number_of_lines_in_log_file=$(wc -l < $log_file_path)
-        if [ $current_number_of_lines_in_log_file -gt $last_line ]; then
-            local content=$(sed -n "$(($last_line + 1)),$current_number_of_lines_in_log_file p" $log_file_path)
-            send_content_to_api $api_path "text/plain" "$content"
-            last_line=$current_number_of_lines_in_log_file
-        fi
-        sleep $log_sending_interval_in_seconds
-    done
-}
-
-echo "Starting to stream logs"
-stream_logs "jobs/$JOB_ID/system_logs" $SYSTEM_LOG_FILENAME &
 
 cat <<EOF > ./job.rb
 require "net/http"
@@ -102,7 +58,7 @@ module SaturnCIAPI
 
     def execute
       command = <<~COMMAND
-        curl -f -u #{ENV["SATURNCI_API_USERNAME"]}:#{ENV["SATURNCI_API_PASSWORD"]} \
+        curl -s -f -u #{ENV["SATURNCI_API_USERNAME"]}:#{ENV["SATURNCI_API_PASSWORD"]} \
             -X POST \
             -H "Content-Type: #{@content_type}" \
             -d "#{@content}" #{url}
@@ -128,7 +84,7 @@ module SaturnCIAPI
 
     def execute
       command = <<~COMMAND
-        curl -f -u #{ENV["SATURNCI_API_USERNAME"]}:#{ENV["SATURNCI_API_PASSWORD"]} \
+        curl -s -f -u #{ENV["SATURNCI_API_USERNAME"]}:#{ENV["SATURNCI_API_PASSWORD"]} \
             -X POST \
             -H "Content-Type: #{@content_type}" \
             --data-binary "@#{@file_path}" #{url}
@@ -156,10 +112,14 @@ module SaturnCIAPI
     def delete(endpoint)
       Request.new(@host, :delete, endpoint).execute
     end
+
+    def debug(message)
+      post("debug_messages", message)
+    end
   end
 end
 
-def stream(log_file_path, api_path)
+def stream(log_file_path, api_path, client)
   Thread.new do
     last_line = 0
 
@@ -168,6 +128,7 @@ def stream(log_file_path, api_path)
 
       if current_number_of_lines_in_log_file > last_line
         content = File.readlines(log_file_path)[last_line..-1].join
+        client.debug "1234 Content: #{content[0..100]}"
 
         SaturnCIAPI::ContentRequest.new(
           host: ENV["HOST"],
@@ -184,7 +145,39 @@ def stream(log_file_path, api_path)
   end
 end
 
+def stream2(log_file_path, api_path, client)
+  Thread.new do
+    most_recent_total_line_count = 0
+
+    while true
+      all_lines = File.readlines(log_file_path)
+      newest_content = all_lines[most_recent_total_line_count..-1].join("\n")
+
+      #client.debug "1234 last line index: #{most_recent_total_line_count} total count: #{all_lines.count}"
+      #client.debug "1234 Content: #{newest_content[0..300]}"
+
+      SaturnCIAPI::ContentRequest.new(
+        host: ENV["HOST"],
+        api_path: api_path,
+        content_type: "text/plain",
+        content: "#{newest_content[0..1000]}\n"
+      ).execute
+
+      most_recent_total_line_count = all_lines.count
+
+      sleep(1)
+    end  
+  end
+end
+
 client = SaturnCIAPI::Client.new(ENV["HOST"])
+client.debug "1234 Starting to stream system logs"
+client.debug "1234 Sending system log to #{ENV["HOST"]}/api/v1/jobs/#{ENV["JOB_ID"]}/system_logs"
+
+#puts "Starting to stream system logs"
+#system_log_streaming_thread = stream("/var/log/syslog", "jobs/#{ENV["JOB_ID"]}/system_logs", client)
+
+stream2("/var/log/syslog", "jobs/#{ENV["JOB_ID"]}/system_logs", client)
 
 puts "Job machine ready"
 client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "job_machine_ready")
@@ -222,7 +215,8 @@ client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "pre_script_finished")
 puts "Starting to stream test output"
 File.open(ENV["TEST_OUTPUT_FILENAME"], 'w') {}
 
-streaming_thread = stream(ENV["TEST_OUTPUT_FILENAME"], "jobs/#{ENV["JOB_ID"]}/test_output")
+#streaming_thread = stream(ENV["TEST_OUTPUT_FILENAME"], "jobs/#{ENV["JOB_ID"]}/test_output")
+stream2(ENV["TEST_OUTPUT_FILENAME"], "jobs/#{ENV["JOB_ID"]}/test_output", client)
 
 puts "Running tests"
 puts "jobs/#{ENV["JOB_ID"]}/test_suite_started"
