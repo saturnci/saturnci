@@ -1,6 +1,8 @@
 <div class="build-list-container">
   <% if @build_list.builds.any? %>
-    <%= render @build_filter_component %>
+    <% if @build_filter_component.present? %>
+      <%= render @build_filter_component %>
+    <% end %>
 
     <div class="build-list">
       <ul data-controller="build-list">
