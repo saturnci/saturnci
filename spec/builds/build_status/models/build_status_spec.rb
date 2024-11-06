@@ -45,10 +45,10 @@ RSpec.describe "build status", type: :model do
       end
 
       context "there are no jobs" do
-        it "is running" do
+        it "is not started" do
           allow(build).to receive(:jobs).and_return([])
 
-          expect(build.status).to eq("Running")
+          expect(build.status).to eq("Not Started")
         end
       end
 
