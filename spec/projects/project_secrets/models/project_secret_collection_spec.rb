@@ -7,6 +7,7 @@ RSpec.describe ProjectSecretCollection, type: :model do
     end
 
     it "creates a project secret for each key and value" do
+      puts "ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY: #{ENV['ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY']}"
       project_secret_collection.project_secrets_attributes = {
         "0" => {
           "key"=>"DATABASE_USERNAME",

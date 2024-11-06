@@ -130,7 +130,8 @@ module JobMachineScript
 
     def script_env_vars
       {
-        "SATURN_TEST_APP_IMAGE_URL" => @registry_cache_image_url
+        "SATURN_TEST_APP_IMAGE_URL" => @registry_cache_image_url,
+        "ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY" => "hJWGiKGSmeeZeUSxkB6uJOeE9mi5MRmD"
       }.map { |key, value| "#{key}=#{value}" }.join(" ")
     end
 
