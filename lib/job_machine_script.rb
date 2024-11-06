@@ -8,7 +8,7 @@ PROJECT_DIR = "/home/ubuntu/project"
 TEST_OUTPUT_FILENAME = "tmp/test_output.txt"
 TEST_RESULTS_FILENAME = "tmp/test_results.txt"
 
-module SaturnCIAPI
+module JobMachineScript
   class Request
     def initialize(host, method, endpoint, payload = nil)
       @host = host
@@ -126,7 +126,7 @@ def stream(log_file_path, api_path, client)
         content = File.readlines(log_file_path)[last_line..-1].join
         client.debug "1234 Content: #{content[0..100]}"
 
-        SaturnCIAPI::ContentRequest.new(
+        JobMachineScript::ContentRequest.new(
           host: ENV["HOST"],
           api_path: api_path,
           content_type: "text/plain",
@@ -152,7 +152,7 @@ def stream2(log_file_path, api_path, client)
       #client.debug "1234 last line index: #{most_recent_total_line_count} total count: #{all_lines.count}"
       #client.debug "1234 Content: #{newest_content[0..300]}"
 
-      SaturnCIAPI::ContentRequest.new(
+      JobMachineScript::ContentRequest.new(
         host: ENV["HOST"],
         api_path: api_path,
         content_type: "text/plain",
@@ -167,7 +167,7 @@ def stream2(log_file_path, api_path, client)
 end
 
 if ENV["JOB_ID"]
-  client = SaturnCIAPI::Client.new(ENV["HOST"])
+  client = JobMachineScript::Client.new(ENV["HOST"])
   client.debug "1234 Starting to stream system logs"
   client.debug "1234 Sending system log to #{ENV["HOST"]}/api/v1/jobs/#{ENV["JOB_ID"]}/system_logs"
 
@@ -250,7 +250,7 @@ if ENV["JOB_ID"]
   client.post("jobs/#{ENV["JOB_ID"]}/job_finished_events")
 
   puts "Sending report"
-  test_reports_request = SaturnCIAPI::FileContentRequest.new(
+  test_reports_request = JobMachineScript::FileContentRequest.new(
     host: ENV["HOST"],
     api_path: "jobs/#{ENV["JOB_ID"]}/test_reports",
     content_type: "text/plain",
