@@ -114,7 +114,7 @@ module JobMachineScript
     end
   end
 
-  class RSpecCommand
+  class TestSuiteCommand
     def initialize(registry_cache_image_url:, test_files_string:, rspec_seed:, test_output_filename:)
       @registry_cache_image_url = registry_cache_image_url
       @test_files_string = test_files_string
@@ -253,7 +253,7 @@ if ENV["JOB_ID"]
   selected_tests = chunks[ENV['JOB_ORDER_INDEX'].to_i - 1]
   test_files_string = selected_tests.join(' ')
 
-  command = JobMachineScript::RSpecCommand.new(
+  command = JobMachineScript::TestSuiteCommand.new(
     registry_cache_image_url: registry_cache_image_url,
     test_files_string: test_files_string,
     rspec_seed: ENV["RSPEC_SEED"],
