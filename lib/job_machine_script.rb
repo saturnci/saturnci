@@ -124,11 +124,10 @@ module JobMachineScript
 
     def to_s
       <<~COMMAND
-      script -c "sudo SATURN_TEST_APP_IMAGE_URL=#{@registry_cache_image_url} docker-compose \
+      script -f #{@test_output_filename} -c "sudo SATURN_TEST_APP_IMAGE_URL=#{@registry_cache_image_url} docker-compose \
         -f .saturnci/docker-compose.yml run saturn_test_app \
         bundle exec rspec --require ./example_status_persistence.rb \
-        --format=documentation --order rand:#{@rspec_seed} #{@test_files_string}" \
-        -f "#{@test_output_filename}"
+        --format=documentation --order rand:#{@rspec_seed} #{@test_files_string}"
       COMMAND
     end
   end
