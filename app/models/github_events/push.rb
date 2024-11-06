@@ -20,8 +20,11 @@ module GitHubEvents
       build.commit_hash = head_commit["id"]
       build.commit_message = head_commit["message"]
 
-      return unless build.project.start_builds_automatically_on_git_push
-      build.start!
+      if build.project.start_builds_automatically_on_git_push
+        build.start!
+      else
+        build.save!
+      end
     end
   end
 end
