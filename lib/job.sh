@@ -1,16 +1,15 @@
 #!/bin/bash
 
-export USER_DIR=/home/ubuntu
-export PROJECT_DIR=$USER_DIR/project
-export TEST_OUTPUT_FILENAME=tmp/test_output.txt
-export TEST_RESULTS_FILENAME=tmp/test_results.txt
-
 cat <<EOF > ./job.rb
 require "net/http"
 require "uri"
 require "json"
 require "digest"
 require "fileutils"
+
+PROJECT_DIR = "/home/ubuntu/project"
+TEST_OUTPUT_FILENAME = "tmp/test_output.txt"
+TEST_RESULTS_FILENAME = "tmp/test_results.txt"
 
 module SaturnCIAPI
   class Request
@@ -183,8 +182,8 @@ puts "Job machine ready"
 client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "job_machine_ready")
 
 token = client.post("github_tokens", github_installation_id: ENV["GITHUB_INSTALLATION_ID"]).body
-system("git clone https://x-access-token:#{token}@github.com/#{ENV['GITHUB_REPO_FULL_NAME']} #{ENV['PROJECT_DIR']}")
-Dir.chdir(ENV['PROJECT_DIR'])
+system("git clone https://x-access-token:#{token}@github.com/#{ENV['GITHUB_REPO_FULL_NAME']} #{PROJECT_DIR}")
+Dir.chdir(PROJECT_DIR)
 FileUtils.mkdir_p('tmp')
 
 client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "repository_cloned")
@@ -213,10 +212,10 @@ system("sudo SATURN_TEST_APP_IMAGE_URL=#{registry_cache_image_url} docker-compos
 client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "pre_script_finished")
 
 puts "Starting to stream test output"
-File.open(ENV["TEST_OUTPUT_FILENAME"], 'w') {}
+File.open(TEST_OUTPUT_FILENAME, 'w') {}
 
-#streaming_thread = stream(ENV["TEST_OUTPUT_FILENAME"], "jobs/#{ENV["JOB_ID"]}/test_output")
-stream2(ENV["TEST_OUTPUT_FILENAME"], "jobs/#{ENV["JOB_ID"]}/test_output", client)
+#streaming_thread = stream(TEST_OUTPUT_FILENAME, "jobs/#{ENV["JOB_ID"]}/test_output")
+stream2(TEST_OUTPUT_FILENAME, "jobs/#{ENV["JOB_ID"]}/test_output", client)
 
 puts "Running tests"
 puts "jobs/#{ENV["JOB_ID"]}/test_suite_started"
@@ -224,7 +223,7 @@ client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "test_suite_started")
 
 File.open('./example_status_persistence.rb', 'w') do |file|
   file.puts "RSpec.configure do |config|"
-  file.puts "  config.example_status_persistence_file_path = '#{ENV['TEST_RESULTS_FILENAME']}'"
+  file.puts "  config.example_status_persistence_file_path = '#{TEST_RESULTS_FILENAME}'"
   file.puts "end"
 end
 
@@ -238,7 +237,7 @@ script -c "sudo SATURN_TEST_APP_IMAGE_URL=#{registry_cache_image_url} docker-com
   -f .saturnci/docker-compose.yml run saturn_test_app \
   bundle exec rspec --require ./example_status_persistence.rb \
   --format=documentation --order rand:#{ENV["RSPEC_SEED"]} #{test_files_string}" \
-  -f "#{ENV["TEST_OUTPUT_FILENAME"]}"
+  -f "#{TEST_OUTPUT_FILENAME}"
 COMMAND
 
 puts command
@@ -257,7 +256,7 @@ test_reports_request = SaturnCIAPI::FileContentRequest.new(
   host: ENV["HOST"],
   api_path: "jobs/#{ENV["JOB_ID"]}/test_reports",
   content_type: "text/plain",
-  file_path: ENV["TEST_RESULTS_FILENAME"]
+  file_path: TEST_RESULTS_FILENAME
 )
 test_reports_request.execute
 
