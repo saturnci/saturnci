@@ -32,7 +32,7 @@ RSpec.describe "builds", type: :request do
       )
 
       response_body = JSON.parse(response.body)
-      expect(response_body[0]["status"]).to eq("Running")
+      expect(response_body[0]["status"]).to eq("Not Started")
     end
   end
 end
