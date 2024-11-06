@@ -5,6 +5,6 @@ RSpec.describe Rebuild, type: :model do
 
   it "does not copy the status" do
     build = Rebuild.create!(original_build)
-    expect(build.status).to eq("Running")
+    expect(build.status).to eq("Not Started")
   end
 end
