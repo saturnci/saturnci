@@ -1,1 +1,10 @@
-Error: no this build has no jobs.
+<div class="project">
+  <header class="project-header">
+    <h2><%= @project.name %></h2>
+    <%= link_to "Settings", project_settings_path(@project) %>
+  </header>
+
+  <div class="dashboard">
+    <%= render "builds/list", current_tab_name: @current_tab_name %>
+  </div>
+</div>
