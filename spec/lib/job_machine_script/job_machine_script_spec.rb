@@ -12,12 +12,8 @@ RSpec.describe "job machine script" do
     end
 
     it "returns a command" do
-      expect(rspec_command.to_s).to eq(<<~COMMAND)
-      script -f tmp/test_output.txt -c "sudo SATURN_TEST_APP_IMAGE_URL=registrycache.saturnci.com:5000/saturn_test_app:123456 docker-compose \
-        -f .saturnci/docker-compose.yml run saturn_test_app \
-        bundle exec rspec --require ./example_status_persistence.rb \
-        --format=documentation --order rand:999 spec/models/github_token_spec.rb spec/rebuilds_spec.rb spec/sign_up_spec.rb spec/test_spec.rb"
-      COMMAND
+      docker_compose_command = "docker-compose -f .saturnci/docker-compose.yml run saturn_test_app bundle exec rspec --require ./example_status_persistence.rb --format=documentation --order rand:999 spec/models/github_token_spec.rb spec/rebuilds_spec.rb spec/sign_up_spec.rb spec/test_spec.rb"
+      expect(rspec_command.to_s).to eq("script -f tmp/test_output.txt -c \"sudo SATURN_TEST_APP_IMAGE_URL=registrycache.saturnci.com:5000/saturn_test_app:123456 #{docker_compose_command}\"")
     end
   end
 end
