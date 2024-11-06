@@ -268,7 +268,9 @@ if ENV["JOB_ID"]
     rspec_seed: ENV["RSPEC_SEED"],
     test_output_filename: TEST_OUTPUT_FILENAME,
     docker_compose_env_vars: {
-      "ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY" => "hJWGiKGSmeeZeUSxkB6uJOeE9mi5MRmD"
+      "ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY" => "hJWGiKGSmeeZeUSxkB6uJOeE9mi5MRmD",
+      "ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT" => "ODFkzrVr0yAgu54eFGd6xZk0VdXFXGAw",
+      "ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY" => "hl9EuhNijClYqxOsdGCZJev9u1hn0Vba"
     }
   ).to_s
   puts command
