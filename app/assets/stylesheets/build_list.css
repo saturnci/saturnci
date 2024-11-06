@@ -52,6 +52,11 @@
   color: #444;
 }
 
+.build-status-not-started {
+  background-color: #DDD;
+  color: #000;
+}
+
 .build-status-passed {
   background-color: #0F0;
   color: #000;

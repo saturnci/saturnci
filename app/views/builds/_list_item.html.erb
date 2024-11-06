@@ -19,7 +19,7 @@
     </div>
 
     <div style="width: 80px; text-align: center">
-      <div class="build-status build-status-<%= build.status.downcase %>">
+      <div class="build-status build-status-<%= build.status.parameterize %>">
         <%= build.status %>
       </div>
 
