@@ -131,12 +131,11 @@ module JobMachineScript
     def script_env_vars
       {
         "SATURN_TEST_APP_IMAGE_URL" => @registry_cache_image_url,
-        "ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY" => "hJWGiKGSmeeZeUSxkB6uJOeE9mi5MRmD"
       }.map { |key, value| "#{key}=#{value}" }.join(" ")
     end
 
     def docker_compose_command
-      "docker-compose -f .saturnci/docker-compose.yml run saturn_test_app #{rspec_command}"
+      "docker-compose -f .saturnci/docker-compose.yml run -e ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY=hJWGiKGSmeeZeUSxkB6uJOeE9mi5MRmD saturn_test_app #{rspec_command}"
     end
 
     def rspec_command
