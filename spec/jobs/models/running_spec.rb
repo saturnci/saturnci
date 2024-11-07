@@ -39,7 +39,7 @@ RSpec.describe Job, type: :model do
         build_1.id,
       ]
 
-      expect(Job.running.map(&:build_id)).to eq(expected_ids)
+      expect(Job.running.map(&:build_id)).to eq(500000)
     end
   end
 end
