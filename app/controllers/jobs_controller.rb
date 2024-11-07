@@ -28,5 +28,7 @@ class JobsController < ApplicationController
       statuses: params[:statuses],
       current_tab_name: @current_tab_name
     )
+
+    @project_component = ProjectComponent.new(@build.project)
   end
 end
