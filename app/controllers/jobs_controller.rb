@@ -4,11 +4,6 @@ class JobsController < ApplicationController
     @build = @job.build
     @project = @build.project
 
-    if params[:clear]
-      params[:branch_name] = nil
-      params[:statuses] = nil
-    end
-
     @build_list = BuildList.new(
       @build,
       branch_name: params[:branch_name],
