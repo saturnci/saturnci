@@ -15,9 +15,16 @@ class BuildsController < ApplicationController
 
     failed_jobs = @build.jobs.select { |job| job.failed? }
 
+    if params[:clear]
+      params[:branch_name] = nil
+      params[:statuses] = nil
+    end
+
     redirect_to job_path(
       failed_jobs.first || @build.jobs.first,
-      DEFAULT_PARTIAL
+      DEFAULT_PARTIAL,
+      branch_name: params[:branch_name],
+      statuses: params[:statuses]
     )
   end
 
