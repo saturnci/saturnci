@@ -147,32 +147,6 @@ module JobMachineScript
   end
 end
 
-def stream(log_file_path, api_path, client)
-  Thread.new do
-    last_line = 0
-
-    while true
-      current_number_of_lines_in_log_file = File.read(log_file_path).lines.count
-
-      if current_number_of_lines_in_log_file > last_line
-        content = File.readlines(log_file_path)[last_line..-1].join
-        client.debug "1234 Content: #{content[0..100]}"
-
-        JobMachineScript::ContentRequest.new(
-          host: ENV["HOST"],
-          api_path: api_path,
-          content_type: "text/plain",
-          content: content
-        ).execute
-
-        last_line = current_number_of_lines_in_log_file
-      end
-
-      sleep(1)
-    end
-  end
-end
-
 def stream2(log_file_path, api_path, client)
   Thread.new do
     most_recent_total_line_count = 0
@@ -203,9 +177,7 @@ if ENV["JOB_ID"]
   client.debug "1234 Starting to stream system logs"
   client.debug "1234 Sending system log to #{ENV["HOST"]}/api/v1/jobs/#{ENV["JOB_ID"]}/system_logs"
 
-  #puts "Starting to stream system logs"
-  #system_log_streaming_thread = stream("/var/log/syslog", "jobs/#{ENV["JOB_ID"]}/system_logs", client)
-
+  puts "Starting to stream system logs"
   stream2("/var/log/syslog", "jobs/#{ENV["JOB_ID"]}/system_logs", client)
 
   puts "Job machine ready"
