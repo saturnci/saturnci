@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   end
 
   get "jobs/:id/:partial", to: "jobs#show", as: "job"
+  get "builds/:id/:partial", to: "builds#show", as: "build"
 
   resources :projects do
     resources :settings, only: :index

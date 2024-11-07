@@ -4,11 +4,6 @@ class JobsController < ApplicationController
     @build = @job.build
     @project = @build.project
 
-    if params[:clear]
-      params[:branch_name] = nil
-      params[:statuses] = nil
-    end
-
     @build_list = BuildList.new(
       @build,
       branch_name: params[:branch_name],
@@ -23,7 +18,7 @@ class JobsController < ApplicationController
     )
 
     @build_filter_component = BuildFilterComponent.new(
-      job: @job,
+      build: @build,
       branch_name: params[:branch_name],
       statuses: params[:statuses],
       current_tab_name: @current_tab_name
