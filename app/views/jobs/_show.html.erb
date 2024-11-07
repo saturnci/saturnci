@@ -1,49 +1,11 @@
 <%= turbo_frame_tag "build", class: "build-inner", data: { turbo_action: "advance" } do %>
-  <div class="build-header">
-    <div>
-      <h2><%= @build.commit_message.truncate(80) %></h2>
-
-      <h3>
-        Branch: <code><%= @build.branch_name %></code>
-        Commit: <code><%= abbreviated_hash(@build.commit_hash) %></code>
-      </h3>
-    </div>
-
-    <div class="build-action-buttons">
-      <%= button_to "Rerun", rebuilds_path(build_id: @build.id), method: :post, data: { turbo: false } %>
-      <%= button_to "Cancel", build_cancellations_path(build_id: @build.id), method: :post, data: { turbo: false } %>
-      <%= button_to "Delete", project_build_path(id: @build.id, project_id: @build.project_id), method: :delete, data: { turbo: false } %>
-    </div>
-  </div>
+  <%= render "builds/header", build: @build do %>
+    <%= button_to "Rerun", rebuilds_path(build_id: @build.id), method: :post, data: { turbo: false } %>
+    <%= button_to "Cancel", build_cancellations_path(build_id: @build.id), method: :post, data: { turbo: false } %>
+    <%= button_to "Delete", project_build_path(id: @build.id, project_id: @build.project_id), method: :delete, data: { turbo: false } %>
+  <% end %>
 
   <%= turbo_frame_tag "build_details", class: "build-details", data: { turbo_action: "advance" } do %>
-    <div class="build-navigation">
-      <% build_navigation(@build, current_tab_name) do |nav| %>
-        <%= nav.item "Test Output", "test_output" %>
-        <%= nav.item "System Logs", "system_logs" %>
-        <%= nav.item "Test Report", "test_report" %>
-        <%= nav.item "Events", "events" %>
-      <% end %>
-    </div>
-
-    <div class="job-menu-container">
-      <ul class="job-menu">
-        <% @build.jobs.each do |job| %>
-          <li>
-            <%= link_to job.name,
-              job_path(job, current_tab_name),
-              class: job == @job ? "active" : "" %>
-          </li>
-        <% end %>
-      </ul>
-    </div>
-
-    <div class="job-details">
-      <div id="<%= @job_output_stream.target %>">
-        <%= render current_tab_name, current_tab_name: @current_tab_name, job: @job %>
-      </div>
-    </div>
-
-    <%= turbo_stream_from @job_output_stream.name %>
+    <%= render "builds/details", build: @build, current_tab_name: @current_tab_name %>
   <% end %>
 <% end %>
