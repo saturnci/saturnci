@@ -1,20 +1,9 @@
 <%= turbo_frame_tag "build", class: "build-inner", data: { turbo_action: "advance" } do %>
-  <div class="build-header">
-    <div>
-      <h2><%= @build.commit_message.truncate(80) %></h2>
-
-      <h3>
-        Branch: <code><%= @build.branch_name %></code>
-        Commit: <code><%= abbreviated_hash(@build.commit_hash) %></code>
-      </h3>
-    </div>
-
-    <div class="build-action-buttons">
-      <%= button_to "Rerun", rebuilds_path(build_id: @build.id), method: :post, data: { turbo: false } %>
-      <%= button_to "Cancel", build_cancellations_path(build_id: @build.id), method: :post, data: { turbo: false } %>
-      <%= button_to "Delete", project_build_path(id: @build.id, project_id: @build.project_id), method: :delete, data: { turbo: false } %>
-    </div>
-  </div>
+  <%= render "builds/header", build: @build do %>
+    <%= button_to "Rerun", rebuilds_path(build_id: @build.id), method: :post, data: { turbo: false } %>
+    <%= button_to "Cancel", build_cancellations_path(build_id: @build.id), method: :post, data: { turbo: false } %>
+    <%= button_to "Delete", project_build_path(id: @build.id, project_id: @build.project_id), method: :delete, data: { turbo: false } %>
+  <% end %>
 
   <%= turbo_frame_tag "build_details", class: "build-details", data: { turbo_action: "advance" } do %>
     <%= render "builds/details", build: @build, current_tab_name: @current_tab_name %>

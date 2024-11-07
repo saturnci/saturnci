@@ -1,0 +1,14 @@
+<div class="build-header">
+  <div>
+    <h2><%= build.commit_message.truncate(80) %></h2>
+
+    <h3>
+      Branch: <code><%= build.branch_name %></code>
+      Commit: <code><%= abbreviated_hash(build.commit_hash) %></code>
+    </h3>
+  </div>
+
+  <div class="build-action-buttons">
+    <%= yield %>
+  </div>
+</div>
