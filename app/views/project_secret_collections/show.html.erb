@@ -15,6 +15,7 @@
               <%= form.text_field :key,
                 name: "project_secret_collection[project_secrets_attributes][#{index}][key]",
                 id: "project_secrets_#{index}_key",
+                size: 80,
                 value: project_secret.key %>
             </td>
 
@@ -22,6 +23,7 @@
               <%= form.password_field :value,
                 name: "project_secret_collection[project_secrets_attributes][#{index}][value]",
                 id: "project_secrets_#{index}_value",
+                size: 40,
                 value: project_secret.value.present? ? "X"*20 : "" %>
             </td>
           </tr>
