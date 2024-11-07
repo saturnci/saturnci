@@ -159,7 +159,7 @@ def stream2(log_file_path, api_path, client)
         host: ENV["HOST"],
         api_path: api_path,
         content_type: "text/plain",
-        content: "#{newest_content}\n"
+        content: "#{newest_content[0..1000]}\n"
       ).execute
 
       most_recent_total_line_count = all_lines.count
@@ -268,5 +268,5 @@ if ENV["JOB_ID"]
   puts "Deleting job machine"
   client.delete("jobs/#{ENV["JOB_ID"]}/job_machine")
 
-  streaming_thread.join if streaming_thread.alive?
+  #streaming_thread.join if streaming_thread.alive?
 end
