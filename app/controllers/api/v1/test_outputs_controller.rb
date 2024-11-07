@@ -1,3 +1,5 @@
+require "base64"
+
 module API
   module V1
     class TestOutputsController < APIController
@@ -5,7 +7,9 @@ module API
 
       def create
         job = Job.find(params[:job_id])
-        job.update!(TAB_NAME => job.attributes[TAB_NAME].to_s + request.body.read)
+        new_content = Base64.decode64(request.body.read)
+        existing_content = job.attributes[TAB_NAME].to_s
+        job.update!(TAB_NAME => existing_content + new_content)
 
         Streaming::JobOutputStream.new(job: job, tab_name: TAB_NAME).broadcast
         head :ok

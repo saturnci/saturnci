@@ -3,6 +3,7 @@ require "uri"
 require "json"
 require "digest"
 require "fileutils"
+require "base64"
 
 PROJECT_DIR = "/home/ubuntu/project"
 TEST_OUTPUT_FILENAME = "tmp/test_output.txt"
@@ -159,7 +160,7 @@ def stream(log_file_path, api_path, client)
         host: ENV["HOST"],
         api_path: api_path,
         content_type: "text/plain",
-        content: "#{newest_content[0..1000]}\n"
+        content: Base64.encode64(newest_content + "\n")
       ).execute
 
       most_recent_total_line_count = all_lines.count
