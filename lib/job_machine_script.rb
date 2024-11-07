@@ -147,7 +147,7 @@ module JobMachineScript
   end
 end
 
-def stream2(log_file_path, api_path, client)
+def stream(log_file_path, api_path, client)
   Thread.new do
     most_recent_total_line_count = 0
 
@@ -175,7 +175,7 @@ if ENV["JOB_ID"]
   client.debug "1234 Sending system log to #{ENV["HOST"]}/api/v1/jobs/#{ENV["JOB_ID"]}/system_logs"
 
   puts "Starting to stream system logs"
-  stream2("/var/log/syslog", "jobs/#{ENV["JOB_ID"]}/system_logs", client)
+  stream("/var/log/syslog", "jobs/#{ENV["JOB_ID"]}/system_logs", client)
 
   puts "Job machine ready"
   client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "job_machine_ready")
@@ -213,8 +213,7 @@ if ENV["JOB_ID"]
   puts "Starting to stream test output"
   File.open(TEST_OUTPUT_FILENAME, 'w') {}
 
-  #streaming_thread = stream(TEST_OUTPUT_FILENAME, "jobs/#{ENV["JOB_ID"]}/test_output")
-  stream2(TEST_OUTPUT_FILENAME, "jobs/#{ENV["JOB_ID"]}/test_output", client)
+  stream(TEST_OUTPUT_FILENAME, "jobs/#{ENV["JOB_ID"]}/test_output", client)
 
   puts "Running tests"
   puts "jobs/#{ENV["JOB_ID"]}/test_suite_started"
@@ -267,6 +266,4 @@ if ENV["JOB_ID"]
 
   puts "Deleting job machine"
   client.delete("jobs/#{ENV["JOB_ID"]}/job_machine")
-
-  #streaming_thread.join if streaming_thread.alive?
 end
