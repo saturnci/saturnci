@@ -1,31 +1,35 @@
-<h1>Secrets</h1>
+<%= render @project_component do |component| %>
+  <%= component.with_body do %>
+    <h1>Secrets</h1>
 
-<%= form_with(model: @project_secret_collection, url: project_project_secret_collection_path(@project)) do |form| %>
-  <table border>
-    <tr>
-      <th>Key</th>
-      <th>Value</th>
-    </tr>
+    <%= form_with(model: @project_secret_collection, url: project_project_secret_collection_path(@project)) do |form| %>
+      <table border>
+        <tr>
+          <th>Key</th>
+          <th>Value</th>
+        </tr>
 
-    <% @project_secret_collection.project_secrets.each_with_index do |project_secret, index| %>
-      <tr>
-        <td>
-          <%= form.text_field :key,
-            name: "project_secret_collection[project_secrets_attributes][#{index}][key]",
-            id: "project_secrets_#{index}_key",
-            value: project_secret.key %>
-        </td>
+        <% @project_secret_collection.project_secrets.each_with_index do |project_secret, index| %>
+          <tr>
+            <td>
+              <%= form.text_field :key,
+                name: "project_secret_collection[project_secrets_attributes][#{index}][key]",
+                id: "project_secrets_#{index}_key",
+                value: project_secret.key %>
+            </td>
 
-        <td>
-          <%= form.password_field :value,
-            name: "project_secret_collection[project_secrets_attributes][#{index}][value]",
-            id: "project_secrets_#{index}_value",
-            value: project_secret.value.present? ? "X"*20 : "" %>
-        </td>
-      </tr>
+            <td>
+              <%= form.password_field :value,
+                name: "project_secret_collection[project_secrets_attributes][#{index}][value]",
+                id: "project_secrets_#{index}_value",
+                value: project_secret.value.present? ? "X"*20 : "" %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+
+      <br>
+      <%= form.submit "Save" %>
     <% end %>
-  </table>
-
-  <br>
-  <%= form.submit "Save" %>
+  <% end %>
 <% end %>
