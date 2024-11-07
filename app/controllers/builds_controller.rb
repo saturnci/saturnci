@@ -11,21 +11,37 @@ class BuildsController < ApplicationController
 
   def show
     @build = Build.find(params[:id])
-    return unless @build.jobs.any?
-
-    failed_jobs = @build.jobs.select { |job| job.failed? }
 
     if params[:clear]
       params[:branch_name] = nil
       params[:statuses] = nil
     end
 
-    redirect_to job_path(
-      failed_jobs.first || @build.jobs.first,
-      DEFAULT_PARTIAL,
-      branch_name: params[:branch_name],
-      statuses: params[:statuses]
-    )
+    if @build.jobs.any?
+      failed_jobs = @build.jobs.select { |job| job.failed? }
+
+      redirect_to job_path(
+        failed_jobs.first || @build.jobs.first,
+        DEFAULT_PARTIAL,
+        branch_name: params[:branch_name],
+        statuses: params[:statuses]
+      )
+    else
+      @build_list = BuildList.new(
+        @build,
+        branch_name: params[:branch_name],
+        statuses: params[:statuses]
+      )
+
+      @build_filter_component = BuildFilterComponent.new(
+        build: @build,
+        branch_name: params[:branch_name],
+        statuses: params[:statuses],
+        current_tab_name: @current_tab_name
+      )
+
+      @project_component = ProjectComponent.new(@build.project)
+    end
   end
 
   def destroy

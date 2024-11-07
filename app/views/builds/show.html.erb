@@ -1,1 +1,27 @@
-Error: no this build has no jobs.
+<%= render @project_component do |component| %>
+  <%= component.with_body do %>
+    <div class="dashboard">
+      <%= render "builds/list", current_tab_name: @current_tab_name %>
+
+      <div class="build">
+        <%= turbo_frame_tag "build", class: "build-inner", data: { turbo_action: "advance" } do %>
+          <div class="build-header">
+            <div>
+              <h2><%= @build.commit_message.truncate(80) %></h2>
+
+              <h3>
+                Branch: <code><%= @build.branch_name %></code>
+                Commit: <code><%= abbreviated_hash(@build.commit_hash) %></code>
+              </h3>
+            </div>
+
+            <div class="build-action-buttons">
+              <%= button_to "Delete", project_build_path(id: @build.id, project_id: @build.project_id), method: :delete, data: { turbo: false } %>
+            </div>
+          </div>
+
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
