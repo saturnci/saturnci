@@ -8,7 +8,7 @@ RSpec.describe "test output", type: :request do
     it "adds test output to a job" do
       post(
         api_v1_job_test_output_path(job_id: job.id),
-        params: "test output content",
+        params: Base64.encode64("test output content"),
         headers: api_authorization_headers.merge({ "CONTENT_TYPE" => "text/plain" })
       )
 
@@ -20,13 +20,13 @@ RSpec.describe "test output", type: :request do
     it "appends anything new to the end of the test output rather than replacing the log content entirely" do
       post(
         api_v1_job_test_output_path(job_id: job.id),
-        params: "first chunk ",
+        params: Base64.encode64("first chunk "),
         headers: api_authorization_headers.merge({ "CONTENT_TYPE" => "text/plain" })
       )
 
       post(
         api_v1_job_test_output_path(job_id: job.id),
-        params: "second chunk",
+        params: Base64.encode64("second chunk"),
         headers: api_authorization_headers.merge({ "CONTENT_TYPE" => "text/plain" })
       )
 
