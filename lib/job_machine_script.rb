@@ -155,14 +155,11 @@ def stream2(log_file_path, api_path, client)
       all_lines = File.readlines(log_file_path)
       newest_content = all_lines[most_recent_total_line_count..-1].join("\n")
 
-      #client.debug "1234 last line index: #{most_recent_total_line_count} total count: #{all_lines.count}"
-      #client.debug "1234 Content: #{newest_content[0..300]}"
-
       JobMachineScript::ContentRequest.new(
         host: ENV["HOST"],
         api_path: api_path,
         content_type: "text/plain",
-        content: "#{newest_content[0..1000]}\n"
+        content: "#{newest_content}\n"
       ).execute
 
       most_recent_total_line_count = all_lines.count
