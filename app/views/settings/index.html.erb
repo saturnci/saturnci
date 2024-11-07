@@ -1,4 +1,7 @@
-<%= @project.name %>
-<h1>Settings</h1>
+<%= render @project_component do |component| %>
+  <%= component.with_body do %>
+    <h1>Settings</h1>
 
-<%= link_to "Secrets", project_project_secret_collection_path(@project) %>
+    <%= link_to "Secrets", project_project_secret_collection_path(@project) %>
+  <% end %>
+<% end %>

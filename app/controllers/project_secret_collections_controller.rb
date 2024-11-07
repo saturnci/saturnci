@@ -9,6 +9,8 @@ class ProjectSecretCollectionsController < ApplicationController
     NUMBER_OF_EMPTY_PROJECT_SECRET_FIELDS.times do
       @project_secret_collection.project_secrets << ProjectSecret.new
     end
+
+    @project_component = ProjectComponent.new(@project)
   end
 
   def create
