@@ -1,0 +1,28 @@
+<div class="build-navigation">
+  <% build_navigation(build, current_tab_name) do |nav| %>
+    <%= nav.item "Test Output", "test_output" %>
+    <%= nav.item "System Logs", "system_logs" %>
+    <%= nav.item "Test Report", "test_report" %>
+    <%= nav.item "Events", "events" %>
+  <% end %>
+</div>
+
+<div class="job-menu-container">
+  <ul class="job-menu">
+    <% build.jobs.each do |job| %>
+      <li>
+        <%= link_to job.name,
+          job_path(job, current_tab_name),
+          class: job == @job ? "active" : "" %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+<div class="job-details">
+  <div id="<%= @job_output_stream.target %>">
+    <%= render current_tab_name, current_tab_name: @current_tab_name, job: @job %>
+  </div>
+</div>
+
+<%= turbo_stream_from @job_output_stream.name %>
