@@ -18,7 +18,7 @@ describe "Navigating from test output tab", type: :system do
       http_request(
         api_authorization_headers: api_authorization_headers,
         path: api_v1_job_system_logs_path(job_id: job.id, format: :json),
-        body: "new system log content"
+        body: Base64.encode64("new system log content")
       )
     end
 
