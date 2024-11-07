@@ -4,6 +4,7 @@ require "json"
 require "digest"
 require "fileutils"
 require "base64"
+require "open3"
 
 PROJECT_DIR = "/home/ubuntu/project"
 TEST_OUTPUT_FILENAME = "tmp/test_output.txt"
@@ -240,10 +241,8 @@ if ENV["JOB_ID"]
   ).to_s
   puts command
 
-  system(command)
-
-  # Without this sleep, there's a race condition between the
-  # test output stream finishing and the job_finished event
+  pid = Process.spawn(command)
+  Process.wait(pid)
   sleep(5)
 
   puts "Job finished"
@@ -266,5 +265,6 @@ if ENV["JOB_ID"]
   puts "Docker push finished"
 
   puts "Deleting job machine"
+  sleep(5)
   client.delete("jobs/#{ENV["JOB_ID"]}/job_machine")
 end
