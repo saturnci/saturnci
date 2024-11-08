@@ -38,7 +38,7 @@ RSpec.describe ProjectSecretCollection, type: :model do
 
       it "skips the empty attributes" do
         project_secret_collection.save!
-        expect(project_secret_collection.project_secrets.count).to eq(1)
+        expect(project_secret_collection.project.project_secrets.count).to eq(1)
       end
     end
   end
@@ -110,7 +110,7 @@ RSpec.describe ProjectSecretCollection, type: :model do
         }
         project_secret_collection.save!
 
-        expect(project_secret_collection.project_secrets.count).to eq(2)
+        expect(project_secret_collection.project.project_secrets.count).to eq(2)
       end
     end
   end

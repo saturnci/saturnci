@@ -20,10 +20,12 @@ class ProjectSecretCollection
   end
 
   def save!
-    project.project_secrets << @project_secrets.reject do |project_secret|
+    project_secrets = @project_secrets.reject do |project_secret|
       project_secret.key.blank? || project_secret.value.blank?
     end.reject do |project_secret|
       project.project_secrets.where(key: project_secret.key).any?
     end
+
+    project.project_secrets << project_secrets
   end
 end
