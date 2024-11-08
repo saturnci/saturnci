@@ -46,6 +46,7 @@ class JobMachineRequest
     "#{@job.build.project.name.gsub("/", "-")}-job-#{@job.id}"
   end
 
+  # /var/lib/cloud/instances/456688083/scripts/part-001
   def user_data
     JobMachineScript.new(@job, @github_installation_id).content
   end
