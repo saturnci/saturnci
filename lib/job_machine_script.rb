@@ -173,8 +173,6 @@ end
 
 if ENV["JOB_ID"]
   client = JobMachineScript::Client.new(ENV["HOST"])
-  client.debug "1234 Starting to stream system logs"
-  client.debug "1234 Sending system log to #{ENV["HOST"]}/api/v1/jobs/#{ENV["JOB_ID"]}/system_logs"
 
   puts "Starting to stream system logs"
   stream("/var/log/syslog", "jobs/#{ENV["JOB_ID"]}/system_logs", client)
