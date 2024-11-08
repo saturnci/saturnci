@@ -27,7 +27,9 @@
         <% if build.status == "Running" %>
           <div data-elapsed-build-time-target="value"></div>
         <% else %>
-          <%= build.duration_formatted %>
+          <span class="build-duration">
+            <%= build.duration_formatted %>
+          </span>
         <% end %>
       </span>
     </div>
