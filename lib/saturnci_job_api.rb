@@ -180,6 +180,9 @@ if ENV["JOB_ID"]
   puts "Job machine ready"
   client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "job_machine_ready")
 
+  puts "Env vars:"
+  puts ENV["USER_ENV_VAR_KEYS"].split(",").join("\n")
+
   token = client.post("github_tokens", github_installation_id: ENV["GITHUB_INSTALLATION_ID"]).body
   system("git clone https://x-access-token:#{token}@github.com/#{ENV['GITHUB_REPO_FULL_NAME']} #{PROJECT_DIR}")
   Dir.chdir(PROJECT_DIR)
@@ -243,7 +246,7 @@ if ENV["JOB_ID"]
     test_output_filename: TEST_OUTPUT_FILENAME,
     docker_compose_env_vars: ENV["USER_ENV_VAR_KEYS"].split(",").map { |key| [key, ENV[key]] }.to_h
   ).to_s
-  puts command
+  puts "Test run command: #{command}"
 
   pid = Process.spawn(command)
   Process.wait(pid)
