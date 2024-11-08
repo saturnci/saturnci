@@ -37,6 +37,10 @@
   color: #FFF;
 }
 
+.build-list a.active .build-duration {
+  color: #DDD;
+}
+
 .build-commit {
   background-color: #DDD;
   padding: 2px 6px;
