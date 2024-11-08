@@ -25,6 +25,7 @@
 
 .job-details {
   overflow-y: auto;
+  height: 100vh;
 }
 
 .job-info-container {
