@@ -2,13 +2,19 @@ require "rails_helper"
 
 RSpec.describe "job machine script" do
   describe "TestSuiteCommand" do
+    let!(:docker_compose_configuration) do
+      SaturnCIJobAPI::DockerComposeConfiguration.new(
+        registry_cache_image_url: "registrycache.saturnci.com:5000/saturn_test_app:123456",
+        env_vars: { "FOO" => "bar", "BAR" => "baz" }
+      )
+    end
+
     let!(:command) do
       SaturnCIJobAPI::TestSuiteCommand.new(
-        registry_cache_image_url: "registrycache.saturnci.com:5000/saturn_test_app:123456",
+        docker_compose_configuration:,
         test_files_string: "spec/models/github_token_spec.rb spec/rebuilds_spec.rb spec/sign_up_spec.rb spec/test_spec.rb",
         rspec_seed: "999",
-        test_output_filename: "tmp/test_output.txt",
-        docker_compose_env_vars: { "FOO" => "bar", "BAR" => "baz" }
+        test_output_filename: "tmp/test_output.txt"
       )
     end
 
