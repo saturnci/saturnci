@@ -180,6 +180,11 @@ end
 if ENV["JOB_ID"]
   client = SaturnCIJobAPI::Client.new(ENV["HOST"])
 
+  docker_compose_configuration = SaturnCIJobAPI::DockerComposeConfiguration.new(
+    registry_cache_image_url: registry_cache_image_url,
+    env_vars: ENV["USER_ENV_VAR_KEYS"].split(",").map { |key| [key, ENV[key]] }.to_h
+  )
+
   puts "Starting to stream system logs"
   stream("/var/log/syslog", "jobs/#{ENV["JOB_ID"]}/system_logs", client)
 
@@ -246,11 +251,10 @@ if ENV["JOB_ID"]
   test_files_string = selected_tests.join(' ')
 
   command = SaturnCIJobAPI::TestSuiteCommand.new(
-    registry_cache_image_url: registry_cache_image_url,
+    docker_compose_configuration:,
     test_files_string: test_files_string,
     rspec_seed: ENV["RSPEC_SEED"],
-    test_output_filename: TEST_OUTPUT_FILENAME,
-    docker_compose_env_vars: ENV["USER_ENV_VAR_KEYS"].split(",").map { |key| [key, ENV[key]] }.to_h
+    test_output_filename: TEST_OUTPUT_FILENAME
   ).to_s
   puts "Test run command: #{command}"
 
