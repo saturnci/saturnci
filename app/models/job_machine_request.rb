@@ -47,6 +47,8 @@ class JobMachineRequest
   end
 
   def user_data
+    script_filename = File.join(Rails.root, "lib", "job_machine_script.rb")
+    script_content = File.read(script_filename)
     encoded_script = Base64.strict_encode64(script_content)
 
     <<~SCRIPT
@@ -69,11 +71,5 @@ class JobMachineRequest
       echo #{encoded_script} | base64 --decode > $RUBY_SCRIPT_PATH
       ruby $RUBY_SCRIPT_PATH
     SCRIPT
-  end
-
-  def script_content
-    lib_filename = File.join(Rails.root, "lib", "saturnci_worker_api", "saturnci_worker_api.rb")
-    script_filename = File.join(Rails.root, "lib", "job_machine_script.rb")
-    File.read(lib_filename) + File.read(script_filename)
   end
 end
