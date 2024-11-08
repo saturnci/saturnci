@@ -1,3 +1,30 @@
+.project {
+  border: 2px solid #888;
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-header {
+  background-color: #DDD;
+  border-bottom: 2px solid #888;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  line-height: 40px;
+  padding: 0 10px;
+}
+
+.project-header h2 {
+  font-size: 20px;
+  padding: 0;
+  margin: 0;
+}
+
+.project-header a {
+  display: block;
+}
 .project-inner {
   padding: 10px;
 }
