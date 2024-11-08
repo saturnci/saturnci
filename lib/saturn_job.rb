@@ -10,7 +10,7 @@ PROJECT_DIR = "/home/ubuntu/project"
 TEST_OUTPUT_FILENAME = "tmp/test_output.txt"
 TEST_RESULTS_FILENAME = "tmp/test_results.txt"
 
-module JobMachineScript
+module SaturnJob
   class Request
     def initialize(host, method, endpoint, payload = nil)
       @host = host
@@ -157,7 +157,7 @@ def stream(log_file_path, api_path, client)
       all_lines = File.readlines(log_file_path)
       newest_content = all_lines[most_recent_total_line_count..-1].join("\n")
 
-      JobMachineScript::ContentRequest.new(
+      SaturnJob::ContentRequest.new(
         host: ENV["HOST"],
         api_path: api_path,
         content_type: "text/plain",
@@ -172,7 +172,7 @@ def stream(log_file_path, api_path, client)
 end
 
 if ENV["JOB_ID"]
-  client = JobMachineScript::Client.new(ENV["HOST"])
+  client = SaturnJob::Client.new(ENV["HOST"])
 
   puts "Starting to stream system logs"
   stream("/var/log/syslog", "jobs/#{ENV["JOB_ID"]}/system_logs", client)
@@ -236,7 +236,7 @@ if ENV["JOB_ID"]
   selected_tests = chunks[ENV['JOB_ORDER_INDEX'].to_i - 1]
   test_files_string = selected_tests.join(' ')
 
-  command = JobMachineScript::TestSuiteCommand.new(
+  command = SaturnJob::TestSuiteCommand.new(
     registry_cache_image_url: registry_cache_image_url,
     test_files_string: test_files_string,
     rspec_seed: ENV["RSPEC_SEED"],
@@ -253,7 +253,7 @@ if ENV["JOB_ID"]
   client.post("jobs/#{ENV["JOB_ID"]}/job_finished_events")
 
   puts "Sending report"
-  test_reports_request = JobMachineScript::FileContentRequest.new(
+  test_reports_request = SaturnJob::FileContentRequest.new(
     host: ENV["HOST"],
     api_path: "jobs/#{ENV["JOB_ID"]}/test_reports",
     content_type: "text/plain",
