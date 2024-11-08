@@ -47,7 +47,7 @@ class JobMachineRequest
   end
 
   def user_data
-    script_filename = File.join(Rails.root, "lib", "saturn_job.rb")
+    script_filename = File.join(Rails.root, "lib", "saturnci_job_api.rb")
     script_content = File.read(script_filename)
     encoded_script = Base64.strict_encode64(script_content)
 
@@ -67,7 +67,7 @@ class JobMachineRequest
       export USER_ENV_VAR_KEYS="#{@job.build.project.project_secrets.map(&:key).join(",")}"
       #{@job.build.project.project_secrets.map { |secret| "export #{secret.key}=#{secret.value}" }.join("\n")}
 
-      RUBY_SCRIPT_PATH=/tmp/saturn_job.rb
+      RUBY_SCRIPT_PATH=/tmp/job_machine_script.rb
       echo #{encoded_script} | base64 --decode > $RUBY_SCRIPT_PATH
       ruby $RUBY_SCRIPT_PATH
     SCRIPT

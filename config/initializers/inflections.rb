@@ -12,6 +12,8 @@
 
 # These inflection rules are supported but not enabled by default:
 ActiveSupport::Inflector.inflections(:en) do |inflect|
+  inflect.acronym "SaturnCI"
+  inflect.acronym "SaturnCICLI"
   inflect.acronym "API"
   inflect.acronym "AWS"
   inflect.acronym "GitHub"
@@ -19,5 +21,6 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym "HTML"
   inflect.acronym "SSH"
   inflect.acronym "RSA"
-  inflect.acronym "SaturnCICLI"
+  inflect.acronym "CI"
+  inflect.acronym "CLI"
 end
