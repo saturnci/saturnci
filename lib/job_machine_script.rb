@@ -208,7 +208,13 @@ if ENV["JOB_ID"]
   client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "pre_script_started")
   system("sudo chmod 755 .saturnci/pre.sh")
   system("sudo SATURN_TEST_APP_IMAGE_URL=#{registry_cache_image_url} docker-compose -f .saturnci/docker-compose.yml run saturn_test_app ./.saturnci/pre.sh")
-  client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "pre_script_finished")
+  puts "pre.sh exit code: #{$?.exitstatus}"
+
+  if $?.exitstatus == 0
+    client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "pre_script_finished")
+  else
+    exit 1
+  end
 
   puts "Starting to stream test output"
   File.open(TEST_OUTPUT_FILENAME, 'w') {}
