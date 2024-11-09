@@ -5,9 +5,13 @@ class JobMachineScript
   end
 
   def library_content
+    content_request_filename = File.join(Rails.root, "lib", "saturnci_job_api", "content_request.rb")
     request_filename = File.join(Rails.root, "lib", "saturnci_job_api", "request.rb")
     script_filename = File.join(Rails.root, "lib", "saturnci_job_api.rb")
-    File.read(request_filename) + File.read(script_filename)
+
+    File.read(content_request_filename) +
+      File.read(request_filename) +
+      File.read(script_filename)
   end
 
   def content
