@@ -11,41 +11,6 @@ TEST_OUTPUT_FILENAME = "tmp/test_output.txt"
 TEST_RESULTS_FILENAME = "tmp/test_results.txt"
 
 module SaturnCIJobAPI
-  class Request
-    def initialize(host, method, endpoint, payload = nil)
-      @host = host
-      @method = method
-      @endpoint = endpoint
-      @payload = payload
-    end
-
-    def execute
-      http = Net::HTTP.new(url.host, url.port)
-      http.use_ssl = true if url.scheme == "https"
-      http.request(request)
-    end
-
-    def request
-      case @method
-      when :post
-        r = Net::HTTP::Post.new(url)
-      when :delete
-        r = Net::HTTP::Delete.new(url)
-      end
-
-      r.basic_auth(ENV["SATURNCI_API_USERNAME"], ENV["SATURNCI_API_PASSWORD"])
-      r["Content-Type"] = "application/json"
-      r.body = @payload.to_json if @payload
-      r
-    end
-
-    private
-
-    def url
-      URI("#{@host}/api/v1/#{@endpoint}")
-    end
-  end
-
   class ContentRequest
     def initialize(host:, api_path:, content_type:, content:)
       @host = host
