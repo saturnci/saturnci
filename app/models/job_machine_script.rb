@@ -4,10 +4,13 @@ class JobMachineScript
     @github_installation_id = github_installation_id
   end
 
-  def content
+  def library_content
     script_filename = File.join(Rails.root, "lib", "saturnci_job_api.rb")
-    script_content = File.read(script_filename)
-    encoded_script = Base64.strict_encode64(script_content)
+    File.read(script_filename)
+  end
+
+  def content
+    encoded_script = Base64.strict_encode64(library_content)
 
     <<~SCRIPT
       #!/usr/bin/bash
