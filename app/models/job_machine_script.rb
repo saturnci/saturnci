@@ -11,7 +11,7 @@ class JobMachineScript
     file_content_request_filename = File.join(Rails.root, "lib", "saturnci_job_api", "file_content_request.rb")
     content_request_filename = File.join(Rails.root, "lib", "saturnci_job_api", "content_request.rb")
     request_filename = File.join(Rails.root, "lib", "saturnci_job_api", "request.rb")
-    script_filename = File.join(Rails.root, "lib", "saturnci_job_api.rb")
+    script_filename = File.join(Rails.root, "lib", "saturnci_job_api", "script.rb")
 
     File.read(stream_filename) +
       File.read(test_suite_command_filename) +
