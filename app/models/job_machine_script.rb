@@ -5,23 +5,19 @@ class JobMachineScript
   end
 
   def library_content
-    stream_filename = File.join(Rails.root, "lib", "saturnci_job_api", "stream.rb")
-    test_suite_command_filename = File.join(Rails.root, "lib", "saturnci_job_api", "test_suite_command.rb")
-    client_filename = File.join(Rails.root, "lib", "saturnci_job_api", "client.rb")
-    file_content_request_filename = File.join(Rails.root, "lib", "saturnci_job_api", "file_content_request.rb")
-    content_request_filename = File.join(Rails.root, "lib", "saturnci_job_api", "content_request.rb")
-    request_filename = File.join(Rails.root, "lib", "saturnci_job_api", "request.rb")
-    script_filename = File.join(Rails.root, "lib", "saturnci_job_api", "script.rb")
+    filenames = [
+      "stream.rb",
+      "test_suite_command.rb",
+      "client.rb",
+      "file_content_request.rb",
+      "content_request.rb",
+      "request.rb",
+      "script.rb"
+    ]
 
-    [
-      File.read(stream_filename),
-      File.read(test_suite_command_filename),
-      File.read(client_filename),
-      File.read(file_content_request_filename),
-      File.read(content_request_filename),
-      File.read(request_filename),
-      File.read(script_filename)
-    ].join("\n")
+    filenames.map do |filename|
+      File.read(File.join(Rails.root, "lib", "saturnci_job_api", filename))
+    end.join("\n")
   end
 
   def content
