@@ -13,13 +13,15 @@ class JobMachineScript
     request_filename = File.join(Rails.root, "lib", "saturnci_job_api", "request.rb")
     script_filename = File.join(Rails.root, "lib", "saturnci_job_api", "script.rb")
 
-    File.read(stream_filename) +
-      File.read(test_suite_command_filename) +
-      File.read(client_filename) +
-      File.read(file_content_request_filename) +
-      File.read(content_request_filename) +
-      File.read(request_filename) +
+    [
+      File.read(stream_filename),
+      File.read(test_suite_command_filename),
+      File.read(client_filename),
+      File.read(file_content_request_filename),
+      File.read(content_request_filename),
+      File.read(request_filename),
       File.read(script_filename)
+    ].join("\n")
   end
 
   def content
