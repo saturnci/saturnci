@@ -3,40 +3,20 @@ require "uri"
 require "json"
 require "digest"
 require "fileutils"
-require "base64"
 require "open3"
 
 PROJECT_DIR = "/home/ubuntu/project"
 TEST_OUTPUT_FILENAME = "tmp/test_output.txt"
 TEST_RESULTS_FILENAME = "tmp/test_results.txt"
 
-def stream(log_file_path, api_path, client)
-  Thread.new do
-    most_recent_total_line_count = 0
-
-    while true
-      all_lines = File.readlines(log_file_path)
-      newest_content = all_lines[most_recent_total_line_count..-1].join("\n")
-
-      SaturnCIJobAPI::ContentRequest.new(
-        host: ENV["HOST"],
-        api_path: api_path,
-        content_type: "text/plain",
-        content: Base64.encode64(newest_content + "\n")
-      ).execute
-
-      most_recent_total_line_count = all_lines.count
-
-      sleep(1)
-    end  
-  end
-end
-
 if ENV["JOB_ID"]
   client = SaturnCIJobAPI::Client.new(ENV["HOST"])
 
   puts "Starting to stream system logs"
-  stream("/var/log/syslog", "jobs/#{ENV["JOB_ID"]}/system_logs", client)
+  SaturnCIJobAPI::Stream.new(
+    "/var/log/syslog",
+    "jobs/#{ENV["JOB_ID"]}/system_logs"
+  ).start
 
   puts "Job machine ready"
   client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "job_machine_ready")
@@ -83,7 +63,10 @@ if ENV["JOB_ID"]
   puts "Starting to stream test output"
   File.open(TEST_OUTPUT_FILENAME, 'w') {}
 
-  stream(TEST_OUTPUT_FILENAME, "jobs/#{ENV["JOB_ID"]}/test_output", client)
+  SaturnCIJobAPI::Stream.new(
+    TEST_OUTPUT_FILENAME,
+    "jobs/#{ENV["JOB_ID"]}/test_output"
+  ).start
 
   puts "Running tests"
   puts "jobs/#{ENV["JOB_ID"]}/test_suite_started"
