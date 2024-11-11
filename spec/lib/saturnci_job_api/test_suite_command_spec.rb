@@ -1,8 +1,13 @@
 require "rails_helper"
 
 RSpec.describe SaturnCIJobAPI::TestSuiteCommand do
+  let!(:docker_compose_configuration) do
+    SaturnCIJobAPI::DockerComposeConfiguration.new
+  end
+
   let!(:command) do
     SaturnCIJobAPI::TestSuiteCommand.new(
+      docker_compose_configuration: docker_compose_configuration,
       registry_cache_image_url: "registrycache.saturnci.com:5000/saturn_test_app:123456",
       test_files_string: "spec/models/github_token_spec.rb spec/rebuilds_spec.rb spec/sign_up_spec.rb spec/test_spec.rb",
       rspec_seed: "999",

@@ -1,6 +1,7 @@
 module SaturnCIJobAPI
   class TestSuiteCommand
-    def initialize(registry_cache_image_url:, test_files_string:, rspec_seed:, test_output_filename:, docker_compose_env_vars:)
+    def initialize(docker_compose_configuration:, registry_cache_image_url:, test_files_string:, rspec_seed:, test_output_filename:, docker_compose_env_vars:)
+      @docker_compose_configuration = docker_compose_configuration
       @registry_cache_image_url = registry_cache_image_url
       @test_files_string = test_files_string
       @rspec_seed = rspec_seed
