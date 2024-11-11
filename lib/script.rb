@@ -52,7 +52,17 @@ class Script
     puts "Running pre.sh"
     client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "pre_script_started")
     system("sudo chmod 755 .saturnci/pre.sh")
-    system("sudo SATURN_TEST_APP_IMAGE_URL=#{registry_cache_image_url} docker-compose -f .saturnci/docker-compose.yml run saturn_test_app ./.saturnci/pre.sh")
+
+    docker_compose_configuration = SaturnCIJobAPI::DockerComposeConfiguration.new(
+      registry_cache_image_url: registry_cache_image_url,
+      env_vars: ENV["USER_ENV_VAR_KEYS"].split(",").map { |key| [key, ENV[key]] }.to_h
+    )
+
+    pre_script_command = SaturnCIJobAPI::PreScriptCommand.new(
+      docker_compose_configuration: docker_compose_configuration
+    )
+    puts "pre.sh command: #{pre_script_command.to_s}"
+    system(pre_script_command.to_s)
     puts "pre.sh exit code: #{$?.exitstatus}"
 
     if $?.exitstatus == 0
@@ -83,11 +93,6 @@ class Script
     chunks = test_files.each_slice((test_files.size / ENV['NUMBER_OF_CONCURRENT_JOBS'].to_i.to_f).ceil).to_a
     selected_tests = chunks[ENV['JOB_ORDER_INDEX'].to_i - 1]
     test_files_string = selected_tests.join(' ')
-
-    docker_compose_configuration = SaturnCIJobAPI::DockerComposeConfiguration.new(
-      registry_cache_image_url: registry_cache_image_url,
-      env_vars: ENV["USER_ENV_VAR_KEYS"].split(",").map { |key| [key, ENV[key]] }.to_h
-    )
 
     command = SaturnCIJobAPI::TestSuiteCommand.new(
       docker_compose_configuration: docker_compose_configuration,
