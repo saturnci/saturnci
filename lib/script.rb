@@ -84,7 +84,10 @@ class Script
     selected_tests = chunks[ENV['JOB_ORDER_INDEX'].to_i - 1]
     test_files_string = selected_tests.join(' ')
 
+    docker_compose_configuration = SaturnCIJobAPI::DockerComposeConfiguration.new
+
     command = SaturnCIJobAPI::TestSuiteCommand.new(
+      docker_compose_configuration: docker_compose_configuration,
       registry_cache_image_url: registry_cache_image_url,
       test_files_string: test_files_string,
       rspec_seed: ENV["RSPEC_SEED"],
