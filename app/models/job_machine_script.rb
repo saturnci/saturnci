@@ -5,22 +5,17 @@ class JobMachineScript
   end
 
   def library_content
-    filenames = [
-      "stream.rb",
-      "test_suite_command.rb",
-      "client.rb",
-      "file_content_request.rb",
-      "content_request.rb",
-      "request.rb"
-    ]
+    Dir.glob(Rails.root.join("lib", "saturnci_job_api", "*")).sort.map do |file_path|
+      File.read(file_path)
+    end.join("\n")
+  end
 
-    filenames.map do |filename|
-      File.read(File.join(Rails.root, "lib", "saturnci_job_api", filename))
-    end.join("\n") + File.read(File.join(Rails.root, "lib", "script.rb"))
+  def script_content
+    File.read(File.join(Rails.root, "lib", "script.rb"))
   end
 
   def content
-    encoded_script = Base64.strict_encode64(library_content)
+    encoded_script = Base64.strict_encode64(library_content + script_content)
 
     <<~SCRIPT
       #!/usr/bin/bash
