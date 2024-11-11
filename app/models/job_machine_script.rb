@@ -11,13 +11,12 @@ class JobMachineScript
       "client.rb",
       "file_content_request.rb",
       "content_request.rb",
-      "request.rb",
-      "script.rb"
+      "request.rb"
     ]
 
     filenames.map do |filename|
       File.read(File.join(Rails.root, "lib", "saturnci_job_api", filename))
-    end.join("\n")
+    end.join("\n") + File.read(File.join(Rails.root, "lib", "saturnci_job_api", "script.rb"))
   end
 
   def content
