@@ -9,7 +9,7 @@ PROJECT_DIR = "/home/ubuntu/project"
 TEST_OUTPUT_FILENAME = "tmp/test_output.txt"
 TEST_RESULTS_FILENAME = "tmp/test_results.txt"
 
-class SaturnCIJobAPI::Script
+class Script
   def self.execute
     client = SaturnCIJobAPI::Client.new(ENV["HOST"])
 
@@ -123,5 +123,5 @@ class SaturnCIJobAPI::Script
 end
 
 if ENV["JOB_ID"]
-  SaturnCIJobAPI::Script.execute
+  Script.execute
 end
