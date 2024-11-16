@@ -5,7 +5,7 @@ module SaturnCIJobAPI
     end
 
     def to_s
-      "sudo #{@docker_compose_configuration.script_env_vars} #{docker_compose_command.strip}"
+      "script -c \"sudo #{@docker_compose_configuration.script_env_vars} #{docker_compose_command.strip}\""
     end
 
     def docker_compose_command
