@@ -25,7 +25,7 @@
                   name: "project_secret_collection[project_secrets_attributes][#{index}][value]",
                   id: "project_secrets_#{index}_value",
                   size: 40,
-                  value: project_secret.value.present? ? MASK_VALUE : "" %>
+                  value: project_secret.value.present? ? ProjectSecret::MASK_VALUE : "" %>
               </td>
             </tr>
           <% end %>
