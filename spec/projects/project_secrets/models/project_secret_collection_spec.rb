@@ -77,10 +77,13 @@ RSpec.describe ProjectSecretCollection, type: :model do
         }
       end
 
-      it "does not overwrite the existing project secret" do
-        expect {
-          project_secret_collection.save!
-        }.not_to change { project_secret.reload.value }
+      it "updates the existing project secret" do
+        project_secret_collection.save!
+        expect(ProjectSecret.find_by(key: "DATABASE_USERNAME").value).to eq("gleve")
+      end
+
+      it "does not create a new project secret" do
+        expect { project_secret_collection.save! }.not_to change(ProjectSecret, :count)
       end
     end
 

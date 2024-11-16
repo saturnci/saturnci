@@ -19,8 +19,6 @@ class ProjectSecretCollectionsController < ApplicationController
     @project_secret_collection = ProjectSecretCollection.new
     @project_secret_collection.project = @project
     @project_secret_collection.project_secrets_attributes = project_secret_collection_params[:project_secrets_attributes]
-
-    @project_secret_collection.delete_blank_secrets!
     @project_secret_collection.save!
 
     redirect_to project_project_secret_collection_path(@project)
