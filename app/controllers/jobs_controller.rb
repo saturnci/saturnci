@@ -24,6 +24,9 @@ class JobsController < ApplicationController
       current_tab_name: @current_tab_name
     )
 
-    @project_component = ProjectComponent.new(@build.project)
+    @project_component = ProjectComponent.new(
+      @build.project,
+      extra_css_classes: "project-home"
+    )
   end
 end
