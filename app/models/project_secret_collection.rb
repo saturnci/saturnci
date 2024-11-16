@@ -12,13 +12,12 @@ class ProjectSecretCollection
   end
 
   def save!
-    project.project_secrets.destroy_all
-
     project_secrets = @project_secrets.reject do |project_secret|
-      project_secret.key.blank? || project_secret.value.blank?
-    end.reject do |project_secret|
-      project.project_secrets.where(key: project_secret.key).any?
+      (project_secret.key.blank? || project_secret.value.blank?) ||
+        project_secret.value == ProjectSecret::MASK_VALUE
     end
+
+    ProjectSecret.where(key: project_secrets.map(&:key)).destroy_all
 
     project.project_secrets << project_secrets
   end
