@@ -15,6 +15,6 @@ RSpec.describe SaturnCIJobAPI::PreScriptCommand do
   end
 
   it "returns a command" do
-    expect(pre_script_command.to_s).to eq("sudo SATURN_TEST_APP_IMAGE_URL=registrycache.saturnci.com:5000/saturn_test_app:123456 docker-compose -f .saturnci/docker-compose.yml run -e FOO=bar -e BAR=baz saturn_test_app ./.saturnci/pre.sh")
+    expect(pre_script_command.to_s).to eq("script -c \"sudo SATURN_TEST_APP_IMAGE_URL=registrycache.saturnci.com:5000/saturn_test_app:123456 docker-compose -f .saturnci/docker-compose.yml run -e FOO=bar -e BAR=baz saturn_test_app ./.saturnci/pre.sh\"")
   end
 end
