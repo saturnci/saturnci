@@ -1,4 +1,5 @@
 class JobEvent < ApplicationRecord
+  self.table_name = "run_events"
   self.inheritance_column = :_type_not_used
   belongs_to :job, touch: true, foreign_key: "run_id"
 
