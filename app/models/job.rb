@@ -1,4 +1,5 @@
 class Job < ApplicationRecord
+  self.table_name = "runs"
   belongs_to :build, touch: true
   has_many :job_events, dependent: :destroy
   has_one :charge
