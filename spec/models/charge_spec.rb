@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Charge, type: :model do
   let!(:charge) do
-    create(:charge, job_duration: 300, rate: 0.1)
+    create(:charge, run_duration: 300, rate: 0.1)
   end
 
   describe "#amount_cents" do

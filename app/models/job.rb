@@ -87,7 +87,7 @@ class Job < ApplicationRecord
       end
 
       create_charge!(
-        job_duration: duration,
+        run_duration: duration,
         rate: Rails.configuration.charge_rate
       )
     end
