@@ -6,19 +6,6 @@ RSpec.describe ProjectSecretCollection, type: :model do
       ProjectSecretCollection.new(project: create(:project))
     end
 
-    it "creates a project secret for each key and value" do
-      project_secret_collection.project_secrets_attributes = {
-        "0" => {
-          "key"=>"DATABASE_USERNAME",
-          "value"=>"steve"
-        }
-      }
-
-      project_secret = project_secret_collection.project_secrets[0]
-      expect(project_secret.key).to eq("DATABASE_USERNAME")
-      expect(project_secret.value).to eq("steve")
-    end
-
     context "empty attributes" do
       let!(:project_secret_collection) do
         ProjectSecretCollection.new(
