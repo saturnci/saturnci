@@ -1,7 +1,7 @@
 class Run < ApplicationRecord
   self.table_name = "runs"
   belongs_to :build, touch: true
-  has_many :job_events, dependent: :destroy, foreign_key: "run_id"
+  has_many :run_events, dependent: :destroy
   has_one :charge, foreign_key: "run_id"
 
   alias_attribute :started_at, :created_at
@@ -23,7 +23,7 @@ class Run < ApplicationRecord
 
   def start!
     transaction do
-      job_events.create!(type: :job_machine_requested)
+      run_events.create!(type: :job_machine_requested)
       job_machine_request.create!
     end
   end
@@ -31,7 +31,7 @@ class Run < ApplicationRecord
   def cancel!
     transaction do
       delete_job_machine
-      job_events.create!(type: :job_cancelled)
+      run_events.create!(type: :job_cancelled)
       update!(test_output: "Job cancelled")
       finish!
     end
@@ -57,7 +57,7 @@ class Run < ApplicationRecord
   end
 
   def cancelled?
-    job_events.job_cancelled.any?
+    run_events.job_cancelled.any?
   end
 
   def job_machine_request
@@ -79,7 +79,7 @@ class Run < ApplicationRecord
 
   def finish!
     transaction do
-      job_events.create!(type: "job_finished")
+      run_events.create!(type: "job_finished")
       update!(exit_code: parsed_exit_code || 1)
 
       if Set.new(build.jobs) == Set.new(build.jobs.finished)
@@ -108,6 +108,6 @@ class Run < ApplicationRecord
   end
 
   def job_finished_event
-    job_events.job_finished.first
+    run_events.job_finished.first
   end
 end
