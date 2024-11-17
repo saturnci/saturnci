@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_06_184126) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_17_140845) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -56,23 +56,6 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_06_184126) do
     t.index ["job_id"], name: "index_job_events_on_job_id"
   end
 
-  create_table "jobs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "build_id", null: false
-    t.string "job_machine_id"
-    t.text "test_output"
-    t.text "test_report"
-    t.text "system_logs"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "order_index", null: false
-    t.string "job_machine_rsa_key_path"
-    t.integer "exit_code"
-    t.string "snapshot_image_id"
-    t.index ["build_id", "order_index"], name: "index_jobs_on_build_id_and_order_index", unique: true
-    t.index ["build_id"], name: "index_jobs_on_build_id"
-    t.index ["job_machine_id"], name: "index_jobs_on_job_machine_id", unique: true
-  end
-
   create_table "project_secrets", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "project_id", null: false
     t.string "key", null: false
@@ -94,6 +77,23 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_06_184126) do
     t.boolean "start_builds_automatically_on_git_push", default: true, null: false
     t.index ["saturn_installation_id"], name: "index_projects_on_saturn_installation_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
+  end
+
+  create_table "runs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "build_id", null: false
+    t.string "job_machine_id"
+    t.text "test_output"
+    t.text "test_report"
+    t.text "system_logs"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "order_index", null: false
+    t.string "job_machine_rsa_key_path"
+    t.integer "exit_code"
+    t.string "snapshot_image_id"
+    t.index ["build_id", "order_index"], name: "index_runs_on_build_id_and_order_index", unique: true
+    t.index ["build_id"], name: "index_runs_on_build_id"
+    t.index ["job_machine_id"], name: "index_runs_on_job_machine_id", unique: true
   end
 
   create_table "saturn_installations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -138,11 +138,11 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_06_184126) do
   end
 
   add_foreign_key "builds", "projects"
-  add_foreign_key "charges", "jobs"
-  add_foreign_key "job_events", "jobs"
-  add_foreign_key "jobs", "builds"
+  add_foreign_key "charges", "runs", column: "job_id"
+  add_foreign_key "job_events", "runs", column: "job_id"
   add_foreign_key "project_secrets", "projects"
   add_foreign_key "projects", "saturn_installations"
   add_foreign_key "projects", "users"
+  add_foreign_key "runs", "builds"
   add_foreign_key "saturn_installations", "users"
 end
