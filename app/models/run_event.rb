@@ -1,7 +1,6 @@
 class RunEvent < ApplicationRecord
-  self.table_name = "run_events"
   self.inheritance_column = :_type_not_used
-  belongs_to :job, touch: true, foreign_key: "run_id"
+  belongs_to :run, touch: true
 
   enum :type, [
     :image_build_started,
