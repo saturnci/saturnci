@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_17_152804) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_17_153647) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -47,15 +47,6 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_17_152804) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "job_events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "run_id", null: false
-    t.integer "type", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["run_id", "type"], name: "index_job_events_on_run_id_and_type", unique: true
-    t.index ["run_id"], name: "index_job_events_on_run_id"
-  end
-
   create_table "project_secrets", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "project_id", null: false
     t.string "key", null: false
@@ -77,6 +68,15 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_17_152804) do
     t.boolean "start_builds_automatically_on_git_push", default: true, null: false
     t.index ["saturn_installation_id"], name: "index_projects_on_saturn_installation_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
+  end
+
+  create_table "run_events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "run_id", null: false
+    t.integer "type", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["run_id", "type"], name: "index_run_events_on_run_id_and_type", unique: true
+    t.index ["run_id"], name: "index_run_events_on_run_id"
   end
 
   create_table "runs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -139,10 +139,10 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_17_152804) do
 
   add_foreign_key "builds", "projects"
   add_foreign_key "charges", "runs"
-  add_foreign_key "job_events", "runs"
   add_foreign_key "project_secrets", "projects"
   add_foreign_key "projects", "saturn_installations"
   add_foreign_key "projects", "users"
+  add_foreign_key "run_events", "runs"
   add_foreign_key "runs", "builds"
   add_foreign_key "saturn_installations", "users"
 end

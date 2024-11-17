@@ -1,7 +1,7 @@
 require "rails_helper"
 include APIAuthenticationHelper
 
-RSpec.describe "job events", type: :request do
+RSpec.describe "run events", type: :request do
   describe "POST /api/v1/jobs/:id/job_events" do
     let!(:job) { create(:job) }
 
