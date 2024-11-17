@@ -6,6 +6,6 @@ class Charge < ApplicationRecord
   end
 
   def amount_cents
-    job_duration * rate
+    run_duration * rate
   end
 end

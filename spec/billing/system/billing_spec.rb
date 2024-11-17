@@ -8,7 +8,7 @@ describe "Billing", type: :system do
   before do
     job.finish!
     login_as(job.build.project.user, scope: :user)
-    allow_any_instance_of(Charge).to receive(:job_duration).and_return(420)
+    allow_any_instance_of(Charge).to receive(:run_duration).and_return(420)
   end
 
   context "the current month is January" do
