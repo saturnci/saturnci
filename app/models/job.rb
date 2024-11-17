@@ -18,7 +18,7 @@ class Job < ApplicationRecord
   end
 
   def name
-    "Job #{order_index}"
+    "Run #{order_index}"
   end
 
   def start!
