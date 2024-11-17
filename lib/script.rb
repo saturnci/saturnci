@@ -22,15 +22,6 @@ class Script
     puts "Job machine ready"
     client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "job_machine_ready")
 
-    puts "Env vars:"
-    keys = ENV["USER_ENV_VAR_KEYS"].split(",")
-    puts keys.join("\n")
-
-    keys.each do |key|
-      value = ENV[key]
-      puts "#{key}=#{value}"
-    end
-
     token = client.post("github_tokens", github_installation_id: ENV["GITHUB_INSTALLATION_ID"]).body
     system("git clone https://x-access-token:#{token}@github.com/#{ENV['GITHUB_REPO_FULL_NAME']} #{PROJECT_DIR}")
     Dir.chdir(PROJECT_DIR)
