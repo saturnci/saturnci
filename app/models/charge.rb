@@ -1,5 +1,5 @@
 class Charge < ApplicationRecord
-  belongs_to :job
+  belongs_to :job, foreign_key: "run_id"
 
   def amount
     amount_cents / 100.0
