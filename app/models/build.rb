@@ -58,9 +58,9 @@ class Build < ApplicationRecord
   end
 
   def duration
-    job_durations = jobs.map(&:duration)
-    return nil if job_durations.any?(nil)
-    job_durations.max
+    run_durations = jobs.map(&:duration)
+    return nil if run_durations.any?(nil)
+    run_durations.max
   end
 
   def delete_job_machines
