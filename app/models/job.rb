@@ -1,7 +1,7 @@
 class Job < ApplicationRecord
   self.table_name = "runs"
   belongs_to :build, touch: true
-  has_many :job_events, dependent: :destroy
+  has_many :job_events, dependent: :destroy, foreign_key: "run_id"
   has_one :charge
 
   alias_attribute :started_at, :created_at

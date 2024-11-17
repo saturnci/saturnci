@@ -1,6 +1,6 @@
 class JobEvent < ApplicationRecord
   self.inheritance_column = :_type_not_used
-  belongs_to :job, touch: true
+  belongs_to :job, touch: true, foreign_key: "run_id"
 
   enum :type, [
     :image_build_started,
