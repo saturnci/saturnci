@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_17_144546) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_17_152027) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -32,13 +32,13 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_17_144546) do
   end
 
   create_table "charges", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "job_id", null: false
+    t.uuid "run_id", null: false
     t.decimal "rate", null: false
     t.decimal "job_duration", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["job_id"], name: "index_charges_on_job_id"
-    t.index ["job_id"], name: "unique_index_on_charges_job_id", unique: true
+    t.index ["run_id"], name: "index_charges_on_run_id"
+    t.index ["run_id"], name: "unique_index_on_charges_job_id", unique: true
   end
 
   create_table "github_events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -138,7 +138,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_17_144546) do
   end
 
   add_foreign_key "builds", "projects"
-  add_foreign_key "charges", "runs", column: "job_id"
+  add_foreign_key "charges", "runs"
   add_foreign_key "job_events", "runs"
   add_foreign_key "project_secrets", "projects"
   add_foreign_key "projects", "saturn_installations"
