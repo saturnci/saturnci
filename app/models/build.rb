@@ -30,7 +30,7 @@ class Build < ApplicationRecord
 
   def cancel!
     transaction do
-      jobs.each(&:cancel!)
+      runs.each(&:cancel!)
     end
   end
 
@@ -43,11 +43,11 @@ class Build < ApplicationRecord
   end
 
   def calculated_status
-    return "Not Started" if jobs.empty?
-    return "Running" if jobs.any? { |job| job.status == "Running" } || jobs.empty?
-    return "Failed" if jobs.any? { |job| job.status == "Failed" }
-    return "Cancelled" if jobs.any? { |job| job.status == "Cancelled" }
-    return "Passed" if jobs.all? { |job| job.status == "Passed" }
+    return "Not Started" if runs.empty?
+    return "Running" if runs.any? { |run| run.status == "Running" } || runs.empty?
+    return "Failed" if runs.any? { |run| run.status == "Failed" }
+    return "Cancelled" if runs.any? { |run| run.status == "Cancelled" }
+    return "Passed" if runs.all? { |run| run.status == "Passed" }
     "Failed"
   end
 
@@ -59,12 +59,12 @@ class Build < ApplicationRecord
   end
 
   def duration
-    run_durations = jobs.map(&:duration)
+    run_durations = runs.map(&:duration)
     return nil if run_durations.any?(nil)
     run_durations.max
   end
 
   def delete_job_machines
-    jobs.each(&:delete_job_machine)
+    runs.each(&:delete_job_machine)
   end
 end

@@ -4,21 +4,21 @@ RSpec.describe Build, type: :model do
   describe "#duration" do
     let!(:build) { create(:build) }
 
-    context "no jobs" do
+    context "no runs" do
       it "is nil" do
         expect(build.duration).to be nil
       end
     end
 
-    context "one job finished, the other not finished yet" do
+    context "one run finished, the other not finished yet" do
       before do
-        finished_job = create(:job, build: build, order_index: 1)
-        allow(finished_job).to receive(:duration).and_return(5)
+        finished_run = create(:run, build: build, order_index: 1)
+        allow(finished_run).to receive(:duration).and_return(5)
 
-        unfinished_job = create(:job, build: build, order_index: 2)
-        allow(unfinished_job).to receive(:duration).and_return(nil)
+        unfinished_run = create(:run, build: build, order_index: 2)
+        allow(unfinished_run).to receive(:duration).and_return(nil)
 
-        allow(build).to receive(:jobs).and_return([finished_job, unfinished_job])
+        allow(build).to receive(:runs).and_return([finished_run, unfinished_run])
       end
 
       it "is nil" do
@@ -26,18 +26,18 @@ RSpec.describe Build, type: :model do
       end
     end
 
-    context "two finished jobs" do
+    context "two finished runs" do
       before do
-        shorter_job = create(:job, build: build, order_index: 1)
-        allow(shorter_job).to receive(:duration).and_return(5)
+        shorter_run = create(:run, build: build, order_index: 1)
+        allow(shorter_run).to receive(:duration).and_return(5)
 
-        longer_job = create(:job, build: build, order_index: 2)
-        allow(longer_job).to receive(:duration).and_return(7)
+        longer_run = create(:run, build: build, order_index: 2)
+        allow(longer_run).to receive(:duration).and_return(7)
 
-        allow(build).to receive(:jobs).and_return([shorter_job, longer_job])
+        allow(build).to receive(:runs).and_return([shorter_run, longer_run])
       end
 
-      it "returns the longer of the two jobs" do
+      it "returns the longer of the two runs" do
         expect(build.duration).to eq(7)
       end
     end
@@ -61,15 +61,15 @@ RSpec.describe Build, type: :model do
   end
 
   describe "#cancel!" do
-    let!(:job) { create(:job) }
+    let!(:run) { create(:run) }
 
     before do
-      stub_request(:delete, "https://api.digitalocean.com/v2/droplets/#{job.job_machine_id}").to_return(status: 200)
+      stub_request(:delete, "https://api.digitalocean.com/v2/droplets/#{run.job_machine_id}").to_return(status: 200)
     end
 
     it "sets the status to 'Cancelled'" do
-      job.build.cancel!
-      expect(job.build.reload.status).to eq("Cancelled")
+      run.build.cancel!
+      expect(run.build.reload.status).to eq("Cancelled")
     end
   end
 end
