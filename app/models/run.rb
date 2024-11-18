@@ -9,7 +9,7 @@ class Run < ApplicationRecord
 
   scope :running, -> do
     unscoped.joins(:build)
-      .where.not(id: Job.finished.select(:id))
+      .where.not(id: Run.finished.select(:id))
       .order("builds.created_at DESC")
   end
 
@@ -32,7 +32,7 @@ class Run < ApplicationRecord
     transaction do
       delete_job_machine
       run_events.create!(type: :job_cancelled)
-      update!(test_output: "Job cancelled")
+      update!(test_output: "Run cancelled")
       finish!
     end
   end
@@ -82,7 +82,7 @@ class Run < ApplicationRecord
       run_events.create!(type: "job_finished")
       update!(exit_code: parsed_exit_code || 1)
 
-      if Set.new(build.jobs) == Set.new(build.jobs.finished)
+      if Set.new(build.runs) == Set.new(build.runs.finished)
         build.update!(cached_status: build.calculated_status)
       end
 
