@@ -1,5 +1,5 @@
 module Billing
-  class JobDecorator < ApplicationDecorator
+  class RunDecorator < ApplicationDecorator
     def charge
       return unless charge_cents.present?
 
