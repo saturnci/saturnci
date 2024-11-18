@@ -1,5 +1,5 @@
 <%= terminal_output do %>
-  <%= run_container current_tab_name, run do %>
-    <%= BuildReport.new(run.test_report).to_s.html_safe %>
+  <%= run_container current_tab_name, job do %>
+    <%= BuildReport.new(job.test_report).to_s.html_safe %>
   <% end %>
 <% end %>
