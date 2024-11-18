@@ -87,7 +87,7 @@ class Script
     end
 
     test_files = Dir.glob('./spec/**/*_spec.rb')
-    chunks = test_files.each_slice((test_files.size / ENV['NUMBER_OF_CONCURRENT_JOBS'].to_i.to_f).ceil).to_a
+    chunks = test_files.each_slice((test_files.size / ENV['NUMBER_OF_CONCURRENT_RUNS'].to_i.to_f).ceil).to_a
     selected_tests = chunks[ENV['JOB_ORDER_INDEX'].to_i - 1]
     test_files_string = selected_tests.join(' ')
 

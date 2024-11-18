@@ -1,7 +1,8 @@
 class Build < ApplicationRecord
-  NUMBER_OF_CONCURRENT_JOBS = 2
+  NUMBER_OF_CONCURRENT_RUNS = 2
   belongs_to :project
   has_many :jobs
+  has_many :runs
   acts_as_paranoid
 
   after_initialize do
@@ -45,7 +46,7 @@ class Build < ApplicationRecord
   end
 
   def jobs_to_use
-    NUMBER_OF_CONCURRENT_JOBS.times.map do |i|
+    NUMBER_OF_CONCURRENT_RUNS.times.map do |i|
       Job.new(build: self, order_index: i + 1)
     end
   end
