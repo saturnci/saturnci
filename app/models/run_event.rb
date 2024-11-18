@@ -13,6 +13,6 @@ class RunEvent < ApplicationRecord
     :pre_script_finished,
     :test_suite_started,
     :repository_cloned,
-    :job_cancelled,
+    :run_cancelled,
   ]
 end
