@@ -31,7 +31,7 @@ class Run < ApplicationRecord
   def cancel!
     transaction do
       delete_runner
-      run_events.create!(type: :job_cancelled)
+      run_events.create!(type: :run_cancelled)
       update!(test_output: "Run cancelled")
       finish!
     end

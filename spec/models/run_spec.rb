@@ -21,9 +21,9 @@ RSpec.describe Run, type: :model do
       allow(run).to receive(:delete_runner)
     end
 
-    it "creates a new job_event with type job_cancelled" do
+    it "creates a new run_event with type run_cancelled" do
       expect { run.cancel! }
-        .to change { run.run_events.where(type: "job_cancelled").count }.by(1)
+        .to change { run.run_events.where(type: "run_cancelled").count }.by(1)
     end
 
     it "sets the status to 'Cancelled'" do
