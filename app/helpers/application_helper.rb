@@ -12,10 +12,10 @@ module ApplicationHelper
     content_tag(:div, terminal_content, class: "job-info-container")
   end
 
-  def job_container(current_tab_name, job, &block)
-    job_info = capture { yield }
-    if job_info.present?
-      content_tag(:div, id: dom_id(job, current_tab_name), &block)
+  def run_container(current_tab_name, run, &block)
+    run_info = capture { yield }
+    if run_info.present?
+      content_tag(:div, id: dom_id(run, current_tab_name), &block)
     else
       content_tag(:div, Quote.random) +
         content_tag(:br) +

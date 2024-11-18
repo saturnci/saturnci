@@ -1,11 +1,11 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe ApplicationHelper, type: :helper do
   describe "waiting message" do
-    context "job info is present" do
+    context "run info is present" do
       it "shows the info" do
-        job = create(:job)
-        result = helper.job_container("system_logs", job) do
+        run = create(:run)
+        result = helper.run_container("system_logs", run) do
           "Build machine ready"
         end
 
@@ -13,10 +13,10 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
     end
 
-    context "job info is not present" do
+    context "run info is not present" do
       it "shows a waiting message" do
-        job = create(:job)
-        result = helper.job_container("system_logs", job) { "" }
+        run = create(:run)
+        result = helper.run_container("system_logs", run) { "" }
 
         expect(result).to include("Waiting")
       end
