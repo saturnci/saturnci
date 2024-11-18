@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Run, type: :model do
-  let!(:run) { create(:job) }
+  let!(:run) { create(:run) }
 
   before do
     fake_job_machine_request = double("JobMachineRequest")
@@ -33,7 +33,7 @@ RSpec.describe Run, type: :model do
 
     it "sets the test output to 'Run cancelled'" do
       run.cancel!
-      expect(run.reload.test_output).to eq("Job cancelled")
+      expect(run.reload.test_output).to eq("Run cancelled")
     end
   end
 
@@ -66,7 +66,7 @@ RSpec.describe Run, type: :model do
 
   describe "#finish!" do
     let!(:other_run) do
-      create(:job, build: run.build, order_index: 2)
+      create(:run, build: run.build, order_index: 2)
     end
 
     context "it is not the last run to finish" do

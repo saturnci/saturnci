@@ -16,7 +16,7 @@ describe "Project select", type: :system do
 
   context "there is at least one build" do
     let!(:build) { create(:build, project: project) }
-    before { create(:job, build: build) }
+    before { create(:run, build: build) }
 
     it "sets the select input to the project currently being visited" do
       # I don't understand why this test is failing
@@ -26,7 +26,7 @@ describe "Project select", type: :system do
 
     context "visiting system logs page" do
       it "sets the select input to the project currently being visited" do
-        visit job_path(build.jobs.first, "system_logs")
+        visit job_path(build.runs.first, "system_logs")
         expect(page).to have_select("project_id", selected: project.name)
       end
     end
