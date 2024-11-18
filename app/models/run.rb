@@ -57,7 +57,7 @@ class Run < ApplicationRecord
   end
 
   def cancelled?
-    run_events.job_cancelled.any?
+    run_events.run_cancelled.any?
   end
 
   def runner_request
