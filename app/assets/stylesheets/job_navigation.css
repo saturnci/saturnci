@@ -1,4 +1,4 @@
-.job-menu-container {
+.run-menu-container {
   display: flex;
   padding: 0;
   border-bottom: 15px solid #000;
@@ -8,11 +8,11 @@
   color: #000;
 }
 
-.job-menu-container, .build-navigation a.active {
+.run-menu-container, .build-navigation a.active {
   background-color: #DDD;
 }
 
-ul.job-menu {
+ul.run-menu {
   display: flex;
   text-align: center;
   padding: 14px 0 0 20px;
@@ -20,7 +20,7 @@ ul.job-menu {
   list-style: none;
 }
 
-ul.job-menu li a {
+ul.run-menu li a {
   padding: 6px 12px;
   margin: 0;
   display: block;
@@ -29,7 +29,7 @@ ul.job-menu li a {
   background-color: #AAA;
 }
 
-ul.job-menu li a.active {
+ul.run-menu li a.active {
   color: #DDD;
   background-color: #000;
 }
