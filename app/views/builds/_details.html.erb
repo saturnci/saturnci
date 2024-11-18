@@ -7,8 +7,8 @@
   <% end %>
 </div>
 
-<div class="job-menu-container">
-  <ul class="job-menu">
+<div class="run-menu-container">
+  <ul class="run-menu">
     <% build.runs.each do |run| %>
       <li>
         <%= link_to run.name,
@@ -19,7 +19,7 @@
   </ul>
 </div>
 
-<div class="job-details">
+<div class="run-details">
   <div id="<%= @job_output_stream.target %>">
     <%= render current_tab_name, current_tab_name: @current_tab_name, job: @job %>
   </div>
