@@ -1,6 +1,6 @@
 <%= terminal_output do %>
-  <%= run_container current_tab_name, run do %>
-    <%= ansi_to_html(SystemLogBody.new(run.system_logs).scrub) %>
+  <%= run_container current_tab_name, job do %>
+    <%= ansi_to_html(SystemLogBody.new(job.system_logs).scrub) %>
   <% end %>
 <% end %>
 

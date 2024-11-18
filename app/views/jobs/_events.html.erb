@@ -1,18 +1,18 @@
 <div class="job-info-container non-terminal-job-info">
-  <%= run_container current_tab_name, run do %>
+  <%= run_container current_tab_name, job do %>
     <table border>
       <tr>
         <th>Event</th>
         <th>Timestamp</th>
         <th>Duration (s)</th>
       </tr>
-      <% run.run_events.each_with_index do |run_event, index| %>
+      <% job.run_events.each_with_index do |run_event, index| %>
         <tr>
           <td><%= run_event.type %></td>
           <td><%= run_event.created_at %></td>
           <td class="number">
             <% if index > 0 %>
-              <%= (run_event.created_at - run.run_events[index - 1].created_at).round(2) %>
+              <%= (run_event.created_at - job.run_events[index - 1].created_at).round(2) %>
             <% end %>
           </td>
         </tr>
