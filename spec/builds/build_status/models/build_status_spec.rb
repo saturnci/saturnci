@@ -2,51 +2,51 @@ require "rails_helper"
 
 RSpec.describe "build status", type: :model do
   describe "#status" do
-    context "no jobs" do
+    context "no runs" do
       it "is 'Not Started'" do
         build = create(:build)
         expect(build.status).to eq("Not Started")
       end
     end
 
-    context "some jobs" do
+    context "some runs" do
       let!(:build) { create(:build) }
-      let!(:job_1) { create(:job, build: build, order_index: 1) }
-      let!(:job_2) { create(:job, build: build, order_index: 2) }
+      let!(:run_1) { create(:run, build: build, order_index: 1) }
+      let!(:run_2) { create(:run, build: build, order_index: 2) }
 
-      context "all jobs have passed" do
+      context "all runs have passed" do
         it "is passed" do
-          allow(job_1).to receive(:status).and_return("Passed")
-          allow(job_2).to receive(:status).and_return("Passed")
-          allow(build).to receive(:jobs).and_return([job_1, job_2])
+          allow(run_1).to receive(:status).and_return("Passed")
+          allow(run_2).to receive(:status).and_return("Passed")
+          allow(build).to receive(:runs).and_return([run_1, run_2])
 
           expect(build.status).to eq("Passed")
         end
       end
 
-      context "any jobs have failed" do
+      context "any runs have failed" do
         it "is failed" do
-          allow(job_1).to receive(:status).and_return("Passed")
-          allow(job_2).to receive(:status).and_return("Failed")
-          allow(build).to receive(:jobs).and_return([job_1, job_2])
+          allow(run_1).to receive(:status).and_return("Passed")
+          allow(run_2).to receive(:status).and_return("Failed")
+          allow(build).to receive(:runs).and_return([run_1, run_2])
 
           expect(build.status).to eq("Failed")
         end
       end
 
-      context "some jobs are running, no jobs are failed" do
+      context "some runs are running, no runs are failed" do
         it "is running" do
-          allow(job_1).to receive(:status).and_return("Passed")
-          allow(job_2).to receive(:status).and_return("Running")
-          allow(build).to receive(:jobs).and_return([job_1, job_2])
+          allow(run_1).to receive(:status).and_return("Passed")
+          allow(run_2).to receive(:status).and_return("Running")
+          allow(build).to receive(:runs).and_return([run_1, run_2])
 
           expect(build.status).to eq("Running")
         end
       end
 
-      context "there are no jobs" do
+      context "there are no runs" do
         it "is not started" do
-          allow(build).to receive(:jobs).and_return([])
+          allow(build).to receive(:runs).and_return([])
 
           expect(build.status).to eq("Not Started")
         end
@@ -55,9 +55,9 @@ RSpec.describe "build status", type: :model do
       describe "caching" do
         context "cache is empty" do
           before do
-            allow(job_1).to receive(:status).and_return("Passed")
-            allow(job_2).to receive(:status).and_return("Passed")
-            allow(build).to receive(:jobs).and_return([job_1, job_2])
+            allow(run_1).to receive(:status).and_return("Passed")
+            allow(run_2).to receive(:status).and_return("Passed")
+            allow(build).to receive(:runs).and_return([run_1, run_2])
           end
 
           it "sets the cached status" do
@@ -69,9 +69,9 @@ RSpec.describe "build status", type: :model do
         context "cached_status does not match calculated_status" do
           before do
             build.update!(cached_status: "Passed")
-            allow(job_1).to receive(:status).and_return("Failed")
-            allow(job_2).to receive(:status).and_return("Failed")
-            allow(build).to receive(:jobs).and_return([job_1, job_2])
+            allow(run_1).to receive(:status).and_return("Failed")
+            allow(run_2).to receive(:status).and_return("Failed")
+            allow(build).to receive(:runs).and_return([run_1, run_2])
           end
 
           it "sets the cached status" do
@@ -83,9 +83,9 @@ RSpec.describe "build status", type: :model do
         context "cached_status matches calculated_status" do
           before do
             build.update!(cached_status: "Passed")
-            allow(job_1).to receive(:status).and_return("Passed")
-            allow(job_2).to receive(:status).and_return("Passed")
-            allow(build).to receive(:jobs).and_return([job_1, job_2])
+            allow(run_1).to receive(:status).and_return("Passed")
+            allow(run_2).to receive(:status).and_return("Passed")
+            allow(build).to receive(:runs).and_return([run_1, run_2])
           end
 
           it "does not update the build" do
