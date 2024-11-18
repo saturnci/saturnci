@@ -54,9 +54,9 @@ RSpec.describe Build, type: :model do
       allow(build).to receive(:runs_to_use).and_return([run])
     end
 
-    it "creates a new job_event with type job_machine_requested" do
+    it "creates a new job_event with type runner_requested" do
       expect { build.start! }
-        .to change { JobEvent.where(type: "job_machine_requested").count }.by(1)
+        .to change { JobEvent.where(type: "runner_requested").count }.by(1)
     end
   end
 

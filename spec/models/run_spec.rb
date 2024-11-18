@@ -10,9 +10,9 @@ RSpec.describe Run, type: :model do
   end
 
   describe "#start!" do
-    it "creates a new job_event with type job_machine_requested" do
+    it "creates a new run_event with type runner_requested" do
       expect { run.start! }
-        .to change { run.run_events.where(type: "job_machine_requested").count }.by(1)
+        .to change { run.run_events.where(type: "runner_requested").count }.by(1)
     end
   end
 

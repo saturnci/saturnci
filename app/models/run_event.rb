@@ -5,7 +5,7 @@ class RunEvent < ApplicationRecord
   enum :type, [
     :image_build_started,
     :image_build_finished,
-    :job_machine_requested,
+    :runner_requested,
     :job_machine_ready,
     :job_started,
     :job_finished,
