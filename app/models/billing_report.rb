@@ -5,8 +5,8 @@ class BillingReport
     @month = month
   end
 
-  def jobs
-    @project.jobs
+  def runs
+    @project.runs
       .joins(:charge)
       .where(created_at: start_date..end_date)
       .order("runs.created_at desc")
