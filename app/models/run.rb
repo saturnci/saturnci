@@ -23,7 +23,7 @@ class Run < ApplicationRecord
 
   def start!
     transaction do
-      run_events.create!(type: :job_machine_requested)
+      run_events.create!(type: :runner_requested)
       job_machine_request.create!
     end
   end
