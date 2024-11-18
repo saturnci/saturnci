@@ -44,14 +44,14 @@ RSpec.describe Build, type: :model do
   end
 
   describe "#start!" do
-    let!(:job) { create(:job) }
-    let!(:build) { job.build }
+    let!(:run) { create(:run) }
+    let!(:build) { run.build }
 
     before do
       fake_job_machine_request = double("JobMachineRequest")
-      allow(job).to receive(:job_machine_request).and_return(fake_job_machine_request)
+      allow(run).to receive(:job_machine_request).and_return(fake_job_machine_request)
       allow(fake_job_machine_request).to receive(:create!)
-      allow(build).to receive(:jobs_to_use).and_return([job])
+      allow(build).to receive(:runs_to_use).and_return([run])
     end
 
     it "creates a new job_event with type job_machine_requested" do
