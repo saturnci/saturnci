@@ -15,10 +15,16 @@ class Build < ApplicationRecord
     transaction do
       save!
 
-      jobs_to_use.each do |job|
-        job.save!
-        job.start!
+      runs_to_use.each do |run|
+        run.save!
+        run.start!
       end
+    end
+  end
+
+  def runs_to_use
+    NUMBER_OF_CONCURRENT_RUNS.times.map do |i|
+      Run.new(build: self, order_index: i + 1)
     end
   end
 
@@ -43,12 +49,6 @@ class Build < ApplicationRecord
     return "Cancelled" if jobs.any? { |job| job.status == "Cancelled" }
     return "Passed" if jobs.all? { |job| job.status == "Passed" }
     "Failed"
-  end
-
-  def jobs_to_use
-    NUMBER_OF_CONCURRENT_RUNS.times.map do |i|
-      Job.new(build: self, order_index: i + 1)
-    end
   end
 
   def duration_formatted
