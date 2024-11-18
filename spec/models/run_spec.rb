@@ -4,9 +4,9 @@ RSpec.describe Run, type: :model do
   let!(:run) { create(:run) }
 
   before do
-    fake_job_machine_request = double("JobMachineRequest")
-    allow(run).to receive(:job_machine_request).and_return(fake_job_machine_request)
-    allow(fake_job_machine_request).to receive(:create!)
+    fake_runner_request = double("RunnerRequest")
+    allow(run).to receive(:runner_request).and_return(fake_runner_request)
+    allow(fake_runner_request).to receive(:create!)
   end
 
   describe "#start!" do
