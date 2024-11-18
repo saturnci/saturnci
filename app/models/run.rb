@@ -30,7 +30,7 @@ class Run < ApplicationRecord
 
   def cancel!
     transaction do
-      delete_job_machine
+      delete_runner
       run_events.create!(type: :job_cancelled)
       update!(test_output: "Run cancelled")
       finish!
@@ -67,7 +67,7 @@ class Run < ApplicationRecord
     )
   end
 
-  def delete_job_machine
+  def delete_runner
     client = DropletKit::Client.new(access_token: ENV['DIGITALOCEAN_ACCESS_TOKEN'])
     client.droplets.delete(id: job_machine_id)
   end

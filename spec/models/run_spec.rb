@@ -18,7 +18,7 @@ RSpec.describe Run, type: :model do
 
   describe "#cancel!" do
     before do
-      allow(run).to receive(:delete_job_machine)
+      allow(run).to receive(:delete_runner)
     end
 
     it "creates a new job_event with type job_cancelled" do

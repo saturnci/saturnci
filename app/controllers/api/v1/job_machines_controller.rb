@@ -2,8 +2,8 @@ module API
   module V1
     class JobMachinesController < APIController
       def destroy
-        job = Job.find(params[:job_id])
-        job.delete_job_machine
+        run = Run.find(params[:job_id])
+        run.delete_runner
         head :ok
       end
     end
