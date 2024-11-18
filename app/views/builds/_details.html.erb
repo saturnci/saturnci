@@ -9,11 +9,11 @@
 
 <div class="job-menu-container">
   <ul class="job-menu">
-    <% build.jobs.each do |job| %>
+    <% build.runs.each do |run| %>
       <li>
-        <%= link_to job.name,
-          job_path(job, current_tab_name),
-          class: job == @job ? "active" : "" %>
+        <%= link_to run.name,
+          job_path(run, current_tab_name),
+          class: run == @job ? "active" : "" %>
       </li>
     <% end %>
   </ul>
