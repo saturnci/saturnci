@@ -51,7 +51,7 @@ class BuildsController < ApplicationController
     build = Build.find(params[:id])
 
     begin
-      build.delete_job_machines
+      build.delete_runners
     rescue DropletKit::Error => e
       if e.message.include?("404")
         Rails.logger.error "Failed to delete job machine: #{e.message}"

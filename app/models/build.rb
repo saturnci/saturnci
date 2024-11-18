@@ -64,7 +64,7 @@ class Build < ApplicationRecord
     run_durations.max
   end
 
-  def delete_job_machines
-    runs.each(&:delete_job_machine)
+  def delete_runners
+    runs.each(&:delete_runner)
   end
 end
