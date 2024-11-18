@@ -24,7 +24,7 @@ class Run < ApplicationRecord
   def start!
     transaction do
       run_events.create!(type: :runner_requested)
-      job_machine_request.create!
+      runner_request.create!
     end
   end
 
@@ -60,9 +60,9 @@ class Run < ApplicationRecord
     run_events.job_cancelled.any?
   end
 
-  def job_machine_request
-    JobMachineRequest.new(
-      job: self,
+  def runner_request
+    RunnerRequest.new(
+      run: self,
       github_installation_id: build.project.saturn_installation.github_installation_id
     )
   end

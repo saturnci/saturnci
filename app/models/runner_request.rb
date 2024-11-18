@@ -1,14 +1,14 @@
 require "droplet_kit"
 
-class JobMachineRequest
-  def initialize(job:, github_installation_id:)
-    @job = job
+class RunnerRequest
+  def initialize(run:, github_installation_id:)
+    @run = run
     @github_installation_id = github_installation_id
   end
 
   def create!
     client = DropletKitClientFactory.client
-    rsa_key = JobMachineRSAKey.new("job-#{@job.id}")
+    rsa_key = JobMachineRSAKey.new("run-#{@run.id}")
 
     droplet_kit_ssh_key = DropletKit::SSHKey.new(
       name: rsa_key.filename,
@@ -33,7 +33,7 @@ class JobMachineRequest
 
     droplet_request = client.droplets.create(droplet)
 
-    @job.update!(
+    @run.update!(
       snapshot_image_id: DropletConfig::SNAPSHOT_IMAGE_ID,
       job_machine_id: droplet_request.id,
       job_machine_rsa_key_path: rsa_key.file_path
@@ -43,11 +43,11 @@ class JobMachineRequest
   private
 
   def droplet_name
-    "#{@job.build.project.name.gsub("/", "-")}-job-#{@job.id}"
+    "#{@run.build.project.name.gsub("/", "-")}-run-#{@run.id}"
   end
 
   # /var/lib/cloud/instances/456688083/scripts/part-001
   def user_data
-    JobMachineScript.new(@job, @github_installation_id).content
+    JobMachineScript.new(@run, @github_installation_id).content
   end
 end

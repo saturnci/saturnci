@@ -11,9 +11,9 @@ RSpec.describe "rebuilds", type: :request do
     end
 
     before do
-      job_machine_request_double = instance_double(JobMachineRequest)
-      allow(JobMachineRequest).to receive(:new).and_return(job_machine_request_double)
-      allow(job_machine_request_double).to receive(:create!)
+      runner_request_double = instance_double(RunnerRequest)
+      allow(RunnerRequest).to receive(:new).and_return(runner_request_double)
+      allow(runner_request_double).to receive(:create!)
     end
 
     it "increases the count of builds by 1" do

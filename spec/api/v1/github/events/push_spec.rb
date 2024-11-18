@@ -11,11 +11,11 @@ RSpec.describe "Push", type: :request do
   end
 
   before do
-    job_machine_request_stub = instance_double("JobMachineRequest").tap do |stub|
+    runner_request_stub = instance_double("RunnerRequest").tap do |stub|
       allow(stub).to receive(:create!)
     end
 
-    allow(JobMachineRequest).to receive(:new).and_return(job_machine_request_stub)
+    allow(RunnerRequest).to receive(:new).and_return(runner_request_stub)
   end
 
   describe "git push event" do
