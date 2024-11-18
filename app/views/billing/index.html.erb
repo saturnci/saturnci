@@ -9,11 +9,11 @@
     <th>Charge</th>
   </tr>
 
-  <% @jobs.each do |job| %>
+  <% @runs.each do |run| %>
     <tr>
-      <td><%= job.created_at %></td>
-      <td class="number"><%= job.charge.run_duration %></td>
-      <td class="number"><%= number_to_currency(job.charge.amount) %></td>
+      <td><%= run.created_at %></td>
+      <td class="number"><%= run.charge.run_duration %></td>
+      <td class="number"><%= number_to_currency(run.charge.amount) %></td>
     </tr>
   <% end %>
 
@@ -21,7 +21,7 @@
     <td colspan="2">Total</td>
 
     <td class="number">
-      <%= number_to_currency(@jobs.map(&:charge).map(&:amount_cents).compact.sum / 100.0) %>
+      <%= number_to_currency(@runs.map(&:charge).map(&:amount_cents).compact.sum / 100.0) %>
     </td>
   </tr>
 </table>
