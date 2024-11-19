@@ -18,7 +18,7 @@ module Streaming
         name,
         target: target,
         partial: "jobs/#{@tab_name}",
-        locals: { job: @job, current_tab_name: @tab_name }
+        locals: { run: @job, current_tab_name: @tab_name }
       )
     end
   end
