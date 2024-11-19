@@ -1,6 +1,6 @@
 <%= terminal_output do %>
-  <%= run_container current_tab_name, job do %>
-    <%= ansi_to_html(job.test_output) %>
+  <%= run_container current_tab_name, run do %>
+    <%= ansi_to_html(run.test_output) %>
   <% end %>
 <% end %>
 
