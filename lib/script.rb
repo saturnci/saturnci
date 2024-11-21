@@ -103,7 +103,7 @@ class Script
     Process.wait(pid)
     sleep(5)
 
-    puts "Job finished"
+    puts "Run finished"
     client.post("jobs/#{ENV["JOB_ID"]}/job_finished_events")
 
     puts "Sending report"

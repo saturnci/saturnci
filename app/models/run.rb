@@ -79,7 +79,7 @@ class Run < ApplicationRecord
 
   def finish!
     transaction do
-      run_events.create!(type: "job_finished")
+      run_events.create!(type: "run_finished")
       update!(exit_code: parsed_exit_code || 1)
 
       if Set.new(build.runs) == Set.new(build.runs.finished)
@@ -104,10 +104,10 @@ class Run < ApplicationRecord
   end
 
   def ended_at
-    job_finished_event&.created_at
+    run_finished_event&.created_at
   end
 
-  def job_finished_event
-    run_events.job_finished.first
+  def run_finished_event
+    run_events.run_finished.first
   end
 end
