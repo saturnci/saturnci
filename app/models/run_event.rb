@@ -6,7 +6,7 @@ class RunEvent < ApplicationRecord
     :image_build_started,
     :image_build_finished,
     :runner_requested,
-    :job_machine_ready,
+    :runner_ready,
     :job_started,
     :job_finished,
     :pre_script_started,
