@@ -9,7 +9,7 @@ RSpec.describe "run events", type: :request do
       expect {
         post(
           api_v1_job_job_events_path(job), 
-          params: { type: "job_machine_ready" },
+          params: { type: "runner_ready" },
           headers: api_authorization_headers
         )
       }.to change(JobEvent, :count).by(1)
@@ -18,7 +18,7 @@ RSpec.describe "run events", type: :request do
     it "returns an empty 200 response" do
       post(
         api_v1_job_job_events_path(job),
-        params: { type: "job_machine_ready" },
+        params: { type: "runner_ready" },
         headers: api_authorization_headers
       )
       expect(response).to have_http_status(200)

@@ -19,8 +19,8 @@ class Script
       "jobs/#{ENV["JOB_ID"]}/system_logs"
     ).start
 
-    puts "Job machine ready"
-    client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "job_machine_ready")
+    puts "Runner ready"
+    client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "runner_ready")
 
     token = client.post("github_tokens", github_installation_id: ENV["GITHUB_INSTALLATION_ID"]).body
     system("git clone https://x-access-token:#{token}@github.com/#{ENV['GITHUB_REPO_FULL_NAME']} #{PROJECT_DIR}")
