@@ -48,6 +48,6 @@ class RunnerRequest
 
   # /var/lib/cloud/instances/456688083/scripts/part-001
   def user_data
-    JobMachineScript.new(@run, @github_installation_id).content
+    RunnerScript.new(@run, @github_installation_id).content
   end
 end
