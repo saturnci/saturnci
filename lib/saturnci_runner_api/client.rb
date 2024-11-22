@@ -1,4 +1,4 @@
-module SaturnCIJobAPI
+module SaturnCIRunnerAPI
   class Client
     def initialize(host)
       @host = host

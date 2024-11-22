@@ -1,4 +1,4 @@
-module SaturnCIJobAPI
+module SaturnCIRunnerAPI
   class PreScriptCommand
     def initialize(docker_compose_configuration:)
       @docker_compose_configuration = docker_compose_configuration

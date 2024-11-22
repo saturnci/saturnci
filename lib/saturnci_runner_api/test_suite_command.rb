@@ -1,4 +1,4 @@
-module SaturnCIJobAPI
+module SaturnCIRunnerAPI
   class TestSuiteCommand
     def initialize(docker_compose_configuration:, test_files_string:, rspec_seed:, test_output_filename:)
       @docker_compose_configuration = docker_compose_configuration

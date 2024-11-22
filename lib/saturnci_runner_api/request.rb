@@ -1,6 +1,6 @@
 require "net/http"
 
-module SaturnCIJobAPI
+module SaturnCIRunnerAPI
   class Request
     def initialize(host, method, endpoint, payload = nil)
       @host = host

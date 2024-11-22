@@ -1,6 +1,6 @@
 require "base64"
 
-module SaturnCIJobAPI
+module SaturnCIRunnerAPI
   class Stream
     def initialize(log_file_path, api_path)
       @log_file_path = log_file_path
@@ -15,7 +15,7 @@ module SaturnCIJobAPI
           all_lines = File.readlines(@log_file_path)
           newest_content = all_lines[most_recent_total_line_count..-1].join("\n")
 
-          SaturnCIJobAPI::ContentRequest.new(
+          SaturnCIRunnerAPI::ContentRequest.new(
             host: ENV["HOST"],
             api_path: @api_path,
             content_type: "text/plain",

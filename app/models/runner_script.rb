@@ -5,7 +5,7 @@ class RunnerScript
   end
 
   def library_content
-    Dir.glob(Rails.root.join("lib", "saturnci_job_api", "*")).sort.map do |file_path|
+    Dir.glob(Rails.root.join("lib", "saturnci_runner_api", "*")).sort.map do |file_path|
       File.read(file_path)
     end.join("\n")
   end

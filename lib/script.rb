@@ -11,10 +11,10 @@ TEST_RESULTS_FILENAME = "tmp/test_results.txt"
 
 class Script
   def self.execute
-    client = SaturnCIJobAPI::Client.new(ENV["HOST"])
+    client = SaturnCIRunnerAPI::Client.new(ENV["HOST"])
 
     puts "Starting to stream system logs"
-    SaturnCIJobAPI::Stream.new(
+    SaturnCIRunnerAPI::Stream.new(
       "/var/log/syslog",
       "jobs/#{ENV["JOB_ID"]}/system_logs"
     ).start
@@ -50,12 +50,12 @@ class Script
     client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "pre_script_started")
     system("sudo chmod 755 .saturnci/pre.sh")
 
-    docker_compose_configuration = SaturnCIJobAPI::DockerComposeConfiguration.new(
+    docker_compose_configuration = SaturnCIRunnerAPI::DockerComposeConfiguration.new(
       registry_cache_image_url: registry_cache_image_url,
       env_vars: ENV["USER_ENV_VAR_KEYS"].split(",").map { |key| [key, ENV[key]] }.to_h
     )
 
-    pre_script_command = SaturnCIJobAPI::PreScriptCommand.new(
+    pre_script_command = SaturnCIRunnerAPI::PreScriptCommand.new(
       docker_compose_configuration: docker_compose_configuration
     )
     puts "pre.sh command: #{pre_script_command.to_s}"
@@ -71,7 +71,7 @@ class Script
     puts "Starting to stream test output"
     File.open(TEST_OUTPUT_FILENAME, 'w') {}
 
-    SaturnCIJobAPI::Stream.new(
+    SaturnCIRunnerAPI::Stream.new(
       TEST_OUTPUT_FILENAME,
       "jobs/#{ENV["JOB_ID"]}/test_output"
     ).start
@@ -91,7 +91,7 @@ class Script
     selected_tests = chunks[ENV['JOB_ORDER_INDEX'].to_i - 1]
     test_files_string = selected_tests.join(' ')
 
-    command = SaturnCIJobAPI::TestSuiteCommand.new(
+    command = SaturnCIRunnerAPI::TestSuiteCommand.new(
       docker_compose_configuration: docker_compose_configuration,
       test_files_string: test_files_string,
       rspec_seed: ENV["RSPEC_SEED"],
@@ -107,7 +107,7 @@ class Script
     client.post("jobs/#{ENV["JOB_ID"]}/job_finished_events")
 
     puts "Sending report"
-    test_reports_request = SaturnCIJobAPI::FileContentRequest.new(
+    test_reports_request = SaturnCIRunnerAPI::FileContentRequest.new(
       host: ENV["HOST"],
       api_path: "jobs/#{ENV["JOB_ID"]}/test_reports",
       content_type: "text/plain",

@@ -1,4 +1,4 @@
-module SaturnCIJobAPI
+module SaturnCIRunnerAPI
   class DockerComposeConfiguration
     def initialize(registry_cache_image_url:, env_vars:)
       @registry_cache_image_url = registry_cache_image_url
