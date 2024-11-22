@@ -13,7 +13,7 @@ describe "Navigating from test output tab", type: :system do
 
   context "navigating to the system logs tab" do
     before do
-      navigate_to_build_tab("system_logs", run:)
+      navigate_to_build_tab("system_logs", job: run)
 
       http_request(
         api_authorization_headers: api_authorization_headers,

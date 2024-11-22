@@ -29,7 +29,7 @@ describe "Visiting different build", type: :system do
         visit_build_tab("system_logs", job: original_job)
         navigate_to_build(other_job.build)
         navigate_to_build_tab("system_logs", job: other_job)
-        system_log_http_request(job: original_job, body: "new system log content")
+        system_log_http_request(run: original_job, body: "new system log content")
       end
 
       it "does not show original job's system logs on the other job's system logs tab" do
