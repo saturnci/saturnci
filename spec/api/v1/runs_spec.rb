@@ -1,10 +1,10 @@
 require "rails_helper"
 include APIAuthenticationHelper
 
-RSpec.describe "jobs", type: :request do
-  let!(:job) do
+RSpec.describe "runs", type: :request do
+  let!(:run) do
     create(
-      :job,
+      :run,
       created_at: "2020-01-01T01:00:00",
       build: create(:build, commit_message: "Do stuff")
     )
@@ -19,7 +19,7 @@ RSpec.describe "jobs", type: :request do
       expect(response).to have_http_status(200)
     end
 
-    it "returns a list of jobs" do
+    it "returns a list of runs" do
       get(
         api_v1_jobs_path,
         headers: api_authorization_headers
@@ -46,7 +46,7 @@ RSpec.describe "jobs", type: :request do
       )
 
       response_body = JSON.parse(response.body)
-      expect(response_body[0]["build_id"]).to eq(job.build.id)
+      expect(response_body[0]["build_id"]).to eq(run.build.id)
     end
 
     it "includes commit message" do
