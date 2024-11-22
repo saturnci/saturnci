@@ -64,7 +64,7 @@ RSpec.describe Build, type: :model do
     let!(:run) { create(:run) }
 
     before do
-      stub_request(:delete, "https://api.digitalocean.com/v2/droplets/#{run.job_machine_id}").to_return(status: 200)
+      stub_request(:delete, "https://api.digitalocean.com/v2/droplets/#{run.runner_id}").to_return(status: 200)
     end
 
     it "sets the status to 'Cancelled'" do

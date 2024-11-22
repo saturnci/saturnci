@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :job do
     build
     order_index { 1 }
-    job_machine_id { SecureRandom.hex(6) }
+    runner_id { SecureRandom.hex(6) }
 
     trait :passed do
       exit_code { 0 }

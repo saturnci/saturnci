@@ -10,7 +10,7 @@ describe "Delete build", type: :system do
 
   context "job machine still exists on Digital Ocean" do
     before do
-      stub_request(:delete, "https://api.digitalocean.com/v2/droplets/#{job.job_machine_id}").to_return(status: 200)
+      stub_request(:delete, "https://api.digitalocean.com/v2/droplets/#{job.runner_id}").to_return(status: 200)
     end
 
     context "branch is only branch" do
@@ -56,7 +56,7 @@ describe "Delete build", type: :system do
 
   context "job machine does not still exist on Digital Ocean" do
     before do
-      stub_request(:delete, "https://api.digitalocean.com/v2/droplets/#{job.job_machine_id}").to_return(status: 404)
+      stub_request(:delete, "https://api.digitalocean.com/v2/droplets/#{job.runner_id}").to_return(status: 404)
     end
 
     it "removes the build" do
