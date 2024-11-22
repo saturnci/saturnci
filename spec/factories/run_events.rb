@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :run_event do
-    job
+    run
   end
 end
