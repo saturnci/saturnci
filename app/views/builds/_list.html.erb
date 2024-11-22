@@ -2,6 +2,10 @@
   <% if @build_list.builds.any? %>
     <%= render @build_filter_component %>
 
+    <div style="padding: 6px 10px; background-color: #EEE; color: #888; font-size: 80%">
+      <%= pluralize(@build_list.builds.count, "build") %>
+    </div>
+
     <div class="build-list">
       <ul data-controller="build-list">
         <% @build_list.builds.each do |build| %>
