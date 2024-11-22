@@ -1,4 +1,4 @@
-class JobMachineNetwork
+class RunnerNetwork
   def initialize(job_machine_id)
     @job_machine_id = job_machine_id
   end
