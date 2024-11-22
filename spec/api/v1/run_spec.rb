@@ -1,11 +1,11 @@
 require "rails_helper"
 include APIAuthenticationHelper
 
-RSpec.describe "job", type: :request do
+RSpec.describe "run", type: :request do
   let!(:job) { create(:job) }
 
   before do
-    allow_any_instance_of(JobMachineNetwork).to receive(:ip_address).and_return("")
+    allow_any_instance_of(RunnerNetwork).to receive(:ip_address).and_return("")
   end
 
   describe "finding by abbreviated hash" do
