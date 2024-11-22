@@ -3,10 +3,10 @@ require "net/http"
 module SaturnAPIHelper
   include APIAuthenticationHelper
 
-  def system_log_http_request(job:, body: nil)
+  def system_log_http_request(run:, body: nil)
     http_request(
       api_authorization_headers:,
-      path: api_v1_job_system_logs_path(job_id: job.id, format: :json),
+      path: api_v1_job_system_logs_path(job_id: run.id, format: :json),
       body:
     )
 

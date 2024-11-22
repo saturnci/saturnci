@@ -3,13 +3,13 @@ require "rails_helper"
 describe "Staying on system log tab", type: :system do
   include SaturnAPIHelper
 
-  let!(:job) do
-    create(:job, system_logs: "original system log content")
+  let!(:run) do
+    create(:run, system_logs: "original system log content")
   end
 
   before do
-    login_as(job.build.project.user, scope: :user)
-    visit job_path(job, "system_logs")
+    login_as(run.build.project.user, scope: :user)
+    visit job_path(run, "system_logs")
   end
 
   context "before log update occurs" do
@@ -23,7 +23,7 @@ describe "Staying on system log tab", type: :system do
       before do
         http_request(
           api_authorization_headers: api_authorization_headers,
-          path: api_v1_job_system_logs_path(job_id: job.id, format: :json),
+          path: api_v1_job_system_logs_path(job_id: run.id, format: :json),
           body: Base64.encode64("new system log content")
         )
       end
@@ -40,7 +40,7 @@ describe "Staying on system log tab", type: :system do
         before do
           http_request(
             api_authorization_headers: api_authorization_headers,
-            path: api_v1_job_system_logs_path(job_id: job.id, format: :json),
+            path: api_v1_job_system_logs_path(job_id: run.id, format: :json),
             body: Base64.encode64("second system log update")
           )
         end
