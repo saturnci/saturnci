@@ -2,7 +2,7 @@
   <% if @build_list.builds.any? %>
     <%= render @build_filter_component %>
 
-    <div style="padding: 6px 10px; background-color: #EEE; color: #888; font-size: 80%">
+    <div class="build-count">
       <%= pluralize(@build_list.builds.count, "build") %>
     </div>
 
