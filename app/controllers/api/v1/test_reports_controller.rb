@@ -2,9 +2,9 @@ module API
   module V1
     class TestReportsController < APIController
       def create
-        job = Job.find(params[:job_id])
+        run = Run.find(params[:run_id])
         request.body.rewind
-        job.update!(test_report: request.body.read)
+        run.update!(test_report: request.body.read)
 
         head :ok
       end
