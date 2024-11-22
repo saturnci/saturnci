@@ -28,7 +28,7 @@
   height: 100vh;
 }
 
-.job-info-container {
+.run-info-container {
   width: 0;
   min-width: 100%;
   overflow: auto;
