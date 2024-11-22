@@ -1,6 +1,6 @@
 require "droplet_kit"
 
-class JobMachineSnapshot
+class RunnerSnapshot
   def self.generate!
     client = DropletKitClientFactory.client
 
@@ -20,7 +20,7 @@ class JobMachineSnapshot
   private
 
   def self.create_droplet(client)
-    rsa_key = JobMachineRSAKey.new("job-machine-snapshot-#{Time.now.to_i}")
+    rsa_key = JobMachineRSAKey.new("runner-snapshot-#{Time.now.to_i}")
 
     droplet_kit_ssh_key = DropletKit::SSHKey.new(
       name: rsa_key.filename,
@@ -34,7 +34,7 @@ class JobMachineSnapshot
     end
     
     droplet = DropletKit::Droplet.new(
-      name: "job-machine-snapshot-#{Time.now.to_i}",
+      name: "runner-snapshot-#{Time.now.to_i}",
       region: DropletConfig::REGION,
       image: DropletConfig::SNAPSHOT_IMAGE_ID,
       size: DropletConfig::SIZE,
