@@ -6,12 +6,12 @@ module API
       TAB_NAME = "test_output"
 
       def create
-        job = Job.find(params[:job_id])
+        run = Run.find(params[:job_id])
         new_content = Base64.decode64(request.body.read)
-        existing_content = job.attributes[TAB_NAME].to_s
-        job.update!(TAB_NAME => existing_content + new_content)
+        existing_content = run.attributes[TAB_NAME].to_s
+        run.update!(TAB_NAME => existing_content + new_content)
 
-        Streaming::JobOutputStream.new(job: job, tab_name: TAB_NAME).broadcast
+        Streaming::RunOutputStream.new(run: run, tab_name: TAB_NAME).broadcast
         head :ok
       end
     end
