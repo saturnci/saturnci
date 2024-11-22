@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_17_153647) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_22_130509) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -81,7 +81,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_17_153647) do
 
   create_table "runs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "build_id", null: false
-    t.string "job_machine_id"
+    t.string "runner_id"
     t.text "test_output"
     t.text "test_report"
     t.text "system_logs"
@@ -93,7 +93,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_17_153647) do
     t.string "snapshot_image_id"
     t.index ["build_id", "order_index"], name: "index_runs_on_build_id_and_order_index", unique: true
     t.index ["build_id"], name: "index_runs_on_build_id"
-    t.index ["job_machine_id"], name: "index_runs_on_job_machine_id", unique: true
+    t.index ["runner_id"], name: "index_runs_on_runner_id", unique: true
   end
 
   create_table "saturn_installations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

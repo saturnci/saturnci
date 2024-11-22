@@ -69,7 +69,7 @@ class Run < ApplicationRecord
 
   def delete_runner
     client = DropletKit::Client.new(access_token: ENV['DIGITALOCEAN_ACCESS_TOKEN'])
-    client.droplets.delete(id: job_machine_id)
+    client.droplets.delete(id: runner_id)
   end
 
   def duration

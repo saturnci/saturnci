@@ -10,7 +10,7 @@ module API
         job = Job.find_by_abbreviated_hash(params[:id])
 
         render json: job.as_json.merge(
-          ip_address: RunnerNetwork.new(job.job_machine_id).ip_address
+          ip_address: RunnerNetwork.new(job.runner_id).ip_address
         )
       end
     end
