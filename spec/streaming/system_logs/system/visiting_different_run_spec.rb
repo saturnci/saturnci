@@ -1,42 +1,44 @@
 require "rails_helper"
 
-describe "Visiting different job", type: :system do
+describe "Visiting different run", type: :system do
   include APIAuthenticationHelper
   include SaturnAPIHelper
   include NavigationHelper
 
-  let!(:original_job) do
-    create(:job, system_logs: "original system log content")
+  let!(:original_run) do
+    create(:run, system_logs: "original system log content")
   end
 
   before do
-    login_as(original_job.build.project.user, scope: :user)
-    visit job_path(original_job, "system_logs")
+    login_as(original_run.build.project.user, scope: :user)
+    visit job_path(original_run, "system_logs")
   end
 
-  context "visiting a different job" do
-    let!(:other_job) do
+  context "visiting a different run" do
+    let!(:other_run) do
       create(
-        :job,
-        build: original_job.build,
-        system_logs: "other job system logs",
+        :run,
+        build: original_run.build,
+        system_logs: "other run system logs",
         order_index: 2
       )
     end
 
     context "after log update occurs" do
       before do
-        visit_build_tab("system_logs", job: original_job)
-        navigate_to_job_tab(other_job)
-        system_log_http_request(job: original_job, body: "new system log content")
+        visit_build_tab("system_logs", job: original_run)
+        expect(page).to have_content(original_run.system_logs) # To prevent race condition
+
+        navigate_to_job_tab(other_run)
+        system_log_http_request(run: original_run, body: "new system log content")
       end
 
-      it "does not show original job's system logs on the other job's system logs tab" do
-        expect(page).not_to have_content(original_job.system_logs)
+      it "does not show original run's system logs on the other run's system logs tab" do
+        expect(page).not_to have_content(original_run.system_logs)
       end
 
-      it "shows the other job's system logs on the other job's system logs tab" do
-        expect(page).to have_content(other_job.system_logs)
+      it "shows the other run's system logs on the other run's system logs tab" do
+        expect(page).to have_content(other_run.system_logs)
       end
     end
   end

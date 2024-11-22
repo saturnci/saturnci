@@ -1,7 +1,6 @@
 module NavigationHelper
   def visit_build_tab(tab_slug, job:)
     visit job_path(job, tab_slug)
-    expect(page).to have_content(original_job.system_logs) # To prevent race condition
   end
 
   def navigate_to_build(build)
