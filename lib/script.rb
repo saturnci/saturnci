@@ -104,7 +104,7 @@ class Script
     sleep(5)
 
     puts "Run finished"
-    client.post("jobs/#{ENV["JOB_ID"]}/job_finished_events")
+    client.post("jobs/#{ENV["JOB_ID"]}/run_finished_events")
 
     puts "Sending report"
     test_reports_request = SaturnCIRunnerAPI::FileContentRequest.new(
