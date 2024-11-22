@@ -23,7 +23,7 @@ describe "Staying on system log tab", type: :system do
       before do
         http_request(
           api_authorization_headers: api_authorization_headers,
-          path: api_v1_job_system_logs_path(job_id: run.id, format: :json),
+          path: api_v1_run_system_logs_path(run_id: run.id, format: :json),
           body: Base64.encode64("new system log content")
         )
       end
@@ -40,7 +40,7 @@ describe "Staying on system log tab", type: :system do
         before do
           http_request(
             api_authorization_headers: api_authorization_headers,
-            path: api_v1_job_system_logs_path(job_id: run.id, format: :json),
+            path: api_v1_run_system_logs_path(run_id: run.id, format: :json),
             body: Base64.encode64("second system log update")
           )
         end
