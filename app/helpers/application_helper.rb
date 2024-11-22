@@ -9,7 +9,7 @@ module ApplicationHelper
 
     compressed_content = content.gsub(/\n\s+/, "").html_safe
     terminal_content = content_tag(:pre, compressed_content, class: "terminal")
-    content_tag(:div, terminal_content, class: "job-info-container")
+    content_tag(:div, terminal_content, class: "run-info-container")
   end
 
   def run_container(current_tab_name, run, &block)
