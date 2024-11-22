@@ -4,13 +4,13 @@ describe "Test output streaming", type: :system do
   include APIAuthenticationHelper
   include SaturnAPIHelper
 
-  let!(:job) do
-    create(:job, test_output: "original test output content")
+  let!(:run) do
+    create(:run, test_output: "original test output content")
   end
 
   before do
-    login_as(job.build.project.user, scope: :user)
-    visit job_path(job, "test_output")
+    login_as(run.build.project.user, scope: :user)
+    visit job_path(run, "test_output")
   end
 
   context "before log update occurs" do
@@ -25,7 +25,7 @@ describe "Test output streaming", type: :system do
 
       http_request(
         api_authorization_headers: api_authorization_headers,
-        path: api_v1_job_test_output_path(job_id: job.id, format: :json),
+        path: api_v1_job_test_output_path(job_id: run.id, format: :json),
         body: Base64.encode64("new test output content")
       )
     end
