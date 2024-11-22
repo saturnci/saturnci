@@ -42,12 +42,12 @@ Rails.application.routes.draw do
       resources :jobs, only: %w[index show] do
         resources :system_logs, only: :create
         resources :test_reports, only: :create
-        resource :test_output, only: :create
         resources :run_finished_events, only: :create
         resource :ssh_key, only: :show
       end
 
       resources :runs, only: %w[index show] do
+        resource :test_output, only: :create
         resources :run_events, only: :create
         resource :runner, only: :destroy
       end
