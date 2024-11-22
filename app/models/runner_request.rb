@@ -27,7 +27,7 @@ class RunnerRequest
       image: DropletConfig::SNAPSHOT_IMAGE_ID,
       size: DropletConfig::SIZE,
       user_data: user_data,
-      tags: ['saturnci'],
+      tags: ["saturnci"],
       ssh_keys: [ssh_key.id]
     )
 
@@ -36,7 +36,7 @@ class RunnerRequest
     @run.update!(
       snapshot_image_id: DropletConfig::SNAPSHOT_IMAGE_ID,
       runner_id: droplet_request.id,
-      job_machine_rsa_key_path: rsa_key.file_path
+      runner_rsa_key_path: rsa_key.file_path
     )
   end
 
