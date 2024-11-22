@@ -1,7 +1,7 @@
 class JobsController < ApplicationController
   def show
-    @job = Job.find(params[:id])
-    @build = @job.build
+    @run = Run.find(params[:id])
+    @build = @run.build
     @project = @build.project
 
     @build_list = BuildList.new(
@@ -13,7 +13,7 @@ class JobsController < ApplicationController
     @current_tab_name = params[:partial] || DEFAULT_PARTIAL
 
     @run_output_stream = Streaming::RunOutputStream.new(
-      run: @job,
+      run: @run,
       tab_name: @current_tab_name
     )
 

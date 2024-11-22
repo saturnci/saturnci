@@ -13,7 +13,7 @@
       <li>
         <%= link_to run.name,
           job_path(run, current_tab_name),
-          class: run == @job ? "active" : "" %>
+          class: run == @run ? "active" : "" %>
       </li>
     <% end %>
   </ul>
@@ -21,7 +21,7 @@
 
 <div class="run-details">
   <div id="<%= @run_output_stream.target %>">
-    <%= render current_tab_name, current_tab_name: @current_tab_name, run: @job %>
+    <%= render current_tab_name, current_tab_name: @current_tab_name, run: @run %>
   </div>
 </div>
 

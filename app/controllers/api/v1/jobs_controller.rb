@@ -2,15 +2,15 @@ module API
   module V1
     class JobsController < APIController
       def index
-        @jobs = Job.running
+        @runs = Run.running
         render 'index', formats: [:json]
       end
 
       def show
-        job = Job.find_by_abbreviated_hash(params[:id])
+        run = Run.find_by_abbreviated_hash(params[:id])
 
-        render json: job.as_json.merge(
-          ip_address: RunnerNetwork.new(job.runner_id).ip_address
+        render json: run.as_json.merge(
+          ip_address: RunnerNetwork.new(run.runner_id).ip_address
         )
       end
     end
