@@ -4,7 +4,7 @@ describe "Cancel build", type: :system do
   let!(:job) { create(:job) }
 
   before do
-    stub_request(:delete, "https://api.digitalocean.com/v2/droplets/#{job.job_machine_id}").to_return(status: 200)
+    stub_request(:delete, "https://api.digitalocean.com/v2/droplets/#{job.runner_id}").to_return(status: 200)
     user = create(:user)
     login_as(user, scope: :user)
   end

@@ -1,9 +1,9 @@
 require "rails_helper"
 include APIAuthenticationHelper
 
-RSpec.describe "job machines", type: :request do
+RSpec.describe "runners", type: :request do
   describe "DELETE /api/v1/jobs/:id/job_machine" do
-    let!(:job) { create(:job, job_machine_id: "123") }
+    let!(:job) { create(:job, runner_id: "123") }
 
     before do
       stub_request(
