@@ -17,7 +17,7 @@ module SaturnCICLI
     end
 
     def rsa_key_path
-      @job["job_machine_rsa_key_path"]
+      @job["runner_rsa_key_path"]
     end
   end
 end
