@@ -35,7 +35,7 @@ class RunnerRequest
 
     @run.update!(
       snapshot_image_id: DropletConfig::SNAPSHOT_IMAGE_ID,
-      job_machine_id: droplet_request.id,
+      runner_id: droplet_request.id,
       job_machine_rsa_key_path: rsa_key.file_path
     )
   end

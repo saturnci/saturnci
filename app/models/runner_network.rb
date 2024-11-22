@@ -1,6 +1,6 @@
 class RunnerNetwork
-  def initialize(job_machine_id)
-    @job_machine_id = job_machine_id
+  def initialize(runner_id)
+    @runner_id = runner_id
   end
 
   def ip_address
@@ -14,7 +14,7 @@ class RunnerNetwork
   end
 
   def droplet
-    client.droplets.find(id: @job_machine_id)
+    client.droplets.find(id: @runner_id)
   end
 
   def client
