@@ -109,7 +109,7 @@ class Script
     puts "Sending report"
     test_reports_request = SaturnCIRunnerAPI::FileContentRequest.new(
       host: ENV["HOST"],
-      api_path: "jobs/#{ENV["JOB_ID"]}/test_reports",
+      api_path: "runs/#{ENV["RUN_ID"]}/test_reports",
       content_type: "text/plain",
       file_path: TEST_RESULTS_FILENAME
     )
