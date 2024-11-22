@@ -20,14 +20,14 @@ class Script
     ).start
 
     puts "Runner ready"
-    client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "runner_ready")
+    client.post("jobs/#{ENV["RUN_ID"]}/run_events", type: "runner_ready")
 
     token = client.post("github_tokens", github_installation_id: ENV["GITHUB_INSTALLATION_ID"]).body
     system("git clone https://x-access-token:#{token}@github.com/#{ENV['GITHUB_REPO_FULL_NAME']} #{PROJECT_DIR}")
     Dir.chdir(PROJECT_DIR)
     FileUtils.mkdir_p('tmp')
 
-    client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "repository_cloned")
+    client.post("jobs/#{ENV["RUN_ID"]}/run_events", type: "repository_cloned")
 
     puts "Checking out commit #{ENV["COMMIT_HASH"]}"
     system("git checkout #{ENV["COMMIT_HASH"]}")
@@ -47,7 +47,7 @@ class Script
     system("sudo docker pull #{registry_cache_image_url} || true")
 
     puts "Running pre.sh"
-    client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "pre_script_started")
+    client.post("jobs/#{ENV["RUN_ID"]}/run_events", type: "pre_script_started")
     system("sudo chmod 755 .saturnci/pre.sh")
 
     docker_compose_configuration = SaturnCIRunnerAPI::DockerComposeConfiguration.new(
@@ -63,7 +63,7 @@ class Script
     puts "pre.sh exit code: #{$?.exitstatus}"
 
     if $?.exitstatus == 0
-      client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "pre_script_finished")
+      client.post("jobs/#{ENV["RUN_ID"]}/run_events", type: "pre_script_finished")
     else
       exit 1
     end
@@ -78,7 +78,7 @@ class Script
 
     puts "Running tests"
     puts "jobs/#{ENV["JOB_ID"]}/test_suite_started"
-    client.post("jobs/#{ENV["JOB_ID"]}/job_events", type: "test_suite_started")
+    client.post("jobs/#{ENV["RUN_ID"]}/run_events", type: "test_suite_started")
 
     File.open('./example_status_persistence.rb', 'w') do |file|
       file.puts "RSpec.configure do |config|"

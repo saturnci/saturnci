@@ -1,8 +1,8 @@
 module API
   module V1
-    class JobEventsController < APIController
+    class RunEventsController < APIController
       def create
-        run = Run.find(params[:job_id])
+        run = Run.find(params[:run_id])
         run.run_events.create!(type: params[:type])
         head :ok
       end
