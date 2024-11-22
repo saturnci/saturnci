@@ -73,7 +73,7 @@ class Script
 
     SaturnCIRunnerAPI::Stream.new(
       TEST_OUTPUT_FILENAME,
-      "jobs/#{ENV["JOB_ID"]}/test_output"
+      "runs/#{ENV["RUN_ID"]}/test_output"
     ).start
 
     puts "Running tests"
