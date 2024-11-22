@@ -20,9 +20,9 @@
 </div>
 
 <div class="run-details">
-  <div id="<%= @job_output_stream.target %>">
+  <div id="<%= @run_output_stream.target %>">
     <%= render current_tab_name, current_tab_name: @current_tab_name, run: @job %>
   </div>
 </div>
 
-<%= turbo_stream_from @job_output_stream.name %>
+<%= turbo_stream_from @run_output_stream.name %>

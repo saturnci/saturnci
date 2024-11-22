@@ -12,8 +12,8 @@ class JobsController < ApplicationController
 
     @current_tab_name = params[:partial] || DEFAULT_PARTIAL
 
-    @job_output_stream = Streaming::JobOutputStream.new(
-      job: @job,
+    @run_output_stream = Streaming::RunOutputStream.new(
+      run: @job,
       tab_name: @current_tab_name
     )
 
