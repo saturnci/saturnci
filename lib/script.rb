@@ -122,9 +122,9 @@ class Script
     system("sudo docker push #{registry_cache_image_url}")
     puts "Docker push finished"
 
-    puts "Deleting job machine"
+    puts "Deleting runner"
     sleep(5)
-    client.delete("jobs/#{ENV["JOB_ID"]}/job_machine")
+    client.delete("runs/#{ENV["RUN_ID"]}/runner")
   end
 end
 

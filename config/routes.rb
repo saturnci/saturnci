@@ -45,9 +45,11 @@ Rails.application.routes.draw do
         resource :test_output, only: :create
         resources :job_events, only: :create
         resources :run_finished_events, only: :create
-        resource :job_machine, only: :destroy
-
         resource :ssh_key, only: :show
+      end
+
+      resources :runs, only: %w[index show] do
+        resource :runner, only: :destroy
       end
 
       resources :builds, only: :index
