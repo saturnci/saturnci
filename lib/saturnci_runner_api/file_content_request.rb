@@ -1,4 +1,4 @@
-module SaturnCIJobAPI
+module SaturnCIRunnerAPI
   class FileContentRequest
     def initialize(host:, api_path:, content_type:, file_path:)
       @host = host
