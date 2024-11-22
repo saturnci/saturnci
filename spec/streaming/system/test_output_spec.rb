@@ -25,7 +25,7 @@ describe "Test output streaming", type: :system do
 
       http_request(
         api_authorization_headers: api_authorization_headers,
-        path: api_v1_job_test_output_path(job_id: run.id, format: :json),
+        path: api_v1_run_test_output_path(run_id: run.id, format: :json),
         body: Base64.encode64("new test output content")
       )
     end
