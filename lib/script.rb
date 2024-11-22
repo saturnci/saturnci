@@ -16,7 +16,7 @@ class Script
     puts "Starting to stream system logs"
     SaturnCIRunnerAPI::Stream.new(
       "/var/log/syslog",
-      "jobs/#{ENV["JOB_ID"]}/system_logs"
+      "runs/#{ENV["RUN_ID"]}/system_logs"
     ).start
 
     puts "Runner ready"
