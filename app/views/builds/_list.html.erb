@@ -2,8 +2,12 @@
   <% if @build_list.builds.any? %>
     <%= render @build_filter_component %>
 
-    <div class="build-count">
+    <div class="build-count"
+         data-controller="build-count"
+         data-build-count-builds-url-value="<%= project_builds_path(@build.project) %>"
+         data-build-count-starting-build-count-value="<%= @build_list.builds.count %>">
       <%= pluralize(@build_list.builds.count, "build") %>
+      <span data-build-count-target="message"></span>
     </div>
 
     <div class="build-list">

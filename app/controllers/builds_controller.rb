@@ -1,6 +1,12 @@
 class BuildsController < ApplicationController
   DEFAULT_PARTIAL = "test_output"
 
+  def index
+    @project = Project.find(params[:project_id])
+    @builds = @project.builds
+    render json: { build_count: @builds.count }
+  end
+
   def create
     @project = Project.find(params[:project_id])
     build = Build.new(project: @project)
