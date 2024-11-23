@@ -8,14 +8,6 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
   mount ActionCable.server => '/cable'
 
-  namespace :admin do
-    root "admin#index"
-
-    resources :github_events, only: :index
-    resources :users, only: :index
-    resources :user_impersonations, only: :create
-  end
-
   get "jobs/:id/:partial", to: "jobs#show", as: "job"
   get "builds/:id(/:partial)", to: "builds#show", as: "build"
 
@@ -41,5 +33,6 @@ Rails.application.routes.draw do
   resources :rebuilds, only: :create
   resources :build_cancellations, only: :create
 
+  draw :admin
   draw :api
 end
