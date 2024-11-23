@@ -18,7 +18,7 @@ describe "Build status", type: :system do
 
         http_request(
           api_authorization_headers: api_authorization_headers,
-          path: api_v1_job_run_finished_events_path(run)
+          path: api_v1_run_run_finished_events_path(run)
         )
 
         expect(page).to have_content("Passed")
@@ -32,7 +32,7 @@ describe "Build status", type: :system do
 
         http_request(
           api_authorization_headers: api_authorization_headers,
-          path: api_v1_job_run_finished_events_path(run)
+          path: api_v1_run_run_finished_events_path(run)
         )
 
         expect(page).to have_content("Passed") # to prevent race condition
@@ -54,7 +54,7 @@ describe "Build status", type: :system do
 
         http_request(
           api_authorization_headers: api_authorization_headers,
-          path: api_v1_job_run_finished_events_path(other_run)
+          path: api_v1_run_run_finished_events_path(other_run)
         )
 
         other_run_build_link = PageObjects::BuildLink.new(page, other_build)
@@ -92,7 +92,7 @@ describe "Build status", type: :system do
 
         http_request(
           api_authorization_headers: api_authorization_headers,
-          path: api_v1_job_run_finished_events_path(run)
+          path: api_v1_run_run_finished_events_path(run)
         )
 
         # After the build finishes, the counter will have
