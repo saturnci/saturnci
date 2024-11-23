@@ -39,7 +39,7 @@
   color: #FFF;
 }
 
-.terminal, .non-terminal-job-info {
+.terminal, .non-terminal-run-info {
   overflow: auto;
   padding: 12px;
 }
