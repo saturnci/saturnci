@@ -17,11 +17,11 @@ class BuildsController < ApplicationController
       params[:statuses] = nil
     end
 
-    if @build.jobs.any?
-      failed_jobs = @build.jobs.select { |job| job.failed? }
+    if @build.runs.any?
+      failed_runs = @build.runs.select(&:failed?)
 
       redirect_to job_path(
-        failed_jobs.first || @build.jobs.first,
+        failed_runs.first || @build.runs.first,
         DEFAULT_PARTIAL,
         branch_name: params[:branch_name],
         statuses: params[:statuses]
@@ -54,7 +54,7 @@ class BuildsController < ApplicationController
       build.delete_runners
     rescue DropletKit::Error => e
       if e.message.include?("404")
-        Rails.logger.error "Failed to delete job machine: #{e.message}"
+        Rails.logger.error "Failed to delete runner: #{e.message}"
       else
         raise
       end
