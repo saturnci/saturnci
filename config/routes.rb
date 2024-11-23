@@ -39,9 +39,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :jobs, only: %w[index show] do
-        resource :ssh_key, only: :show
-      end
+      resources :jobs, only: %w[index show]
 
       resources :runs, only: %w[index show] do
         resources :run_finished_events, only: :create
