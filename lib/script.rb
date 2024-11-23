@@ -77,7 +77,6 @@ class Script
     ).start
 
     puts "Running tests"
-    puts "jobs/#{ENV["JOB_ID"]}/test_suite_started"
     client.post("runs/#{ENV["RUN_ID"]}/run_events", type: "test_suite_started")
 
     File.open('./example_status_persistence.rb', 'w') do |file|
@@ -104,7 +103,7 @@ class Script
     sleep(5)
 
     puts "Run finished"
-    client.post("jobs/#{ENV["JOB_ID"]}/run_finished_events")
+    client.post("runs/#{ENV["RUN_ID"]}/run_finished_events")
 
     puts "Sending report"
     test_reports_request = SaturnCIRunnerAPI::FileContentRequest.new(
@@ -128,6 +127,6 @@ class Script
   end
 end
 
-if ENV["JOB_ID"]
+if ENV["RUN_ID"]
   Script.execute
 end
