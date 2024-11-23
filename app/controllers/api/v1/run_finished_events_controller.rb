@@ -2,7 +2,7 @@ module API
   module V1
     class RunFinishedEventsController < APIController
       def create
-        run = Run.find(params[:job_id])
+        run = Run.find(params[:run_id])
 
         ActiveRecord::Base.transaction do
           run.finish!

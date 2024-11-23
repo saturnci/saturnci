@@ -21,7 +21,6 @@ class RunnerScript
       #!/usr/bin/bash
       export HOST=#{ENV["SATURNCI_HOST"]}
       export RUN_ID=#{@run.id}
-      export JOB_ID=#{@run.id}
       export SATURNCI_API_USERNAME=#{ENV["SATURNCI_API_USERNAME"]}
       export SATURNCI_API_PASSWORD=#{ENV["SATURNCI_API_PASSWORD"]}
       export JOB_ORDER_INDEX=#{@run.order_index}
