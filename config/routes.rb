@@ -1,3 +1,7 @@
+def draw(routes_name)
+  instance_eval(File.read(Rails.root.join("config/routes/#{routes_name}.rb")))
+end
+
 Rails.application.routes.draw do
   root to: "projects#index"
 
@@ -37,25 +41,5 @@ Rails.application.routes.draw do
   resources :rebuilds, only: :create
   resources :build_cancellations, only: :create
 
-  namespace :api do
-    namespace :v1 do
-      resources :jobs, only: %w[index show]
-
-      resources :runs, only: %w[index show] do
-        resources :run_finished_events, only: :create
-        resources :test_reports, only: :create
-        resources :system_logs, only: :create
-        resource :test_output, only: :create
-        resources :run_events, only: :create
-        resource :runner, only: :destroy
-      end
-
-      resources :builds, only: :index
-
-      resources :github_events
-      resources :github_tokens, only: :create
-      resources :job_machine_images, only: :update
-      resources :debug_messages, only: :create
-    end
-  end
+  draw :api
 end
