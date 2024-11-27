@@ -5,6 +5,15 @@ class Build < ApplicationRecord
   has_many :runs
   acts_as_paranoid
 
+  after_create_commit do
+    broadcast_append_to(
+      "builds",
+      target: "build-list",
+      partial: "builds/build_list_item",
+      locals: { build: self, active_build: nil }
+    )
+  end
+
   after_initialize do
     self.seed ||= rand(10000)
   end
