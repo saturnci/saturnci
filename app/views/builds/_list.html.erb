@@ -7,7 +7,7 @@
     </div>
 
     <div class="build-list">
-      <ul data-controller="build-list">
+      <ul data-controller="build-list" id="build-list">
         <% @build_list.builds.each do |build| %>
           <%= render "builds/build_list_item", build: build, active_build: @build %>
         <% end %>
@@ -17,3 +17,5 @@
     (No builds)
   <% end %>
 </div>
+
+<%= turbo_stream_from "builds" %>
