@@ -1,0 +1,9 @@
+<%= link_to project_build_path(@active_build.project, @build),
+  data: { turbo_frame: "build", action: "click->build-list#makeActive", build_list_target: "link" },
+  class: css_class,
+  id: id do %>
+
+  <div id="build_status_<%= @build.id %>">
+    <%= render "builds/list_item", build: @build %>
+  </div>
+<% end %>

@@ -10,15 +10,7 @@
       <ul data-controller="build-list">
         <% @build_list.builds.each do |build| %>
           <li>
-            <%= link_to project_build_path(@build.project, build),
-              data: { turbo_frame: "build", action: "click->build-list#makeActive", build_list_target: "link" },
-              class: build == @build ? "active" : "",
-              id: "build_link_#{build.id}" do %>
-
-              <div id="build_status_<%= build.id %>">
-                <%= render "builds/list_item", build: build %>
-              </div>
-            <% end %>
+            <%= render BuildLinkComponent.new(build: build, active_build: @build) %>
           </li>
         <% end %>
       </ul>
