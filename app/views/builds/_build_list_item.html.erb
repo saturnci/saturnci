@@ -1,5 +1,5 @@
 <li>
-  <%= link_to project_build_path(build.project, build),
+  <%= link_to project_build_path(active_build.project, build),
     data: { turbo_frame: "build", action: "click->build-list#makeActive", build_list_target: "link" },
     class: build == active_build ? "active" : "",
     id: "build_link_#{build.id}" do %>
