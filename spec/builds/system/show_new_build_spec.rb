@@ -12,6 +12,7 @@ describe "Show new build", type: :system do
   context "a new build gets created" do
     it "shows the new build" do
       new_build = create(:build, project: build.project)
+      new_build.broadcast
       expect(page).to have_content(new_build.commit_hash)
     end
   end
