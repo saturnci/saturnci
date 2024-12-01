@@ -28,15 +28,6 @@ class Build < ApplicationRecord
     end
   end
 
-  def broadcast
-    broadcast_prepend_to(
-      "builds",
-      target: "build-list",
-      partial: "builds/build_list_item",
-      locals: { build: self, active_build: nil }
-    )
-  end
-
   def cancel!
     transaction do
       runs.each(&:cancel!)
@@ -75,5 +66,14 @@ class Build < ApplicationRecord
 
   def delete_runners
     runs.each(&:delete_runner)
+  end
+
+  def broadcast
+    broadcast_prepend_to(
+      "builds",
+      target: "build-list",
+      partial: "builds/build_list_item",
+      locals: { build: self, active_build: nil }
+    )
   end
 end
