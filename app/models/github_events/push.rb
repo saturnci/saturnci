@@ -26,10 +26,7 @@ module GitHubEvents
         build.save!
       end
 
-      while build.status == "Not Started"
-        sleep(1)
-      end
-
+      sleep(5)
       build.broadcast
     end
   end
