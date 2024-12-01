@@ -26,8 +26,10 @@ module GitHubEvents
         build.save!
       end
 
-      sleep(5)
-      build.broadcast
+      20.times do
+        sleep(1)
+        build.broadcast
+      end
     end
   end
 end
