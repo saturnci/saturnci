@@ -31,7 +31,7 @@ RSpec.describe "push" do
     let!(:project) { create(:project, start_builds_automatically_on_git_push: true) }
 
     it "starts the build" do
-      build = Build.new(project:)
+      build = create(:build, project:)
       expect(build).to receive(:start!)
       push_event.prepare_build(build)
     end

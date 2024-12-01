@@ -28,6 +28,15 @@ class Build < ApplicationRecord
     end
   end
 
+  def broadcast
+    broadcast_append_to(
+      "builds",
+      target: "build-list",
+      partial: "builds/build_list_item",
+      locals: { build: self, active_build: nil }
+    )
+  end
+
   def cancel!
     transaction do
       runs.each(&:cancel!)
