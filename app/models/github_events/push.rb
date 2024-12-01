@@ -24,8 +24,9 @@ module GitHubEvents
         build.start!
       else
         build.save!
-        build.broadcast
       end
+
+      build.broadcast
     end
   end
 end
