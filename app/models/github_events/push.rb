@@ -26,6 +26,7 @@ module GitHubEvents
         build.save!
       end
 
+      sleep(5)
       build.broadcast
     end
   end
