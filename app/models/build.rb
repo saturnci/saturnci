@@ -29,7 +29,7 @@ class Build < ApplicationRecord
   end
 
   def broadcast
-    broadcast_append_to(
+    broadcast_prepend_to(
       "builds",
       target: "build-list",
       partial: "builds/build_list_item",
