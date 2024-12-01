@@ -20,8 +20,6 @@ class Build < ApplicationRecord
         run.start!
       end
     end
-
-    broadcast
   end
 
   def runs_to_use
