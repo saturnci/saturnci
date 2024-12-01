@@ -28,7 +28,11 @@ module GitHubEvents
 
       20.times do
         sleep(1)
-        build.broadcast
+
+        if build.status == "Running"
+          build.broadcast
+          break
+        end
       end
     end
   end
