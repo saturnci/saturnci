@@ -37,6 +37,7 @@ module GitHubEvents
         sleep(BROADCAST_INTERVAL_IN_SECONDS)
 
         if build.status == "Running"
+          sleep(1)
           build.broadcast
           break
         end
