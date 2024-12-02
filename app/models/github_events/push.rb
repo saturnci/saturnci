@@ -1,5 +1,8 @@
 module GitHubEvents
   class Push
+    NUMBER_IF_TIMES_TO_REPEAT_BROADCAST = 20
+    BROADCAST_INTERVAL_IN_SECONDS = 1
+
     def initialize(payload, github_repo_full_name)
       @payload = payload
       @github_repo_full_name = github_repo_full_name
@@ -26,8 +29,12 @@ module GitHubEvents
         build.save!
       end
 
-      20.times do
-        sleep(1)
+      broadcast_build(build)
+    end
+
+    def broadcast_build(build)
+      NUMBER_IF_TIMES_TO_REPEAT_BROADCAST.times do
+        sleep(BROADCAST_INTERVAL_IN_SECONDS)
 
         if build.status == "Running"
           build.broadcast
