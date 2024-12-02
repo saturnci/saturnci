@@ -63,7 +63,8 @@ class Run < ApplicationRecord
   def runner_request
     RunnerRequest.new(
       run: self,
-      github_installation_id: build.project.saturn_installation.github_installation_id
+      github_installation_id: build.project.saturn_installation.github_installation_id,
+      ssh_key: RunnerSSHKey.new(self)
     )
   end
 
