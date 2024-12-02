@@ -17,7 +17,7 @@ module Streaming
       Turbo::StreamsChannel.broadcast_update_to(
         name,
         target: target,
-        partial: "jobs/#{@tab_name}",
+        partial: "runs/#{@tab_name}",
         locals: { run: @run, current_tab_name: @tab_name }
       )
     end
