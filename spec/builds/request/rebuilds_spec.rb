@@ -13,7 +13,7 @@ RSpec.describe "rebuilds", type: :request do
     before do
       runner_request_double = instance_double(RunnerRequest)
       allow(RunnerRequest).to receive(:new).and_return(runner_request_double)
-      allow(runner_request_double).to receive(:create!)
+      allow(runner_request_double).to receive(:execute!)
     end
 
     it "increases the count of builds by 1" do
