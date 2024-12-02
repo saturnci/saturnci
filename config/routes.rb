@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
   mount ActionCable.server => '/cable'
 
-  get "jobs/:id/:partial", to: "jobs#show", as: "job"
+  get "runs/:id/:partial", to: "runs#show", as: "run"
   get "builds/:id(/:partial)", to: "builds#show", as: "build"
 
   resources :projects do
@@ -16,8 +16,8 @@ Rails.application.routes.draw do
     resource :project_secret_collection, only: %i(show create destroy)
 
     resources :builds, only: %i(show create destroy) do
-      resources :jobs, only: :show do
-        get ":partial", to: "jobs#show", on: :member, as: "job_detail_content"
+      resources :runs, only: :show do
+        get ":partial", to: "runs#show", on: :member, as: "run_detail_content"
       end
 
       get ":partial", to: "builds#show", on: :member, as: "build_detail_content"

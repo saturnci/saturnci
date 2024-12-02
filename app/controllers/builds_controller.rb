@@ -20,7 +20,7 @@ class BuildsController < ApplicationController
     if @build.runs.any?
       failed_runs = @build.runs.select(&:failed?)
 
-      redirect_to job_path(
+      redirect_to run_path(
         failed_runs.first || @build.runs.first,
         DEFAULT_PARTIAL,
         branch_name: params[:branch_name],
