@@ -22,16 +22,5 @@ services:
     logging:
       driver: none
 
-  redis:
-    image: redis:4.0.14-alpine
-    volumes:
-      - redis:/data:delegated
-    ports:
-      - "127.0.0.1:6380:6379"
-    restart: on-failure
-    logging:
-      driver: none
-
 volumes:
   postgresql:
-  redis:
