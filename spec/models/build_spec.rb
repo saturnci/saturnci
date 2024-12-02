@@ -50,7 +50,7 @@ RSpec.describe Build, type: :model do
     before do
       fake_runner_request = double("RunnerRequest")
       allow(run).to receive(:runner_request).and_return(fake_runner_request)
-      allow(fake_runner_request).to receive(:create!)
+      allow(fake_runner_request).to receive(:execute!)
       allow(build).to receive(:runs_to_use).and_return([run])
     end
 

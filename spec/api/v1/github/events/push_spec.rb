@@ -12,7 +12,7 @@ RSpec.describe "Push", type: :request do
 
   before do
     runner_request_stub = instance_double("RunnerRequest").tap do |stub|
-      allow(stub).to receive(:create!)
+      allow(stub).to receive(:execute!)
     end
 
     allow(RunnerRequest).to receive(:new).and_return(runner_request_stub)

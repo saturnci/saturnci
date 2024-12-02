@@ -6,7 +6,7 @@ class RunnerRequest
     @github_installation_id = github_installation_id
   end
 
-  def create!
+  def execute!
     client = DropletKitClientFactory.client
     rsa_key = JobMachineRSAKey.new("run-#{@run.id}")
 

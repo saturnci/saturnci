@@ -24,7 +24,7 @@ class Run < ApplicationRecord
   def start!
     transaction do
       run_events.create!(type: :runner_requested)
-      runner_request.create!
+      runner_request.execute!
     end
   end
 
