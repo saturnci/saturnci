@@ -1,26 +1,14 @@
 require "droplet_kit"
 
 class RunnerRequest
-  def initialize(run:, github_installation_id:)
+  def initialize(run:, github_installation_id:, ssh_key:, client: DropletKitClientFactory.client)
     @run = run
     @github_installation_id = github_installation_id
+    @ssh_key = ssh_key
+    @client = client
   end
 
   def execute!
-    client = DropletKitClientFactory.client
-    rsa_key = RunnerRSAKey.new("run-#{@run.id}")
-
-    droplet_kit_ssh_key = DropletKit::SSHKey.new(
-      name: rsa_key.filename,
-      public_key: File.read("#{rsa_key.file_path}.pub")
-    )
-
-    ssh_key = client.ssh_keys.create(droplet_kit_ssh_key)
-
-    unless ssh_key.id.present?
-      raise "SSH key creation not successful"
-    end
-
     droplet = DropletKit::Droplet.new(
       name: droplet_name,
       region: DropletConfig::REGION,
@@ -28,15 +16,15 @@ class RunnerRequest
       size: DropletConfig::SIZE,
       user_data: user_data,
       tags: ["saturnci"],
-      ssh_keys: [ssh_key.id]
+      ssh_keys: [@ssh_key.id]
     )
 
-    droplet_request = client.droplets.create(droplet)
+    droplet_request = @client.droplets.create(droplet)
 
     @run.update!(
       snapshot_image_id: DropletConfig::SNAPSHOT_IMAGE_ID,
       runner_id: droplet_request.id,
-      runner_rsa_key_path: rsa_key.file_path
+      runner_rsa_key_path: @ssh_key.rsa_key.file_path
     )
   end
 
