@@ -10,7 +10,7 @@ describe "Test output streaming", type: :system do
 
   before do
     login_as(run.build.project.user, scope: :user)
-    visit job_path(run, "test_output")
+    visit run_path(run, "test_output")
   end
 
   context "before log update occurs" do

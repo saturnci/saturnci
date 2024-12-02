@@ -1,13 +1,13 @@
 require "rails_helper"
 
 describe "Test output scrolling", type: :system do
-  let!(:job) do
-    create(:job, test_output: ("line\n" * 500) + "bottom line")
+  let!(:run) do
+    create(:run, test_output: ("line\n" * 500) + "bottom line")
   end
 
   before do
-    login_as(job.build.project.user, scope: :user)
-    visit job_path(job, "test_output")
+    login_as(run.build.project.user, scope: :user)
+    visit run_path(run, "test_output")
   end
 
   it "scrolls to the bottom" do

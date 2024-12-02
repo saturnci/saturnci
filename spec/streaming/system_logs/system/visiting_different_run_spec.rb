@@ -11,7 +11,7 @@ describe "Visiting different run", type: :system do
 
   before do
     login_as(original_run.build.project.user, scope: :user)
-    visit job_path(original_run, "system_logs")
+    visit run_path(original_run, "system_logs")
   end
 
   context "visiting a different run" do
@@ -26,10 +26,10 @@ describe "Visiting different run", type: :system do
 
     context "after log update occurs" do
       before do
-        visit_build_tab("system_logs", job: original_run)
+        visit_build_tab("system_logs", run: original_run)
         expect(page).to have_content(original_run.system_logs) # To prevent race condition
 
-        navigate_to_job_tab(other_run)
+        navigate_to_run_tab(other_run)
         system_log_http_request(run: original_run, body: "new system log content")
       end
 
