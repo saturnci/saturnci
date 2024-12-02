@@ -1,19 +1,19 @@
 require "rails_helper"
 
 describe "Status filtering", type: :system do
-  let!(:passed_job) { create(:job, :passed) }
+  let!(:passed_run) { create(:run, :passed) }
 
-  let!(:failed_job) do
+  let!(:failed_run) do
     create(
-      :job,
+      :run,
       :failed,
-      build: create(:build, project: passed_job.build.project)
+      build: create(:build, project: passed_run.build.project)
     ).finish!
   end
 
   before do
-    login_as(passed_job.build.project.user, scope: :user)
-    visit job_path(passed_job, "test_output")
+    login_as(passed_run.build.project.user, scope: :user)
+    visit run_path(passed_run, "test_output")
   end
 
   context "passed builds only" do
@@ -24,13 +24,13 @@ describe "Status filtering", type: :system do
 
     it "includes the passed build" do
       within ".build-list" do
-        expect(page).to have_content(passed_job.build.commit_hash)
+        expect(page).to have_content(passed_run.build.commit_hash)
       end
     end
 
     it "does not include the failed build" do
       within ".build-list" do
-        expect(page).not_to have_content(failed_job.build.commit_hash)
+        expect(page).not_to have_content(failed_run.build.commit_hash)
       end
     end
   end
@@ -43,13 +43,13 @@ describe "Status filtering", type: :system do
 
     it "includes the failed build" do
       within ".build-list" do
-        expect(page).to have_content(failed_job.build.commit_hash)
+        expect(page).to have_content(failed_run.build.commit_hash)
       end
     end
 
     it "does not include the passed build" do
       within ".build-list" do
-        expect(page).not_to have_content(passed_job.build.commit_hash)
+        expect(page).not_to have_content(passed_run.build.commit_hash)
       end
     end
   end
@@ -63,13 +63,13 @@ describe "Status filtering", type: :system do
 
     it "includes the failed build" do
       within ".build-list" do
-        expect(page).to have_content(failed_job.build.commit_hash)
+        expect(page).to have_content(failed_run.build.commit_hash)
       end
     end
 
     it "includes the passed build" do
       within ".build-list" do
-        expect(page).to have_content(passed_job.build.commit_hash)
+        expect(page).to have_content(passed_run.build.commit_hash)
       end
     end
   end
@@ -81,7 +81,7 @@ describe "Status filtering", type: :system do
 
       # to prevent race condition
       within ".build-list" do
-        expect(page).not_to have_content(failed_job.build.commit_hash)
+        expect(page).not_to have_content(failed_run.build.commit_hash)
       end
 
       expect(page).to have_checked_field("Passed")
@@ -93,7 +93,7 @@ describe "Status filtering", type: :system do
 
       # to prevent race condition
       within ".build-list" do
-        expect(page).not_to have_content(passed_job.build.commit_hash)
+        expect(page).not_to have_content(passed_run.build.commit_hash)
       end
 
       expect(page).to have_checked_field("Failed")

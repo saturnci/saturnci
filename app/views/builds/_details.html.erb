@@ -12,7 +12,7 @@
     <% build.runs.each do |run| %>
       <li>
         <%= link_to run.name,
-          job_path(run, current_tab_name),
+          run_path(run, current_tab_name),
           class: run == @run ? "active" : "" %>
       </li>
     <% end %>

@@ -1,4 +1,4 @@
-class JobsController < ApplicationController
+class RunsController < ApplicationController
   def show
     @run = Run.find(params[:id])
     @build = @run.build

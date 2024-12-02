@@ -8,12 +8,12 @@ describe "Navigating from test output tab", type: :system do
 
   before do
     login_as(run.build.project.user, scope: :user)
-    visit job_path(run, "test_output")
+    visit run_path(run, "test_output")
   end
 
   context "navigating to the system logs tab" do
     before do
-      navigate_to_build_tab("system_logs", job: run)
+      navigate_to_build_tab("system_logs", run:)
 
       http_request(
         api_authorization_headers: api_authorization_headers,
