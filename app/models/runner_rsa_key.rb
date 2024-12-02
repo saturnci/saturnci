@@ -1,7 +1,7 @@
 require "fileutils"
 require "securerandom"
 
-class JobMachineRSAKey
+class RunnerRSAKey
   TMP_DIR_NAME = "/tmp/saturnci"
   attr_reader :filename
 

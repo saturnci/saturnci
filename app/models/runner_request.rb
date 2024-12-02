@@ -8,7 +8,7 @@ class RunnerRequest
 
   def execute!
     client = DropletKitClientFactory.client
-    rsa_key = JobMachineRSAKey.new("run-#{@run.id}")
+    rsa_key = RunnerRSAKey.new("run-#{@run.id}")
 
     droplet_kit_ssh_key = DropletKit::SSHKey.new(
       name: rsa_key.filename,

@@ -1,10 +1,10 @@
 require "rails_helper"
 
-describe JobMachineRSAKey do
+describe RunnerRSAKey do
   let!(:tmp_dir_name) { Rails.root.join("tmp", "saturnci") }
 
   before do
-    stub_const('JobMachineRSAKey::TMP_DIR_NAME', tmp_dir_name)
+    stub_const('RunnerRSAKey::TMP_DIR_NAME', tmp_dir_name)
   end
 
   after(:each) do
@@ -12,7 +12,7 @@ describe JobMachineRSAKey do
   end
 
   it "creates a file" do
-    job_machine_rsa_key = JobMachineRSAKey.new("job-123")
-    expect(File.exist?(job_machine_rsa_key.file_path)).to be true
+    runner_rsa_key = RunnerRSAKey.new("run-123")
+    expect(File.exist?(runner_rsa_key.file_path)).to be true
   end
 end
