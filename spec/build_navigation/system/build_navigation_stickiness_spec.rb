@@ -12,7 +12,7 @@ describe "Build navigation stickiness", type: :system do
 
   context "the log pane is scrolled all the way to the bottom" do
     it "keeps the build navigation visible" do
-      visit job_path(run, "test_output")
+      visit run_path(run, "test_output")
 
       page.execute_script('document.querySelector(".run-details").scrollTop = document.querySelector(".run-details").scrollHeight')
 

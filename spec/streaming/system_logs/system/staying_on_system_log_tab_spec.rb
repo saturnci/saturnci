@@ -9,7 +9,7 @@ describe "Staying on system log tab", type: :system do
 
   before do
     login_as(run.build.project.user, scope: :user)
-    visit job_path(run, "system_logs")
+    visit run_path(run, "system_logs")
   end
 
   context "before log update occurs" do
