@@ -68,21 +68,21 @@ spec:
             secretKeyRef:
               name: saturn-secrets
               key: SATURNCI_HOST
-        - name: GITHUB_OAUTH_CLIENT_ID
-          valueFrom:
-            secretKeyRef:
-              name: saturn-secrets
-              key: GITHUB_OAUTH_CLIENT_ID
-        - name: GITHUB_OAUTH_CLIENT_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: saturn-secrets
-              key: GITHUB_OAUTH_CLIENT_SECRET
         - name: GITHUB_APP_ID
           valueFrom:
             secretKeyRef:
               name: saturn-secrets
               key: GITHUB_APP_ID
+        - name: GITHUB_APP_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: GITHUB_APP_CLIENT_SECRET
+        - name: GITHUB_APP_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: GITHUB_APP_CLIENT_ID
         - name: GITHUB_PRIVATE_PEM
           valueFrom:
             secretKeyRef:
@@ -165,21 +165,21 @@ spec:
             secretKeyRef:
               name: saturn-secrets
               key: SATURNCI_HOST
-        - name: GITHUB_OAUTH_CLIENT_ID
-          valueFrom:
-            secretKeyRef:
-              name: saturn-secrets
-              key: GITHUB_OAUTH_CLIENT_ID
-        - name: GITHUB_OAUTH_CLIENT_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: saturn-secrets
-              key: GITHUB_OAUTH_CLIENT_SECRET
         - name: GITHUB_APP_ID
           valueFrom:
             secretKeyRef:
               name: saturn-secrets
               key: GITHUB_APP_ID
+        - name: GITHUB_APP_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: GITHUB_APP_CLIENT_SECRET
+        - name: GITHUB_APP_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: GITHUB_APP_CLIENT_ID
         - name: GITHUB_PRIVATE_PEM
           valueFrom:
             secretKeyRef:
