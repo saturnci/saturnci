@@ -278,6 +278,21 @@ Devise.setup do |config|
     scope: "user,public_repo"
   )
 
+  config.omniauth(
+    :github,
+    "GITHUB_APP_CLIENT_ID",
+    "GITHUB_APP_CLIENT_SECRET",
+    scope: "read:user",
+    setup: lambda do |env|
+      request = Rack::Request.new(env)
+      env["omniauth.strategy"].options[:client_id] = ENV["GITHUB_APP_CLIENT_ID"]
+      env["omniauth.strategy"].options[:client_secret] = ENV["GITHUB_APP_CLIENT_SECRET"]
+      env["omniauth.strategy"].options[:client_options].site = "https://api.github.com"
+      env["omniauth.strategy"].options[:client_options].authorize_url = "https://github.com/login/oauth/authorize"
+      env["omniauth.strategy"].options[:client_options].token_url = "https://github.com/login/oauth/access_token"
+    end
+  )
+
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
