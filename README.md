@@ -39,6 +39,10 @@ It will take a while for the snapshot to show up in the Snapshots area of Digita
 
 ## Client setup
 
+Install GitHub app
+
+https://github.com/apps/saturnci
+
 ```Dockerfile
 # .saturnci/Dockerfile
 
