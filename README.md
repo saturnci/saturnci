@@ -29,6 +29,14 @@ Relevant:
 - https://docs.docker.com/docker-hub/mirror/
 - https://docs.docker.com/build/cache/backends/registry/
 
+## To generate a new runner snapshot
+
+```ruby
+RunnerSnapshot.generate!
+```
+
+It will take a while for the snapshot to show up in the Snapshots area of Digital Ocean.
+
 ## Client setup
 
 ```Dockerfile
