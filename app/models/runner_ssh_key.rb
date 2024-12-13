@@ -1,8 +1,8 @@
 class RunnerSSHKey
   attr_reader :rsa_key
 
-  def initialize(run)
-    @rsa_key = RunnerRSAKey.new("run-#{run.id}")
+  def initialize(name)
+    @rsa_key = RunnerRSAKey.new(name)
   end
 
   def id
