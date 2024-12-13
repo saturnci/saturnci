@@ -20,7 +20,7 @@ class RunnerSnapshot
   private
 
   def self.create_droplet(client)
-    rsa_key = RunnerRSAKey.new("runner-snapshot-#{Time.now.to_i}")
+    rsa_key = Cloud::RSAKey.new("runner-snapshot-#{Time.now.to_i}")
 
     droplet_kit_ssh_key = DropletKit::SSHKey.new(
       name: rsa_key.filename,
