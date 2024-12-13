@@ -64,7 +64,7 @@ class Run < ApplicationRecord
     RunnerRequest.new(
       run: self,
       github_installation_id: build.project.saturn_installation.github_installation_id,
-      ssh_key: RunnerSSHKey.new("run-#{id}")
+      ssh_key: Cloud::SSHKey.new("run-#{id}")
     )
   end
 
