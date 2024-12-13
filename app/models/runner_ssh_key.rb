@@ -2,7 +2,7 @@ class RunnerSSHKey
   attr_reader :rsa_key
 
   def initialize(name)
-    @rsa_key = RunnerRSAKey.new(name)
+    @rsa_key = Cloud::RSAKey.new(name)
   end
 
   def id
