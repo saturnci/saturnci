@@ -23,7 +23,14 @@ class Script
     client.post("runs/#{ENV["RUN_ID"]}/run_events", type: "runner_ready")
 
     token = client.post("github_tokens", github_installation_id: ENV["GITHUB_INSTALLATION_ID"]).body
-    system("git clone https://x-access-token:#{token}@github.com/#{ENV['GITHUB_REPO_FULL_NAME']} #{PROJECT_DIR}")
+    _, stderr, status = Open3.capture3("git clone https://x-access-token:#{token}@github.com/#{ENV['GITHUB_REPO_FULL_NAME']} #{PROJECT_DIR}")
+
+    if status.success?
+      puts "Clone of #{ENV["GITHUB_REPO_FULL_NAME"]} into #{PROJECT_DIR} successful"
+    else
+      puts "Clone of #{ENV["GITHUB_REPO_FULL_NAME"]} into #{PROJECT_DIR} failed: #{stderr}"
+    end
+
     Dir.chdir(PROJECT_DIR)
     FileUtils.mkdir_p('tmp')
 
