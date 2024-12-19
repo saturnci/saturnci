@@ -6,6 +6,9 @@
   <% end %>
 
   <%= turbo_frame_tag "build_details", class: "build-details", data: { turbo_action: "advance" } do %>
-    <%= render "builds/details", build: @build, current_tab_name: @current_tab_name %>
+    <%= render "builds/details",
+      build: @build,
+      current_tab_name: current_tab_name,
+      run_output_stream: run_output_stream %>
   <% end %>
 <% end %>
