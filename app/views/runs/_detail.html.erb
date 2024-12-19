@@ -1,4 +1,4 @@
-<%= turbo_frame_tag "build", class: "build-inner", data: { turbo_action: "advance" } do %>
+<%= turbo_frame_tag "details_pane", class: "build-inner", data: { turbo_action: "advance" } do %>
   <%= render "builds/header", build: @build do %>
     <%= button_to "Rerun", rebuilds_path(build_id: @build.id), method: :post, data: { turbo: false } %>
     <%= button_to "Cancel", build_cancellations_path(build_id: @build.id), method: :post, data: { turbo: false } %>
