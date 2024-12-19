@@ -13,7 +13,7 @@ class ProjectsController < ApplicationController
     build = @project.builds.order("created_at desc").first
 
     if build.present?
-      redirect_to project_build_path(@project, build)
+      redirect_to BuildLink.new(build).path
     end
   end
 

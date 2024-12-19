@@ -19,7 +19,6 @@ describe "Project select", type: :system do
     before { create(:run, build: build) }
 
     it "sets the select input to the project currently being visited" do
-      # I don't understand why this test is failing
       visit project_path(project)
       expect(page).to have_select("project_id", selected: project.name)
     end
