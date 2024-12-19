@@ -7,10 +7,12 @@ class BuildLink
   end
 
   def path
-    if @build.runs.any?
-      run_path(first_failed_run || @build.runs.first, DEFAULT_PARTIAL)
-    else
-      project_build_path(@build.project, @build)
+    Rails.cache.fetch(cache_key) do
+      if @build.runs.any?
+        run_path(first_failed_run || @build.runs.first, DEFAULT_PARTIAL)
+      else
+        project_build_path(@build.project, @build)
+      end
     end
   end
 
@@ -18,5 +20,9 @@ class BuildLink
 
   def first_failed_run
     @build.runs.select(&:failed?).first
+  end
+
+  def cache_key
+    ["build_link_path", @build.id, @build.updated_at].join("/")
   end
 end
