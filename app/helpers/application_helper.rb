@@ -1,4 +1,22 @@
 module ApplicationHelper
+  DEFAULT_PARTIAL = "test_output"
+
+  def build_home_path(build)
+    if build.runs.any?
+      failed_runs = build.runs.select(&:failed?)
+      failed_runs.first || build.runs.first
+
+      run_path(
+        failed_runs.first || build.runs.first,
+        DEFAULT_PARTIAL,
+        branch_name: params[:branch_name],
+        statuses: params[:statuses]
+      )
+    else
+      project_build_path(build.project, build)
+    end
+  end
+
   def abbreviated_hash(hash)
     hash[0..7]
   end

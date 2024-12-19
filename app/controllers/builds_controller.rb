@@ -1,6 +1,4 @@
 class BuildsController < ApplicationController
-  DEFAULT_PARTIAL = "test_output"
-
   def create
     @project = Project.find(params[:project_id])
     build = Build.new(project: @project)
@@ -17,34 +15,23 @@ class BuildsController < ApplicationController
       params[:statuses] = nil
     end
 
-    if @build.runs.any?
-      failed_runs = @build.runs.select(&:failed?)
+    @build_list = BuildList.new(
+      @build,
+      branch_name: params[:branch_name],
+      statuses: params[:statuses]
+    )
 
-      redirect_to run_path(
-        failed_runs.first || @build.runs.first,
-        DEFAULT_PARTIAL,
-        branch_name: params[:branch_name],
-        statuses: params[:statuses]
-      )
-    else
-      @build_list = BuildList.new(
-        @build,
-        branch_name: params[:branch_name],
-        statuses: params[:statuses]
-      )
+    @build_filter_component = BuildFilterComponent.new(
+      build: @build,
+      branch_name: params[:branch_name],
+      statuses: params[:statuses],
+      current_tab_name: @current_tab_name
+    )
 
-      @build_filter_component = BuildFilterComponent.new(
-        build: @build,
-        branch_name: params[:branch_name],
-        statuses: params[:statuses],
-        current_tab_name: @current_tab_name
-      )
-
-      @project_component = ProjectComponent.new(
-        @build.project,
-        extra_css_classes: "project-home"
-      )
-    end
+    @project_component = ProjectComponent.new(
+      @build.project,
+      extra_css_classes: "project-home"
+    )
   end
 
   def destroy
