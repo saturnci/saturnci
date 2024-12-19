@@ -9,6 +9,7 @@ class BuildsController < ApplicationController
 
   def show
     @build = Build.find(params[:id])
+    @project = @build.project
 
     if params[:clear]
       params[:branch_name] = nil
