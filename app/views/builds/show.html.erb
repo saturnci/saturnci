@@ -4,7 +4,7 @@
       <%= render "builds/list", current_tab_name: @current_tab_name %>
 
       <div class="build">
-        <%= turbo_frame_tag "build", class: "build-inner", data: { turbo_action: "advance" } do %>
+        <%= turbo_frame_tag "details_pane", class: "build-inner", data: { turbo_action: "advance" } do %>
           <%= render "builds/header", build: @build do %>
             <%= button_to "Run", rebuilds_path(build_id: @build.id), method: :post, data: { turbo: false } %>
             <%= button_to "Delete", project_build_path(id: @build.id, project_id: @build.project_id), method: :delete, data: { turbo: false } %>

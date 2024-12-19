@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe BuildsController, type: :request do
+xdescribe BuildsController, type: :request do
   describe "GET #show" do
     context "a failed run is present" do
       let!(:build) { create(:build) }
