@@ -23,25 +23,9 @@
   overflow-y: auto;
 }
 
-.run-details {
-  overflow-y: auto;
-  height: 100vh;
-}
-
-.run-info-container {
-  width: 0;
-  min-width: 100%;
-  overflow: auto;
-}
-
 .terminal {
   background-color: #000;
   color: #FFF;
-}
-
-.terminal, .non-terminal-run-info {
-  overflow: auto;
-  padding: 12px;
 }
 
 .build-header {
