@@ -1,0 +1,14 @@
+<%= render project_component do |component| %>
+  <%= component.with_body do %>
+    <div class="dashboard">
+      <%= render "builds/list",
+        current_tab_name: @current_tab_name,
+        build_list: build_list,
+        build_filter_component: build_filter_component %>
+
+      <div class="build">
+        <%= body %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
