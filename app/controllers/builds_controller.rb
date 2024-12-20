@@ -8,30 +8,14 @@ class BuildsController < ApplicationController
   end
 
   def show
-    @build = Build.find(params[:id])
-    @project = @build.project
+    build = Build.find(params[:id])
 
-    if params[:clear]
-      params[:branch_name] = nil
-      params[:statuses] = nil
-    end
-
-    @build_list = BuildList.new(
-      @build,
-      branch_name: params[:branch_name],
-      statuses: params[:statuses]
-    )
-
-    @build_filter_component = BuildFilterComponent.new(
+    @build_component = BuildComponent.new(
       build: @build,
+      current_tab_name: params[:partial],
       branch_name: params[:branch_name],
       statuses: params[:statuses],
-      current_tab_name: @current_tab_name
-    )
-
-    @project_component = ProjectComponent.new(
-      @build.project,
-      extra_css_classes: "project-home"
+      clear: params[:clear]
     )
   end
 
