@@ -8,7 +8,7 @@ class BuildsController < ApplicationController
   end
 
   def show
-    build = Build.find(params[:id])
+    @build = Build.find(params[:id])
 
     @build_component = BuildComponent.new(
       build: @build,
