@@ -1,4 +1,4 @@
-<%= terminal_output do %>
+<%= terminal_output("terminal-masked") do %>
   <%= run_container current_tab_name, run do %>
     <%= ansi_to_html(SystemLogBody.new(run.system_logs).scrub) %>
   <% end %>
@@ -7,4 +7,5 @@
 <script>
 var element = document.querySelector('.run-details');
 element.scrollTop = element.scrollHeight;
+document.querySelector('.terminal').classList.remove('terminal-masked');
 </script>
