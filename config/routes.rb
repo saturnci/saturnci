@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   resources :projects do
     resource :settings do
+      resource :general_settings, only: %i(show update)
       resource :project_secret_collection, only: %i(show update)
     end
 
