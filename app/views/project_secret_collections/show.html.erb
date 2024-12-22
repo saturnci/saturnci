@@ -3,7 +3,7 @@
     <div class="project-inner">
       <h1>Secrets</h1>
 
-      <%= form_with(model: @project_secret_collection, url: project_project_secret_collection_path(@project)) do |form| %>
+      <%= form_with(model: @project_secret_collection, url: project_settings_project_secret_collection_path(@project), method: :put) do |form| %>
         <table border>
           <tr>
             <th>Key</th>

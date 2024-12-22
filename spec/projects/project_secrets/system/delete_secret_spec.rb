@@ -14,7 +14,7 @@ describe "Delete secret", type: :system do
     end
 
     it "deletes the target secret" do
-      visit project_project_secret_collection_path(project)
+      visit project_settings_project_secret_collection_path(project)
       find_field("project_secrets_0_key", with: "FOO").set("")
       click_on "Save"
 
@@ -23,7 +23,7 @@ describe "Delete secret", type: :system do
     end
 
     it "does not delete other secrets" do
-      visit project_project_secret_collection_path(project)
+      visit project_settings_project_secret_collection_path(project)
       find_field("project_secrets_0_key", with: "FOO").set("")
       click_on "Save"
 

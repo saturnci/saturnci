@@ -13,7 +13,7 @@ class ProjectSecretCollectionsController < ApplicationController
     @project_component = ProjectComponent.new(@project)
   end
 
-  def create
+  def update
     @project = Project.find(params[:project_id])
 
     @project_secret_collection = ProjectSecretCollection.new
@@ -21,7 +21,7 @@ class ProjectSecretCollectionsController < ApplicationController
     @project_secret_collection.project_secrets_attributes = project_secret_collection_params[:project_secrets_attributes]
     @project_secret_collection.save!
 
-    redirect_to project_project_secret_collection_path(@project)
+    redirect_to project_settings_project_secret_collection_path(@project)
   end
 
   private

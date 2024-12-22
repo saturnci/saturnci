@@ -1,5 +1,5 @@
 class SettingsController < ApplicationController
-  def index
+  def show
     @project = Project.find(params[:project_id])
     @project_component = ProjectComponent.new(@project)
   end
