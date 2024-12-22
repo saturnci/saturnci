@@ -3,6 +3,11 @@
     <div class="project-inner">
       <%= flash[:notice] %>
 
+      <h1>General Settings</h1>
+
+      <br>
+      <b>Start builds automatically on git push</b>
+
       <%= form_with model: @project, url: project_settings_general_settings_path(@project), method: :patch do |form| %>
         <div>
           <%= form.radio_button :start_builds_automatically_on_git_push, true %>
@@ -13,6 +18,7 @@
           <%= form.label :start_builds_automatically_on_git_push, "No", value: false %>
         </div>
 
+        <br>
         <%= form.submit "Save" %>
       <% end %>
     </div>
