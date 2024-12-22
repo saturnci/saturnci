@@ -12,8 +12,9 @@ Rails.application.routes.draw do
   get "builds/:id(/:partial)", to: "builds#show", as: "build"
 
   resources :projects do
-    resources :settings, only: :index
-    resource :project_secret_collection, only: %i(show create destroy)
+    resource :settings do
+      resource :project_secret_collection, only: %i(show update)
+    end
 
     resources :builds, only: %i(show create destroy) do
       resources :runs, only: :show do
