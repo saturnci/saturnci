@@ -1,0 +1,20 @@
+<%= render @project_component do |component| %>
+  <%= component.with_body do %>
+    <div class="project-inner">
+      <%= flash[:notice] %>
+
+      <%= form_with model: @project, url: project_settings_general_settings_path(@project), method: :patch do |form| %>
+        <div>
+          <%= form.radio_button :start_builds_automatically_on_git_push, true %>
+          <%= form.label :start_builds_automatically_on_git_push, "Yes", value: true %>
+        </div>
+        <div>
+          <%= form.radio_button :start_builds_automatically_on_git_push, false %>
+          <%= form.label :start_builds_automatically_on_git_push, "No", value: false %>
+        </div>
+
+        <%= form.submit "Save" %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
