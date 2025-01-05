@@ -17,10 +17,10 @@
   cursor: pointer;
 }
 
-.sign-up-button:hover {
-  background: linear-gradient(to bottom, #0F0, #0C0);
-}
-
 .sign-up-button, .sign-up-button:active {
   background: linear-gradient(to bottom, #0C0, #090);
+}
+
+.sign-up-button:hover {
+  background: linear-gradient(to bottom, #0F0, #0C0);
 }
