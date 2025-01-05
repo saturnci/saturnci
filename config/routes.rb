@@ -3,7 +3,7 @@ def draw(routes_name)
 end
 
 Rails.application.routes.draw do
-  root to: "projects#index"
+  root to: "marketing#home"
 
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
   mount ActionCable.server => '/cable'

@@ -1,0 +1,10 @@
+<center>
+  <h1 style="margin-top: 100px">SaturnCI</h1>
+
+  <div data-turbo="false">
+    <%= button_to "Sign Up with GitHub",
+      user_github_omniauth_authorize_path,
+      method: :post,
+      class: "sign-up-button" %>
+  </div>
+</center>

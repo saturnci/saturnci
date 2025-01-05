@@ -1,0 +1,20 @@
+.sign-up-button {
+  color: #FFF;
+  padding: 20px 30px;
+  margin: 30px 0 0 0;
+  display: block;
+  font-size: 32px;
+  border-radius: 24px;
+  border: none;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+.sign-up-button:hover {
+  background: linear-gradient(to bottom, #0F0, #0C0);
+}
+
+.sign-up-button, .sign-up-button:active {
+  background: linear-gradient(to bottom, #0C0, #090);
+}
