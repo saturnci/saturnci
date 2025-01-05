@@ -38,12 +38,14 @@
 
           <div>
             Signed in as <%= current_user.name %>
-            <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete } %>
+            <%= link_to "Sign Out", destroy_user_session_path, data: { turbo_method: :delete } %>
           </div>
         </div>
       <% else %>
-        <%= link_to "Sign in", new_user_session_path %>
-        <%= link_to "Sign up", new_user_registration_path %>
+        <nav class="marketing-nav">
+          <%= link_to "Sign In", new_user_session_path %>
+          <%= link_to "Sign Up", home_marketing_index_path %>
+        </nav>
       <% end %>
     </header>
 

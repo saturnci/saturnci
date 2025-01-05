@@ -3,6 +3,10 @@ def draw(routes_name)
 end
 
 Rails.application.routes.draw do
+  resources :marketing, only: [] do
+    get "home", on: :collection
+  end
+
   root to: "marketing#home"
 
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }

@@ -1,3 +1,9 @@
+.marketing-nav {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
 .sign-up-button {
   color: #FFF;
   padding: 20px 30px;
