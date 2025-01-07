@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     get "home", on: :collection
   end
 
-  root to: "marketing#home"
+  root to: "projects#index"
 
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
   mount ActionCable.server => '/cable'

@@ -30,7 +30,7 @@ describe "Default page", type: :system do
   context "not signed in" do
     it "shows the sign-in page" do
       visit root_path
-      expect(page).to have_content("Sign in")
+      expect(page).to have_content("Sign In")
     end
   end
 end
