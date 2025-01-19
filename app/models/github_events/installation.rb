@@ -7,7 +7,7 @@ module GitHubEvents
     def process
       user.saturn_installations.create!(
         github_installation_id: @payload["installation"]["id"],
-        name: @payload["installation"]["account"]["login"],
+        account_name: @payload["installation"]["account"]["login"],
       )
     end
 
