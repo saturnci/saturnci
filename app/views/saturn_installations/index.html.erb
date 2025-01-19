@@ -8,6 +8,7 @@
   <table border>
     <tr>
       <th>GitHub Account Name</th>
+      <th>Projects</th>
       <th>GitHub Installation ID</th>
       <th>Created</th>
       <th colspan="2"></th>
@@ -16,6 +17,7 @@
     <% @saturn_installations.each do |saturn_installation| %>
       <tr>
         <td><%= saturn_installation.account_name %></td>
+        <td><%= saturn_installation.projects.map(&:name).join(", ") %></td>
         <td><%= saturn_installation.github_installation_id %></td>
         <td><%= I18n.l(saturn_installation.created_at) %></td>
 
