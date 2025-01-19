@@ -1,5 +1,6 @@
 class ApplicationRecord < ActiveRecord::Base
   primary_abstract_class
+  acts_as_paranoid
 
   def self.find_by_abbreviated_hash(abbreviated_hash)
     where("id::text LIKE ?", "#{abbreviated_hash}%").tap do |matching_records|

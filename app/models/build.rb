@@ -3,7 +3,6 @@ class Build < ApplicationRecord
   belongs_to :project
   has_many :jobs
   has_many :runs
-  acts_as_paranoid
 
   after_initialize do
     self.seed ||= rand(10000)

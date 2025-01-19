@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_19_142839) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_19_152634) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -66,6 +66,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_19_142839) do
     t.uuid "saturn_installation_id"
     t.boolean "active", default: true, null: false
     t.boolean "start_builds_automatically_on_git_push", default: true, null: false
+    t.datetime "deleted_at"
     t.index ["saturn_installation_id"], name: "index_projects_on_saturn_installation_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
@@ -91,6 +92,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_19_142839) do
     t.string "runner_rsa_key_path"
     t.integer "exit_code"
     t.string "snapshot_image_id"
+    t.datetime "deleted_at"
     t.index ["build_id", "order_index"], name: "index_runs_on_build_id_and_order_index", unique: true
     t.index ["build_id"], name: "index_runs_on_build_id"
     t.index ["runner_id"], name: "index_runs_on_runner_id", unique: true
@@ -102,6 +104,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_19_142839) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "account_name"
+    t.datetime "deleted_at"
     t.index ["user_id", "github_installation_id"], name: "index_saturn_installations_on_user_and_github_id", unique: true
     t.index ["user_id"], name: "index_saturn_installations_on_user_id"
   end
@@ -132,6 +135,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_19_142839) do
     t.string "provider"
     t.string "uid"
     t.boolean "super_admin", default: false
+    t.datetime "deleted_at"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
