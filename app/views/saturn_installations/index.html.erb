@@ -7,14 +7,14 @@
 <% if @saturn_installations.any? %>
   <table border>
     <tr>
-      <th>Name</th>
+      <th>GitHub Account Name</th>
       <th>GitHub Installation ID</th>
       <th colspan="2"></th>
     </tr>
 
     <% @saturn_installations.each do |saturn_installation| %>
       <tr>
-        <td><%= saturn_installation.name %></td>
+        <td><%= saturn_installation.account_name %></td>
         <td><%= saturn_installation.github_installation_id %></td>
 
         <td>
