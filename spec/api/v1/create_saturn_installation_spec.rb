@@ -32,11 +32,11 @@ RSpec.describe API::V1::GitHubEventsController, type: :controller do
       expect(saturn_installation.github_installation_id).to eq(payload["installation"]["id"])
     end
 
-    it "sets the name" do
+    it "sets the account name" do
       post :create, params: payload, as: :json
 
       saturn_installation = user.saturn_installations.last
-      expect(saturn_installation.name).to eq("jasonswett")
+      expect(saturn_installation.account_name).to eq("jasonswett")
     end
   end
 
