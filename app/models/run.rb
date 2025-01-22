@@ -1,4 +1,5 @@
 class Run < ApplicationRecord
+  acts_as_paranoid
   self.table_name = "runs"
   belongs_to :build, touch: true
   has_many :run_events, dependent: :destroy
