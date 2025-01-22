@@ -1,4 +1,5 @@
 class Build < ApplicationRecord
+  acts_as_paranoid
   NUMBER_OF_CONCURRENT_RUNS = 2
   belongs_to :project
   has_many :jobs
