@@ -4,7 +4,7 @@ end
 
 Rails.application.routes.draw do
   get "saturnci_github_app_authorizations/new"
-  root to: "projects#index"
+  root to: "saturn_installations#index"
 
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
   mount ActionCable.server => '/cable'
