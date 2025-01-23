@@ -103,7 +103,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_22_235609) do
     t.string "github_installation_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "account_name", null: false
+    t.string "account_name"
     t.datetime "deleted_at"
     t.string "github_app_installation_url"
     t.index ["user_id", "github_installation_id"], name: "index_saturn_installations_on_user_and_github_id", unique: true
