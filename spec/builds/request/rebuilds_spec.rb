@@ -4,7 +4,7 @@ RSpec.describe "rebuilds", type: :request do
   describe "POST rebuilds" do
     let!(:build) do
       create(:build) do |build|
-        build.project.user.saturn_installations.create!(
+        build.project.user.github_accounts.create!(
           github_installation_id: "123456"
         )
       end

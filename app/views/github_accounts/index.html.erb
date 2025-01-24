@@ -4,20 +4,22 @@
 <%= link_to "Add Account", ENV["SATURNCI_INSTALLATION_URL"] %>
 <br>
 
-<% if @saturn_installations.any? %>
-  <% @saturn_installations.each do |saturn_installation| %>
+<% if @github_accounts.any? %>
+  <% @github_accounts.each do |github_account| %>
     <div class="saturnci-github-app-installation">
-      <h2><%= saturn_installation.account_name %></h2>
-      <div>Created: <%= I18n.l(saturn_installation.created_at) %> UTC</div>
+      <h2><%= github_account.account_name %></h2>
+      <div>Created: <%= I18n.l(github_account.created_at) %> UTC</div>
 
       <div>
         GitHub installation ID:
-        <%= link_to saturn_installation.github_installation_id, saturn_installation.github_app_installation_url, target: "_blank" %>
+        <%= link_to github_account.github_installation_id,
+          github_account.github_app_installation_url,
+          target: "_blank" %>
       </div>
 
       <div>
         <%= link_to "Remove Account",
-          saturn_installation_path(saturn_installation),
+          github_account_path(github_account),
           data: { turbo_method: :delete } %>
       </div>
 
@@ -26,14 +28,14 @@
       <div>
         Projects:
         <ul>
-          <% saturn_installation.projects.each do |project| %>
+          <% github_account.projects.each do |project| %>
             <li><%= link_to project, project %></li>
           <% end %>
         </ul>
 
         <div>
           <%= link_to "Add Project",
-            new_saturn_installation_project_integration_path(saturn_installation) %>
+            new_github_account_project_integration_path(github_account) %>
         </div>
       </div>
     </div>

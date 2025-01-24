@@ -4,7 +4,7 @@ include APIAuthenticationHelper
 RSpec.describe "Push", type: :request do
   let!(:project) do
     create(:project, github_repo_full_name: "user/test") do |project|
-      project.user.saturn_installations.create!(
+      project.user.github_accounts.create!(
         github_installation_id: "1111111"
       )
     end
@@ -79,7 +79,7 @@ RSpec.describe "Push", type: :request do
     context "multiple matching projects" do
       before do
         create(:project, github_repo_full_name: project.github_repo_full_name) do |project|
-          project.user.saturn_installations.create!(
+          project.user.github_accounts.create!(
             github_installation_id: "1111112"
           )
         end

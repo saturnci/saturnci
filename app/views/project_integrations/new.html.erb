@@ -5,7 +5,7 @@
     <tr>
       <td>
         <%= link_to repository.name,
-          saturn_installation_project_integrations_path(repo_full_name: repository.full_name),
+          github_account_project_integrations_path(repo_full_name: repository.full_name),
           data: { turbo_method: :post } %>
       </td>
     </tr>

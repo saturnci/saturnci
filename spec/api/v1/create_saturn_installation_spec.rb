@@ -26,17 +26,17 @@ RSpec.describe API::V1::GitHubEventsController, type: :controller do
     it "creates a new saturn installation for the user" do
       expect {
         post :create, params: payload, as: :json
-      }.to change { user.saturn_installations.count }.by(1)
+      }.to change { user.github_accounts.count }.by(1)
 
-      saturn_installation = user.saturn_installations.last
-      expect(saturn_installation.github_installation_id).to eq(payload["installation"]["id"])
+      github_account = user.github_accounts.last
+      expect(github_account.github_installation_id).to eq(payload["installation"]["id"])
     end
 
     it "sets the account name" do
       post :create, params: payload, as: :json
 
-      saturn_installation = user.saturn_installations.last
-      expect(saturn_installation.account_name).to eq("jasonswett")
+      github_account = user.github_accounts.last
+      expect(github_account.account_name).to eq("jasonswett")
     end
   end
 
@@ -63,10 +63,10 @@ RSpec.describe API::V1::GitHubEventsController, type: :controller do
     it "creates a new saturn installation for the user" do
       expect {
         post :create, params: payload, as: :json
-      }.to change { user.saturn_installations.count }.by(1)
+      }.to change { user.github_accounts.count }.by(1)
 
-      saturn_installation = user.saturn_installations.last
-      expect(saturn_installation.github_installation_id).to eq(payload["installation"]["id"].to_s)
+      github_account = user.github_accounts.last
+      expect(github_account.github_installation_id).to eq(payload["installation"]["id"].to_s)
     end
   end
 end

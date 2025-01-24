@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   acts_as_paranoid
   has_many :projects
-  has_many :saturn_installations
+  has_many :github_accounts
 
   devise(
     :database_authenticatable,
