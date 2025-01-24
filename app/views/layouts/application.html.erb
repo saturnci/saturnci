@@ -22,18 +22,6 @@
         <div style="display: flex;justify-content: space-between">
           <div>
             <b><%= link_to "SaturnCI", root_path %></b>
-            <%= link_to "Installations", saturn_installations_path %>
-
-            <% if @project.present? %>
-              <%= link_to "Billing", project_billing_path(@project.id) %>
-            <% end %>
-
-            <%= link_to "Projects", projects_path %>
-
-            <%= select_tag "project_id",
-              options_from_collection_for_select(current_user.projects, :id, :name, @project&.id),
-              include_blank: true,
-              onchange: "window.location.href = '#{Rails.application.routes.url_helpers.projects_path}' + '/' + this.value" %>
           </div>
 
           <div>
