@@ -29,7 +29,7 @@ RSpec.describe "GitHub Events", type: :request do
           params: payload,
           headers: api_authorization_headers.merge('CONTENT_TYPE' => 'application/json')
         )
-      }.to change { SaturnInstallation.count }.by(1)
+      }.to change { GitHubAccount.count }.by(1)
     end
   end
 

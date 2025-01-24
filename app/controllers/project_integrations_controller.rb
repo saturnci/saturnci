@@ -3,7 +3,7 @@ require "octokit"
 
 class ProjectIntegrationsController < ApplicationController
   def new
-    @github_account = SaturnInstallation.find(params[:github_account_id])
+    @github_account = GitHubAccount.find(params[:github_account_id])
 
     @repositories = []
     page = 0
