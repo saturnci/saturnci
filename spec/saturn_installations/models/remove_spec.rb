@@ -5,7 +5,7 @@ describe "Removing a Saturn Installation" do
     let!(:run) { create(:run) }
 
     it "deletes any associated projects" do
-      expect { run.build.project.saturn_installation.destroy }
+      expect { run.build.project.github_account.destroy }
         .to change { Project.exists?(run.build.project.id) }
         .from(true).to(false)
     end

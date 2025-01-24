@@ -17,7 +17,7 @@ describe "User impersonations", type: :request do
 
     it "shows the other user's projects" do
       post admin_user_impersonations_path(user_id: other_user.id)
-      get saturn_installations_path
+      get github_accounts_path
       expect(response.body).to include("Signed in as #{other_user.name}")
     end
   end

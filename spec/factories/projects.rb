@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :project do
     user
-    saturn_installation
+    github_account
     name { "My Project" }
   end
 end

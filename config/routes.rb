@@ -4,7 +4,7 @@ end
 
 Rails.application.routes.draw do
   get "saturnci_github_app_authorizations/new"
-  root to: "saturn_installations#index"
+  root to: "github_accounts#index"
 
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
   mount ActionCable.server => '/cable'
@@ -29,7 +29,7 @@ Rails.application.routes.draw do
     get "billing(/:year(/:month))", to: "billing#index", as: "billing"
   end
 
-  resources :saturn_installations do
+  resources :github_accounts do
     resources :project_integrations, only: %i(new create)
   end
 

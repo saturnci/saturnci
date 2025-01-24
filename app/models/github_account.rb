@@ -1,7 +1,6 @@
-# A SaturnInstallation is created via a GitHub "created" webhook
+# A GitHubAccount is created via a GitHub "created" webhook
 # event, which is handled in an object called GitHub::Installation.
-class SaturnInstallation < ApplicationRecord
-  self.table_name = "github_accounts"
+class GitHubAccount < ApplicationRecord
   acts_as_paranoid
   belongs_to :user
   has_many :projects, dependent: :destroy

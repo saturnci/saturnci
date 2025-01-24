@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_24_015026) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_24_020028) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -75,11 +75,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_24_015026) do
     t.datetime "updated_at", null: false
     t.string "github_repo_full_name"
     t.uuid "user_id", null: false
-    t.uuid "saturn_installation_id"
+    t.uuid "github_account_id"
     t.boolean "active", default: true, null: false
     t.boolean "start_builds_automatically_on_git_push", default: true, null: false
     t.datetime "deleted_at"
-    t.index ["saturn_installation_id"], name: "index_projects_on_saturn_installation_id"
+    t.index ["github_account_id"], name: "index_projects_on_github_account_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
@@ -146,7 +146,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_24_015026) do
   add_foreign_key "charges", "runs"
   add_foreign_key "github_accounts", "users"
   add_foreign_key "project_secrets", "projects"
-  add_foreign_key "projects", "github_accounts", column: "saturn_installation_id"
+  add_foreign_key "projects", "github_accounts"
   add_foreign_key "projects", "users"
   add_foreign_key "run_events", "runs"
   add_foreign_key "runs", "builds"
