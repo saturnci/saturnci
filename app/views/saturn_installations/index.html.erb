@@ -1,39 +1,43 @@
-<h1>SaturnCI GitHub App Installations</h1>
+<h1>GitHub Accounts</h1>
 <br>
 
-<%= link_to "New Installation", ENV["SATURNCI_INSTALLATION_URL"] %>
+<%= link_to "Add Account", ENV["SATURNCI_INSTALLATION_URL"] %>
 <br>
 
 <% if @saturn_installations.any? %>
-  <table border>
-    <tr>
-      <th>GitHub Installation ID</th>
-      <th>GitHub Account Name</th>
-      <th>Projects</th>
-      <th>Created</th>
-      <th colspan="2"></th>
-    </tr>
+  <% @saturn_installations.each do |saturn_installation| %>
+    <div class="saturnci-github-app-installation">
+      <h2><%= saturn_installation.account_name %></h2>
+      <div>Created: <%= I18n.l(saturn_installation.created_at) %> UTC</div>
 
-    <% @saturn_installations.each do |saturn_installation| %>
-      <tr>
-        <td><%= saturn_installation.github_installation_id %></td>
-        <td><%= saturn_installation.account_name %></td>
-        <td><%= saturn_installation.projects.map(&:name).join(", ") %></td>
-        <td><%= I18n.l(saturn_installation.created_at) %></td>
+      <div>
+        GitHub installation ID:
+        <%= link_to saturn_installation.github_installation_id, saturn_installation.github_app_installation_url, target: "_blank" %>
+      </div>
 
-        <td>
+      <div>
+        <%= link_to "Remove Account",
+          saturn_installation_path(saturn_installation),
+          data: { turbo_method: :delete } %>
+      </div>
+
+      <br>
+
+      <div>
+        Projects:
+        <ul>
+          <% saturn_installation.projects.each do |project| %>
+            <li><%= link_to project, project %></li>
+          <% end %>
+        </ul>
+
+        <div>
           <%= link_to "Add Project",
             new_saturn_installation_project_integration_path(saturn_installation) %>
-        </td>
-
-        <td>
-          <%= link_to "Remove",
-            saturn_installation_path(saturn_installation),
-            data: { turbo_method: :delete } %>
-        </td>
-      </tr>
-    <% end %>
-  </table>
+        </div>
+      </div>
+    </div>
+  <% end %>
 <% else %>
   (No installations)
 <% end %>

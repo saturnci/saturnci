@@ -1,0 +1,17 @@
+.saturnci-github-app-installation {
+  background-color: #EEE;
+  margin-bottom: 20px;
+  padding: 20px;
+  width: 600px;
+}
+
+.saturnci-github-app-installation h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.saturnci-github-app-installation ul, li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
