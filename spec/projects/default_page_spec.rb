@@ -8,22 +8,9 @@ describe "Default page", type: :system do
       login_as(user, scope: :user)
     end
 
-    context "no projects exist" do
-      it "shows the installations page" do
-        visit root_path
-        expect(page).to have_content("Installations")
-      end
-    end
-
-    context "one project exists" do
-      before do
-        create(:job, build: create(:build, project: create(:project, user:)))
-      end
-
-      it "shows the project page" do
-        visit "/"
-        expect(page).to have_content("Branch:")
-      end
+    it "shows the GitHub Accounts page" do
+      visit root_path
+      expect(page).to have_content("GitHub Accounts")
     end
   end
 
