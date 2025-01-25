@@ -28,7 +28,12 @@ RSpec.describe "push" do
   end
 
   context "start builds automatically" do
-    let!(:project) { create(:project, start_builds_automatically_on_git_push: true) }
+    let!(:project) do
+      create(
+        :project,
+        start_builds_automatically_on_git_push: true
+      )
+    end
 
     it "starts the build" do
       build = create(:build, project:)
@@ -38,10 +43,15 @@ RSpec.describe "push" do
   end
 
   context "do not start builds automatically" do
-    let!(:project) { create(:project, start_builds_automatically_on_git_push: false) }
+    let!(:project) do
+      create(
+        :project,
+        start_builds_automatically_on_git_push: false
+      )
+    end
 
     it "saves the build" do
-      build = Build.new(project:)
+      build = build(:build, project:)
       expect { push_event.prepare_build(build) }.to change(Build, :count).by(1)
     end
 
