@@ -12,7 +12,7 @@ class ProjectsController < ApplicationController
   def show
     if @project.builds.any?
       build = @project.builds.order("created_at desc").first
-    else
+    elsif @project.unscoped.builds.empty?
       build = BuildFromCommitFactory.new(
         BuildFromCommitFactory.most_recent_commit(@project)
       ).build
