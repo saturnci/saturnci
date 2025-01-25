@@ -56,7 +56,7 @@ RSpec.describe "push" do
     end
 
     it "does not start the build" do
-      build = Build.new(project:)
+      build = build(:build, project:)
       expect(build).not_to receive(:start!)
       push_event.prepare_build(build)
     end
