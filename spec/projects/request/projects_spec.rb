@@ -35,10 +35,24 @@ describe "Projects", type: :request do
         )
       end
 
-      it "creates a build" do
-        expect {
-          get project_path(project)
-        }.to change(Build, :count).by(1)
+      context "there have never been builds before" do
+        it "creates a build" do
+          expect {
+            get project_path(project)
+          }.to change(Build, :count).by(1)
+        end
+      end
+
+      context "there have been builds before" do
+        before do
+          create(:build, project:).destroy
+        end
+
+        it "does not create a build" do
+          expect {
+            get project_path(project)
+          }.not_to change(Build, :count)
+        end
       end
     end
   end
