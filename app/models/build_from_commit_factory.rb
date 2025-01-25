@@ -11,4 +11,9 @@ class BuildFromCommitFactory
       commit_message: @commit["commit"]["message"]
     )
   end
+
+  def self.most_recent_commit(project)
+    client = project.github_account.octokit_client
+    client.commit(project.github_repo_full_name, "main")
+  end
 end

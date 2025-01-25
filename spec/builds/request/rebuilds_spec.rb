@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "rebuilds", type: :request do
+describe "rebuilds", type: :request do
   describe "POST rebuilds" do
     let!(:build) do
       create(:build) do |build|

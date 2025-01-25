@@ -10,11 +10,18 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    build = @project.builds.order("created_at desc").first
+    if @project.builds.any?
+      build = @project.builds.order("created_at desc").first
+    else
+      build = BuildFromCommitFactory.new(
+        BuildFromCommitFactory.most_recent_commit(@project)
+      ).build
 
-    if build.present?
-      redirect_to BuildLink.new(build).path
+      build.project = @project
+      build.save!
     end
+
+    redirect_to BuildLink.new(build).path
   end
 
   def new
