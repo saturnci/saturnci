@@ -10,19 +10,25 @@ module GitHubEvents
 
     def process
       Project.where(github_repo_full_name: @github_repo_full_name).each do |project|
-        prepare_build(Build.new(project:))
+        build = Build.new(project:)
+        build.assign_attributes(build_specification)
+        prepare_build(build)
       end
     end
 
-    def prepare_build(build)
+    def build_specification
       ref_path = @payload["ref"]
       head_commit = @payload["head_commit"]
 
-      build.branch_name = ref_path.split("/").last
-      build.author_name = head_commit["author"]["name"]
-      build.commit_hash = head_commit["id"]
-      build.commit_message = head_commit["message"]
+      {
+        branch_name: ref_path.split("/").last,
+        author_name: head_commit["author"]["name"],
+        commit_hash: head_commit["id"],
+        commit_message: head_commit["message"]
+      }
+    end
 
+    def prepare_build(build)
       if build.project.start_builds_automatically_on_git_push
         build.start!
       else
