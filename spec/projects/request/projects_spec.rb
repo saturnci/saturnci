@@ -43,6 +43,16 @@ describe "Projects", type: :request do
         end
       end
 
+      context "there are builds for other projects" do
+        before { create(:build) }
+
+        it "creates a build" do
+          expect {
+            get project_path(project)
+          }.to change(Build, :count).by(1)
+        end
+      end
+
       context "there have been builds before" do
         before do
           create(:build, project:).destroy

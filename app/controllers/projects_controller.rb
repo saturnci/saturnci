@@ -13,7 +13,7 @@ class ProjectsController < ApplicationController
     if @project.builds.any?
       build = @project.builds.order("created_at desc").first
       redirect_to BuildLink.new(build).path
-    elsif @project.builds.unscoped.empty?
+    elsif @project.builds.with_deleted.empty?
       build = BuildFromCommitFactory.new(
         BuildFromCommitFactory.most_recent_commit(@project)
       ).build
