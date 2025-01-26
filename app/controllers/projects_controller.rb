@@ -12,16 +12,17 @@ class ProjectsController < ApplicationController
   def show
     if @project.builds.any?
       build = @project.builds.order("created_at desc").first
-    elsif @project.unscoped.builds.empty?
+      redirect_to BuildLink.new(build).path
+    elsif @project.builds.unscoped.empty?
       build = BuildFromCommitFactory.new(
         BuildFromCommitFactory.most_recent_commit(@project)
       ).build
 
       build.project = @project
       build.save!
-    end
 
-    redirect_to BuildLink.new(build).path
+      redirect_to BuildLink.new(build).path
+    end
   end
 
   def new

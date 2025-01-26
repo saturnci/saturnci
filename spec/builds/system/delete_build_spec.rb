@@ -8,7 +8,7 @@ describe "Delete build", type: :system do
     login_as(user, scope: :user)
   end
 
-  context "job machine still exists on Digital Ocean" do
+  context "runner still exists on Digital Ocean" do
     before do
       stub_request(:delete, "https://api.digitalocean.com/v2/droplets/#{job.runner_id}").to_return(status: 200)
     end
