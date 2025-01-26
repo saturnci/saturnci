@@ -18,6 +18,11 @@
       </div>
 
       <div>
+        <%= link_to "Details",
+          github_account_path(github_account) %>
+      </div>
+
+      <div>
         <%= link_to "Remove Account",
           github_account_path(github_account),
           data: { turbo_method: :delete } %>
