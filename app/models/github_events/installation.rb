@@ -9,6 +9,7 @@ module GitHubEvents
         github_installation_id: @payload["installation"]["id"],
         github_app_installation_url: @payload["installation"]["html_url"],
         account_name: @payload["installation"]["account"]["login"],
+        installation_response_payload: @payload,
       )
     end
 

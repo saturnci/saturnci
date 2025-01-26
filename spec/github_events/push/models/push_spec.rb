@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "push" do
+describe "push" do
   let!(:payload) do
     {
       "ref": "refs/heads/main",
