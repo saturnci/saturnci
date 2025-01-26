@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_24_020028) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_26_144204) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -49,6 +49,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_24_020028) do
     t.string "account_name"
     t.datetime "deleted_at"
     t.string "github_app_installation_url"
+    t.jsonb "installation_response_payload"
     t.index ["user_id", "github_installation_id"], name: "index_saturn_installations_on_user_and_github_id", unique: true
     t.index ["user_id"], name: "index_github_accounts_on_user_id"
   end
