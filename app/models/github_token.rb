@@ -21,7 +21,7 @@ class GitHubToken
     payload = {
       iat: Time.now.to_i, # Issued-at time
       exp: Time.now.to_i + (10 * 60), # JWT expiration time
-      iss: ENV.fetch('GITHUB_APP_ID', nil)
+      iss: ENV["GITHUB_APP_ID"] # issuer, i.e. the SaturnCI app
     }
 
     jwt = JWT.encode(payload, private_key, 'RS256')

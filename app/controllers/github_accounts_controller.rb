@@ -9,7 +9,11 @@ class GitHubAccountsController < ApplicationController
 
   def destroy
     github_account = GitHubAccount.find(params[:id])
-    github_account.destroy!
+
+    ActiveRecord::Base.transaction do
+      github_account.octokit_client.delete_installation(github_account.github_installation_id)
+      github_account.destroy!
+    end
 
     redirect_to github_accounts_path
   end
