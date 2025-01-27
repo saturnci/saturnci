@@ -12,15 +12,17 @@
 
 # These inflection rules are supported but not enabled by default:
 ActiveSupport::Inflector.inflections(:en) do |inflect|
-  inflect.acronym "SaturnCI"
-  inflect.acronym "SaturnCICLI"
-  inflect.acronym "API"
-  inflect.acronym "AWS"
-  inflect.acronym "GitHub"
-  inflect.acronym "ANSI"
-  inflect.acronym "HTML"
-  inflect.acronym "SSH"
-  inflect.acronym "RSA"
-  inflect.acronym "CI"
-  inflect.acronym "CLI"
+  %w(
+    ANSI
+    API
+    AWS
+    CI
+    CLI
+    GitHub
+    HTML
+    RSA
+    SSH
+    SaturnCI
+    SaturnCICLI
+  ).each { |a| inflect.acronym a }
 end
