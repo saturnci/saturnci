@@ -16,6 +16,9 @@ class GeneralSettingsController < ApplicationController
   private
 
   def project_params
-    params.require(:project).permit(:start_builds_automatically_on_git_push)
+    params.require(:project).permit(
+      :start_builds_automatically_on_git_push,
+      :concurrency
+    )
   end
 end

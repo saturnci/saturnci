@@ -19,6 +19,12 @@
         </div>
 
         <br>
+        <%= form.label :concurrency %>
+        <div>
+          <%= form.number_field :concurrency, min: 1 %>
+        </div>
+
+        <br>
         <%= form.submit "Save" %>
       <% end %>
     </div>
