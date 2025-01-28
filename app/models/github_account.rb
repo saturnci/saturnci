@@ -10,4 +10,8 @@ class GitHubAccount < ApplicationRecord
   def octokit_client
     Octokit::Client.new(bearer_token: GitHubJWTToken.generate)
   end
+
+  def installation_access_octokit_client
+    Octokit::Client.new(bearer_token: GitHubToken.token(github_installation_id))
+  end
 end
