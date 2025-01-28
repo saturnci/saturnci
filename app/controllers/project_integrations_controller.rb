@@ -10,7 +10,7 @@ class ProjectIntegrationsController < ApplicationController
 
     begin
       page += 1
-      current_page_repositories = @github_account.octokit_client.get("/installation/repositories", page: page)
+      current_page_repositories = @github_account.installation_access_octokit_client.get("/installation/repositories", page: page)
       @repositories += current_page_repositories.repositories
     end while current_page_repositories.total_count > @repositories.size
   end
@@ -19,7 +19,7 @@ class ProjectIntegrationsController < ApplicationController
     @github_account = GitHubAccount.find(params[:github_account_id])
 
     repo_full_name = params[:repo_full_name]
-    repo = @github_account.octokit_client.repo(repo_full_name)
+    repo = @github_account.installation_access_octokit_client.get("/repos/#{repo_full_name}")
 
     project = current_user.projects.create!(
       github_account: @github_account,

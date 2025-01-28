@@ -2,6 +2,10 @@ require "jwt"
 
 class GitHubJWTToken
   def self.generate
+    # The private pem comes from the private key which can be generated at
+    # https://github.com/settings/apps/saturnci-development,
+    # https://github.com/settings/apps/saturnci-staging and
+    # https://github.com/settings/apps/saturnci (production)
     private_pem = Rails.configuration.github_private_pem
     private_key = OpenSSL::PKey::RSA.new(private_pem)
 

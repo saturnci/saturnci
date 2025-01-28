@@ -13,7 +13,7 @@ class BuildFromCommitFactory
   end
 
   def self.most_recent_commit(project)
-    client = project.github_account.octokit_client
+    client = project.github_account.installation_access_octokit_client
     client.commit(project.github_repo_full_name, "main")
   end
 end
