@@ -1,6 +1,5 @@
 class Build < ApplicationRecord
   acts_as_paranoid
-  NUMBER_OF_CONCURRENT_RUNS = 2
   belongs_to :project
   has_many :jobs
   has_many :runs
@@ -23,7 +22,7 @@ class Build < ApplicationRecord
   end
 
   def runs_to_use
-    NUMBER_OF_CONCURRENT_RUNS.times.map do |i|
+    project.concurrency.times.map do |i|
       Run.new(build: self, order_index: i + 1)
     end
   end
