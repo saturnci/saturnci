@@ -24,7 +24,7 @@ class RunnerScript
       export SATURNCI_API_USERNAME=#{ENV["SATURNCI_API_USERNAME"]}
       export SATURNCI_API_PASSWORD=#{ENV["SATURNCI_API_PASSWORD"]}
       export JOB_ORDER_INDEX=#{@run.order_index}
-      export NUMBER_OF_CONCURRENT_RUNS=#{Build::NUMBER_OF_CONCURRENT_RUNS}
+      export NUMBER_OF_CONCURRENT_RUNS=#{@run.build.project.concurrency}
       export COMMIT_HASH=#{@run.build.commit_hash}
       export RSPEC_SEED=#{@run.build.seed}
       export GITHUB_INSTALLATION_ID=#{@github_installation_id}
