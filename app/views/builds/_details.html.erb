@@ -13,7 +13,7 @@
       <li>
         <%= link_to run.name,
           run_path(run, current_tab_name),
-          class: run == @run ? "active" : "" %>
+          class: "#{run == @run ? "active" : ""} #{run.failed? ? "text-red" : ""}" %>
       </li>
     <% end %>
   </ul>
