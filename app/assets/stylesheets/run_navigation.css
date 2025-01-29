@@ -4,11 +4,8 @@
 }
 
 ul.run-menu {
-  display: flex;
   text-align: center;
   padding: 8px 0 0 10px;
-  margin: 0;
-  list-style: none;
 }
 
 ul.run-menu li {
@@ -18,18 +15,10 @@ ul.run-menu li {
 }
 
 ul.run-menu li a {
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
   background-color: #CCC;
   border-top: 2px solid #CCC;
   border-bottom: 2px solid #999;
-
-  padding: 7px 12px 6px 12px;
   margin: 0;
-  margin-right: 6px;
-  display: block;
-  text-decoration: none;
-  color: #444;
 }
 
 ul.run-menu li a.active {
