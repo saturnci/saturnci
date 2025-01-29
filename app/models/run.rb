@@ -19,7 +19,7 @@ class Run < ApplicationRecord
   end
 
   def name
-    "Run #{order_index}"
+    "Runner #{order_index}"
   end
 
   def start!
