@@ -1,6 +1,7 @@
 .run-details {
   overflow-y: auto;
   height: 100vh;
+  z-index: 100;
 }
 
 .terminal-masked, .terminal-masked span {
