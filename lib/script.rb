@@ -6,7 +6,7 @@ require "fileutils"
 require "open3"
 
 PROJECT_DIR = "/home/ubuntu/project"
-TEST_OUTPUT_FILENAME = "tmp/test_output.txt"
+RSPEC_DOCUMENTATION_OUTPUT_FILENAME = "tmp/rspec_documentation_output.txt"
 TEST_RESULTS_FILENAME = "tmp/test_results.txt"
 
 class Script
@@ -76,10 +76,10 @@ class Script
     end
 
     puts "Starting to stream test output"
-    File.open(TEST_OUTPUT_FILENAME, 'w') {}
+    File.open(RSPEC_DOCUMENTATION_OUTPUT_FILENAME, 'w') {}
 
     SaturnCIRunnerAPI::Stream.new(
-      TEST_OUTPUT_FILENAME,
+      RSPEC_DOCUMENTATION_OUTPUT_FILENAME,
       "runs/#{ENV["RUN_ID"]}/test_output"
     ).start
 
@@ -101,7 +101,7 @@ class Script
       docker_compose_configuration: docker_compose_configuration,
       test_files_string: test_files_string,
       rspec_seed: ENV["RSPEC_SEED"],
-      test_output_filename: TEST_OUTPUT_FILENAME
+      rspec_documentation_output_filename: RSPEC_DOCUMENTATION_OUTPUT_FILENAME
     ).to_s
     puts "Test run command: #{command}"
 

@@ -1,14 +1,14 @@
 module SaturnCIRunnerAPI
   class TestSuiteCommand
-    def initialize(docker_compose_configuration:, test_files_string:, rspec_seed:, test_output_filename:)
+    def initialize(docker_compose_configuration:, test_files_string:, rspec_seed:, rspec_documentation_output_filename:)
       @docker_compose_configuration = docker_compose_configuration
       @test_files_string = test_files_string
       @rspec_seed = rspec_seed
-      @test_output_filename = test_output_filename
+      @rspec_documentation_output_filename = rspec_documentation_output_filename
     end
 
     def to_s
-      "script -f #{@test_output_filename} -c \"sudo #{@docker_compose_configuration.script_env_vars} #{docker_compose_command.strip}\""
+      "script -f #{@rspec_documentation_output_filename} -c \"sudo #{@docker_compose_configuration.script_env_vars} #{docker_compose_command.strip}\""
     end
 
     def docker_compose_command
@@ -18,7 +18,14 @@ module SaturnCIRunnerAPI
     private
 
     def rspec_command
-      "bundle exec rspec --require ./example_status_persistence.rb --format=documentation --order rand:#{@rspec_seed} #{@test_files_string}"
+      [
+        "bundle exec rspec",
+        "--require ./example_status_persistence.rb",
+        "--format=documentation",
+        # "--format RspecJunitFormatter --out rspec_results.xml",
+        "--order rand:#{@rspec_seed}",
+        @test_files_string
+      ].join(' ')
     end
   end
 end
