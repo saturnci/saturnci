@@ -1,3 +1,13 @@
+<ul class="run-menu">
+  <% build.runs.each do |run| %>
+    <li>
+      <%= link_to run.name,
+        run_path(run, current_tab_name),
+        class: run == @run ? "active" : "" %>
+    </li>
+  <% end %>
+</ul>
+
 <div class="build-navigation">
   <% build_navigation(build, current_tab_name) do |nav| %>
     <%= nav.item "Test Output", "test_output" %>
@@ -5,18 +15,6 @@
     <%= nav.item "Test Report", "test_report" %>
     <%= nav.item "Events", "events" %>
   <% end %>
-</div>
-
-<div class="run-menu-container">
-  <ul class="run-menu">
-    <% build.runs.each do |run| %>
-      <li>
-        <%= link_to run.name,
-          run_path(run, current_tab_name),
-          class: run == @run ? "active" : "" %>
-      </li>
-    <% end %>
-  </ul>
 </div>
 
 <div class="run-details">
