@@ -20,6 +20,10 @@ ul.run-menu {
   list-style: none;
 }
 
+ul.run-menu li {
+  margin-right: 6px;
+}
+
 ul.run-menu li a {
   padding: 6px 12px;
   margin: 0;
