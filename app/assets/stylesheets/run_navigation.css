@@ -20,13 +20,12 @@ ul.run-menu {
   list-style: none;
 }
 
-ul.run-menu li {
-  margin-right: 6px;
-}
-
 ul.run-menu li a {
-  padding: 6px 12px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding: 7px 12px 6px 12px;
   margin: 0;
+  margin-right: 6px;
   display: block;
   text-decoration: none;
   color: #000;
