@@ -1,24 +1,15 @@
-.build-navigation {
-  display: flex;
+.build-menu {
   padding: 20px 0 0 10px;
   background-color: #EEE;
   border-top: 2px solid #999;
   border-bottom: 15px solid #000;
-  position: relative;
 }
 
-.build-navigation a {
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+.build-menu a {
   background-color: #BBB;
-  margin-right: 6px;
-  display: block;
-  padding: 7px 12px 6px 12px;
-  text-decoration: none;
-  color: #444;
 }
 
-.build-navigation a.active {
+.build-menu a.active {
   color: #FFF;
   background-color: #000;
 }

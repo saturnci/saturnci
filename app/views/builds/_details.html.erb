@@ -1,4 +1,4 @@
-<ul class="run-menu">
+<ul class="run-menu tab-menu">
   <% build.runs.each do |run| %>
     <li>
       <%= link_to run.name,
@@ -8,14 +8,14 @@
   <% end %>
 </ul>
 
-<div class="build-navigation">
+<ul class="build-menu tab-menu">
   <% build_navigation(build, current_tab_name) do |nav| %>
     <%= nav.item "Test Output", "test_output" %>
     <%= nav.item "System Logs", "system_logs" %>
     <%= nav.item "Test Report", "test_report" %>
     <%= nav.item "Events", "events" %>
   <% end %>
-</div>
+</ul>
 
 <div class="run-details">
   <div id="<%= run_output_stream.target %>">

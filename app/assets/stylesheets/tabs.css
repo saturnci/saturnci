@@ -1,0 +1,18 @@
+ul.tab-menu {
+  display: flex;
+  margin: 0;
+  list-style: none;
+}
+
+ul.tab-menu li {
+  margin-right: 6px;
+}
+
+ul.tab-menu li a {
+  color: #444;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding: 7px 12px 6px 12px;
+  display: block;
+  text-decoration: none;
+}
