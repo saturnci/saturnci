@@ -13,7 +13,7 @@ RSpec.describe SaturnCIRunnerAPI::TestSuiteCommand do
       docker_compose_configuration: docker_compose_configuration,
       test_files_string: "spec/models/github_token_spec.rb spec/rebuilds_spec.rb spec/sign_up_spec.rb spec/test_spec.rb",
       rspec_seed: "999",
-      test_output_filename: "tmp/test_output.txt"
+      rspec_documentation_output_filename: "tmp/test_output.txt"
     )
   end
 
