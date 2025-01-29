@@ -1,18 +1,21 @@
 .build-navigation {
   display: flex;
-  padding: 0;
+  padding: 20px 0 0 10px;
   background-color: #EEE;
-  border-top: 2px solid #888;
+  border-top: 2px solid #999;
   border-bottom: 15px solid #000;
-  padding-top: 20px;
   position: relative;
 }
 
 .build-navigation a {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  background-color: #CCC;
+  margin-right: 6px;
   display: block;
-  padding: 8px 12px;
+  padding: 7px 12px 6px 12px;
   text-decoration: none;
-  color: #000;
+  color: #444;
 }
 
 .build-navigation a.active {
