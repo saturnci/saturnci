@@ -1,15 +1,6 @@
 .run-menu-container {
   display: flex;
   padding: 0;
-  border-bottom: 15px solid #000;
-}
-
-.build-navigation a.active {
-  color: #000;
-}
-
-.run-menu-container, .build-navigation a.active {
-  background-color: #DDD;
 }
 
 ul.run-menu {
@@ -20,20 +11,34 @@ ul.run-menu {
   list-style: none;
 }
 
+ul.run-menu li {
+  position: relative;
+  top: 2px;
+  z-index: 10;
+}
+
 ul.run-menu li a {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
+  background-color: #DDD;
+  border-top: 2px solid #DDD;
+  border-bottom: 2px solid #888;
+
   padding: 7px 12px 6px 12px;
   margin: 0;
   margin-right: 6px;
   display: block;
   text-decoration: none;
   color: #000;
-  background-color: #AAA;
-  box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.5);
 }
 
 ul.run-menu li a.active {
-  color: #DDD;
-  background-color: #000;
+  border-top: 2px solid #888;
+  border-left: 2px solid #888;
+  border-right: 2px solid #888;
+  border-bottom: 2px solid #EEE;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: #000;
+  background-color: #EEE;
 }

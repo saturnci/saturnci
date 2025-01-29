@@ -1,7 +1,11 @@
 .build-navigation {
   display: flex;
   padding: 0;
-  background-color: #FFF;
+  background-color: #EEE;
+  border-top: 2px solid #888;
+  border-bottom: 15px solid #000;
+  padding-top: 20px;
+  position: relative;
 }
 
 .build-navigation a {
@@ -9,4 +13,9 @@
   padding: 8px 12px;
   text-decoration: none;
   color: #000;
+}
+
+.build-navigation a.active {
+  color: #FFF;
+  background-color: #000;
 }

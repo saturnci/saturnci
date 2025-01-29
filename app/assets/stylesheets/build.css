@@ -2,8 +2,10 @@
   flex: 1;
   min-height: 0;
   display: flex;
-  background-color: #000;
-  color: #EEE;
+}
+
+.build, .build-header {
+  background-color: #EEE;
 }
 
 .build a {
@@ -33,7 +35,6 @@
   flex-direction: row;
   justify-content: space-between;
   color: #000;
-  background-color: #FFF;
 }
 
 .build-header h2 {
