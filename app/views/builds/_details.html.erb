@@ -9,7 +9,7 @@
 </ul>
 
 <ul class="build-menu tab-menu">
-  <% build_navigation(build, current_tab_name) do |nav| %>
+  <% build_navigation(@run, current_tab_name) do |nav| %>
     <%= nav.item "Test Output", "test_output" %>
     <%= nav.item "System Logs", "system_logs" %>
     <%= nav.item "Test Report", "test_report" %>
