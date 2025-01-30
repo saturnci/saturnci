@@ -19,6 +19,7 @@ ul.run-menu li a {
   border-top: 2px solid #CCC;
   border-bottom: 2px solid #999;
   margin: 0;
+  padding: 6px 11px 6px 11px !important;
 }
 
 ul.run-menu li a.active {
@@ -26,8 +27,8 @@ ul.run-menu li a.active {
   border-left: 2px solid #999;
   border-right: 2px solid #999;
   border-bottom: 2px solid #EEE;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 9px !important;
+  padding-right: 9px !important;
   color: #000;
   background-color: #EEE;
 }
