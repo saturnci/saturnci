@@ -10,6 +10,8 @@ class ProjectsController < ApplicationController
   end
 
   def show
+    authorize @project
+
     if @project.builds.any?
       build = @project.builds.order("created_at desc").first
       redirect_to BuildLink.new(build).path
@@ -44,13 +46,12 @@ class ProjectsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_project
-      @project = Project.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def project_params
-      params.require(:project).permit(:name)
-    end
+  def set_project
+    @project = Project.find(params[:id])
+  end
+
+  def project_params
+    params.require(:project).permit(:name)
+  end
 end
