@@ -1,0 +1,7 @@
+test:
+  database: saturn_test
+  adapter: postgresql
+  encoding: unicode
+  username: <%= ENV.fetch("DATABASE_USERNAME") %>
+  host: <%= ENV.fetch("DATABASE_HOST") %>
+  port: <%= ENV.fetch("DATABASE_PORT") %>
