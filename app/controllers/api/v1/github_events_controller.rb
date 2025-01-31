@@ -2,7 +2,7 @@ module API
   module V1
     class GitHubEventsController < ApplicationController
       skip_before_action :verify_authenticity_token
-      skip_before_action :authenticate_user!
+      skip_before_action :authenticate_user_or_404!
 
       def create
         payload_raw = request.body.read
