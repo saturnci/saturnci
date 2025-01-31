@@ -6,7 +6,7 @@ describe "Branch filtering", type: :system do
   before do
     create(
       :build,
-      :with_job,
+      :with_run,
       project: project,
       branch_name: "main",
       commit_message: "Commit from 'main' branch"
@@ -14,14 +14,13 @@ describe "Branch filtering", type: :system do
 
     create(
       :build,
-      :with_job,
+      :with_run,
       project: project,
       branch_name: "filters",
       commit_message: "Commit from 'filter' branch"
     )
 
-    user = create(:user)
-    login_as(user, scope: :user)
+    login_as(project.user, scope: :user)
   end
 
   context "main branch is selected" do

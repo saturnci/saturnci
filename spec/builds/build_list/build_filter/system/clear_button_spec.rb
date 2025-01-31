@@ -7,7 +7,7 @@ describe "Clearing filter selections", type: :system do
     before do
       create(
         :build,
-        :with_passed_job,
+        :with_passed_run,
         project: project,
         branch_name: "main",
         commit_message: "Commit from 'main' branch"
@@ -15,14 +15,13 @@ describe "Clearing filter selections", type: :system do
 
       create(
         :build,
-        :with_passed_job,
+        :with_passed_run,
         project: project,
         branch_name: "filters",
         commit_message: "Commit from 'filter' branch"
       )
 
-      user = create(:user)
-      login_as(user, scope: :user)
+      login_as(project.user, scope: :user)
     end
 
     it "clears branch selection" do
@@ -48,7 +47,7 @@ describe "Clearing filter selections", type: :system do
     let!(:failed_build) do
       create(
         :build,
-        :with_failed_job,
+        :with_failed_run,
         cached_status: "Failed",
         commit_message: "This branch failed"
       )
@@ -57,7 +56,7 @@ describe "Clearing filter selections", type: :system do
     let!(:passed_build) do
       create(
         :build,
-        :with_passed_job,
+        :with_passed_run,
         cached_status: "Passed",
         project: failed_build.project,
         commit_message: "This branch passed"
@@ -65,8 +64,7 @@ describe "Clearing filter selections", type: :system do
     end
 
     before do
-      user = create(:user)
-      login_as(user, scope: :user)
+      login_as(failed_build.project.user, scope: :user)
     end
 
     it "clears status selection" do
