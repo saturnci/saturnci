@@ -1,6 +1,12 @@
 class GitHubAccountsController < ApplicationController
+  skip_before_action :authenticate_user_or_404!, only: :index
+
   def index
-    @github_accounts = current_user.github_accounts
+    if user_signed_in?
+      @github_accounts = current_user.github_accounts
+    else
+      redirect_to new_user_session_path
+    end
   end
 
   def show
