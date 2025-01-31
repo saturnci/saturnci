@@ -53,6 +53,9 @@ class Script
     puts "Pulling the existing image to avoid rebuilding if possible"
     system("sudo docker pull #{registry_cache_image_url} || true")
 
+    puts "Copying database.yml"
+    system("sudo cp .saturnci/database.yml config/database.yml")
+
     puts "Running pre.sh"
     client.post("runs/#{ENV["RUN_ID"]}/run_events", type: "pre_script_started")
     system("sudo chmod 755 .saturnci/pre.sh")
