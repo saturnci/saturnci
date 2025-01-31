@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
-  before_action :authenticate_user_or_404!
   include Pundit
+  before_action :authenticate_user_or_404!
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   private
