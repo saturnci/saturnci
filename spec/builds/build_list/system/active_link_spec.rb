@@ -4,11 +4,11 @@ describe "Active link", type: :system do
   let!(:project) { create(:project) }
 
   let!(:build_1) do
-    create(:build, :with_job, project: project)
+    create(:build, :with_run, project: project)
   end
 
   let!(:build_2) do
-    create(:build, :with_job, project: project)
+    create(:build, :with_run, project: project)
   end
 
   let!(:build_link_1) do
