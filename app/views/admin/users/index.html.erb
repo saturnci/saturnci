@@ -2,12 +2,14 @@
 
 <table border>
   <tr>
+    <th>Created</th>
     <th>Name</th>
     <th>Email</th>
     <th></th>
   </tr>
   <% @users.each do |user| %>
     <tr>
+      <td><%= user.created_at %></td>
       <td><%= user.name %></td>
       <td><%= user.email %></td>
       <td>
