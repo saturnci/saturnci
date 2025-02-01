@@ -19,7 +19,7 @@ describe "Visiting different tab", type: :system do
         visit run_path(run, "test_output")
 
         http_request(
-          api_authorization_headers: api_authorization_headers,
+          api_authorization_headers: api_authorization_headers(run.build),
           path: api_v1_run_system_logs_path(run_id: run.id, format: :json),
           body: "new system log content"
         )

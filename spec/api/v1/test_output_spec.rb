@@ -9,7 +9,7 @@ RSpec.describe "test output", type: :request do
       post(
         api_v1_run_test_output_path(run_id: run.id),
         params: Base64.encode64("test output content"),
-        headers: api_authorization_headers.merge({ "CONTENT_TYPE" => "text/plain" })
+        headers: api_authorization_headers(run.build).merge({ "CONTENT_TYPE" => "text/plain" })
       )
 
       expect(run.reload.test_output).to eq("test output content")
@@ -21,13 +21,13 @@ RSpec.describe "test output", type: :request do
       post(
         api_v1_run_test_output_path(run_id: run.id),
         params: Base64.encode64("first chunk "),
-        headers: api_authorization_headers.merge({ "CONTENT_TYPE" => "text/plain" })
+        headers: api_authorization_headers(run.build).merge({ "CONTENT_TYPE" => "text/plain" })
       )
 
       post(
         api_v1_run_test_output_path(run_id: run.id),
         params: Base64.encode64("second chunk"),
-        headers: api_authorization_headers.merge({ "CONTENT_TYPE" => "text/plain" })
+        headers: api_authorization_headers(run.build).merge({ "CONTENT_TYPE" => "text/plain" })
       )
 
       expect(run.reload.test_output).to eq("first chunk second chunk")

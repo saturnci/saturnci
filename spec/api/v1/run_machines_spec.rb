@@ -15,7 +15,7 @@ RSpec.describe "runners", type: :request do
     it "returns an empty 200 response" do
       delete(
         api_v1_run_runner_path(run),
-        headers: api_authorization_headers
+        headers: api_authorization_headers(run.build)
       )
       expect(response).to have_http_status(200)
       expect(response.body).to be_empty

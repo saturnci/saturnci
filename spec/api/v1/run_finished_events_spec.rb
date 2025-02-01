@@ -9,7 +9,7 @@ RSpec.describe "run finished events", type: :request do
       expect {
         post(
           api_v1_run_run_finished_events_path(run),
-          headers: api_authorization_headers
+          headers: api_authorization_headers(run.build)
         )
       }.to change(RunEvent, :count).by(1)
     end
@@ -17,7 +17,7 @@ RSpec.describe "run finished events", type: :request do
     it "returns an empty 200 response" do
       post(
         api_v1_run_run_finished_events_path(run),
-        headers: api_authorization_headers
+        headers: api_authorization_headers(run.build)
       )
       expect(response).to have_http_status(200)
       expect(response.body).to be_empty
@@ -27,7 +27,7 @@ RSpec.describe "run finished events", type: :request do
       expect {
         post(
           api_v1_run_run_finished_events_path(run),
-          headers: api_authorization_headers
+          headers: api_authorization_headers(run.build)
         )
       }.to change { run.reload.charge.present? }.from(false).to(true)
     end

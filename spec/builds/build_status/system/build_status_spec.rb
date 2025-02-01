@@ -17,7 +17,7 @@ describe "Build status", type: :system do
         expect(page).to have_content("Running")
 
         http_request(
-          api_authorization_headers: api_authorization_headers,
+          api_authorization_headers: api_authorization_headers(run.build),
           path: api_v1_run_run_finished_events_path(run)
         )
 
@@ -31,7 +31,7 @@ describe "Build status", type: :system do
         expect(page).to have_content("Running")
 
         http_request(
-          api_authorization_headers: api_authorization_headers,
+                                                               api_authorization_headers: api_authorization_headers(run.build),
           path: api_v1_run_run_finished_events_path(run)
         )
 
@@ -53,7 +53,7 @@ describe "Build status", type: :system do
         expect(page).to have_content("Running", count: 2)
 
         http_request(
-          api_authorization_headers: api_authorization_headers,
+                                                               api_authorization_headers: api_authorization_headers(run.build),
           path: api_v1_run_run_finished_events_path(other_run)
         )
 
@@ -91,7 +91,7 @@ describe "Build status", type: :system do
         expect(page).not_to have_content("3m 40s")
 
         http_request(
-          api_authorization_headers: api_authorization_headers,
+                                                               api_authorization_headers: api_authorization_headers(run.build),
           path: api_v1_run_run_finished_events_path(run)
         )
 
