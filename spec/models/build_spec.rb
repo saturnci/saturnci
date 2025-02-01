@@ -1,6 +1,10 @@
 require "rails_helper"
 
 RSpec.describe Build, type: :model do
+  it "gets an API token" do
+    expect(create(:build).api_token).to be_present
+  end
+
   describe "#duration" do
     let!(:build) { create(:build) }
 

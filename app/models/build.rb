@@ -3,6 +3,7 @@ class Build < ApplicationRecord
   belongs_to :project
   has_many :jobs
   has_many :runs
+  has_secure_token :api_token
 
   after_initialize do
     self.seed ||= rand(10000)
