@@ -10,11 +10,13 @@ RSpec.describe "runs", type: :request do
     )
   end
 
+  let!(:user) { run.build.project.user }
+
   describe "GET /api/v1/jobs" do
     it "returns a 200 response" do
       get(
         api_v1_jobs_path,
-        headers: api_authorization_headers
+        headers: api_authorization_headers(user)
       )
       expect(response).to have_http_status(200)
     end
@@ -22,7 +24,7 @@ RSpec.describe "runs", type: :request do
     it "returns a list of runs" do
       get(
         api_v1_jobs_path,
-        headers: api_authorization_headers
+        headers: api_authorization_headers(user)
       )
 
       response_body = JSON.parse(response.body)
@@ -32,7 +34,7 @@ RSpec.describe "runs", type: :request do
     it "includes build status" do
       get(
         api_v1_jobs_path,
-        headers: api_authorization_headers
+        headers: api_authorization_headers(user)
       )
 
       response_body = JSON.parse(response.body)
@@ -42,7 +44,7 @@ RSpec.describe "runs", type: :request do
     it "includes build id" do
       get(
         api_v1_jobs_path,
-        headers: api_authorization_headers
+        headers: api_authorization_headers(user)
       )
 
       response_body = JSON.parse(response.body)
@@ -52,7 +54,7 @@ RSpec.describe "runs", type: :request do
     it "includes commit message" do
       get(
         api_v1_jobs_path,
-        headers: api_authorization_headers
+        headers: api_authorization_headers(user)
       )
 
       response_body = JSON.parse(response.body)

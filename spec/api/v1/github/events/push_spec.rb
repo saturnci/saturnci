@@ -42,7 +42,7 @@ RSpec.describe "Push", type: :request do
     end
 
     let(:headers) do
-      api_authorization_headers.merge('CONTENT_TYPE' => 'application/json')
+      api_authorization_headers(project.user).merge('CONTENT_TYPE' => 'application/json')
     end
 
     it "returns 200" do

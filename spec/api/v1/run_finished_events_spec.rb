@@ -4,12 +4,13 @@ include APIAuthenticationHelper
 RSpec.describe "run finished events", type: :request do
   describe "POST /api/v1/runs/:id/run_finished_events" do
     let!(:run) { create(:run) }
+    let!(:user) { run.build.project.user }
 
     it "increases the count of run events by 1" do
       expect {
         post(
           api_v1_run_run_finished_events_path(run),
-          headers: api_authorization_headers
+          headers: api_authorization_headers(user)
         )
       }.to change(RunEvent, :count).by(1)
     end
@@ -17,7 +18,7 @@ RSpec.describe "run finished events", type: :request do
     it "returns an empty 200 response" do
       post(
         api_v1_run_run_finished_events_path(run),
-        headers: api_authorization_headers
+        headers: api_authorization_headers(user)
       )
       expect(response).to have_http_status(200)
       expect(response.body).to be_empty
@@ -27,7 +28,7 @@ RSpec.describe "run finished events", type: :request do
       expect {
         post(
           api_v1_run_run_finished_events_path(run),
-          headers: api_authorization_headers
+          headers: api_authorization_headers(user)
         )
       }.to change { run.reload.charge.present? }.from(false).to(true)
     end

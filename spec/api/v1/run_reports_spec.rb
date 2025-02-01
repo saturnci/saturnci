@@ -9,7 +9,7 @@ RSpec.describe "test reports", type: :request do
       post(
         api_v1_run_test_reports_path(run_id: run.id),
         params: "test report content",
-        headers: api_authorization_headers.merge({ "CONTENT_TYPE" => "text/plain" })
+        headers: api_authorization_headers(run.build.project.user).merge({ "CONTENT_TYPE" => "text/plain" })
       )
 
       expect(run.reload.test_report).to eq("test report content")
