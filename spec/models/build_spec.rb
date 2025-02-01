@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Build, type: :model do
+describe Build, type: :model do
   describe "#duration" do
     let!(:build) { create(:build) }
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_01_142001) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_01_170609) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -28,6 +28,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_01_142001) do
     t.integer "seed", null: false
     t.string "cached_status"
     t.datetime "deleted_at"
+    t.string "api_token"
     t.index ["project_id"], name: "index_builds_on_project_id"
   end
 
@@ -107,7 +108,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_01_142001) do
     t.integer "exit_code"
     t.string "snapshot_image_id"
     t.datetime "deleted_at"
-    t.string "api_token"
     t.index ["build_id", "order_index"], name: "index_runs_on_build_id_and_order_index", unique: true
     t.index ["build_id"], name: "index_runs_on_build_id"
     t.index ["runner_id"], name: "index_runs_on_runner_id", unique: true
@@ -140,6 +140,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_01_142001) do
     t.string "uid"
     t.boolean "super_admin", default: false
     t.datetime "deleted_at"
+    t.string "api_token"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
