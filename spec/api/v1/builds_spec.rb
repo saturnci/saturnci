@@ -6,11 +6,13 @@ RSpec.describe "builds", type: :request do
     create(:build, created_at: "2020-01-01T01:00:00")
   end
 
+  let!(:user) { build.project.user }
+
   describe "GET /api/v1/builds" do
     it "returns a 200 response" do
       get(
         api_v1_builds_path,
-        headers: api_authorization_headers
+        headers: api_authorization_headers(user)
       )
       expect(response).to have_http_status(200)
     end
@@ -18,7 +20,7 @@ RSpec.describe "builds", type: :request do
     it "returns a list of builds" do
       get(
         api_v1_builds_path,
-        headers: api_authorization_headers
+        headers: api_authorization_headers(user)
       )
 
       response_body = JSON.parse(response.body)
@@ -28,7 +30,7 @@ RSpec.describe "builds", type: :request do
     it "includes status" do
       get(
         api_v1_builds_path,
-        headers: api_authorization_headers
+        headers: api_authorization_headers(user)
       )
 
       response_body = JSON.parse(response.body)

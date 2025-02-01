@@ -1,8 +1,6 @@
 module APIAuthenticationHelper
-  def api_authorization_headers
-    username = ENV["SATURNCI_API_USERNAME"]
-    password = ENV["SATURNCI_API_PASSWORD"]
-    encoded_credentials = ActionController::HttpAuthentication::Basic.encode_credentials(username, password)
+  def api_authorization_headers(user)
+    encoded_credentials = ActionController::HttpAuthentication::Basic.encode_credentials(user.id, user.api_token)
     { "Authorization" => encoded_credentials }
   end
 end

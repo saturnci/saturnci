@@ -3,13 +3,14 @@ include APIAuthenticationHelper
 
 RSpec.describe "test output", type: :request do
   let!(:run) { create(:run) }
+  let!(:user) { run.build.project.user }
 
   describe "POST /api/v1/runs/:id/test_output" do
     it "adds test output to a run" do
       post(
         api_v1_run_test_output_path(run_id: run.id),
         params: Base64.encode64("test output content"),
-        headers: api_authorization_headers.merge({ "CONTENT_TYPE" => "text/plain" })
+        headers: api_authorization_headers(user).merge({ "CONTENT_TYPE" => "text/plain" })
       )
 
       expect(run.reload.test_output).to eq("test output content")
@@ -21,13 +22,13 @@ RSpec.describe "test output", type: :request do
       post(
         api_v1_run_test_output_path(run_id: run.id),
         params: Base64.encode64("first chunk "),
-        headers: api_authorization_headers.merge({ "CONTENT_TYPE" => "text/plain" })
+        headers: api_authorization_headers(user).merge({ "CONTENT_TYPE" => "text/plain" })
       )
 
       post(
         api_v1_run_test_output_path(run_id: run.id),
         params: Base64.encode64("second chunk"),
-        headers: api_authorization_headers.merge({ "CONTENT_TYPE" => "text/plain" })
+        headers: api_authorization_headers(user).merge({ "CONTENT_TYPE" => "text/plain" })
       )
 
       expect(run.reload.test_output).to eq("first chunk second chunk")

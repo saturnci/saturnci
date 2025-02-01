@@ -2,6 +2,7 @@ class User < ApplicationRecord
   acts_as_paranoid
   has_many :projects
   has_many :github_accounts
+  has_secure_token :api_token
 
   devise(
     :database_authenticatable,

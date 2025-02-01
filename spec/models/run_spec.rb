@@ -9,10 +9,6 @@ RSpec.describe Run, type: :model do
     allow(fake_runner_request).to receive(:execute!)
   end
 
-  it "gets an API token" do
-    expect(run.api_token).to be_present
-  end
-
   describe "#start!" do
     it "creates a new run_event with type runner_requested" do
       expect { run.start! }

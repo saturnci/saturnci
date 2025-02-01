@@ -3,13 +3,15 @@ include APIAuthenticationHelper
 
 RSpec.describe "debug messages", type: :request do
   describe "POST /api/v1/debug_messages" do
+    let!(:user) { create(:user) }
+
     it "logs the message" do
       allow(Rails.logger).to receive(:info)
 
       post(
         api_v1_debug_messages_path,
         params: "answer: 42",
-        headers: api_authorization_headers.merge("CONTENT_TYPE" => "text/plain")
+        headers: api_authorization_headers(user).merge("CONTENT_TYPE" => "text/plain")
       )
 
       expect(Rails.logger).to have_received(:info).with("answer: 42")
