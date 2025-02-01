@@ -1,7 +1,6 @@
 class Run < ApplicationRecord
   acts_as_paranoid
   self.table_name = "runs"
-  has_secure_token :api_token
   belongs_to :build, touch: true
   has_many :run_events, dependent: :destroy
   has_one :charge, foreign_key: "run_id"
