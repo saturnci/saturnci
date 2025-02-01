@@ -69,7 +69,7 @@ class Build < ApplicationRecord
 
   def broadcast
     broadcast_prepend_to(
-      "builds",
+      [project.user, "builds"],
       target: "build-list",
       partial: "builds/build_list_item",
       locals: { build: self, active_build: nil }
