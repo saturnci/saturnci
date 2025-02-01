@@ -7,6 +7,8 @@ describe "Staying on system log tab", type: :system do
     create(:run, system_logs: "original system log content")
   end
 
+  let!(:user) { run.build.project.user }
+
   before do
     login_as(run.build.project.user, scope: :user)
     visit run_path(run, "system_logs")
@@ -22,7 +24,7 @@ describe "Staying on system log tab", type: :system do
     context "after the first log update occurs" do
       before do
         http_request(
-          api_authorization_headers: api_authorization_headers,
+          api_authorization_headers: api_authorization_headers(user),
           path: api_v1_run_system_logs_path(run_id: run.id, format: :json),
           body: Base64.encode64("new system log content")
         )
@@ -39,7 +41,7 @@ describe "Staying on system log tab", type: :system do
       context "after a second log update occurs" do
         before do
           http_request(
-            api_authorization_headers: api_authorization_headers,
+            api_authorization_headers: api_authorization_headers(user),
             path: api_v1_run_system_logs_path(run_id: run.id, format: :json),
             body: Base64.encode64("second system log update")
           )

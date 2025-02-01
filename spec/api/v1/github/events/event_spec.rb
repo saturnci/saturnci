@@ -3,8 +3,8 @@ include APIAuthenticationHelper
 
 RSpec.describe "GitHub Events", type: :request do
   describe "installation event" do
-    before do
-      user = create(:user, uid: "55555", provider: "github")
+    let!(:user) do
+      create(:user, uid: "55555", provider: "github")
     end
 
     let!(:payload) do
@@ -27,7 +27,7 @@ RSpec.describe "GitHub Events", type: :request do
         post(
           "/api/v1/github_events",
           params: payload,
-          headers: api_authorization_headers.merge('CONTENT_TYPE' => 'application/json')
+          headers: api_authorization_headers(user).merge('CONTENT_TYPE' => 'application/json')
         )
       }.to change { GitHubAccount.count }.by(1)
     end
@@ -56,12 +56,14 @@ RSpec.describe "GitHub Events", type: :request do
       }.to_json
     end
 
+    let!(:user) { create(:user) }
+
     it "creates a GitHubEvent" do
       expect {
         post(
           "/api/v1/github_events",
           params: payload,
-          headers: api_authorization_headers.merge('CONTENT_TYPE' => 'application/json')
+          headers: api_authorization_headers(user).merge('CONTENT_TYPE' => 'application/json')
         )
       }.to change { GitHubEvent.count }.by(1)
     end

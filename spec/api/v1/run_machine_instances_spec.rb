@@ -2,6 +2,8 @@ require "rails_helper"
 include APIAuthenticationHelper
 
 RSpec.describe "job machine instances", type: :request do
+  let!(:user) { create(:user) }
+
   describe "PUT /api/v1/job_machine_images/:id" do
     before do
       # This stub corresponds to the snapshot request
@@ -20,7 +22,7 @@ RSpec.describe "job machine instances", type: :request do
     it "returns an empty 200 response" do
       put(
         api_v1_job_machine_image_path(id: "123456"),
-        headers: api_authorization_headers
+        headers: api_authorization_headers(user)
       )
 
       expect(response).to have_http_status(200)
