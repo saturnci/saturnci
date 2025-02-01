@@ -3,6 +3,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def github
     @user = User.from_omniauth(request.env["omniauth.auth"])
+    Rails.logger.info "GitHub auth: #{request.env["omniauth.auth"].inspect}"
 
     if @user.persisted?
       session[:github_oauth_token] = request.env["omniauth.auth"].credentials.token
