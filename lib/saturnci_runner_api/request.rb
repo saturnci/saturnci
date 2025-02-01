@@ -23,7 +23,7 @@ module SaturnCIRunnerAPI
         r = Net::HTTP::Delete.new(url)
       end
 
-      r.basic_auth(ENV["SATURNCI_API_USERNAME"], ENV["SATURNCI_API_PASSWORD"])
+      r.basic_auth(ENV["USER_ID"], ENV["USER_API_TOKEN"])
       r["Content-Type"] = "application/json"
       r.body = @payload.to_json if @payload
       r

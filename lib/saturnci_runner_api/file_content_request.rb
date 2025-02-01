@@ -9,7 +9,7 @@ module SaturnCIRunnerAPI
 
     def execute
       command = <<~COMMAND
-        curl -s -f -u #{ENV["SATURNCI_API_USERNAME"]}:#{ENV["SATURNCI_API_PASSWORD"]} \
+        curl -s -f -u #{ENV["USER_ID"]}:#{ENV["USER_API_TOKEN"]} \
             -X POST \
             -H "Content-Type: #{@content_type}" \
             --data-binary "@#{@file_path}" #{url}
