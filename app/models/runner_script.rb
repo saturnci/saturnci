@@ -21,8 +21,8 @@ class RunnerScript
       #!/usr/bin/bash
       export HOST=#{ENV["SATURNCI_HOST"]}
       export RUN_ID=#{@run.id}
-      export USER_ID=#{@run.user_id}
-      export USER_API_TOKEN=#{@run.user.api_token}
+      export USER_ID=#{@run.build.project.user.id}
+      export USER_API_TOKEN=#{@run.build.project.user.api_token}
       export JOB_ORDER_INDEX=#{@run.order_index}
       export NUMBER_OF_CONCURRENT_RUNS=#{@run.build.project.concurrency}
       export COMMIT_HASH=#{@run.build.commit_hash}
