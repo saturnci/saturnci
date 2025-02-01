@@ -5,6 +5,8 @@ module API
       skip_before_action :authenticate_user_or_404!
 
       def create
+        skip_authorization
+
         payload_raw = request.body.read
         payload = JSON.parse(payload_raw)
         Rails.logger.info "GitHub webhook payload: #{payload.inspect}"
