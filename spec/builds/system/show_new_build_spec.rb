@@ -16,6 +16,14 @@ describe "Show new build", type: :system do
     end
   end
 
+  context "a different user's build" do
+    it "does not show the new build" do
+      new_build = create(:build, project: create(:project))
+      new_build.broadcast
+      expect(page).not_to have_content(new_build.commit_hash)
+    end
+  end
+
   context "build gets not just created but started" do
     let!(:new_build) { create(:build, project: build.project) }
     let!(:run) { create(:run, build: new_build) }

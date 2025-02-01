@@ -18,4 +18,4 @@
   <% end %>
 </div>
 
-<%= turbo_stream_from "builds" %>
+<%= turbo_stream_from [current_user, "builds"] %>
