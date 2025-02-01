@@ -5,6 +5,7 @@
     <th>Created</th>
     <th>Name</th>
     <th>Email</th>
+    <th>Projects</th>
     <th></th>
   </tr>
   <% @users.each do |user| %>
@@ -12,6 +13,7 @@
       <td><%= user.created_at %></td>
       <td><%= user.name %></td>
       <td><%= user.email %></td>
+      <td class="number"><%= user.projects.count %></td>
       <td>
         <%= link_to "Become",
           admin_user_impersonations_path(user_id: user.id),
