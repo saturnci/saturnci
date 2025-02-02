@@ -3,6 +3,42 @@ require_relative "../helpers/authentication_helper"
 require_relative "../helpers/api_helper"
 
 describe "client" do
+  describe "run" do
+    let!(:client) do
+      SaturnCICLI::Client.new(username: "foo", password: "bar")
+    end
+
+    before do
+      AuthenticationHelper.stub_authentication_request
+
+      run_details = {
+        "id" => "3efa1a7e",
+        "build_id" => "7b9c2d3f",
+        "created_at" => "2024-02-28 16:00:00",
+        "status" => "Passed",
+        "build_commit_message" => "Fix bug",
+        "duration" => "5m 30s"
+      }
+
+      APIHelper.stub_body("api/v1/runs/3efa1a7e", run_details)
+    end
+
+    it "shows the run" do
+      expected_output = <<~OUTPUT
+      id: 3efa1a7e
+      build_id: 7b9c2d3f
+      created_at: 2024-02-28 16:00:00
+      status: Passed
+      build_commit_message: Fix bug
+      duration: 5m 30s
+      OUTPUT
+
+      expect {
+        client.execute("run 3efa1a7e")
+      }.to output(expected_output).to_stdout
+    end
+  end
+
   describe "runs" do
     before do
       AuthenticationHelper.stub_authentication_request
@@ -42,10 +78,7 @@ describe "client" do
     end
 
     let!(:client) do
-      SaturnCICLI::Client.new(
-        username: ENV["SATURNCI_API_USERNAME"],
-        password: ENV["SATURNCI_API_PASSWORD"]
-      )
+      SaturnCICLI::Client.new(username: "foo", password: "bar")
     end
 
     it "shows runs" do
