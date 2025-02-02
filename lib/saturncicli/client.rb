@@ -15,7 +15,6 @@ module SaturnCICLI
       @username = username
       @password = password
       @host = host
-      builds
     end
 
     def execute(argument)
