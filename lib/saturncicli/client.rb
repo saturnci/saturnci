@@ -24,6 +24,9 @@ module SaturnCICLI
         ssh(run_id)
       when "runs"
         runs
+      when /run\s+/
+        run_id = argument.split(" ")[1]
+        run(run_id)
       when "builds"
         builds
       when nil
@@ -59,6 +62,15 @@ module SaturnCICLI
         items: runs,
         options: options
       )
+    end
+
+    def run(run_id)
+      response = request("runs/#{run_id}")
+      run_attrs = JSON.parse(response.body)
+
+      run_attrs.each do |key, value|
+        puts "#{key}: #{value}"
+      end
     end
 
     def ssh(run_id)
