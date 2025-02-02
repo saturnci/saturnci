@@ -6,10 +6,9 @@ class Run < ApplicationRecord
   has_one :charge, foreign_key: "run_id"
 
   alias_attribute :started_at, :created_at
-  default_scope -> { order("order_index") }
 
   scope :running, -> do
-    where(exit_code: nil).order("created_at desc")
+    joins(:build).where(exit_code: nil).order("builds.created_at desc, runs.order_index asc")
   end
 
   scope :finished, -> do
