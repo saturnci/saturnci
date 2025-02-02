@@ -38,5 +38,38 @@ RSpec.describe "run", type: :request do
       response_body = JSON.parse(response.body)
       expect(response_body["id"]).to eq(run.id)
     end
+
+    context "RSA key file does not exist" do
+      it "returns an empty RSA key" do
+        get(
+          api_v1_run_path(run.id),
+          headers: api_authorization_headers(user)
+        )
+        response_body = JSON.parse(response.body)
+        expect(response_body["rsa_key"]).to be_blank
+      end
+    end
+
+    context "RSA key file exists" do
+      around do |example|
+        tempfile = Tempfile.new("rsa_key")
+        tempfile.write("abc123")
+        tempfile.close
+        run.update!(runner_rsa_key_path: tempfile.path)
+
+        example.run
+
+        tempfile.unlink
+      end
+
+      it "returns the RSA key" do
+        get(
+          api_v1_run_path(run.id),
+          headers: api_authorization_headers(user)
+        )
+        response_body = JSON.parse(response.body)
+        expect(response_body["rsa_key"]).to eq("abc123")
+      end
+    end
   end
 end
