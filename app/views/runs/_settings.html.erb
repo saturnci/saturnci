@@ -1,0 +1,13 @@
+<div class="non-terminal-run-info">
+  <%= flash[:notice] %>
+
+  <%= form_with(model: @run, url: run_run_settings_path(@run), method: :patch, local: true) do |form| %>
+    <div>
+      <%= form.label :terminate_on_completion, "Terminate runner once run is complete" %>
+      <%= form.check_box :terminate_on_completion %>
+    </div>
+    <div>
+      <%= form.submit "Save" %>
+    </div>
+  <% end %>
+</div>

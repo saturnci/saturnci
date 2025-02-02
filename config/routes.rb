@@ -12,6 +12,10 @@ Rails.application.routes.draw do
   get "runs/:id/:partial", to: "runs#show", as: "run"
   get "builds/:id(/:partial)", to: "builds#show", as: "build"
 
+  resources :runs, only: [] do
+    resource :run_settings, only: %i(update)
+  end
+
   resources :projects do
     resource :settings do
       resource :general_settings, only: %i(show update)

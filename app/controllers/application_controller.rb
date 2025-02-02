@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  include Pundit
+  include Pundit::Authorization
   before_action :authenticate_user_or_404!, unless: :devise_controller?
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
