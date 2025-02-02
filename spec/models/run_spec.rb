@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Run, type: :model do
+describe Run, type: :model do
   let!(:run) { create(:run) }
 
   before do
