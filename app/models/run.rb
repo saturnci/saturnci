@@ -9,7 +9,7 @@ class Run < ApplicationRecord
   default_scope -> { order("order_index") }
 
   scope :running, -> do
-    unscoped.joins(:build)
+    joins(:build)
       .where.not(id: Run.finished.select(:id))
       .order("builds.created_at DESC")
   end
