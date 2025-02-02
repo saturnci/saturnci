@@ -6,16 +6,13 @@ class Run < ApplicationRecord
   has_one :charge, foreign_key: "run_id"
 
   alias_attribute :started_at, :created_at
-  default_scope -> { order("order_index") }
 
   scope :running, -> do
-    unscoped.joins(:build)
-      .where.not(id: Run.finished.select(:id))
-      .order("builds.created_at DESC")
+    joins(:build).where(exit_code: nil).order("builds.created_at desc, runs.order_index asc")
   end
 
   scope :finished, -> do
-    where.not(exit_code: nil)
+    where.not(id: Run.running.select(:id))
   end
 
   def name

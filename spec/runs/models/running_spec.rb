@@ -1,34 +1,34 @@
 require "rails_helper"
 
-RSpec.describe Job, type: :model do
+describe Run, type: :model do
   describe "#running" do
-    let!(:running_job) do
-      create(:job, exit_code: nil)
+    let!(:running_run) do
+      create(:run, exit_code: nil)
     end
 
-    let!(:finished_job) do
-      create(:job, exit_code: 0)
+    let!(:finished_run) do
+      create(:run, exit_code: 0)
     end
 
-    it "by default includes the running job" do
-      expect(Job.running).to include(running_job)
+    it "by default includes the running run" do
+      expect(Run.running).to include(running_run)
     end
 
-    it "by default does not include the finished job" do
-      expect(Job.running).not_to include(finished_job)
+    it "by default does not include the finished run" do
+      expect(Run.running).not_to include(finished_run)
     end
   end
 
   context "two builds" do
     let!(:build_1) { create(:build) }
-    let!(:build_2) { create(:build) }
+    let!(:build_2) { create(:build, created_at: build_1.created_at + 1.minute) }
 
     before do
-      create(:job, build: build_1, order_index: 1)
-      create(:job, build: build_1, order_index: 2)
+      create(:run, build: build_1, order_index: 1)
+      create(:run, build: build_1, order_index: 2)
 
-      create(:job, build: build_2, order_index: 1)
-      create(:job, build: build_2, order_index: 2)
+      create(:run, build: build_2, order_index: 1)
+      create(:run, build: build_2, order_index: 2)
     end
 
     it "groups by build" do
@@ -39,7 +39,7 @@ RSpec.describe Job, type: :model do
         build_1.id,
       ]
 
-      expect(Job.running.map(&:build_id)).to eq(expected_ids)
+      expect(Run.running.map(&:build_id)).to eq(expected_ids)
     end
   end
 end
