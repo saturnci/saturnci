@@ -1,12 +1,10 @@
-# frozen_string_literal: true
-
-require 'jwt'
-require 'octokit'
+require "jwt"
+require "octokit"
 
 # Maybe this should be called GitHubInstallationAccessToken
 class GitHubToken
   def self.generate(github_installation_id)
-    fail 'Installation ID is missing' if github_installation_id.blank?
+    fail "Installation ID is missing" if github_installation_id.blank?
 
     token(github_installation_id)
   end

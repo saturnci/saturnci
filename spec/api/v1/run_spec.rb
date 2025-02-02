@@ -14,7 +14,7 @@ RSpec.describe "run", type: :request do
       extend ApplicationHelper
 
       get(
-        api_v1_job_path(abbreviated_hash(run.id)),
+        api_v1_run_path(abbreviated_hash(run.id)),
         headers: api_authorization_headers(user)
       )
       expect(response).to have_http_status(200)
@@ -24,7 +24,7 @@ RSpec.describe "run", type: :request do
   describe "GET /api/v1/run/:id" do
     it "returns a 200 response" do
       get(
-        api_v1_job_path(run.id),
+        api_v1_run_path(run.id),
         headers: api_authorization_headers(user)
       )
       expect(response).to have_http_status(200)
@@ -32,7 +32,7 @@ RSpec.describe "run", type: :request do
 
     it "includes the id" do
       get(
-        api_v1_job_path(run.id),
+        api_v1_run_path(run.id),
         headers: api_authorization_headers(user)
       )
       response_body = JSON.parse(response.body)

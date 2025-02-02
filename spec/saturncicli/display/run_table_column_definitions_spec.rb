@@ -1,9 +1,9 @@
-require_relative "../../../lib/saturncicli/display/job_table_column_definitions"
+require_relative "../../../lib/saturncicli/display/run_table_column_definitions"
 
 describe "definitions" do
   describe "#define_columns" do
     let!(:definitions) do
-      SaturnCICLI::Display::JobTableColumnDefinitions.new
+      SaturnCICLI::Display::RunTableColumnDefinitions.new
     end
 
     it "sets the key of the first column to build_id" do
