@@ -15,6 +15,7 @@ module SaturnCICLI
       @username = username
       @password = password
       @host = host
+      builds
     end
 
     def execute(argument)
@@ -35,6 +36,12 @@ module SaturnCICLI
 
     def builds(options = {})
       response = request("builds")
+
+      if response.code == "500"
+        puts "500 Internal Server Error"
+        return
+      end
+
       builds = JSON.parse(response.body)
 
       puts Display::Table.new(
