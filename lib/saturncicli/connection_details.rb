@@ -8,16 +8,16 @@ module SaturnCICLI
 
     def refresh
       response = @request.call
-      @job = JSON.parse(response.body)
+      @run = JSON.parse(response.body)
       self
     end
 
     def ip_address
-      @job["ip_address"]
+      @run["ip_address"]
     end
 
     def rsa_key_path
-      @job["runner_rsa_key_path"]
+      @run["runner_rsa_key_path"]
     end
   end
 end

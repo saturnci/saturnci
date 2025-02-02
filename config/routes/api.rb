@@ -9,7 +9,7 @@ namespace :api do
       resource :runner, only: :destroy
     end
 
-    resources :jobs, only: %w[index show]
+    resources :runs, only: %w[index show]
     resources :builds, only: :index
 
     resources :github_events

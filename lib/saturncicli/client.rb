@@ -19,11 +19,11 @@ module SaturnCICLI
 
     def execute(argument)
       case argument
-      when /--job\s+(\S+)/
-        job_id = argument.split(" ")[1]
-        ssh(job_id)
-      when "jobs"
-        jobs
+      when /--run\s+(\S+)/
+        run_id = argument.split(" ")[1]
+        ssh(run_id)
+      when "runs"
+        runs
       when "builds"
         builds
       when nil
@@ -50,20 +50,20 @@ module SaturnCICLI
       )
     end
 
-    def jobs(options = {})
-      response = request("jobs")
-      jobs = JSON.parse(response.body)
+    def runs(options = {})
+      response = request("runs")
+      runs = JSON.parse(response.body)
 
       puts Display::Table.new(
-        resource_name: :job,
-        items: jobs,
+        resource_name: :run,
+        items: runs,
         options: options
       )
     end
 
-    def ssh(job_id)
+    def ssh(run_id)
       connection_details = ConnectionDetails.new(
-        request: -> { request("jobs/#{job_id}") }
+        request: -> { request("runs/#{run_id}") }
       )
 
       until connection_details.refresh.ip_address

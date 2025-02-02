@@ -1,6 +1,6 @@
 module API
   module V1
-    class JobsController < APIController
+    class RunsController < APIController
       def index
         @runs = Run.running
         render 'index', formats: [:json]
