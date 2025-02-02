@@ -1,5 +1,5 @@
 <ul class="run-menu tab-menu">
-  <% build.runs.each do |run| %>
+  <% build.runs.sorted.each do |run| %>
     <li>
       <%= link_to run.name,
         run_path(run, current_tab_name),
