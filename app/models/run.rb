@@ -7,6 +7,10 @@ class Run < ApplicationRecord
 
   alias_attribute :started_at, :created_at
 
+  scope :sorted, -> do
+    order("runs.order_index")
+  end
+
   scope :running, -> do
     joins(:build).where(exit_code: nil).order("builds.created_at desc, runs.order_index asc")
   end
