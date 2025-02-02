@@ -9,9 +9,8 @@ class Run < ApplicationRecord
   default_scope -> { order("order_index") }
 
   scope :running, -> do
-    joins(:build)
-      .where.not(id: Run.finished.select(:id))
-      .order("builds.created_at DESC")
+    where.not(id: Run.finished.select(:id))
+      .order("created_at desc")
   end
 
   scope :finished, -> do
