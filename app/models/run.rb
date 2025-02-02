@@ -9,12 +9,11 @@ class Run < ApplicationRecord
   default_scope -> { order("order_index") }
 
   scope :running, -> do
-    where.not(id: Run.finished.select(:id))
-      .order("created_at desc")
+    where(exit_code: nil).order("created_at desc")
   end
 
   scope :finished, -> do
-    where.not(exit_code: nil)
+    where.not(id: Run.running.select(:id))
   end
 
   def name
