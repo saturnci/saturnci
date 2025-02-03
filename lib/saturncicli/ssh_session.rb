@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module SaturnCICLI
   class SSHSession
     def initialize(ip_address:, rsa_key_path:)
