@@ -15,6 +15,14 @@ module API
         )
       end
 
+      def update
+        run = Run.find_by_abbreviated_hash(params[:id])
+        run.terminate_on_completion = params[:terminate_on_completion]
+        run.save!
+
+        render json: run.as_json
+      end
+
       private
 
       def rsa_key(run)
