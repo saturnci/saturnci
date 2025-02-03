@@ -23,7 +23,7 @@ module SaturnCICLI
         run_id = argument.split(" ")[1]
 
         connection_details = ConnectionDetails.new(
-          request: -> { request("runs/#{run_id}") }
+          request: -> { get("runs/#{run_id}") }
         )
 
         ssh(run_id, connection_details)
@@ -42,7 +42,7 @@ module SaturnCICLI
     end
 
     def builds(options = {})
-      response = request("builds")
+      response = get("builds")
 
       if response.code == "500"
         puts "500 Internal Server Error"
@@ -59,7 +59,7 @@ module SaturnCICLI
     end
 
     def runs(options = {})
-      response = request("runs")
+      response = get("runs")
       runs = JSON.parse(response.body)
 
       puts Display::Table.new(
@@ -70,7 +70,7 @@ module SaturnCICLI
     end
 
     def run(run_id)
-      response = request("runs/#{run_id}")
+      response = get("runs/#{run_id}")
       run_attrs = JSON.parse(response.body)
 
       run_attrs.each do |key, value|
@@ -90,13 +90,18 @@ module SaturnCICLI
       )
 
       ssh_session.connect
+      put("run/#{run_id}", { "terminate_on_completion" => false })
       puts ssh_session.command
     end
 
     private
 
-    def request(endpoint)
+    def get(endpoint)
       APIRequest.new(self, "GET", endpoint).response
+    end
+
+    def put(endpoint, body)
+      APIRequest.new(self, "PUT", endpoint, body).response
     end
   end
 end

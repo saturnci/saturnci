@@ -6,6 +6,9 @@ describe "ssh" do
   before do
     AuthenticationHelper.stub_authentication_request
     allow_any_instance_of(SaturnCICLI::SSHSession).to receive(:connect)
+
+    stub_request(:put, "https://app.saturnci.com/api/v1/run/abc123").
+      to_return(status: 200, body: "", headers: {})
   end
 
   let!(:client) do
@@ -54,6 +57,20 @@ describe "ssh" do
         command = "--run abc123 ssh"
         client.ssh("abc123", connection_details)
       end.to output(".ssh -o StrictHostKeyChecking=no -i /tmp/saturnci/run-abc123 root@111.11.11.1\n").to_stdout
+    end
+  end
+
+  describe "terminate on completion" do
+    before do
+      allow(connection_details).to receive(:ip_address).and_return("111.11.11.1")
+      allow(connection_details).to receive(:rsa_key_path).and_return("/tmp/saturnci/run-abc123")
+    end
+
+    it "sends a request to set terminate_on_completion to false" do
+      client.ssh("abc123", connection_details)
+
+      expect(a_request(:put, "https://app.saturnci.com/api/v1/run/abc123"))
+        .to have_been_made.once
     end
   end
 end
