@@ -96,7 +96,7 @@ module SaturnCICLI
     private
 
     def request(endpoint)
-      APIRequest.new(self, endpoint).response
+      APIRequest.new(self, "GET", endpoint).response
     end
   end
 end
