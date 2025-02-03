@@ -3,10 +3,11 @@ require "uri"
 
 module SaturnCICLI
   class APIRequest
-    def initialize(client, request_method, endpoint)
+    def initialize(client, request_method, endpoint, body = nil)
       @client = client
       @request_method = request_method
       @endpoint = endpoint
+      @body = body
     end
 
     def response
@@ -33,6 +34,8 @@ module SaturnCICLI
       case @request_method
       when "GET"
         Net::HTTP::Get
+      when "PUT"
+        Net::HTTP::Put
       end
     end
 
