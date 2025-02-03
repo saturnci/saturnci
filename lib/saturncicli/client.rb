@@ -21,6 +21,11 @@ module SaturnCICLI
       case argument
       when /--run\s+(\S+)/
         run_id = argument.split(" ")[1]
+
+        connection_details = ConnectionDetails.new(
+          request: -> { request("runs/#{run_id}") }
+        )
+
         ssh(run_id)
       when "runs"
         runs
@@ -73,11 +78,7 @@ module SaturnCICLI
       end
     end
 
-    def ssh(run_id)
-      connection_details = ConnectionDetails.new(
-        request: -> { request("runs/#{run_id}") }
-      )
-
+    def ssh(run_id, connection_details)
       until connection_details.refresh.ip_address
         print "."
         sleep(ConnectionDetails::WAIT_INTERVAL_IN_SECONDS)

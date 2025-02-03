@@ -15,20 +15,29 @@ describe "ssh" do
     )
   end
 
+  let!(:connection_details) do
+    instance_double(SaturnCICLI::ConnectionDetails)
+  end
+
+  before do
+    allow(connection_details).to receive(:refresh).and_return(connection_details)
+  end
+
   context "remote machine has an IP address" do
     let!(:body) do
-      {
-        "runner_rsa_key_path" => "/tmp/saturnci/run-abc123",
-        "ip_address" => "111.11.11.1"
-      }
+      { "ip_address" => "111.11.11.1" }
     end
 
-    before { APIHelper.stub_body("api/v1/runs/abc123", body) }
+    before do
+      APIHelper.stub_body("api/v1/runs/abc123", body)
+      allow(connection_details).to receive(:ip_address).and_return("111.11.11.1")
+      allow(connection_details).to receive(:rsa_key_path).and_return("/tmp/saturnci/run-abc123")
+    end
 
     it "outputs the run id" do
       expect do
         command = "--run abc123 ssh"
-        client.execute(command)
+        client.ssh("abc123", connection_details)
       end.to output("ssh -o StrictHostKeyChecking=no -i /tmp/saturnci/run-abc123 root@111.11.11.1\n").to_stdout
     end
   end
@@ -36,15 +45,14 @@ describe "ssh" do
   context "remote machine does not yet have an IP address" do
     before do
       APIHelper.stub_body("api/v1/runs/abc123", {})
-      stub_const("ConnectionDetails::WAIT_INTERVAL_IN_SECONDS", 0)
-      allow_any_instance_of(SaturnCICLI::ConnectionDetails).to receive(:ip_address).and_return(nil, "111.11.11.1")
-      allow_any_instance_of(SaturnCICLI::ConnectionDetails).to receive(:rsa_key_path).and_return("/tmp/saturnci/run-abc123")
+      allow(connection_details).to receive(:ip_address).and_return(nil, "111.11.11.1")
+      allow(connection_details).to receive(:rsa_key_path).and_return("/tmp/saturnci/run-abc123")
     end
 
     it "outputs a dot" do
       expect do
         command = "--run abc123 ssh"
-        client.execute(command)
+        client.ssh("abc123", connection_details)
       end.to output(".ssh -o StrictHostKeyChecking=no -i /tmp/saturnci/run-abc123 root@111.11.11.1\n").to_stdout
     end
   end
