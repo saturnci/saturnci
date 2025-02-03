@@ -26,7 +26,7 @@ module SaturnCICLI
           request: -> { request("runs/#{run_id}") }
         )
 
-        ssh(run_id)
+        ssh(run_id, connection_details)
       when "runs"
         runs
       when /run\s+/
