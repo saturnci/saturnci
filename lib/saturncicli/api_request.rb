@@ -27,6 +27,8 @@ module SaturnCICLI
     def request
       request_method.new(uri).tap do |request|
         request.basic_auth @client.username, @client.password
+        request.content_type = "application/json"
+        request.body = @body.to_json
       end
     end
 
@@ -34,8 +36,8 @@ module SaturnCICLI
       case @request_method
       when "GET"
         Net::HTTP::Get
-      when "PUT"
-        Net::HTTP::Put
+      when "PATCH"
+        Net::HTTP::Patch
       end
     end
 

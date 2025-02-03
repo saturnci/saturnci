@@ -6,9 +6,11 @@ describe "update run", type: :request do
 
   describe "PATCH /api/v1/runs/:id" do
     it "changes terminate_on_completion from true to false" do
+      extend ApplicationHelper
+
       patch(
-        api_v1_run_path(run),
-        params: { terminate_on_completion: false },
+        api_v1_run_path(id: abbreviated_hash(run.id)),
+        params: { "terminate_on_completion" => "false" },
         headers: api_authorization_headers(run.build.project.user)
       )
 

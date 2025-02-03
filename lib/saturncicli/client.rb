@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require "json"
 require_relative "api_request"
 require_relative "display/table"
@@ -89,9 +87,10 @@ module SaturnCICLI
         rsa_key_path: connection_details.rsa_key_path
       )
 
-      put("run/#{run_id}", { "terminate_on_completion" => false })
-      ssh_session.connect
+      response = patch("runs/#{run_id}", { "terminate_on_completion" => false })
+      raise "Problem: #{response.inspect}" unless response.code == "200"
       puts ssh_session.command
+      ssh_session.connect
     end
 
     private
@@ -100,8 +99,8 @@ module SaturnCICLI
       APIRequest.new(self, "GET", endpoint).response
     end
 
-    def put(endpoint, body)
-      APIRequest.new(self, "PUT", endpoint, body).response
+    def patch(endpoint, body)
+      APIRequest.new(self, "PATCH", endpoint, body).response
     end
   end
 end
