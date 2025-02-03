@@ -89,8 +89,8 @@ module SaturnCICLI
         rsa_key_path: connection_details.rsa_key_path
       )
 
-      ssh_session.connect
       put("run/#{run_id}", { "terminate_on_completion" => false })
+      ssh_session.connect
       puts ssh_session.command
     end
 
