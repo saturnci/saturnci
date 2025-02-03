@@ -1,3 +1,5 @@
+require "tempfile"
+
 module SaturnCICLI
   class ConnectionDetails
     WAIT_INTERVAL_IN_SECONDS = 5
@@ -17,7 +19,11 @@ module SaturnCICLI
     end
 
     def rsa_key_path
-      @run["runner_rsa_key_path"]
+      tempfile = Tempfile.new("rsa_key")
+      tempfile.write(@run["rsa_key"])
+      tempfile.close
+
+      tempfile.path
     end
   end
 end
