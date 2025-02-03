@@ -1,7 +1,7 @@
 require "rails_helper"
 include APIAuthenticationHelper
 
-RSpec.describe "runs", type: :request do
+describe "runs", type: :request do
   let!(:run) do
     create(
       :run,
