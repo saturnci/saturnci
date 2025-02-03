@@ -22,6 +22,10 @@
         <div style="display: flex;justify-content: space-between">
           <div>
             <b><%= link_to "SaturnCI", root_path %></b>
+
+            <% if current_user.super_admin? %>
+              <%= link_to "Admin", admin_root_path %>
+            <% end %>
           </div>
 
           <div>
