@@ -91,7 +91,11 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.active_record.encryption.primary_key = ENV["ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY"]
+  config.active_record.encryption.primary_key = [
+    ENV["ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY"],
+    ENV["OLD_ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY"]
+  ]
+
   config.active_record.encryption.deterministic_key = ENV["ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY"]
   config.active_record.encryption.key_derivation_salt = ENV["ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT"]
 
