@@ -16,10 +16,14 @@ module SaturnCICLI
       end
     end
 
+    def use_ssl?
+      uri.scheme == "https"
+    end
+
     private
 
     def send_request
-      Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
+      Net::HTTP.start(uri.hostname, uri.port, use_ssl: use_ssl?) do |http|
         http.request(request)
       end
     end
