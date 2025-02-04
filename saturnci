@@ -1,12 +1,13 @@
 #!/usr/bin/env ruby
 
+require_relative "lib/saturncicli/credential"
 require_relative "lib/saturncicli/client"
 
 begin
   credential = SaturnCICLI::Credential.new(
     host: ENV["SATURNCI_API_HOST"] || SaturnCICLI::Credential::DEFAULT_HOST,
-    username: ENV["USER_ID"],
-    password: ENV["USER_API_TOKEN"]
+    user_id: ENV["USER_ID"],
+    api_token: ENV["USER_API_TOKEN"]
   )
 
   client = SaturnCICLI::Client.new(credential)
