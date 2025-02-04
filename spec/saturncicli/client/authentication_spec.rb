@@ -28,33 +28,11 @@ describe "authentication" do
       )
     end
 
-    let!(:client) do
-      SaturnCICLI::Client.new(credential)
-    end
+    it "returns false" do
+      stub_request(:get, "#{SaturnCICLI::Credential::DEFAULT_HOST}/api/v1/runs")
+        .to_return(status: 401, body: {}.to_json)
 
-    it "outputs a graceful error message" do
-      stub_request(:get, "#{SaturnCICLI::Credential::DEFAULT_HOST}/api/v1/builds")
-        .to_return(status: 401)
-
-      expect { client.builds }.to raise_error("Bad credentials.")
-    end
-  end
-
-  context "raw error" do
-    let!(:credential) do
-      SaturnCICLI::Credential.new(
-        user_id: "",
-        api_token: ""
-      )
-    end
-
-    it "does not raise a bad credentials error" do
-      stub_request(:get, "#{SaturnCICLI::Credential::DEFAULT_HOST}/api/v1/builds")
-        .to_return(status: 500)
-
-      expect {
-        SaturnCICLI::Client.new(credential)
-      }.not_to raise_error
+      expect(credential.valid?).to be false
     end
   end
 end
