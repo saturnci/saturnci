@@ -20,10 +20,12 @@ class RunnerScript
     <<~SCRIPT
       #!/usr/bin/bash
       export HOST=#{ENV["SATURNCI_HOST"]}
+      export DOCKER_REGISTRY_CACHE_USERNAME=#{ENV["DOCKER_REGISTRY_CACHE_USERNAME"]}
+      export DOCKER_REGISTRY_CACHE_PASSWORD=#{ENV["DOCKER_REGISTRY_CACHE_PASSWORD"]}
       export RUN_ID=#{@run.id}
+      export RUN_ORDER_INDEX=#{@run.order_index}
       export USER_ID=#{@run.build.project.user.id}
       export USER_API_TOKEN=#{@run.build.project.user.api_token}
-      export RUN_ORDER_INDEX=#{@run.order_index}
       export NUMBER_OF_CONCURRENT_RUNS=#{@run.build.project.concurrency}
       export COMMIT_HASH=#{@run.build.commit_hash}
       export RSPEC_SEED=#{@run.build.seed}
