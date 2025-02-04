@@ -20,7 +20,7 @@ module SaturnCICLI
 
     def rsa_key_path
       tempfile = Tempfile.new("rsa_key")
-      tempfile.write(@run["rsa_key"])
+      tempfile.write(Base64.decode64(@run["rsa_key"]))
       tempfile.close
 
       tempfile.path

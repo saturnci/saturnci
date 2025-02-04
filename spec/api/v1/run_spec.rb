@@ -62,13 +62,13 @@ describe "run", type: :request do
         tempfile.unlink
       end
 
-      it "returns the RSA key" do
+      it "returns the base64 encoded RSA key" do
         get(
           api_v1_run_path(run.id),
           headers: api_authorization_headers(user)
         )
         response_body = JSON.parse(response.body)
-        expect(response_body["rsa_key"]).to eq("abc123")
+        expect(response_body["rsa_key"]).to eq("YWJjMTIz")
       end
     end
   end
