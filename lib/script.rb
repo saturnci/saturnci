@@ -7,6 +7,7 @@ require "open3"
 
 PROJECT_DIR = "/home/ubuntu/project"
 RSPEC_DOCUMENTATION_OUTPUT_FILENAME = "tmp/rspec_documentation_output.txt"
+JUNIT_OUTPUT_FILENAME = "tmp/junit_output.xml"
 TEST_RESULTS_FILENAME = "tmp/test_results.txt"
 
 class Script
@@ -104,7 +105,8 @@ class Script
       docker_compose_configuration: docker_compose_configuration,
       test_files_string: test_files_string,
       rspec_seed: ENV["RSPEC_SEED"],
-      rspec_documentation_output_filename: RSPEC_DOCUMENTATION_OUTPUT_FILENAME
+      rspec_documentation_output_filename: RSPEC_DOCUMENTATION_OUTPUT_FILENAME,
+      junit_output_filename: JUNIT_OUTPUT_FILENAME
     ).to_s
     puts "Test run command: #{command}"
 
