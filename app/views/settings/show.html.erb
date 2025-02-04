@@ -1,9 +1,0 @@
-<%= render @project_component do |component| %>
-  <%= component.with_body do %>
-    <div class="project-inner">
-      <h1>Settings</h1>
-      <%= link_to "General", project_settings_general_settings_path(@project) %>
-      <%= link_to "Secrets", project_settings_project_secret_collection_path(@project) %>
-    </div>
-  <% end %>
-<% end %>

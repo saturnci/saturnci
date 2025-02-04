@@ -1,6 +1,7 @@
 <%= render @project_component do |component| %>
   <%= component.with_body do %>
     <div class="project-inner">
+      <%= render "settings/menu" %>
       <h1>Secrets</h1>
 
       <%= form_with(model: @project_secret_collection, url: project_settings_project_secret_collection_path(@project), method: :put) do |form| %>

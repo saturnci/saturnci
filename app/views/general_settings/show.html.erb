@@ -1,6 +1,7 @@
 <%= render @project_component do |component| %>
   <%= component.with_body do %>
     <div class="project-inner">
+      <%= render "settings/menu" %>
       <%= flash[:notice] %>
 
       <h1>General Settings</h1>
