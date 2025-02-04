@@ -7,7 +7,7 @@ describe SaturnCICLI::ConnectionDetails do
         request: -> do
           double(
             "Response",
-            body: { rsa_key: "FAKE_RSA_KEY_CONTENT" }.to_json
+            body: { rsa_key: Base64.encode64("FAKE_RSA_KEY_CONTENT") }.to_json
           )
         end
       )
