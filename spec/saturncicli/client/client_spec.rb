@@ -1,11 +1,19 @@
 require_relative "../../../lib/saturncicli/client"
+require_relative "../../../lib/saturncicli/credential"
 require_relative "../helpers/authentication_helper"
 require_relative "../helpers/api_helper"
 
 describe "client" do
+  let!(:credential) do
+    SaturnCICLI::Credential.new(
+      user_id: "foo",
+      api_token: "bar"
+    )
+  end
+
   describe "run" do
     let!(:client) do
-      SaturnCICLI::Client.new(username: "foo", password: "bar")
+      SaturnCICLI::Client.new(credential)
     end
 
     before do
@@ -78,7 +86,7 @@ describe "client" do
     end
 
     let!(:client) do
-      SaturnCICLI::Client.new(username: "foo", password: "bar")
+      SaturnCICLI::Client.new(credential)
     end
 
     it "shows runs" do

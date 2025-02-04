@@ -1,3 +1,4 @@
+require_relative "../../../lib/saturncicli/credential"
 require_relative "../../../lib/saturncicli/client"
 
 describe "build list" do
@@ -20,15 +21,17 @@ describe "build list" do
       }
     ].to_json
 
-    stub_request(:get, "#{SaturnCICLI::Client::DEFAULT_HOST}/api/v1/builds")
+    stub_request(:get, "#{SaturnCICLI::Credential::DEFAULT_HOST}/api/v1/builds")
       .to_return(body: body, status: 200)
   end
 
   let!(:client) do
-    SaturnCICLI::Client.new(
-      username: "valid_username",
-      password: "valid_password"
+    credential = SaturnCICLI::Credential.new(
+      user_id: "valid_user_id",
+      api_token: "valid_api_token"
     )
+
+    SaturnCICLI::Client.new(credential)
   end
 
   it "formats the output to a table" do
