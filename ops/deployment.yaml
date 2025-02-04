@@ -115,16 +115,6 @@ spec:
             secretKeyRef:
               name: saturn-secrets
               key: ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT
-        - name: DOCKER_REGISTRY_CACHE_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: saturn-secrets
-              key: DOCKER_REGISTRY_CACHE_USERNAME
-        - name: DOCKER_REGISTRY_CACHE_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: saturn-secrets
-              key: DOCKER_REGISTRY_CACHE_PASSWORD
       initContainers:
       - name: saturn-migrations
         image: registry.digitalocean.com/saturnci/saturnci:$TAG
@@ -227,13 +217,3 @@ spec:
             secretKeyRef:
               name: saturn-secrets
               key: ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT
-        - name: DOCKER_REGISTRY_CACHE_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: saturn-secrets
-              key: DOCKER_REGISTRY_CACHE_USERNAME
-        - name: DOCKER_REGISTRY_CACHE_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: saturn-secrets
-              key: DOCKER_REGISTRY_CACHE_PASSWORD
