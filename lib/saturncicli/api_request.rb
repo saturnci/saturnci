@@ -3,9 +3,9 @@ require "uri"
 
 module SaturnCICLI
   class APIRequest
-    def initialize(credential, request_method, endpoint, body = {})
+    def initialize(credential:, method:, endpoint:, body: {})
       @credential = credential
-      @request_method = request_method
+      @method = method
       @endpoint = endpoint
       @body = body
     end
@@ -29,15 +29,15 @@ module SaturnCICLI
     end
 
     def request
-      request_method.new(uri).tap do |request|
+      method.new(uri).tap do |request|
         request.basic_auth @credential.user_id, @credential.api_token
         request.content_type = "application/json"
         request.body = @body.to_json
       end
     end
 
-    def request_method
-      case @request_method
+    def method
+      case @method
       when "GET"
         Net::HTTP::Get
       when "PATCH"

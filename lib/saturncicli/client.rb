@@ -91,11 +91,20 @@ module SaturnCICLI
     private
 
     def get(endpoint)
-      APIRequest.new(@credential, "GET", endpoint).response
+      APIRequest.new(
+        credential: @credential,
+        method: "GET",
+        endpoint:
+      ).response
     end
 
     def patch(endpoint, body)
-      APIRequest.new(@credential, "PATCH", endpoint, body).response
+      APIRequest.new(
+        credential: @credential,
+        method: "PATCH",
+        endpoint:,
+        body:
+      )
     end
   end
 end

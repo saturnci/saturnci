@@ -12,7 +12,12 @@ describe SaturnCICLI::APIRequest do
     end
 
     it "uses SSL" do
-      api_request = SaturnCICLI::APIRequest.new(credential, "GET", "builds")
+      api_request = SaturnCICLI::APIRequest.new(
+        credential:,
+        method: "GET",
+        endpoint: "builds"
+      )
+
       expect(api_request.use_ssl?).to be true
     end
   end
@@ -27,7 +32,12 @@ describe SaturnCICLI::APIRequest do
     end
 
     it "does not use SSL" do
-      api_request = SaturnCICLI::APIRequest.new(credential, "GET", "builds")
+      api_request = SaturnCICLI::APIRequest.new(
+        credential:,
+        method: "GET",
+        endpoint: "builds"
+      )
+
       expect(api_request.use_ssl?).to be false
     end
   end
