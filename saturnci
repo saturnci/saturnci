@@ -3,16 +3,14 @@
 require_relative "lib/saturncicli/credential"
 require_relative "lib/saturncicli/client"
 
-begin
-  credential = SaturnCICLI::Credential.new(
-    host: ENV["SATURNCI_API_HOST"] || SaturnCICLI::Credential::DEFAULT_HOST,
-    user_id: ENV["USER_ID"],
-    api_token: ENV["USER_API_TOKEN"]
-  )
+credential = SaturnCICLI::Credential.new(
+  host: ENV["SATURNCI_API_HOST"] || SaturnCICLI::Credential::DEFAULT_HOST,
+  user_id: ENV["USER_ID"],
+  api_token: ENV["USER_API_TOKEN"]
+)
 
-  client = SaturnCICLI::Client.new(credential)
+return unless credential.valid?
 
-  client.execute(ARGV.join(" "))
-rescue StandardError => e
-  puts e.message
-end
+client = SaturnCICLI::Client.new(credential)
+
+client.execute(ARGV.join(" "))

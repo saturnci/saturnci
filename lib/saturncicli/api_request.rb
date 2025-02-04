@@ -3,16 +3,32 @@ require "uri"
 
 module SaturnCICLI
   class APIRequest
-    def initialize(credential:, method:, endpoint:, body: {})
+    def initialize(credential:, method:, endpoint:, body: {}, debug: false)
       @credential = credential
       @method = method
       @endpoint = endpoint
       @body = body
+      @debug = debug
     end
 
     def response
-      send_request.tap do |response|
-        raise "Bad credentials." if response.code == "401"
+      if @debug
+        puts "Request details:"
+        puts uri.scheme
+        puts uri.hostname
+        puts uri.path
+        puts uri.port
+        puts
+      end
+
+      Net::HTTP.start(uri.hostname, uri.port, use_ssl: use_ssl?) do |http|
+        http.request(request)
+      end.tap do |response|
+        if @debug
+          puts "Response:"
+          puts "#{response.code} #{response.message}"
+          puts response.body
+        end
       end
     end
 
@@ -21,12 +37,6 @@ module SaturnCICLI
     end
 
     private
-
-    def send_request
-      Net::HTTP.start(uri.hostname, uri.port, use_ssl: use_ssl?) do |http|
-        http.request(request)
-      end
-    end
 
     def request
       method.new(uri).tap do |request|
