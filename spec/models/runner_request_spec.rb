@@ -31,4 +31,25 @@ RSpec.describe RunnerRequest do
         .from(false).to(true)
     end
   end
+
+  describe "#droplet_name" do
+    let!(:runner_request) do
+      RunnerRequest.new(
+        run: nil,
+        github_installation_id: nil,
+        ssh_key: nil,
+        client: nil
+      )
+    end
+
+    context "project with underscores in name" do
+      it "replaces slashes and underscores with dashes" do
+        droplet_name = runner_request.droplet_name(
+          "fabrix-eu/mantel_back",
+          "4d2f3088-6b82-4888-8762-0be3eb7500a1"
+        )
+        expect(droplet_name).to eq("fabrix-eu-mantel-back-run-4d2f3088")
+      end
+    end
+  end
 end
