@@ -6,6 +6,7 @@ class Quote
     "\"No man ever steps in the same river twice, for it's not the same river and he's not the same man.\" - Heraclitus",
     "\"An investment in knowledge pays the best interest.\" - Benjamin Franklin",
     "\"Experience keeps a dear school, but fools will learn in no other.\" - Benjamin Franklin",
+    "\"The used key is always bright.\" - Benjamin Franklin",
     "\"The recipe for great work is: very exacting taste, plus the ability to gratify it.\" - Paul Graham"
   ]
 
