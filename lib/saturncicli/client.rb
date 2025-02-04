@@ -6,13 +6,8 @@ require_relative "connection_details"
 
 module SaturnCICLI
   class Client
-    DEFAULT_HOST = "https://app.saturnci.com"
-    attr_reader :host, :username, :password
-
-    def initialize(username:, password:, host: DEFAULT_HOST)
-      @username = username
-      @password = password
-      @host = host
+    def initialize(credential)
+      @credential = credential
     end
 
     def execute(argument)
@@ -96,11 +91,11 @@ module SaturnCICLI
     private
 
     def get(endpoint)
-      APIRequest.new(self, "GET", endpoint).response
+      APIRequest.new(@credential, "GET", endpoint).response
     end
 
     def patch(endpoint, body)
-      APIRequest.new(self, "PATCH", endpoint, body).response
+      APIRequest.new(@credential, "PATCH", endpoint, body).response
     end
   end
 end

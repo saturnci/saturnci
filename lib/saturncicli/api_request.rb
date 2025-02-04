@@ -3,8 +3,8 @@ require "uri"
 
 module SaturnCICLI
   class APIRequest
-    def initialize(client, request_method, endpoint, body = nil)
-      @client = client
+    def initialize(credential, request_method, endpoint, body = {})
+      @credential = credential
       @request_method = request_method
       @endpoint = endpoint
       @body = body
@@ -26,7 +26,7 @@ module SaturnCICLI
 
     def request
       request_method.new(uri).tap do |request|
-        request.basic_auth @client.username, @client.password
+        request.basic_auth @credential.user_id, @credential.api_token
         request.content_type = "application/json"
         request.body = @body.to_json
       end
@@ -42,7 +42,7 @@ module SaturnCICLI
     end
 
     def uri
-      URI("#{@client.host}/api/v1/#{@endpoint}")
+      URI("#{@credential.host}/api/v1/#{@endpoint}")
     end
   end
 end
