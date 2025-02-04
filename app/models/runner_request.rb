@@ -10,7 +10,7 @@ class RunnerRequest
 
   def execute!
     droplet = DropletKit::Droplet.new(
-      name: droplet_name,
+      name: droplet_name(@run.build.project.name, @run.id),
       region: DropletConfig::REGION,
       image: DropletConfig::SNAPSHOT_IMAGE_ID,
       size: DropletConfig::SIZE,
@@ -28,11 +28,15 @@ class RunnerRequest
     )
   end
 
-  private
-
-  def droplet_name
-    "#{@run.build.project.name.gsub("/", "-")}-run-#{@run.id}"
+  def droplet_name(project_name, run_id)
+    [
+      project_name.gsub("/", "-").gsub("_", "-"),
+      "run",
+      run_id[0..7]
+    ].join("-")
   end
+
+  private
 
   # /var/lib/cloud/instances/456688083/scripts/part-001
   def user_data
