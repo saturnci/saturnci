@@ -1,47 +1,38 @@
-require_relative '../../../lib/saturncicli/client'
+require_relative "../../../lib/saturncicli/credential"
+require_relative "../../../lib/saturncicli/client"
 
 describe "authentication" do
   context "valid credentials" do
+    let!(:credential) do
+      SaturnCICLI::Credential.new(
+        user_id: "valid_user_id",
+        api_token: "valid_api_token"
+      )
+    end
+
     it "does not raise an error" do
-      stub_request(:get, "#{SaturnCICLI::Client::DEFAULT_HOST}/api/v1/builds")
+      stub_request(:get, "#{SaturnCICLI::Credential::DEFAULT_HOST}/api/v1/builds")
         .to_return(body: "[]", status: 200)
 
       expect {
-        SaturnCICLI::Client.new(
-          username: "valid_username",
-          password: "valid_password"
-        )
+        SaturnCICLI::Client.new(credential)
       }.not_to raise_error
     end
   end
 
   context "invalid credentials" do
-    let!(:client) do
-      SaturnCICLI::Client.new(
-        username: "",
-        password: ""
+    let!(:credential) do
+      SaturnCICLI::Credential.new(
+        user_id: "",
+        api_token: ""
       )
     end
 
-    it "outputs a graceful error message" do
-      stub_request(:get, "#{SaturnCICLI::Client::DEFAULT_HOST}/api/v1/builds")
-        .to_return(status: 401)
+    it "returns false" do
+      stub_request(:get, "#{SaturnCICLI::Credential::DEFAULT_HOST}/api/v1/runs")
+        .to_return(status: 401, body: {}.to_json)
 
-      expect { client.builds }.to raise_error("Bad credentials.")
-    end
-  end
-
-  context "raw error" do
-    it "does not raise a bad credentials error" do
-      stub_request(:get, "#{SaturnCICLI::Client::DEFAULT_HOST}/api/v1/builds")
-        .to_return(status: 500)
-
-      expect {
-        SaturnCICLI::Client.new(
-          username: "",
-          password: ""
-        )
-      }.not_to raise_error
+      expect(credential.valid?).to be false
     end
   end
 end

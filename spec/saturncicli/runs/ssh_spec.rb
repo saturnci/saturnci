@@ -1,5 +1,6 @@
 require_relative "../helpers/authentication_helper"
 require_relative "../helpers/api_helper"
+require_relative "../../../lib/saturncicli/credential"
 require_relative "../../../lib/saturncicli/client"
 
 describe "ssh" do
@@ -11,11 +12,16 @@ describe "ssh" do
       to_return(status: 200, body: "", headers: {})
   end
 
-  let!(:client) do
-    SaturnCICLI::Client.new(
-      username: "valid_username",
-      password: "valid_password"
+  let!(:credential) do
+    SaturnCICLI::Credential.new(
+      user_id: "valid_user_id",
+      api_token: "valid_api_token"
     )
+  end
+
+
+  let!(:client) do
+    SaturnCICLI::Client.new(credential)
   end
 
   let!(:connection_details) do
