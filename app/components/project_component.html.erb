@@ -1,7 +1,7 @@
 <div class="project <%= @extra_css_classes %>">
   <header class="project-header">
     <h2><%= link_to @project.name, project_path(@project) %></h2>
-    <%= link_to "Settings", project_settings_path(@project) %>
+    <%= link_to "Settings", project_settings_general_settings_path(@project) %>
   </header>
 
   <%= body %>
