@@ -104,7 +104,7 @@ module SaturnCICLI
         method: "PATCH",
         endpoint:,
         body:
-      )
+      ).response
     end
   end
 end
