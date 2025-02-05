@@ -21,6 +21,7 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
     GitHub
     HTML
     JWT
+    JSON
     RSA
     SSH
     SaturnCI
