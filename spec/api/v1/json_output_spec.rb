@@ -9,7 +9,7 @@ RSpec.describe "JSON output", type: :request do
     it "adds json output to a run" do
       post(
         api_v1_run_json_output_path(run_id: run.id),
-        params: Base64.encode64("JSON output content"),
+        params: "JSON output content",
         headers: api_authorization_headers(user).merge({ "CONTENT_TYPE" => "text/plain" })
       )
 
