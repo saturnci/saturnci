@@ -17,3 +17,6 @@ spec:
         image: registry:2
         ports:
         - containerPort: 5000
+        env:
+        - name: REGISTRY_STORAGE_DELETE_ENABLED
+          value: "true"
