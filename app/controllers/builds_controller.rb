@@ -2,6 +2,8 @@ class BuildsController < ApplicationController
   def create
     @project = Project.find(params[:project_id])
     build = Build.new(project: @project)
+    authorize build
+
     build.start!
 
     redirect_to build
@@ -9,6 +11,7 @@ class BuildsController < ApplicationController
 
   def show
     @build = Build.find(params[:id])
+    authorize @build
 
     @build_component = BuildComponent.new(
       build: @build,
@@ -21,6 +24,7 @@ class BuildsController < ApplicationController
 
   def destroy
     build = Build.find(params[:id])
+    authorize build
 
     begin
       build.delete_runners

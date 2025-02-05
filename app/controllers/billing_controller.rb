@@ -1,6 +1,7 @@
 class BillingController < ApplicationController
   def index
     @project = Project.find(params[:project_id])
+    authorize @project, :show?
 
     @runs = BillingReport.new(
       project: @project,

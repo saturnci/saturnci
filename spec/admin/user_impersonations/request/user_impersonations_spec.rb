@@ -30,9 +30,9 @@ describe "User impersonations", type: :request do
       login_as(non_super_admin_user, scope: :user)
     end
 
-    it "returns a 401 response" do
+    it "returns a 404 response" do
       post admin_user_impersonations_path(user_id: other_user.id)
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(404)
     end
 
     it "does not render the page" do

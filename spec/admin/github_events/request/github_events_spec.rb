@@ -24,9 +24,9 @@ describe "GitHub Events", type: :request do
     end
 
     describe "GET /admin" do
-      it "returns a 401 response" do
+      it "returns a 404 response" do
         get admin_github_events_path
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(404)
       end
 
       it "does not render the page" do
