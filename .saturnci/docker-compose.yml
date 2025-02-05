@@ -58,7 +58,7 @@ services:
     hostname: chrome
     shm_size: 2g
     ports:
-      - "4444:4444"
+      - "9515:9515"
 
 volumes:
   postgresql:
