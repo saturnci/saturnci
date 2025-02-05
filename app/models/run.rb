@@ -55,7 +55,7 @@ class Run < ApplicationRecord
   end
 
   def failed?
-    !passed?
+    finished? && !passed?
   end
 
   def cancelled?
