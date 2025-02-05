@@ -31,5 +31,18 @@ describe BuildLink do
         expect(BuildLink.new(build).path).to include(run_2.id.to_s)
       end
     end
+
+    context "successful run followed by failed run" do
+      before do
+        expect(BuildLink.new(build).path).to include(run_1.id.to_s)
+      end
+
+      it "works" do
+        travel_to(1.minute.from_now) do
+          run_2.update!(exit_code: 1)
+          expect(BuildLink.new(build).path).to include(run_2.id.to_s)
+        end
+      end
+    end
   end
 end
