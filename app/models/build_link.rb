@@ -23,6 +23,10 @@ class BuildLink
   end
 
   def cache_key
-    ["build_link_path", @build.id, @build.updated_at].join("/")
+    [
+      "build_link_path",
+      @build.id,
+      @build.updated_at.to_i
+    ].join("/")
   end
 end

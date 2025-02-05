@@ -115,4 +115,12 @@ describe Run, type: :model do
       end
     end
   end
+
+  describe "updating exit code" do
+    it "updates build updated_at" do
+      expect {
+        run.update!(exit_code: 0)
+      }.to change { run.build.reload.updated_at }
+    end
+  end
 end
