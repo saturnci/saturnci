@@ -9,7 +9,7 @@ if ENV["DOCKER_ENV"].present?
     Capybara::Selenium::Driver.new(
       app,
       browser: :remote,
-      url: "http://chrome:9515/",
+      url: "http://chrome:4444/",
       options: options,
     )
   end
