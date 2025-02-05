@@ -48,7 +48,7 @@ class Script
     system("sudo systemd-resolve --flush-caches")
 
     puts "Authenticating to Docker registry (#{registry_cache_url})"
-    system("sudo docker login #{registry_cache_url} -u myusername -p mypassword")
+    system("sudo docker login #{registry_cache_url} -u #{ENV["DOCKER_REGISTRY_CACHE_USERNAME"]} -p #{ENV["DOCKER_REGISTRY_CACHE_PASSWORD"]}")
 
     puts "Pulling the existing image to avoid rebuilding if possible"
     system("sudo docker pull #{registry_cache_image_url} || true")
