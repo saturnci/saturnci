@@ -13,6 +13,6 @@ class ApplicationController < ActionController::Base
   end
 
   def user_not_authorized
-    render status: :not_found
+    head :not_found
   end
 end
