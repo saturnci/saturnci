@@ -13,7 +13,7 @@ WebMock.disable_net_connect!(
     '0.0.0.0:3000',
     'googlechromelabs.github.io',
     'storage.googleapis.com',
-    'chrome:9515',
+    'chrome:4444',
     'edgedl.me.gvt1.com',
     %r{github\.com/mozilla/geckodriver/.*},
     'objects.githubusercontent.com'
