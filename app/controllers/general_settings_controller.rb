@@ -1,12 +1,16 @@
 class GeneralSettingsController < ApplicationController
   def show
     @project = Project.find(params[:project_id])
+    authorize @project, :show?
+
     @project_component = ProjectComponent.new(@project)
   end
 
   def update
     @project = Project.find(params[:project_id])
-    @project.update(project_params)
+    authorize @project, :update?
+
+    @project.update!(project_params)
 
     flash[:notice] = "Settings saved"
 

@@ -1,7 +1,7 @@
 module Admin
   class UserImpersonationsController < ApplicationController
     def create
-      head :unauthorized and return unless current_user.super_admin?
+      authorize :user_impersonation
 
       user = User.find(params[:user_id])
       sign_in(:user, user)

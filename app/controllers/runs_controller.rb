@@ -1,6 +1,8 @@
 class RunsController < ApplicationController
   def show
     @run = Run.find(params[:id])
+    authorize @run
+
     @current_tab_name = params[:partial]
     @build = @run.build
     @project = @build.project
