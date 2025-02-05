@@ -18,8 +18,6 @@ services:
       DATABASE_HOST: postgres
       DATABASE_PORT: 5432
       RAILS_ENV: test
-      SATURNCI_API_USERNAME: myuser
-      SATURNCI_API_PASSWORD: mypassword
 
   postgres:
     image: postgres:13.1-alpine
