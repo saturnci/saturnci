@@ -20,8 +20,7 @@ describe "Active link", type: :system do
   end
 
   before do
-    user = create(:user)
-    login_as(user, scope: :user)
+    login_as(project.user, scope: :user)
     visit project_build_path(project, build_1)
   end
 
