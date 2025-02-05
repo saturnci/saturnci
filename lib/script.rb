@@ -6,7 +6,7 @@ require "fileutils"
 require "open3"
 
 PROJECT_DIR = "/home/ubuntu/project"
-JSON_OUTPUT_FILENAME = "tmp/json_output.txt"
+RSPEC_DOCUMENTATION_OUTPUT_FILENAME = "tmp/rspec_documentation_output.txt"
 TEST_RESULTS_FILENAME = "tmp/test_results.txt"
 
 class Script
@@ -104,7 +104,7 @@ class Script
       docker_compose_configuration: docker_compose_configuration,
       test_files_string: test_files_string,
       rspec_seed: ENV["RSPEC_SEED"],
-      json_output_filename: JSON_OUTPUT_FILENAME
+      rspec_documentation_output_filename: RSPEC_DOCUMENTATION_OUTPUT_FILENAME
     ).to_s
     puts "Test run command: #{command}"
 
@@ -114,15 +114,6 @@ class Script
 
     puts "Run finished"
     client.post("runs/#{ENV["RUN_ID"]}/run_finished_events")
-
-    puts "Sending JSON output"
-    json_output_request = SaturnCIRunnerAPI::FileContentRequest.new(
-      host: ENV["HOST"],
-      api_path: "runs/#{ENV["RUN_ID"]}/json_output",
-      content_type: "text/plain",
-      file_path: JSON_OUTPUT_FILENAME
-    )
-    json_output_request.execute
 
     puts "Sending report"
     test_reports_request = SaturnCIRunnerAPI::FileContentRequest.new(
