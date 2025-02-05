@@ -11,6 +11,7 @@ class ProjectSecretCollectionsController < ApplicationController
     end
 
     @project_component = ProjectComponent.new(@project)
+    authorize @project_secret_collection
   end
 
   def update
@@ -19,6 +20,8 @@ class ProjectSecretCollectionsController < ApplicationController
     @project_secret_collection = ProjectSecretCollection.new
     @project_secret_collection.project = @project
     @project_secret_collection.project_secrets_attributes = project_secret_collection_params[:project_secrets_attributes]
+
+    authorize @project_secret_collection
     @project_secret_collection.save!
 
     redirect_to project_settings_project_secret_collection_path(@project)
