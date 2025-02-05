@@ -22,7 +22,7 @@ module SaturnCIRunnerAPI
         "bundle exec rspec",
         "--require ./example_status_persistence.rb",
         "--format=documentation",
-        # "--format RspecJunitFormatter --out rspec_results.xml",
+        "--format json --out tmp/json_output.json",
         "--order rand:#{@rspec_seed}",
         @test_files_string
       ].join(' ')
