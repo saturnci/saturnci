@@ -6,7 +6,7 @@
   <% end %>
 
   <%= turbo_frame_tag "build_body", class: "build-body", data: { turbo_action: "advance" } do %>
-    <%= render "builds/menu", build: @build, run: @run, current_tab_name: current_tab_name %>
+    <%= render "builds/menu", build: @build, run: @run, target_tab_name: current_tab_name %>
 
     <ul class="build-menu tab-menu">
       <% build_navigation(@run, current_tab_name) do |nav| %>
