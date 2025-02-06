@@ -27,7 +27,7 @@
   flex-direction: column;
 }
 
-.build-details {
+.build-body {
   flex-grow: 1;
   display: flex;
   flex-direction: column;

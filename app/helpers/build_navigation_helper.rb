@@ -11,7 +11,7 @@ class BuildNavigation
         text,
         @view_context.run_path(@run, slug),
         class: @partial == slug ? "active" : "",
-        data: { turbo_frame: "build_details" }
+        data: { turbo_frame: "build_body" }
       )
     end
   end
