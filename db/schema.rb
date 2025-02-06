@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_06_194717) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_06_201312) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -136,6 +136,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_06_194717) do
     t.uuid "run_id", null: false
     t.string "description", null: false
     t.text "exception"
+    t.text "exception_message"
+    t.text "exception_backtrace"
     t.index ["run_id"], name: "index_test_case_runs_on_run_id"
   end
 
