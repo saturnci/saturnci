@@ -115,6 +115,15 @@ class Script
     puts "Run finished"
     client.post("runs/#{ENV["RUN_ID"]}/run_finished_events")
 
+    puts "Sending JSON output"
+    test_output_request = SaturnCIRunnerAPI::FileContentRequest.new(
+      host: ENV["HOST"],
+      api_path: "runs/#{ENV["RUN_ID"]}/json_output",
+      content_type: "application/json",
+      file_path: "tmp/json_output.json"
+    )
+    test_output_request.execute
+
     puts "Sending report"
     test_reports_request = SaturnCIRunnerAPI::FileContentRequest.new(
       host: ENV["HOST"],
