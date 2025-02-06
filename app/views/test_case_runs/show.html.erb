@@ -7,14 +7,14 @@
 
       <br>
 
-      <div>
-        <%= @test_case_run.exception_backtrace.gsub("\n", "<br>").html_safe %>
+      <div class="text-red">
+        <%= @test_case_run.exception_message.gsub("\n", "<br>").html_safe %>
       </div>
 
       <br>
 
-      <div class="text-red">
-        <%= @test_case_run.exception_message.gsub("\n", "<br>").html_safe %>
+      <div>
+        <%= @test_case_run.exception_backtrace.gsub("\n", "<br>").html_safe %>
       </div>
     <% else %>
       <div>
