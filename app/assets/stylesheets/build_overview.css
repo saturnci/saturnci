@@ -16,8 +16,7 @@
 }
 
 .test-case-run-status-failed a {
-  color: #FFF;
-  background-color: red;
+  color: red;
 }
 
 .test-case-runs {
