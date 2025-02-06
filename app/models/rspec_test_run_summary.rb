@@ -10,7 +10,7 @@ class RSpecTestRunSummary
         identifier: example[:id],
         path: example[:file_path],
         status: example[:status].to_s,
-        description: example[:description],
+        description: example[:full_description],
         line_number: example[:line_number],
         exception: example[:exception],
         exception_message: example[:exception] && example[:exception][:message].strip,
