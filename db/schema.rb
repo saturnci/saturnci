@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_06_021809) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_06_023126) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -133,6 +133,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_06_021809) do
     t.float "duration", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "run_id", null: false
+    t.index ["run_id"], name: "index_test_case_runs_on_run_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -166,4 +168,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_06_021809) do
   add_foreign_key "projects", "users"
   add_foreign_key "run_events", "runs"
   add_foreign_key "runs", "builds"
+  add_foreign_key "test_case_runs", "runs"
 end
