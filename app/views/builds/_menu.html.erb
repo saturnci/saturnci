@@ -1,8 +1,15 @@
 <ul class="run-menu tab-menu">
+  <li>
+    <%= link_to "Overview",
+      project_build_path(build.project_id, build),
+      class: current_tab_name == "overview" ? "active" : "",
+      data: { turbo: false } %>
+  </li>
+
   <% build.runs.sorted.each do |run| %>
     <li>
       <%= link_to run.name,
-        run_path(run, current_tab_name),
+        run_path(run, target_tab_name),
         class: run == @run ? "active" : "" %>
     </li>
   <% end %>

@@ -2,7 +2,6 @@
   padding: 20px 0 0 10px;
   background-color: #EEE;
   border-top: 2px solid #999;
-  border-bottom: 15px solid #000;
 }
 
 .build-menu a {
@@ -12,4 +11,8 @@
 .build-menu a.active {
   color: #FFF;
   background-color: #000;
+}
+
+.thick-black-bottom-border {
+  border-bottom: 15px solid #000;
 }
