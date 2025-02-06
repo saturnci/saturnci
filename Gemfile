@@ -7,16 +7,16 @@ ruby "3.3.5"
 
 gem "rails", "~> 8.0.0.rc1"
 
-gem "jbuilder"
 gem "bootsnap", require: false
 gem "importmap-rails"
+gem "jbuilder"
 gem "pg", "~> 1.1"
 gem "puma", "~> 6.0"
+gem "pundit"
+gem "solid_cable"
 gem "sprockets-rails"
 gem "stimulus-rails"
 gem "turbo-rails", "~> 1.5"
-gem "solid_cable"
-gem "pundit"
 
 # For soft deletion
 gem "paranoia"
