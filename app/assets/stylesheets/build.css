@@ -5,12 +5,18 @@
   background-color: #000;
 }
 
-.build-wrapper {
+.two-column-master-detail {
   display: flex;
   flex-grow: 1;
   overflow: hidden;
   min-height: 0;
   height: 100%;
+}
+
+.build-inner {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .run-menu, .build-header {
@@ -19,12 +25,6 @@
 
 .build a {
   color: #000;
-}
-
-.build-inner {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
 }
 
 .build-body {
