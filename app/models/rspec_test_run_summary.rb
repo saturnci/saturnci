@@ -1,7 +1,7 @@
 class RSpecTestRunSummary
   def initialize(run, raw_data)
     @run = run
-    @raw_data = raw_data
+    @raw_data = raw_data.with_indifferent_access
   end
 
   def generate_test_case_runs!
