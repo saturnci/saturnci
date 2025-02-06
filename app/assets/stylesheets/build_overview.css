@@ -27,11 +27,11 @@
 }
 
 .test-case-run-list {
-  max-width: 600px;
+  min-width: 600px;
 }
 
 .test-case-run-details {
-  max-width: 600px;
+  min-width: 600px;
 }
 
 .test-case-run {
