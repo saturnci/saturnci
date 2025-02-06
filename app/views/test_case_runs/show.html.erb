@@ -8,13 +8,13 @@
       <br>
 
       <div class="text-red">
-        <%= @test_case_run.exception_message %>
+        <%= @test_case_run.exception_message.gsub("\n", "<br>").html_safe %>
       </div>
 
       <br>
 
       <div>
-        <%= @test_case_run.exception_backtrace %>
+        <%= @test_case_run.exception_backtrace.gsub("\n", "<br>").html_safe %>
       </div>
 
       <br>
