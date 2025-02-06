@@ -1,5 +1,10 @@
 <%= build.test_case_runs.count %> test cases
 
+<div>
+  <%= build.test_case_runs.passed.count %> passed,
+  <%= build.test_case_runs.failed.count %> failed
+</div>
+
 <div class="build-overview">
   <ul>
     <% build.test_case_runs.order("status desc, path").each do |test_case_run| %>
