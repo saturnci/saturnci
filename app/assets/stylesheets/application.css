@@ -52,11 +52,3 @@ pre {
   font-size: 80%;
   text-align: right;
 }
-
-.dashboard {
-  display: flex;
-  flex-grow: 1;
-  overflow: hidden;
-  min-height: 0;
-  height: 100%;
-}
