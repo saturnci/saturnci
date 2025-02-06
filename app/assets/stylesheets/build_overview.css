@@ -1,0 +1,12 @@
+.build-overview {
+  font-family: monospace;
+  font-size: 12px;
+}
+
+.test-case-run-status-0 {
+  color: green;
+}
+
+.test-case-run-status-1 {
+  color: red;
+}

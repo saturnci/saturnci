@@ -1,0 +1,9 @@
+<div class="build-overview">
+  <ul>
+    <% build.test_case_runs.order("status desc, path").each do |test_case_run| %>
+      <li class="test-case-run-status-<%= test_case_run.status %>">
+        <%= test_case_run.identifier %>
+      </li>
+    <% end %>
+  </ul>
+</div>
