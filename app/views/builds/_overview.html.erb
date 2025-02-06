@@ -1,29 +1,31 @@
 <% if build.finished? %>
-  <%= build.test_case_runs.count %> test cases
+  <% cache do %>
+    <%= build.test_case_runs.count %> test cases
 
-  <div>
-    <%= build.test_case_runs.passed.count %> passed,
-    <%= build.test_case_runs.failed.count %> failed
-  </div>
-
-  <br>
-
-  <div class="test-case-runs">
-    <div class="test-case-run-list">
-      <ul class="build-overview-test-case-runs">
-        <% build.test_case_runs.order("status desc, path").each do |test_case_run| %>
-          <li class="test-case-run-status-<%= test_case_run.status %>">
-            <%= link_to test_case_run.tidy_identifier,
-              project_test_case_run_path(test_case_run.project, test_case_run),
-              data: { turbo_frame: "test_case_run_details" } %>
-          </li>
-        <% end %>
-      </ul>
+    <div>
+      <%= build.test_case_runs.passed.count %> passed,
+      <%= build.test_case_runs.failed.count %> failed
     </div>
 
-    <%= turbo_frame_tag "test_case_run_details", class: "test-case-run-details" do %>
-    <% end %>
-  </div>
+    <br>
+
+    <div class="test-case-runs">
+      <div class="test-case-run-list">
+        <ul class="build-overview-test-case-runs">
+          <% build.test_case_runs.order("status desc, path").each do |test_case_run| %>
+            <li class="test-case-run-status-<%= test_case_run.status %>">
+              <%= link_to test_case_run.tidy_identifier,
+                project_test_case_run_path(test_case_run.project, test_case_run),
+                data: { turbo_frame: "test_case_run_details" } %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+
+      <%= turbo_frame_tag "test_case_run_details", class: "test-case-run-details" do %>
+      <% end %>
+    </div>
+  <% end %>
 <% else %>
   Waiting for test suite to finish...
 <% end %>
