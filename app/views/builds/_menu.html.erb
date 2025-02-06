@@ -1,4 +1,8 @@
 <ul class="run-menu tab-menu">
+  <li>
+    <%= link_to "Overview", project_build_path(build.project_id, build), data: { turbo: false } %>
+  </li>
+
   <% build.runs.sorted.each do |run| %>
     <li>
       <%= link_to run.name,
