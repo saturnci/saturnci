@@ -6,8 +6,8 @@ require "fileutils"
 require "open3"
 
 PROJECT_DIR = "/home/ubuntu/project"
-RSPEC_DOCUMENTATION_OUTPUT_FILENAME = "tmp/rspec_documentation_output.txt"
 TEST_RESULTS_FILENAME = "tmp/test_results.txt"
+RSPEC_DOCUMENTATION_OUTPUT_FILENAME = "tmp/rspec_documentation_output.txt"
 
 class Script
   def self.execute
