@@ -52,3 +52,7 @@ pre {
   font-size: 80%;
   text-align: right;
 }
+
+.text-red {
+  color: red;
+}
