@@ -51,6 +51,10 @@ class Build < ApplicationRecord
     "Failed"
   end
 
+  def finished?
+    status != "Running"
+  end
+
   def duration_formatted
     return unless duration.present?
     minutes = (duration / 60).floor

@@ -1,4 +1,4 @@
-<% if build.test_case_runs.any? %>
+<% if build.finished? %>
   <%= build.test_case_runs.count %> test cases
 
   <div>
