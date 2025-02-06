@@ -23,6 +23,7 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
     JWT
     JSON
     RSA
+    RSpec
     SSH
     SaturnCI
     SaturnCICLI
