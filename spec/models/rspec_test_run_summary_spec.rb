@@ -77,7 +77,14 @@ describe RSpecTestRunSummary do
               file_path: "./spec/streaming/system_logs/system/visiting_different_tab_spec.rb",
               line_number: 28,
               run_time: 12.255599035,
-              exception: "something went wrong",
+              exception: {
+                "class" => "RSpec::Expectations::ExpectationNotMetError",
+                "message" => "\nexpected: 10000\n     got: 0.3e0\n\n(compared using ==)\n",
+                "backtrace" => [
+                  "./spec/models/charge_spec.rb:16:in `block (3 levels) in <main>'",
+                  "/usr/local/bundle/gems/webmock-3.24.0/lib/webmock/rspec.rb:39:in `block (2 levels) in <top (required)>'"
+                ]
+              },
               pending_message: nil
             },
           ]
@@ -88,9 +95,14 @@ describe RSpecTestRunSummary do
         RSpecTestRunSummary.new(run, raw_data)
       end
 
-      it "sets the exception" do
+      it "sets the exception message" do
         rspec_test_run_summary.generate_test_case_runs!
-        expect(run.reload.test_case_runs.first.exception).to eq("something went wrong")
+        expect(run.reload.test_case_runs.first.exception_message).to eq("expected: 10000\n     got: 0.3e0\n\n(compared using ==)")
+      end
+
+      it "sets the exception backtrace" do
+        rspec_test_run_summary.generate_test_case_runs!
+        expect(run.reload.test_case_runs.first.exception_backtrace).to eq("./spec/models/charge_spec.rb:16:in `block (3 levels) in <main>'\n/usr/local/bundle/gems/webmock-3.24.0/lib/webmock/rspec.rb:39:in `block (2 levels) in <top (required)>'")
       end
     end
 
@@ -119,6 +131,16 @@ describe RSpecTestRunSummary do
       it "sets exception to nil" do
         rspec_test_run_summary.generate_test_case_runs!
         expect(run.reload.test_case_runs.first.exception).to be_nil
+      end
+
+      it "gives a blank message" do
+        rspec_test_run_summary.generate_test_case_runs!
+        expect(run.reload.test_case_runs.first.exception_message).to be_blank
+      end
+
+      it "gives a blank backtrace" do
+        rspec_test_run_summary.generate_test_case_runs!
+        expect(run.reload.test_case_runs.first.exception_backtrace).to be_blank
       end
     end
   end

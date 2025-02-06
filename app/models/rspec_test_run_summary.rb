@@ -13,6 +13,8 @@ class RSpecTestRunSummary
         description: example[:description],
         line_number: example[:line_number],
         exception: example[:exception],
+        exception_message: example[:exception] && example[:exception][:message].strip,
+        exception_backtrace: example[:exception] && example[:exception][:backtrace].join("\n"),
         duration: example[:run_time]
       )
     end
