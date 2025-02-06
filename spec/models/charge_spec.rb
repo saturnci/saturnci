@@ -13,7 +13,7 @@ RSpec.describe Charge, type: :model do
 
   describe "#amount" do
     it "is amount_cents in dollars" do
-      expect(charge.amount).to eq(0.3)
+      expect(charge.amount).to eq(348953489534895345989)
     end
   end
 end
