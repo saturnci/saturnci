@@ -6,7 +6,17 @@ module API
         request.body.rewind
         run.update!(json_output: request.body.read)
 
-        head :ok
+        rspec_test_run_summary = RSpecTestRunSummary.new(
+          run,
+          JSON.parse(run.json_output)
+        )
+
+        rspec_test_run_summary.generate_test_case_runs!
+
+        render(
+          json: { test_case_run_count: run.test_case_runs.count },
+          status: :ok
+        )
       end
     end
   end
