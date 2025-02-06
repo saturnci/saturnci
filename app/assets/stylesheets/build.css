@@ -5,6 +5,14 @@
   background-color: #000;
 }
 
+.build-wrapper {
+  display: flex;
+  flex-grow: 1;
+  overflow: hidden;
+  min-height: 0;
+  height: 100%;
+}
+
 .run-menu, .build-header {
   background-color: #FFF;
 }
