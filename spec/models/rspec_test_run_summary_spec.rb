@@ -48,7 +48,17 @@ describe RSpecTestRunSummary do
     }
   end
 
+  let!(:run) { create(:run) }
+
+  let!(:rspec_test_run_summary) do
+    RSpecTestRunSummary.new(run, raw_data)
+  end
+
   it "works" do
-    RSpecTestRunSummary.new(raw_data)
+    expect {
+      rspec_test_run_summary.generate_test_case_runs!
+    }.to change {
+      run.reload.test_case_runs.count
+    }.by(3)
   end
 end
