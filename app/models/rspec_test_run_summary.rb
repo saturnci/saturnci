@@ -9,7 +9,7 @@ class RSpecTestRunSummary
       @run.test_case_runs.create!(
         identifier: example[:id],
         path: example[:file_path],
-        status: example[:status],
+        status: example[:status].to_s,
         description: example[:description],
         line_number: example[:line_number],
         duration: example[:run_time]
