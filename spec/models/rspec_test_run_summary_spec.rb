@@ -64,6 +64,65 @@ describe RSpecTestRunSummary do
     end
   end
 
+  describe "exception" do
+    context "when there is an exception" do
+      let!(:raw_data) do
+        {
+          examples: [
+            {
+              id: "./spec/streaming/system_logs/system/visiting_different_tab_spec.rb[1:1:1:1]",
+              description: "does not show the system log content",
+              full_description: "Visiting different tab visiting a different tab after log update occurs does not show the system log content",
+              status: "failed",
+              file_path: "./spec/streaming/system_logs/system/visiting_different_tab_spec.rb",
+              line_number: 28,
+              run_time: 12.255599035,
+              exception: "something went wrong",
+              pending_message: nil
+            },
+          ]
+        }
+      end
+
+      let!(:rspec_test_run_summary) do
+        RSpecTestRunSummary.new(run, raw_data)
+      end
+
+      it "sets the exception" do
+        rspec_test_run_summary.generate_test_case_runs!
+        expect(run.reload.test_case_runs.first.exception).to eq("something went wrong")
+      end
+    end
+
+    context "when there is no exception" do
+      let!(:raw_data) do
+        {
+          examples: [
+            {
+              id: "./spec/streaming/system_logs/system/visiting_different_tab_spec.rb[1:1:1:1]",
+              description: "does not show the system log content",
+              full_description: "Visiting different tab visiting a different tab after log update occurs does not show the system log content",
+              status: "passed",
+              file_path: "./spec/streaming/system_logs/system/visiting_different_tab_spec.rb",
+              line_number: 28,
+              run_time: 12.255599035,
+              pending_message: nil
+            },
+          ]
+        }
+      end
+
+      let!(:rspec_test_run_summary) do
+        RSpecTestRunSummary.new(run, raw_data)
+      end
+
+      it "sets exception to nil" do
+        rspec_test_run_summary.generate_test_case_runs!
+        expect(run.reload.test_case_runs.first.exception).to be_nil
+      end
+    end
+  end
+
   describe "status" do
     context "passed" do
       let!(:raw_data) do

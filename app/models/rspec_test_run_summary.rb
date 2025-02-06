@@ -12,6 +12,7 @@ class RSpecTestRunSummary
         status: example[:status].to_s,
         description: example[:description],
         line_number: example[:line_number],
+        exception: example[:exception],
         duration: example[:run_time]
       )
     end

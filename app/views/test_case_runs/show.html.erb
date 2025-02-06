@@ -1,6 +1,10 @@
 <%= turbo_frame_tag "test_case_run_details" do %>
   <div class="test-case-run">
     <div>
+      <%= @test_case_run.exception %>
+    </div>
+
+    <div>
       <%= @test_case_run.status %>
     </div>
 
