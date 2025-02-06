@@ -1,7 +1,6 @@
 .build-overview-test-case-runs {
   font-family: monospace;
   font-size: 12px;
-  max-width: 600px;
   padding: 0;
   margin: 0;
 }
@@ -24,9 +23,15 @@
 .test-case-runs {
   display: flex;
   flex-direction: row;
+  width: 100%;
 }
 
 .test-case-run-list {
+  width: 35%;
+}
+
+.test-case-run-details {
+  width: 65%;
 }
 
 .test-case-run {
