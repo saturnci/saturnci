@@ -3,10 +3,10 @@
   font-size: 12px;
 }
 
-.test-case-run-status-0 {
+.test-case-run-status-passed {
   color: green;
 }
 
-.test-case-run-status-1 {
+.test-case-run-status-failed {
   color: red;
 }
