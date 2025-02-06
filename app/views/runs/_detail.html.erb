@@ -6,15 +6,7 @@
   <% end %>
 
   <%= turbo_frame_tag "build_body", class: "build-body", data: { turbo_action: "advance" } do %>
-    <ul class="run-menu tab-menu">
-      <% @build.runs.sorted.each do |run| %>
-        <li>
-          <%= link_to run.name,
-            run_path(run, current_tab_name),
-            class: run == @run ? "active" : "" %>
-        </li>
-      <% end %>
-    </ul>
+    <%= render "builds/menu", build: @build, run: @run, current_tab_name: current_tab_name %>
 
     <ul class="build-menu tab-menu">
       <% build_navigation(@run, current_tab_name) do |nav| %>

@@ -1,0 +1,9 @@
+<ul class="run-menu tab-menu">
+  <% build.runs.sorted.each do |run| %>
+    <li>
+      <%= link_to run.name,
+        run_path(run, current_tab_name),
+        class: run == @run ? "active" : "" %>
+    </li>
+  <% end %>
+</ul>
