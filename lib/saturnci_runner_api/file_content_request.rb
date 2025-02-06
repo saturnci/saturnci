@@ -15,6 +15,7 @@ module SaturnCIRunnerAPI
             --data-binary "@#{@file_path}" #{url}
       COMMAND
 
+      puts command
       system(command)
     end
 
