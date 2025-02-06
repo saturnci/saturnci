@@ -1,3 +1,5 @@
+<h3>Test Cases (<%= build.test_case_runs.count %>)</h3>
+
 <div class="build-overview">
   <ul>
     <% build.test_case_runs.order("status desc, path").each do |test_case_run| %>
