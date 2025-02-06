@@ -3,6 +3,7 @@ class Build < ApplicationRecord
   belongs_to :project
   has_many :jobs
   has_many :runs
+  has_many :test_case_runs, through: :runs
 
   after_initialize do
     self.seed ||= rand(10000)
@@ -48,6 +49,10 @@ class Build < ApplicationRecord
     return "Cancelled" if runs.any? { |run| run.status == "Cancelled" }
     return "Passed" if runs.all? { |run| run.status == "Passed" }
     "Failed"
+  end
+
+  def finished?
+    status != "Running"
   end
 
   def duration_formatted

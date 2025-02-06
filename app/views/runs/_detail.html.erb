@@ -6,9 +6,13 @@
   <% end %>
 
   <%= turbo_frame_tag "build_body", class: "build-body", data: { turbo_action: "advance" } do %>
-    <%= render "builds/menu", build: @build, run: @run, current_tab_name: current_tab_name %>
+    <%= render "builds/menu",
+      build: @build,
+      run: @run,
+      current_tab_name: current_tab_name,
+      target_tab_name: current_tab_name %>
 
-    <ul class="build-menu tab-menu">
+    <ul class="build-menu tab-menu thick-black-bottom-border">
       <% build_navigation(@run, current_tab_name) do |nav| %>
         <%= nav.item "Test Output", "test_output" %>
         <%= nav.item "System Logs", "system_logs" %>

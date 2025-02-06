@@ -1,0 +1,19 @@
+<% if build.finished? %>
+  <%= build.test_case_runs.count %> test cases
+
+  <div>
+    <%= build.test_case_runs.passed.count %> passed,
+    <%= build.test_case_runs.failed.count %> failed
+  </div>
+
+  <ul class="build-overview-test-case-runs">
+    <% build.test_case_runs.order("status desc, path").each do |test_case_run| %>
+      <li class="test-case-run-status-<%= test_case_run.status %>">
+        <%= link_to test_case_run.tidy_identifier,
+          project_test_case_run_path(test_case_run.project, test_case_run) %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  Waiting for test suite to finish...
+<% end %>
