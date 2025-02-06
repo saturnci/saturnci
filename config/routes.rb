@@ -26,6 +26,8 @@ Rails.application.routes.draw do
       get ":partial", to: "builds#show", on: :member, as: "build_detail_content"
     end
 
+    resources :test_case_runs, only: :show
+
     get "billing(/:year(/:month))", to: "billing#index", as: "billing"
   end
 

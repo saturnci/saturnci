@@ -1,12 +1,20 @@
-.build-overview {
+.build-overview-test-case-runs {
   font-family: monospace;
   font-size: 12px;
+  max-width: 600px;
 }
 
-.test-case-run-status-passed {
+.build-overview-test-case-runs a {
+  display: block;
+  background: none;
+  padding: 3px 6px;
+}
+
+.test-case-run-status-passed a {
   color: green;
 }
 
-.test-case-run-status-failed {
-  color: red;
+.test-case-run-status-failed a {
+  color: #FFF;
+  background-color: red;
 }

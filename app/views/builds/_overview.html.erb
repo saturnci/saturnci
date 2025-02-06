@@ -6,15 +6,14 @@
     <%= build.test_case_runs.failed.count %> failed
   </div>
 
-  <div class="build-overview">
-    <ul>
-      <% build.test_case_runs.order("status desc, path").each do |test_case_run| %>
-        <li class="test-case-run-status-<%= test_case_run.status %>">
-          <%= test_case_run.tidy_identifier %>
-        </li>
-      <% end %>
-    </ul>
-  </div>
+  <ul class="build-overview-test-case-runs">
+    <% build.test_case_runs.order("status desc, path").each do |test_case_run| %>
+      <li class="test-case-run-status-<%= test_case_run.status %>">
+        <%= link_to test_case_run.tidy_identifier,
+          project_test_case_run_path(test_case_run.project, test_case_run) %>
+      </li>
+    <% end %>
+  </ul>
 <% else %>
   Waiting for test suite to finish...
 <% end %>
