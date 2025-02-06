@@ -120,7 +120,7 @@ class Script
       host: ENV["HOST"],
       api_path: "runs/#{ENV["RUN_ID"]}/json_output",
       content_type: "application/json",
-      file_path: "tmp/test_output.json"
+      file_path: "tmp/json_output.json"
     )
     test_output_request.execute
 
