@@ -7,7 +7,11 @@
       <% end %>
 
       <%= turbo_frame_tag "build_body", class: "build-body", data: { turbo_action: "advance" } do %>
-        <%= render "builds/menu", build: @build, run: nil, target_tab_name: "test_output" %>
+        <%= render "builds/menu",
+          build: @build,
+          run: nil,
+          current_tab_name: "overview",
+          target_tab_name: "test_output" %>
       <% end %>
     <% end %>
   <% end %>
