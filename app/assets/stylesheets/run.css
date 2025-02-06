@@ -2,6 +2,7 @@
   overflow-y: auto;
   height: 100vh;
   z-index: 100;
+  background-color: #000;
 }
 
 .terminal-masked, .terminal-masked span {
