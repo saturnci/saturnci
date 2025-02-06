@@ -7,7 +7,7 @@
 .build-overview-test-case-runs a {
   display: block;
   background: none;
-  padding: 3px 6px;
+  padding: 3px 0;
 }
 
 .test-case-run-status-passed a {
