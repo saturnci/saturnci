@@ -1,16 +1,20 @@
-<%= build.test_case_runs.count %> test cases
+<% if build.test_case_runs.any? %>
+  <%= build.test_case_runs.count %> test cases
 
-<div>
-  <%= build.test_case_runs.passed.count %> passed,
-  <%= build.test_case_runs.failed.count %> failed
-</div>
+  <div>
+    <%= build.test_case_runs.passed.count %> passed,
+    <%= build.test_case_runs.failed.count %> failed
+  </div>
 
-<div class="build-overview">
-  <ul>
-    <% build.test_case_runs.order("status desc, path").each do |test_case_run| %>
-      <li class="test-case-run-status-<%= test_case_run.status %>">
-        <%= test_case_run.tidy_identifier %>
-      </li>
-    <% end %>
-  </ul>
-</div>
+  <div class="build-overview">
+    <ul>
+      <% build.test_case_runs.order("status desc, path").each do |test_case_run| %>
+        <li class="test-case-run-status-<%= test_case_run.status %>">
+          <%= test_case_run.tidy_identifier %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% else %>
+  Waiting for test suite to finish...
+<% end %>
