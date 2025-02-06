@@ -1,6 +1,6 @@
 <li>
   <%= link_to BuildLink.new(build).path,
-    data: { turbo_frame: "details_pane", action: "click->build-list#makeActive", build_list_target: "link" },
+    data: { turbo_frame: "build", action: "click->build-list#makeActive", build_list_target: "link" },
     class: build == active_build ? "active" : "",
     id: "build_link_#{build.id}" do %>
 
