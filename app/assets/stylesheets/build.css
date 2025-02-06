@@ -1,16 +1,16 @@
-.build {
-  flex: 1;
-  min-height: 0;
-  display: flex;
-  background-color: #000;
-}
-
 .two-column-master-detail {
   display: flex;
   flex-grow: 1;
   overflow: hidden;
   min-height: 0;
   height: 100%;
+}
+
+.build-wrapper {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  background-color: #000;
 }
 
 .build-inner {
