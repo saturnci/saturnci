@@ -2,6 +2,12 @@
   <div class="test-case-run">
     <% if @test_case_run.exception.present? %>
       <div>
+        <%= @test_case_run.path %>:<%= @test_case_run.line_number %>
+      </div>
+
+      <br>
+
+      <div>
         <%= @test_case_run.description %>
       </div>
 
