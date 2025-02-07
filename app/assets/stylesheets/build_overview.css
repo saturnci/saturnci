@@ -12,6 +12,8 @@
 }
 
 .test-case-run-list {
+  border: 2px solid #999;
+  padding: 10px;
   background-color: #FFF;
   flex-grow: 1;
   max-height: 100%;
