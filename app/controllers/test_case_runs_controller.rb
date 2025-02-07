@@ -4,10 +4,7 @@ class TestCaseRunsController < ApplicationController
     authorize @test_case_run
 
     if turbo_frame_request?
-      render partial: "test_case_runs/details", locals: {
-        test_case_run: @test_case_run,
-      }
-
+      render partial: "test_case_runs/details", locals: { test_case_run: @test_case_run }
       return
     end
 

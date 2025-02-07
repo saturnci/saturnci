@@ -13,6 +13,11 @@ class BuildsController < ApplicationController
     @build = Build.find(params[:id])
     authorize @build
 
+    if turbo_frame_request?
+      render partial: "builds/detail", locals: { build: @build }
+      return
+    end
+
     @build_component = BuildComponent.new(
       build: @build,
       current_tab_name: params[:partial],
