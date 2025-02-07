@@ -1,38 +1,28 @@
 <%= turbo_frame_tag "test_case_run_details" do %>
   <div class="test-case-run">
+    <h2 class="font-fixed">
+      <%= @test_case_run.path %>:<%= @test_case_run.line_number %>
+    </h2>
+
+    <h3>
+      <%= @test_case_run.description %>
+    </h3>
+
+    <br>
+
     <% if @test_case_run.exception.present? %>
-      <div>
-        <%= @test_case_run.path %>:<%= @test_case_run.line_number %>
-      </div>
-
-      <br>
-
-      <div>
-        <%= @test_case_run.description %>
-      </div>
-
-      <br>
-
-      <div class="text-red">
+      <div class="terminal text-red">
         <%= @test_case_run.exception_message.gsub("\n", "<br>").html_safe %>
       </div>
 
       <br>
 
-      <div>
+      <div class="terminal">
         <%= @test_case_run.exception_backtrace.gsub("\n", "<br>").html_safe %>
       </div>
     <% else %>
       <div>
         <%= @test_case_run.status %> in <%= @test_case_run.duration %> seconds
-      </div>
-
-      <div>
-        <%= @test_case_run.path %>:<%= @test_case_run.line_number %>
-      </div>
-
-      <div>
-        <%= @test_case_run.identifier %>
       </div>
     <% end %>
   </div>
