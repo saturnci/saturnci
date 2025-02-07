@@ -53,6 +53,10 @@ pre {
   text-align: right;
 }
 
+.font-fixed {
+  font-family: monospace;
+}
+
 .text-red {
   color: red;
 }

@@ -35,6 +35,7 @@
 }
 
 .terminal {
+  font-family: monospace;
   background-color: #000;
   color: #FFF;
 }
