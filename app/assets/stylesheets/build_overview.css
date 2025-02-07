@@ -1,3 +1,30 @@
+.build-overview-wrapper {
+  padding: 20px 15px;
+  background-color: #EEE;
+  border-top: 2px solid #999;
+
+  flex-grow: 1;
+  max-height: 100%;
+  overflow-y: auto;
+
+  display: flex;
+  flex-direction: row;
+}
+
+.test-case-run-list {
+  background-color: #FFF;
+  flex-grow: 1;
+  max-height: 100%;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.test-case-run-details {
+  flex: 2;
+  height: 100%;
+  background-color: #000;
+}
+
 .build-overview-test-case-runs {
   font-family: monospace;
   font-size: 12px;
@@ -19,22 +46,9 @@
   color: red;
 }
 
-.test-case-runs {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-}
-
-.test-case-run-list {
-}
-
-.test-case-run-details {
-}
-
 .test-case-run {
   font-family: monospace;
   font-size: 12px;
   color: #FFF;
-  background-color: #000;
   padding: 20px;
 }
