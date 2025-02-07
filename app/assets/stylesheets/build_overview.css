@@ -20,18 +20,18 @@
 }
 
 .test-case-run-list {
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
   background-color: #FFF;
   flex: 1;
 }
 
 .test-case-run-details {
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
   flex: 3;
   background-color: #DDD;
-  border-left: none;
+  border-right: none;
 }
 
 .test-case-run-details h2 {
