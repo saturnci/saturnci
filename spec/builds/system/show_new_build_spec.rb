@@ -9,10 +9,25 @@ describe "Show new build", type: :system do
   end
 
   context "a new build gets created" do
+    let!(:new_build) { create(:build, project: build.project) }
+
     it "shows the new build" do
-      new_build = create(:build, project: build.project)
       new_build.broadcast
-      expect(page).to have_content(new_build.commit_hash)
+
+      within ".build-list" do
+        expect(page).to have_content(new_build.commit_hash, count: 1)
+      end
+    end
+
+    context "the page gets loaded before the broadcast occurs" do
+      it "does not show the new build twice" do
+        visit project_path(build.project)
+        new_build.broadcast
+
+        within ".build-list" do
+          expect(page).to have_content(new_build.commit_hash, count: 1)
+        end
+      end
     end
   end
 
