@@ -20,37 +20,3 @@
 <% else %>
   Waiting for test suite to finish...
 <% end %>
-
-<% if false %>
-<% if build.finished? %>
-  <% cache do %>
-    <%= build.test_case_runs.count %> test cases
-
-    <div>
-      <%= build.test_case_runs.passed.count %> passed,
-      <%= build.test_case_runs.failed.count %> failed
-    </div>
-
-    <br>
-
-    <div class="test-case-runs">
-      <div class="test-case-run-list">
-        <ul class="build-overview-test-case-runs">
-          <% build.test_case_runs.order("status desc, path").each do |test_case_run| %>
-            <li class="test-case-run-status-<%= test_case_run.status %>">
-              <%= link_to "#{File.basename(test_case_run.path)}:#{test_case_run.line_number}",
-                project_test_case_run_path(test_case_run.project, test_case_run),
-                data: { turbo_frame: "test_case_run_details" } %>
-            </li>
-          <% end %>
-        </ul>
-      </div>
-
-      <%= turbo_frame_tag "test_case_run_details", class: "test-case-run-details", data: { turbo_action: "advance" } do %>
-      <% end %>
-    </div>
-  <% end %>
-<% else %>
-  Waiting for test suite to finish...
-<% end %>
-<% end %>
