@@ -52,7 +52,7 @@ class Build < ApplicationRecord
   end
 
   def finished?
-    status != "Running"
+    status != "Running" && status != "Not Started"
   end
 
   def duration_formatted
