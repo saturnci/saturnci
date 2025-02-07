@@ -11,16 +11,14 @@
       current_tab_name: "overview",
       target_tab_name: "test_output" %>
 
-    <% if build.finished? %>
-      <div class="build-overview-wrapper">
+    <div class="build-overview-wrapper">
+      <% if build.finished? %>
         <div class="test-case-run-list">
           <%= render "builds/test_case_run_list", build: %>
         </div>
 
         <%= render "test_case_runs/details", test_case_run: @test_case_run %>
-      </div>
-    <% else %>
-      Waiting for test suite to finish...
-    <% end %>
+      <% end %>
+    </div>
   <% end %>
 <% end %>
