@@ -22,7 +22,7 @@
         </ul>
       </div>
 
-      <%= turbo_frame_tag "test_case_run_details", class: "test-case-run-details" do %>
+      <%= turbo_frame_tag "test_case_run_details", class: "test-case-run-details", data: { turbo_action: "advance" } do %>
       <% end %>
     </div>
   <% end %>
