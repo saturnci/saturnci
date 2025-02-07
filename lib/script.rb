@@ -1,9 +1,9 @@
-require "net/http"
-require "uri"
-require "json"
 require "digest"
 require "fileutils"
+require "json"
+require "net/http"
 require "open3"
+require "uri"
 
 PROJECT_DIR = "/home/ubuntu/project"
 RSPEC_DOCUMENTATION_OUTPUT_FILENAME = "tmp/rspec_documentation_output.txt"
