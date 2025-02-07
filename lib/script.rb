@@ -42,6 +42,7 @@ class Script
     gemfile_lock_checksum = Digest::SHA256.file("Gemfile.lock").hexdigest
     registry_cache_url = "registrycache.saturnci.com:5000"
 
+    # This pulls a cached Docker image
     registry_cache_image_url = "#{registry_cache_url}/saturn_test_app:#{gemfile_lock_checksum}"
 
     # Registry cache IP is sometimes wrong without this.
