@@ -2,8 +2,7 @@
   <li>
     <%= link_to "Overview",
       project_build_path(build.project_id, build),
-      class: current_tab_name == "overview" ? "active" : "",
-      data: { turbo: false } %>
+      class: current_tab_name == "overview" ? "active" : "" %>
   </li>
 
   <% build.runs.sorted.each do |run| %>
