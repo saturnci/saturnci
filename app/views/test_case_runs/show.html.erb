@@ -1,1 +1,5 @@
-<%= render "test_case_runs/details", test_case_run: @test_case_run %>
+<%= render @build_component do |component| %>
+  <%= component.with_body do %>
+    <%= render "test_case_runs/details", test_case_run: @test_case_run %>
+  <% end %>
+<% end %>
