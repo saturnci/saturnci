@@ -11,4 +11,8 @@ class TestCaseRun < ApplicationRecord
   def tidy_identifier
     identifier.gsub("\.\/spec\/", "")
   end
+
+  def tidy_path
+    path.gsub("\.\/", "")
+  end
 end
