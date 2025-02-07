@@ -73,6 +73,11 @@ class Build < ApplicationRecord
   end
 
   def broadcast
+    broadcast_remove_to(
+      [project.user, "builds"],
+      target: ActionView::RecordIdentifier.dom_id(self)
+    )
+
     broadcast_prepend_to(
       [project.user, "builds"],
       target: "build-list",
