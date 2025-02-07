@@ -1,4 +1,4 @@
-<%= turbo_frame_tag "test_case_run_details" do %>
+<%= turbo_frame_tag "test_case_run_details", class: "test-case-run-details", data: { turbo_action: "advance" } do %>
   <div class="test-case-run">
     <h2 class="font-fixed">
       <%= test_case_run.path %>:<%= test_case_run.line_number %>

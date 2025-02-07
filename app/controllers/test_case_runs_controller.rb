@@ -3,8 +3,10 @@ class TestCaseRunsController < ApplicationController
     @test_case_run = TestCaseRun.find(params[:id])
     authorize @test_case_run
 
+    @build = @test_case_run.run.build
+
     @build_component = BuildComponent.new(
-      build: @test_case_run.run.build,
+      build: @build,
       current_tab_name: "overview",
       branch_name: params[:branch_name],
       statuses: params[:statuses],

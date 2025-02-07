@@ -17,8 +17,7 @@
           <%= render "builds/test_case_run_list", build: %>
         </div>
 
-        <%= turbo_frame_tag "test_case_run_details", class: "test-case-run-details", data: { turbo_action: "advance" } do %>
-        <% end %>
+        <%= render "test_case_runs/details", test_case_run: @test_case_run %>
       </div>
     <% else %>
       Waiting for test suite to finish...
