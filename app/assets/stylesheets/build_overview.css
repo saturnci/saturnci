@@ -22,7 +22,7 @@
 
 .test-case-run-list {
   border-left: 2px solid #999;
-  background-color: #FFF;
+  background-color: #EEE;
   flex: 0 0 300px;
 }
 
@@ -63,11 +63,11 @@
 }
 
 .build-overview-test-case-runs li:nth-child(odd) {
-  background-color: #EEE;
+  background-color: #FFF;
 }
 
 .build-overview-test-case-runs li:nth-child(even) {
-  background-color: #FFF;
+  background-color: #EEE;
 }
 
 .test-case-run-status-passed a {
