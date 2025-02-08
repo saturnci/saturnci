@@ -1,5 +1,4 @@
 .build-overview-wrapper {
-  padding: 20px 15px;
   background-color: #EEE;
   border-top: 2px solid #999;
 
@@ -12,23 +11,17 @@
 }
 
 .test-case-run-details, .test-case-run-list {
-  border: 1px solid #999;
   overflow-y: auto;
   max-height: 100%;
 }
 
 .test-case-run-details {
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  background-color: #DDD;
-  border-right: none;
   flex: 1;
-  padding: 5px 10px;
+  padding: 5px 10px 30px 10px;
 }
 
 .test-case-run-list {
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
+  border-left: 2px solid #999;
   background-color: #FFF;
   flex: 0 0 300px;
 }
