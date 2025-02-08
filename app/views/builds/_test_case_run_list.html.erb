@@ -1,9 +1,11 @@
 <ul class="build-overview-test-case-runs">
-  <% build.test_case_runs.failed_first.each do |test_case_run| %>
-    <li class="test-case-run-status-<%= test_case_run.status %>">
-      <%= link_to "#{File.basename(test_case_run.path)}:#{test_case_run.line_number}",
-        project_test_case_run_path(test_case_run.project, test_case_run),
-        data: { turbo_frame: "test_case_run_details" } %>
-    </li>
+  <% cache build.updated_at do %>
+    <% build.test_case_runs.failed_first.each do |test_case_run| %>
+      <li class="test-case-run-status-<%= test_case_run.status %>">
+        <%= link_to "#{File.basename(test_case_run.path)}:#{test_case_run.line_number}",
+          project_test_case_run_path(test_case_run.project, test_case_run),
+          data: { turbo_frame: "test_case_run_details" } %>
+      </li>
+    <% end %>
   <% end %>
 </ul>
