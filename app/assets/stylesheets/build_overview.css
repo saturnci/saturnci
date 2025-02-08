@@ -58,8 +58,7 @@
 }
 
 .build-overview-test-case-runs a:hover {
-  color: #000;
-  background-color: #8DF;
+  background-color: #DDD;
 }
 
 .build-overview-test-case-runs a.active {
