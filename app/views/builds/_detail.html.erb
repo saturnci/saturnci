@@ -21,7 +21,7 @@
             <%= build.test_case_runs.failed.count %> failed
           </div>
 
-          <%= render "builds/test_case_run_list", build: %>
+          <%= render "builds/test_case_run_list", build:, active_test_case_run: test_case_run %>
         </div>
       <% end %>
     </div>
