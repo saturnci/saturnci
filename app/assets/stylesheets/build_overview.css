@@ -70,11 +70,11 @@
 }
 
 .build-overview-test-case-runs li:nth-child(odd) {
-  background-color: #FFF;
+  background-color: #EEE;
 }
 
 .build-overview-test-case-runs li:nth-child(even) {
-  background-color: #EEE;
+  background-color: #FFF;
 }
 
 .test-case-run-status-passed a {
