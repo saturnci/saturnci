@@ -30,7 +30,6 @@ class BuildsController < ApplicationController
     end
 
     if @build.test_case_runs.any?
-      test_case_run = @build.test_case_runs.failed_first.first
       redirect_to project_test_case_run_path(@build.project, test_case_run) and return
     end
 
