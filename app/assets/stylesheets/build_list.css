@@ -28,6 +28,10 @@
   color: black;
 }
 
+.build-list a:hover {
+  background-color: #EEE;
+}
+
 .build-list a.active {
   background-color: #00F;
   color: #FFF;
