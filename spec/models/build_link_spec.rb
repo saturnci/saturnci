@@ -3,6 +3,14 @@ require "rails_helper"
 describe BuildLink do
   include Rails.application.routes.url_helpers
 
+  context "build is finished" do
+    let!(:build) { create(:build, :with_failed_run) }
+
+    it "links to overview page" do
+      expect(BuildLink.new(build).path).to eq(project_build_path(build.project, build))
+    end
+  end
+
   context "there are no runs" do
     let!(:build) { create(:build) }
 
