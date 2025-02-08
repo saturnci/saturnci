@@ -12,14 +12,12 @@
       target_tab_name: "test_output" %>
 
     <div class="build-overview-wrapper">
-      <% cache build.updated_at do %>
         <% if build.finished? %>
           <%= render "test_case_runs/details", test_case_run: @test_case_run %>
+
           <div class="test-case-run-list">
             <%= render "builds/test_case_run_list", build: %>
           </div>
-
-        <% end %>
       <% end %>
     </div>
   <% end %>
