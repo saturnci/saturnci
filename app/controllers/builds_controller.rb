@@ -29,9 +29,9 @@ class BuildsController < ApplicationController
       return
     end
 
-    if @build.test_case_runs.any?
-      redirect_to project_test_case_run_path(@build.project, test_case_run) and return
-    end
+    #if @build.test_case_runs.any?
+      #redirect_to project_test_case_run_path(@build.project, test_case_run) and return
+    #end
 
     @build_component = BuildComponent.new(
       build: @build,
