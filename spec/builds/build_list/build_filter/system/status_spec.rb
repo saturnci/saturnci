@@ -99,4 +99,28 @@ describe "Status filtering", type: :system do
       expect(page).to have_checked_field("Failed")
     end
   end
+
+  context "starting from build overview page" do
+    let!(:test_case_run) do
+      create(:test_case_run, run: failed_run)
+    end
+
+    before do
+      visit project_build_path(failed_run.build.project, failed_run.build)
+      check "Passed"
+      click_on "Apply"
+    end
+
+    it "includes the passed build" do
+      within ".build-list" do
+        expect(page).to have_content(passed_run.build.commit_hash)
+      end
+    end
+
+    it "does not include the failed build" do
+      within ".build-list" do
+        expect(page).not_to have_content(failed_run.build.commit_hash)
+      end
+    end
+  end
 end

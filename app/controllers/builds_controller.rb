@@ -30,7 +30,11 @@ class BuildsController < ApplicationController
     end
 
     if @build.test_case_runs.any?
-      redirect_to project_test_case_run_path(@build.project, test_case_run) and return
+      redirect_to project_test_case_run_path(
+        @build.project,
+        test_case_run,
+        request.query_parameters
+      ) and return
     end
 
     @build_component = BuildComponent.new(
