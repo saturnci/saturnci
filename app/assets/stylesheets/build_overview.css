@@ -11,39 +11,43 @@
   flex-direction: row;
 }
 
-.test-case-run-list, .test-case-run-details {
+.test-case-run-details, .test-case-run-list {
   border: 1px solid #999;
   overflow-y: auto;
-  flex-grow: 1;
   max-height: 100%;
   padding: 10px;
+}
+
+.test-case-run-details {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  background-color: #DDD;
+  border-right: none;
+  flex: 1;
 }
 
 .test-case-run-list {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   background-color: #FFF;
-  flex: 1;
+  flex: 0 0 300px;
 }
 
-.test-case-run-details {
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  flex: 3;
-  background-color: #DDD;
-  border-right: none;
+.test-case-run {
+  width: 500px;
 }
 
 .test-case-run-details h2 {
   padding: 0;
   margin: 10px 0 10px 0;
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .test-case-run-details h3 {
   padding: 0;
   margin: 0;
   color: #888;
+  font-size: 20px;
 }
 
 .build-overview-test-case-runs {
