@@ -15,7 +15,6 @@
   border: 1px solid #999;
   overflow-y: auto;
   max-height: 100%;
-  padding: 10px;
 }
 
 .test-case-run-details {
@@ -24,6 +23,7 @@
   background-color: #DDD;
   border-right: none;
   flex: 1;
+  padding: 10px;
 }
 
 .test-case-run-list {
@@ -60,7 +60,21 @@
 .build-overview-test-case-runs a {
   display: block;
   background: none;
-  padding: 3px 0;
+  padding: 5px 10px;
+  text-decoration: none;
+}
+
+.build-overview-test-case-runs a:hover {
+  color: #000;
+  background-color: #8DF;
+}
+
+.build-overview-test-case-runs li:nth-child(odd) {
+  background-color: #FFF;
+}
+
+.build-overview-test-case-runs li:nth-child(even) {
+  background-color: #EEE;
 }
 
 .test-case-run-status-passed a {
@@ -69,7 +83,4 @@
 
 .test-case-run-status-failed a {
   color: red;
-}
-
-.test-case-run {
 }
