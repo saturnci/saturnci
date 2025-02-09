@@ -14,7 +14,7 @@ class BuildsController < ApplicationController
     authorize @build
 
     if @build.test_case_runs.any?
-      test_case_run = TestCaseRun.failed_first(@build.test_case_runs).first
+      test_case_run = @build.test_case_runs.failed_first.first
     end
 
     if turbo_frame_request?
