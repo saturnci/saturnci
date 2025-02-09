@@ -10,7 +10,7 @@ class BuildsController < ApplicationController
   end
 
   def show
-    @build = Build.find(params[:id])
+    @build = Build.includes(:test_case_runs).find(params[:id])
     authorize @build
 
     if @build.test_case_runs.any?
