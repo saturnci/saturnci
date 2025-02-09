@@ -97,5 +97,30 @@ describe Build, type: :model do
         expect(build.finished?).to be false
       end
     end
+
+    context "build status changes from 'Running' to 'Finished'" do
+      let!(:build) { create(:build) }
+
+      it "returns true" do
+        allow(build).to receive(:status).and_return("Running")
+        expect(build.finished?).to be false
+        allow(build).to receive(:status).and_return("Finished")
+        expect(build.finished?).to be true
+      end
+    end
+
+    context "build is finished and the finished state is checked twice" do
+      let!(:build) { create(:build) }
+
+      it "does not execute a query on the second check" do
+        allow(build).to receive(:status).and_return("Finished")
+
+        # Twice because #finished? calls #status twice
+        expect(build).to receive(:status).twice
+
+        build.finished?
+        build.finished?
+      end
+    end
   end
 end
