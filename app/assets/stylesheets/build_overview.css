@@ -31,6 +31,25 @@
   overflow: scroll;
 }
 
+.test-case-run .code {
+  font-family: monospace;
+  font-size: 12px;
+  background-color: #FFF;
+  padding: 10px;
+}
+
+.test-case-run .code-section {
+  background-color: #CCC;
+  padding: 5px;
+}
+
+.test-case-run .code-section h3 {
+  font-size: 16px;
+  color: #666;
+  padding: 0 0 4px 0;
+  margin: 0;
+}
+
 .test-case-run-details h2 {
   padding: 0;
   margin: 10px 0 10px 0;
