@@ -29,7 +29,7 @@ class BuildsController < ApplicationController
       return
     end
 
-    if @build.test_case_runs.any?
+    if test_case_run.present?
       redirect_to project_test_case_run_path(
         @build.project,
         test_case_run,
