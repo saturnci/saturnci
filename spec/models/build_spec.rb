@@ -72,4 +72,30 @@ describe Build, type: :model do
       expect(run.build.reload.status).to eq("Cancelled")
     end
   end
+
+  describe "#finished?" do
+    context "build status is 'Finished'" do
+      let!(:build) { create(:build) }
+
+      before do
+        allow(build).to receive(:status).and_return("Finished")
+      end
+
+      it "returns true" do
+        expect(build.finished?).to be true
+      end
+    end
+
+    context "build status is 'Running'" do
+      let!(:build) { create(:build) }
+
+      before do
+        allow(build).to receive(:status).and_return("Running")
+      end
+
+      it "returns false" do
+        expect(build.finished?).to be false
+      end
+    end
+  end
 end
