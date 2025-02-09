@@ -28,7 +28,7 @@
 }
 
 .test-case-run {
-  overflow: scroll;
+  overflow: auto;
 }
 
 .test-case-run .code {
