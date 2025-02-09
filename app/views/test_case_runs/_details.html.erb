@@ -12,14 +12,20 @@
       <br>
 
       <% if test_case_run.exception.present? %>
-        <div class="terminal text-red">
-          <%= test_case_run.exception_message.gsub("\n", "<br>").html_safe %>
+        <div class="code-section">
+          <h3>Error message</h3>
+          <div class="code text-red">
+            <%= test_case_run.exception_message.gsub("\n", "<br>").html_safe %>
+          </div>
         </div>
 
         <br>
 
-        <div class="terminal">
-          <%= test_case_run.exception_backtrace.gsub("\n", "<br>").html_safe %>
+        <div class="code-section">
+          <h3>Backtrace</h3>
+          <div class="code">
+            <%= test_case_run.exception_backtrace.gsub("\n", "<br>").html_safe %>
+          </div>
         </div>
       <% else %>
         <div>
