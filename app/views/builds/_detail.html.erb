@@ -18,7 +18,7 @@
         <div class="test-case-run-list">
           <div style="padding: 10px; color: #666;">
             <%= build.test_case_runs.size %> test cases,
-            <%= build.test_case_runs.failed.size %> failed
+            <%= build.test_case_runs.select { |tcr| tcr.status == "failed" }.size %> failed
           </div>
 
           <%= render "builds/test_case_run_list", build:, active_test_case_run: test_case_run %>
