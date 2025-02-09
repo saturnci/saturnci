@@ -1,5 +1,5 @@
 <ul class="build-overview-test-case-runs" data-controller="test-case-run">
-  <% TestCaseRun.failed_first(build.test_case_runs).each do |test_case_run| %>
+  <% build.test_case_runs.failed_first.each do |test_case_run| %>
     <% cache [test_case_run, test_case_run == active_test_case_run] do %>
       <li class="test-case-run-status-<%= test_case_run.status %>">
         <%= link_to "#{File.basename(test_case_run.path)}:#{test_case_run.line_number}",
