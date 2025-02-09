@@ -17,17 +17,18 @@
 
 .test-case-run-details {
   flex: 1;
+  width: 0;
   padding: 5px 10px 30px 10px;
 }
 
 .test-case-run-list {
   border-left: 2px solid #999;
   background-color: #EEE;
-  flex: 0 0 300px;
+  width: 300px;
 }
 
 .test-case-run {
-  width: 500px;
+  overflow: scroll;
 }
 
 .test-case-run-details h2 {
