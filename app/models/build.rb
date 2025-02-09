@@ -90,7 +90,7 @@ class Build < ApplicationRecord
     broadcast_prepend_to(
       [project.user, "builds"],
       target: "build-list",
-      partial: "builds/build_list_item",
+      partial: "builds/build_link",
       locals: { build: self, active_build: nil }
     )
   end
