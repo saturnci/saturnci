@@ -19,6 +19,18 @@
   padding: 0 10px;
 }
 
+ul.project-menu {
+  display: flex;
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+}
+
+ul.project-menu li {
+  margin: 0;
+  padding: 0;
+}
+
 .project-header h2 {
   font-size: 20px;
   padding: 0;

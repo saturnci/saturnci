@@ -1,0 +1,14 @@
+<%= render @project_component do |component| %>
+  <%= component.with_body do %>
+    <div class="project-inner">
+      <h1>Diagnostics</h1>
+      <br>
+      <h2>GitHub Events (<%= [@limit, @all_github_events.count].min %> of <%= @all_github_events.count %>)</h2>
+      <br>
+
+      <% @github_events.each do |github_event| %>
+        <pre><%= JSON.pretty_generate(github_event.body).html_safe %></pre>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
