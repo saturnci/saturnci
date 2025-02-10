@@ -4,6 +4,7 @@ require "octokit"
 class ProjectIntegrationsController < ApplicationController
   def new
     @github_account = GitHubAccount.find(params[:github_account_id])
+    authorize @github_account
 
     @repositories = []
     page = 0
@@ -17,6 +18,7 @@ class ProjectIntegrationsController < ApplicationController
 
   def create
     @github_account = GitHubAccount.find(params[:github_account_id])
+    authorize @github_account
 
     repo_full_name = params[:repo_full_name]
     repo = @github_account.installation_access_octokit_client.get("/repos/#{repo_full_name}")

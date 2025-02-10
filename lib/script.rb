@@ -39,11 +39,13 @@ class Script
     puts "Checking out commit #{ENV["COMMIT_HASH"]}"
     system("git checkout #{ENV["COMMIT_HASH"]}")
 
-    gemfile_lock_checksum = Digest::SHA256.file("Gemfile.lock").hexdigest
+    docker_registry_cache_checksum = Digest::SHA256.hexdigest(File.read("Gemfile.lock") + File.read(".saturnci/Dockerfile"))
+    puts "Docker registry cache checksum: #{docker_registry_cache_checksum}"
+
     registry_cache_url = "registrycache.saturnci.com:5000"
 
     # This pulls a cached Docker image
-    registry_cache_image_url = "#{registry_cache_url}/saturn_test_app:#{gemfile_lock_checksum}"
+    registry_cache_image_url = "#{registry_cache_url}/saturn_test_app:#{docker_registry_cache_checksum}"
 
     # Registry cache IP is sometimes wrong without this.
     system("sudo systemd-resolve --flush-caches")
