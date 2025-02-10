@@ -40,6 +40,8 @@ class Script
     system("git checkout #{ENV["COMMIT_HASH"]}")
 
     docker_registry_cache_checksum = Digest::SHA256.hexdigest(File.read("Gemfile.lock") + File.read(".saturnci/Dockerfile"))
+    puts "Docker registry cache checksum: #{docker_registry_cache_checksum}"
+
     registry_cache_url = "registrycache.saturnci.com:5000"
 
     # This pulls a cached Docker image
@@ -48,8 +50,7 @@ class Script
     # Registry cache IP is sometimes wrong without this.
     system("sudo systemd-resolve --flush-caches")
 
-    puts "Docker registry cache checksum: #{docker_registry_cache_checksum}"
-    puts "Authenticating to Docker registry!!! (#{registry_cache_url})"
+    puts "Authenticating to Docker registry (#{registry_cache_url})"
     system("sudo docker login #{registry_cache_url} -u #{ENV["DOCKER_REGISTRY_CACHE_USERNAME"]} -p #{ENV["DOCKER_REGISTRY_CACHE_PASSWORD"]}")
 
     puts "Pulling the existing image to avoid rebuilding if possible"
