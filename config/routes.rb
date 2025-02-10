@@ -27,7 +27,6 @@ Rails.application.routes.draw do
     end
 
     resources :test_case_runs, only: :show
-    resources :diagnostics, only: :index
 
     get "billing(/:year(/:month))", to: "billing#index", as: "billing"
   end
