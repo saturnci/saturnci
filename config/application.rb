@@ -40,5 +40,6 @@ module Saturn
     config.hosts << "staging.saturnci.com"
 
     config.charge_rate = 0.1
+    config.active_record.schema_format = :sql
   end
 end
