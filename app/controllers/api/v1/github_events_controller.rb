@@ -8,15 +8,16 @@ module API
         payload = JSON.parse(payload_raw)
         Rails.logger.info "GitHub webhook payload: #{payload.inspect}"
 
-        GitHubEvent.create!(
-          project: Project.find_by(github_repo_full_name: payload["repository"]["full_name"]),
-          body: payload
+        project = Project.find_by(
+          github_repo_full_name: payload["repository"]["full_name"]
         )
+
+        GitHubEvent.create!(project:, body: payload)
 
         case payload["action"]
         when "created"
           GitHubEvents::Installation.new(payload).process
-        else
+        when "push"
           GitHubEvents::Push.new(payload, params[:repository][:full_name]).process
         end
 
