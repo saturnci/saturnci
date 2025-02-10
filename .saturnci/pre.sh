@@ -1,4 +1,5 @@
 #!/bin/bash
-rails db:create && \
-  rails db:schema:load && \
-  rails assets:precompile
+bundle exec rails db:drop && \
+  bundle exec rails db:create && \
+  bundle exec rails db:schema:load && \
+  bundle exec rails assets:precompile
