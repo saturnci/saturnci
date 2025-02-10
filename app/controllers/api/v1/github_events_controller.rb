@@ -10,10 +10,10 @@ module API
 
         GitHubEvent.create!(body: payload)
 
-        case payload["action"]
+        case request.headers["X-GitHub-Event"]
         when "created"
           GitHubEvents::Installation.new(payload).process
-        else
+        when "push"
           GitHubEvents::Push.new(payload, params[:repository][:full_name]).process
         end
 
