@@ -1,7 +1,5 @@
 FROM ruby:3.3.5
 
-# This is an arbitrary change to test image caching
-
 WORKDIR /code
 
 COPY Gemfile Gemfile.lock /code/
