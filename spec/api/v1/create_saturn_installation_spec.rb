@@ -7,16 +7,12 @@ RSpec.describe API::V1::GitHubEventsController, type: :controller do
 
   before do
     request.env["HTTP_X_GITHUB_EVENT"] = "installation"
-    create(:project, github_repo_full_name: "johnsmith/myproject")
   end
 
   context "personal account" do
     let!(:payload) do
       {
         "action" => "created",
-        "repository" => {
-          "full_name" => "johnsmith/myproject",
-        },
         "installation" => {
           "id" => "12345",
           "account" => {
@@ -48,9 +44,6 @@ RSpec.describe API::V1::GitHubEventsController, type: :controller do
     let!(:payload) do
       {
         "action" => "created",
-        "repository" => {
-          "full_name" => "johnsmith/myproject",
-        },
         "installation" => {
           "id" => 46029919,
           "account" => {
