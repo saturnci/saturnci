@@ -3,7 +3,7 @@ include APIAuthenticationHelper
 
 RSpec.describe "Push", type: :request do
   let!(:project) do
-    create(:project, github_repo_full_name: "user/test") do |project|
+    create(:project, github_repo_full_name: "johnsmith/myproject") do |project|
       project.user.github_accounts.create!(
         github_installation_id: "1111111"
       )
@@ -21,14 +21,15 @@ RSpec.describe "Push", type: :request do
   describe "git push event" do
     let!(:payload) do
       {
+        "action": "push",
         "ref": "refs/heads/main",
         "repository": {
           "id": 123,
-          "name": "test",
-          "full_name": "user/test",
+          "name": "myproject",
+          "full_name": "johnsmith/myproject",
         },
         "pusher": {
-          "name": "user",
+          "name": "johnsmith",
         },
         "head_commit": {
           "id": "abc123",
