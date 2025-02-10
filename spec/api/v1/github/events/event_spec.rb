@@ -2,10 +2,6 @@ require "rails_helper"
 include APIAuthenticationHelper
 
 RSpec.describe "GitHub Events", type: :request do
-  before do
-    create(:project, github_repo_full_name: "johnsmith/myproject")
-  end
-
   describe "installation event" do
     let!(:user) do
       create(:user, uid: "55555", provider: "github")
@@ -14,9 +10,6 @@ RSpec.describe "GitHub Events", type: :request do
     let!(:payload) do
       {
         "action" => "created",
-        "repository" => {
-          "full_name" => "johnsmith/myproject",
-        },
         "installation" => {
           "id" => "12345",
           "account" => {
@@ -43,15 +36,14 @@ RSpec.describe "GitHub Events", type: :request do
   describe "git push event" do
     let!(:payload) do
       {
-        "action" => "push",
         "ref": "refs/heads/main",
         "repository": {
           "id": 123,
-          "name": "johnsmith",
-          "full_name": "johnsmith/myproject"
+          "name": "test",
+          "full_name": "user/test",
         },
         "pusher": {
-          "name": "johnsmith",
+          "name": "user",
         },
         "head_commit": {
           "id": "abc123",
