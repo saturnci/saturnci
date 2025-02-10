@@ -9,7 +9,7 @@ module API
         Rails.logger.info "GitHub webhook payload: #{payload.inspect}"
 
         GitHubEvent.create!(
-          project: Project.find_by(full_name: payload["repository"]["full_name"]),
+          project: Project.find_by(github_repo_full_name: payload["repository"]["full_name"]),
           body: payload
         )
 
