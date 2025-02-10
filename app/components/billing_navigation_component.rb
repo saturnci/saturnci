@@ -6,7 +6,7 @@ class BillingNavigationComponent < ViewComponent::Base
   end
 
   def dates
-    @project.jobs
+    @project.runs
       .joins(:charge)
       .select("to_char(runs.created_at, 'YYYY-MM') as month")
       .order("month desc")
