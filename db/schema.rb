@@ -59,7 +59,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_10_022907) do
     t.jsonb "body", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "project_id", null: false
+    t.uuid "project_id"
     t.index ["project_id"], name: "index_github_events_on_project_id"
   end
 
