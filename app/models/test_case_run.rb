@@ -1,6 +1,6 @@
 class TestCaseRun < ApplicationRecord
   belongs_to :run
-  enum :status, %i[passed failed]
+  enum :status, %i[passed failed pending]
 
   def self.failed_first(test_case_runs)
     test_case_runs.sort_by do |tcr|
