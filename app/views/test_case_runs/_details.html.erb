@@ -1,15 +1,15 @@
 <%= turbo_frame_tag "test_case_run_details", class: "test-case-run-details", data: { turbo_action: "advance" } do %>
   <% if test_case_run.present? %>
     <div class="test-case-run">
-      <h2 class="font-fixed">
-        <%= test_case_run.tidy_path %>:<%= test_case_run.line_number %>
-      </h2>
+      <header class="test-case-run-header-<%= test_case_run.status %>">
+        <h2 class="font-fixed">
+          <%= test_case_run.tidy_path %>:<%= test_case_run.line_number %>
+        </h2>
 
-      <h3>
-        <%= test_case_run.description %>
-      </h3>
-
-      <br>
+        <h3>
+          <%= test_case_run.description %>
+        </h3>
+      </header>
 
       <% if test_case_run.exception.present? %>
         <div class="code-section">
@@ -19,8 +19,6 @@
           </div>
         </div>
 
-        <br>
-
         <div class="code-section">
           <h3>Backtrace</h3>
           <div class="code">
@@ -29,7 +27,7 @@
         </div>
       <% else %>
         <div>
-          <%= test_case_run.status %> in <%= test_case_run.duration %> seconds
+          Duration: <%= number_with_precision(test_case_run.duration, precision: 2) %> seconds
         </div>
       <% end %>
     </div>
