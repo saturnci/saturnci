@@ -1,7 +1,7 @@
 require "rails_helper"
 include APIAuthenticationHelper
 
-RSpec.describe "Push", type: :request do
+describe "Push", type: :request do
   let!(:project) do
     create(:project, github_repo_full_name: "user/test") do |project|
       project.user.github_accounts.create!(
@@ -41,8 +41,11 @@ RSpec.describe "Push", type: :request do
       }.to_json
     end
 
-    let(:headers) do
-      api_authorization_headers(project.user).merge('CONTENT_TYPE' => 'application/json')
+    let!(:headers) do
+      api_authorization_headers(project.user).merge(
+        "CONTENT_TYPE" => "application/json",
+        "X-GitHub-Event" => "push"
+      )
     end
 
     it "returns 200" do
@@ -73,7 +76,7 @@ RSpec.describe "Push", type: :request do
       )
 
       build = Build.last
-      expect(build.branch_name).to eq('main')
+      expect(build.branch_name).to eq("main")
     end
 
     context "multiple matching projects" do
