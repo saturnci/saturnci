@@ -52,16 +52,15 @@ class Build < ApplicationRecord
   end
 
   def finished?
-    if Rails.cache.exist?("build/#{id}/finished")
-      return Rails.cache.read("build/#{id}/finished")
-    end
+    cache_key = "build/#{id}/finished"
+    return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
 
     if status != "Running" && status != "Not Started"
-      true
-      Rails.cache.write("build/#{id}/finished", true)
-    else
-      false
+      Rails.cache.write(cache_key, true)
+      return true
     end
+
+    false
   end
 
   def duration_formatted
