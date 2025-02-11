@@ -202,4 +202,32 @@ describe RSpecTestRunSummary do
       end
     end
   end
+
+  context "missing required data" do
+    let!(:raw_data) do
+      {
+        examples: [
+          {
+            id: "./spec/streaming/system_logs/system/visiting_different_tab_spec.rb[1:1:1:1]",
+            description: "does not show the system log content",
+            full_description: "Visiting different tab visiting a different tab after log update occurs does not show the system log content",
+            file_path: "./spec/streaming/system_logs/system/visiting_different_tab_spec.rb",
+            line_number: 28,
+            run_time: 12.255599035,
+            pending_message: nil
+          },
+        ]
+      }
+    end
+
+    let!(:rspec_test_run_summary) do
+      RSpecTestRunSummary.new(run, raw_data)
+    end
+
+    it "does not fail silently" do
+      expect {
+        rspec_test_run_summary.generate_test_case_runs!
+      }.to raise_error
+    end
+  end
 end
