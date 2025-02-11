@@ -7,6 +7,7 @@
     <th>Email</th>
     <th>Projects</th>
     <th>Runs</th>
+    <th>Most recent run</th>
     <th></th>
   </tr>
   <% @users.each do |user| %>
@@ -16,6 +17,9 @@
       <td><%= user.email %></td>
       <td class="number"><%= user.projects.count %></td>
       <td class="number"><%= user.runs.finished.count %></td>
+      <td>
+        <%= user.runs.finished.order("created_at desc").first&.created_at %>
+      </td>
       <td>
         <%= link_to "Become",
           admin_user_impersonations_path(user_id: user.id),
