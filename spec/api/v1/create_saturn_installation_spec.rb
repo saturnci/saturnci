@@ -1,12 +1,12 @@
 require "rails_helper"
 
-RSpec.describe API::V1::GitHubEventsController, type: :controller do
+describe API::V1::GitHubEventsController, type: :controller do
   include Devise::Test::ControllerHelpers
 
   let!(:user) { create(:user, uid: "55555", provider: "github") }
 
   before do
-    request.env["HTTP_X_GITHUB_EVENT"] = "installation"
+    request.headers["X-GitHub-Event"] = "created"
   end
 
   context "personal account" do

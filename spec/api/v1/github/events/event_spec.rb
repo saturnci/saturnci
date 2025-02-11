@@ -1,7 +1,7 @@
 require "rails_helper"
 include APIAuthenticationHelper
 
-RSpec.describe "GitHub Events", type: :request do
+describe "GitHub Events", type: :request do
   describe "installation event" do
     let!(:user) do
       create(:user, uid: "55555", provider: "github")
@@ -27,7 +27,10 @@ RSpec.describe "GitHub Events", type: :request do
         post(
           "/api/v1/github_events",
           params: payload,
-          headers: api_authorization_headers(user).merge('CONTENT_TYPE' => 'application/json')
+          headers: api_authorization_headers(user).merge(
+            "CONTENT_TYPE" => "application/json",
+            "X-GitHub-Event" => "created"
+          )
         )
       }.to change { GitHubAccount.count }.by(1)
     end
@@ -63,7 +66,10 @@ RSpec.describe "GitHub Events", type: :request do
         post(
           "/api/v1/github_events",
           params: payload,
-          headers: api_authorization_headers(user).merge('CONTENT_TYPE' => 'application/json')
+          headers: api_authorization_headers(user).merge(
+            "CONTENT_TYPE" => "application/json",
+            "X-GitHub-Event" => "push"
+          )
         )
       }.to change { GitHubEvent.count }.by(1)
     end
