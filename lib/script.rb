@@ -135,6 +135,9 @@ class Script
     puts response.body
     puts
 
+    puts "Screenshots:"
+    puts `find #{PROJECT_DIR}/tmp/capybara`
+
     push_docker_image(registry_cache_image_url)
 
     puts "Deleting runner"
