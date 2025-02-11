@@ -17,12 +17,9 @@ module SaturnCIRunnerAPI
       request.basic_auth(ENV["USER_ID"], ENV["USER_API_TOKEN"])
       request.body = File.read(@file_path)
 
-      response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == "https") do |http|
+      Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == "https") do |http|
         http.request(request)
       end
-
-      puts response.body
-      response
     end
 
     private
