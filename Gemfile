@@ -23,8 +23,11 @@ gem "paranoia"
 
 gem "audited"
 gem "devise"
-gem "droplet_kit"
 gem "view_component"
+
+# For Digital Ocean
+gem "droplet_kit"
+gem "aws-sdk-s3"
 
 # For GitHub authentication
 gem "aws-sdk-secretsmanager", require: false
