@@ -136,7 +136,7 @@ class Script
     puts
 
     puts "Screenshots:"
-    puts `find #{PROJECT_DIR}/tmp/capybara`
+    puts `find #{PROJECT_DIR}/tmp/capybara -type f`
 
     push_docker_image(registry_cache_image_url)
 
