@@ -126,7 +126,10 @@ class Script
       content_type: "application/json",
       file_path: "tmp/json_output.json"
     )
-    test_output_request.execute
+    response = test_output_request.execute
+    puts "Response code: #{response.code}"
+    puts response.body
+    puts
 
     puts "Sending report"
     test_reports_request = SaturnCIRunnerAPI::FileContentRequest.new(
@@ -135,8 +138,12 @@ class Script
       content_type: "text/plain",
       file_path: TEST_RESULTS_FILENAME
     )
-    test_reports_request.execute
+    response = test_reports_request.execute
+    puts "Response code: #{response.code}"
+    puts response.body
+    puts
 
+    puts "$(sudo docker image ls)"
     puts `$(sudo docker image ls)`
 
     puts "Performing docker tag and push"
