@@ -46,6 +46,7 @@ class Script
 
     # This pulls a cached Docker image
     registry_cache_image_url = "#{registry_cache_url}/saturn_test_app:#{docker_registry_cache_checksum}"
+    puts "Registry cache image URL: #{registry_cache_image_url}"
 
     # Registry cache IP is sometimes wrong without this.
     system("sudo systemd-resolve --flush-caches")
