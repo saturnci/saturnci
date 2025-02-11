@@ -73,7 +73,7 @@ class Script
       docker_compose_configuration: docker_compose_configuration
     )
     puts "pre.sh command: #{pre_script_command.to_s}"
-    exec(pre_script_command.to_s)
+    system(pre_script_command.to_s)
     puts "pre.sh exit code: #{$?.exitstatus}"
 
     if $?.exitstatus == 0
