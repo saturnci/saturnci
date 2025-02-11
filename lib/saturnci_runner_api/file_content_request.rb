@@ -1,3 +1,6 @@
+require "net/http"
+require "uri"
+
 module SaturnCIRunnerAPI
   class FileContentRequest
     def initialize(host:, api_path:, content_type:, file_path:)
@@ -8,15 +11,18 @@ module SaturnCIRunnerAPI
     end
 
     def execute
-      command = <<~COMMAND
-        curl -s -f -u #{ENV["USER_ID"]}:#{ENV["USER_API_TOKEN"]} \
-            -X POST \
-            -H "Content-Type: #{@content_type}" \
-            --data-binary "@#{@file_path}" #{url}
-      COMMAND
+      uri = URI(url)
+      request = Net::HTTP::Post.new(uri)
+      request["Content-Type"] = @content_type
+      request.basic_auth(ENV["USER_ID"], ENV["USER_API_TOKEN"])
+      request.body = File.read(@file_path)
 
-      puts command
-      system(command)
+      response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == "https") do |http|
+        http.request(request)
+      end
+
+      puts response.body
+      response
     end
 
     private
