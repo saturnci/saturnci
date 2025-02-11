@@ -31,6 +31,28 @@
   overflow: auto;
 }
 
+.test-case-run header {
+  background-color: #FFF;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.test-case-run-header-passed {
+  border: 4px solid green;
+}
+
+.test-case-run-header-failed {
+  border: 4px solid red;
+}
+
+.test-case-run-header-passed h2 {
+  color: green;
+}
+
+.test-case-run-header-failed h2 {
+  color: red;
+}
+
 .test-case-run .code {
   font-family: monospace;
   font-size: 12px;
@@ -41,6 +63,7 @@
 .test-case-run .code-section {
   background-color: #CCC;
   padding: 5px;
+  margin: 20px 0;
 }
 
 .test-case-run .code-section h3 {
@@ -53,15 +76,15 @@
 
 .test-case-run-details h2 {
   padding: 0;
-  margin: 10px 0 10px 0;
+  margin: 0 0 10px 0;
   font-size: 16px;
 }
 
 .test-case-run-details h3 {
   padding: 0;
   margin: 0;
-  color: #888;
-  font-size: 20px;
+  color: #444;
+  font-size: 16px;
 }
 
 .build-overview-test-case-runs {
