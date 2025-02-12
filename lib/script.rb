@@ -39,8 +39,6 @@ class Script
     docker_registry_cache_checksum = Digest::SHA256.hexdigest(File.read("Gemfile.lock") + File.read(".saturnci/Dockerfile"))
     puts "Docker registry cache checksum: #{docker_registry_cache_checksum}"
 
-    REGISTRY_CACHE_URL = "registrycache.saturnci.com:5000"
-
     # This pulls a cached Docker image
     registry_cache_image_url = "#{REGISTRY_CACHE_URL}/saturn_test_app:#{docker_registry_cache_checksum}"
     puts "Registry cache image URL: #{registry_cache_image_url}"
