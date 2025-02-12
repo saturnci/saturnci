@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe SaturnCIRunnerAPI::TestSuiteCommand do
+describe SaturnCIRunnerAPI::TestSuiteCommand do
   let!(:docker_compose_configuration) do
     SaturnCIRunnerAPI::DockerComposeConfiguration.new(
       registry_cache_image_url: "registrycache.saturnci.com:5000/saturn_test_app:123456",
