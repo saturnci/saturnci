@@ -15,7 +15,7 @@ module API
           Streaming::RunOutputStream.new(run: run, tab_name: TAB_NAME).broadcast
 
         rescue StandardError => e
-          run.update!(TAB_NAME => existing_content + "\nError: #{e.message}")
+          run.update!(TAB_NAME => "Error: #{e.message}")
           Streaming::RunOutputStream.new(run: run, tab_name: TAB_NAME).broadcast
 
           render(json: { error: e.message }, status: :bad_request)

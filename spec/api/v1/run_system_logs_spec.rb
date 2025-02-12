@@ -37,8 +37,10 @@ RSpec.describe "system logs", type: :request do
 
   context "raw error" do
     before do
+      allow_any_instance_of(Run).to receive(:attributes).and_raise(StandardError.new("something went wrong"))
+
       post(
-        api_v1_run_system_logs_path(run_id: "abc123invalid", format: :json),
+        api_v1_run_system_logs_path(run_id: run.id, format: :json),
         headers: api_authorization_headers(run.build.project.user)
       )
     end
