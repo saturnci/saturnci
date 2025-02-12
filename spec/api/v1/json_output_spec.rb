@@ -72,4 +72,22 @@ RSpec.describe "JSON output", type: :request do
       expect(JSON.parse(response.body)["test_case_run_count"]).to eq(3)
     end
   end
+
+  context "raw error" do
+    before do
+      post(
+        api_v1_run_json_output_path(run_id: run.id),
+        params: { foo: "bar" }.to_json,
+        headers: api_authorization_headers(run.build.project.user).merge({ "CONTENT_TYPE" => "text/plain" })
+      )
+    end
+
+    it "returns the error message" do
+      expect(response.body["error"]).to be_present
+    end
+
+    it "returns a 400 status code" do
+      expect(response.status).to eq(400)
+    end
+  end
 end

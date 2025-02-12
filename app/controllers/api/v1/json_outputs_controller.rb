@@ -2,16 +2,21 @@ module API
   module V1
     class JSONOutputsController < APIController
       def create
-        run = Run.find(params[:run_id])
-        request.body.rewind
-        run.update!(json_output: request.body.read)
+        begin
+          run = Run.find(params[:run_id])
+          request.body.rewind
+          run.update!(json_output: request.body.read)
 
-        rspec_test_run_summary = RSpecTestRunSummary.new(
-          run,
-          JSON.parse(run.json_output)
-        )
+          rspec_test_run_summary = RSpecTestRunSummary.new(
+            run,
+            JSON.parse(run.json_output)
+          )
 
-        rspec_test_run_summary.generate_test_case_runs!
+          rspec_test_run_summary.generate_test_case_runs!
+        rescue StandardError => e
+          render(json: { error: e.message }, status: :bad_request)
+          return
+        end
 
         render(
           json: { test_case_run_count: run.test_case_runs.count },
