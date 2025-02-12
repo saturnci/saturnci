@@ -104,16 +104,16 @@ class Script
     selected_tests = chunks[ENV['RUN_ORDER_INDEX'].to_i - 1]
     test_files_string = selected_tests.join(' ')
 
-    command = SaturnCIRunnerAPI::TestSuiteCommand.new(
+    test_suite_command = SaturnCIRunnerAPI::TestSuiteCommand.new(
       docker_compose_configuration: docker_compose_configuration,
       test_files_string: test_files_string,
       rspec_seed: ENV["RSPEC_SEED"],
       rspec_documentation_output_filename: RSPEC_DOCUMENTATION_OUTPUT_FILENAME
     ).to_s
-    puts "Test run command: #{command}"
+    puts "Test run command: #{test_suite_command}"
 
-    pid = Process.spawn(command)
-    Process.wait(pid)
+    test_suite_pid = Process.spawn(test_suite_command)
+    Process.wait(test_suite_pid)
     sleep(5)
 
     puts "Run finished"
