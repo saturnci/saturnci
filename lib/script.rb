@@ -22,7 +22,7 @@ class Script
     puts "Runner ready"
     client.post("runs/#{ENV["RUN_ID"]}/run_events", type: "runner_ready")
 
-    clone_repo(client:, source: ENV["GITHUB_REPO_FULL_NAME"], destination: PROJECT_DIR)
+    clone_repo(client: client, source: ENV["GITHUB_REPO_FULL_NAME"], destination: PROJECT_DIR)
 
     Dir.chdir(PROJECT_DIR)
     FileUtils.mkdir_p('tmp')
