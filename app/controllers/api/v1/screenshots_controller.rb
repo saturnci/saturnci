@@ -4,16 +4,25 @@ module API
   module V1
     class ScreenshotsController < APIController
       def create
-        run = Run.find(params[:run_id])
-        request.body.rewind
+        begin
+          run = Run.find(params[:run_id])
+          request.body.rewind
 
-        spaces_file_upload = SpacesFileUpload.new(
-          filename: request.headers["X-Filename"],
-          body: request.body.read,
-          content_type: request.headers["Content-Type"]
-        )
+          if request.headers["X-Filename"].blank?
+            raise "X-Filename header missing"
+          end
 
-        spaces_file_upload.put
+          spaces_file_upload = SpacesFileUpload.new(
+            filename: request.headers["X-Filename"],
+            body: request.body.read,
+            content_type: request.headers["Content-Type"]
+          )
+
+          spaces_file_upload.put
+        rescue StandardError => e
+          render(json: { error: e.message }, status: :bad_request)
+          return
+        end
 
         head :ok
       end
