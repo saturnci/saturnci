@@ -74,6 +74,9 @@ class Script
       exit 1
     end
 
+    puts "Starting system health monitoring"
+    start_system_health_monitoring
+
     puts "Starting to stream test output"
     File.open(RSPEC_DOCUMENTATION_OUTPUT_FILENAME, 'w') {}
 
@@ -159,6 +162,17 @@ class Script
     sleep(5)
     system_log_stream.kill
     client.delete("runs/#{ENV["RUN_ID"]}/runner")
+  end
+
+  def self.start_system_health_monitoring
+    Thread.new do
+      loop do
+        cpu_usage = `top -b -n 1 | grep "Cpu"`.strip
+        mem_usage = `free -h | grep "Mem"`.strip
+        puts "[System Health] #{cpu_usage} | #{mem_usage}"
+        sleep 10
+      end
+    end
   end
 
   def self.clone_repo(client:, source:, destination:)
