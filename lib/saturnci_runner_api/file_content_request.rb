@@ -14,6 +14,7 @@ module SaturnCIRunnerAPI
       uri = URI(url)
       request = Net::HTTP::Post.new(uri)
       request["Content-Type"] = @content_type
+      request["X-Filename"] = File.basename(@file_path)
       request.basic_auth(ENV["USER_ID"], ENV["USER_API_TOKEN"])
       request.body = File.read(@file_path)
 
