@@ -3,7 +3,6 @@ require "uri"
 require "json"
 require "digest"
 require "fileutils"
-require "open3"
 
 PROJECT_DIR = "/home/ubuntu/project"
 RSPEC_DOCUMENTATION_OUTPUT_FILENAME = "tmp/rspec_documentation_output.txt"
@@ -23,10 +22,7 @@ class Script
     puts "Runner ready"
     client.post("runs/#{ENV["RUN_ID"]}/run_events", type: "runner_ready")
 
-    puts "Cloning #{ENV["GITHUB_REPO_FULL_NAME"]} into #{PROJECT_DIR}..."
-    token = client.post("github_tokens", github_installation_id: ENV["GITHUB_INSTALLATION_ID"]).body
-    _, stderr, status = Open3.capture3("git clone --recurse-submodules https://x-access-token:#{token}@github.com/#{ENV['GITHUB_REPO_FULL_NAME']} #{PROJECT_DIR}")
-    puts status.success? ? "clone successful" : "clone failed: #{stderr}"
+    clone_repo(client:, source: ENV["GITHUB_REPO_FULL_NAME"], destination: PROJECT_DIR)
 
     Dir.chdir(PROJECT_DIR)
     FileUtils.mkdir_p('tmp')
@@ -149,6 +145,14 @@ class Script
     puts "Deleting runner"
     sleep(5)
     client.delete("runs/#{ENV["RUN_ID"]}/runner")
+  end
+
+  def self.clone_repo(client:, source:, destination:)
+    require "open3"
+    puts "Cloning #{source} into #{destination}..."
+    token = client.post("github_tokens", github_installation_id: ENV["GITHUB_INSTALLATION_ID"]).body
+    _, stderr, status = Open3.capture3("git clone --recurse-submodules https://x-access-token:#{token}@github.com/#{source} #{destination}")
+    puts status.success? ? "clone successful" : "clone failed: #{stderr}"
   end
 end
 
