@@ -7,7 +7,7 @@ module API
 
       def create
         begin
-          run = Run.find!(params[:run_id])
+          run = Run.find(params[:run_id])
           new_content = Base64.decode64(request.body.read)
           existing_content = run.attributes[TAB_NAME].to_s
 
