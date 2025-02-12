@@ -23,14 +23,10 @@ class Script
     puts "Runner ready"
     client.post("runs/#{ENV["RUN_ID"]}/run_events", type: "runner_ready")
 
+    puts "Cloning #{ENV["GITHUB_REPO_FULL_NAME"]} into #{PROJECT_DIR}..."
     token = client.post("github_tokens", github_installation_id: ENV["GITHUB_INSTALLATION_ID"]).body
     _, stderr, status = Open3.capture3("git clone --recurse-submodules https://x-access-token:#{token}@github.com/#{ENV['GITHUB_REPO_FULL_NAME']} #{PROJECT_DIR}")
-
-    if status.success?
-      puts "Clone of #{ENV["GITHUB_REPO_FULL_NAME"]} into #{PROJECT_DIR} successful"
-    else
-      puts "Clone of #{ENV["GITHUB_REPO_FULL_NAME"]} into #{PROJECT_DIR} failed: #{stderr}"
-    end
+    puts status.success? ? "clone successful" : "clone failed: #{stderr}"
 
     Dir.chdir(PROJECT_DIR)
     FileUtils.mkdir_p('tmp')
@@ -148,7 +144,7 @@ class Script
     puts `$(sudo docker image ls)`
 
     puts "Performing docker tag and push"
-    system("sudo docker tag #{registry_cache_url}/saturn_test_app #{registry_cache_image_url}")
+    system("sudo docker tag #{REGISTRY_CACHE_URL}/saturn_test_app #{registry_cache_image_url}")
     system("sudo docker push #{registry_cache_image_url}")
     puts "Docker push finished"
 
