@@ -26,4 +26,21 @@ RSpec.describe "Screenshots", type: :request do
 
     expect(response.status).to eq(200)
   end
+
+  context "raw error" do
+    before do
+      post(
+        api_v1_run_screenshots_path(run_id: run.id),
+        headers: api_authorization_headers(run.build.project.user)
+      )
+    end
+
+    it "returns the error message" do
+      expect(response.body["error"]).to be_present
+    end
+
+    it "returns a 400 status code" do
+      expect(response.status).to eq(400)
+    end
+  end
 end
