@@ -139,19 +139,19 @@ class Script
     puts "Screenshots:"
     puts screenshot_paths
 
-    #screenshot_paths.each do |screenshot_path|
-    #  screenshot_upload_request = SaturnCIRunnerAPI::FileContentUploadRequest.new(
-    #    host: ENV["HOST"],
-    #    api_path: "runs/#{ENV["RUN_ID"]}/screenshots",
-    #    content_type: "image/png",
-    #    file_path: screenshot_path
-    #  )
-    #
-    #  response = screenshot_upload_request.execute
-    #  puts "Response code: #{response.code}"
-    #  puts response.body
-    #  puts
-    #end
+    screenshot_paths.each do |screenshot_path|
+      screenshot_upload_request = SaturnCIRunnerAPI::FileContentUploadRequest.new(
+        host: ENV["HOST"],
+        api_path: "runs/#{ENV["RUN_ID"]}/screenshots",
+        content_type: "image/png",
+        file_path: screenshot_path
+      )
+    
+      response = screenshot_upload_request.execute
+      puts "Response code: #{response.code}"
+      puts response.body
+      puts
+    end
 
     push_docker_image(registry_cache_image_url)
 
