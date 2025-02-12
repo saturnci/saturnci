@@ -10,14 +10,11 @@ module API
           run = Run.find!(params[:run_id])
           new_content = Base64.decode64(request.body.read)
           existing_content = run.attributes[TAB_NAME].to_s
-
           run.update!(TAB_NAME => existing_content + new_content)
+
           Streaming::RunOutputStream.new(run: run, tab_name: TAB_NAME).broadcast
 
         rescue StandardError => e
-          run.update!(TAB_NAME => existing_content + "\nError: #{e.message}")
-          Streaming::RunOutputStream.new(run: run, tab_name: TAB_NAME).broadcast
-
           render(json: { error: e.message }, status: :bad_request)
           return
         end
