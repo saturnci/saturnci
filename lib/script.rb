@@ -143,7 +143,7 @@ class Script
     puts screenshot_paths
 
     screenshot_paths.each do |screenshot_path|
-      screenshot_upload_request = SaturnCIRunnerAPI::FileContentUploadRequest.new(
+      screenshot_upload_request = SaturnCIRunnerAPI::FileContentRequest.new(
         host: ENV["HOST"],
         api_path: "runs/#{ENV["RUN_ID"]}/screenshots",
         content_type: "image/png",
