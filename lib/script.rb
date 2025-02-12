@@ -8,6 +8,7 @@ require "open3"
 PROJECT_DIR = "/home/ubuntu/project"
 RSPEC_DOCUMENTATION_OUTPUT_FILENAME = "tmp/rspec_documentation_output.txt"
 TEST_RESULTS_FILENAME = "tmp/test_results.txt"
+REGISTRY_CACHE_URL = "registrycache.saturnci.com:5000"
 
 class Script
   def self.execute
@@ -42,17 +43,17 @@ class Script
     docker_registry_cache_checksum = Digest::SHA256.hexdigest(File.read("Gemfile.lock") + File.read(".saturnci/Dockerfile"))
     puts "Docker registry cache checksum: #{docker_registry_cache_checksum}"
 
-    registry_cache_url = "registrycache.saturnci.com:5000"
+    REGISTRY_CACHE_URL = "registrycache.saturnci.com:5000"
 
     # This pulls a cached Docker image
-    registry_cache_image_url = "#{registry_cache_url}/saturn_test_app:#{docker_registry_cache_checksum}"
+    registry_cache_image_url = "#{REGISTRY_CACHE_URL}/saturn_test_app:#{docker_registry_cache_checksum}"
     puts "Registry cache image URL: #{registry_cache_image_url}"
 
     # Registry cache IP is sometimes wrong without this.
     system("sudo systemd-resolve --flush-caches")
 
-    puts "Authenticating to Docker registry (#{registry_cache_url})"
-    system("sudo docker login #{registry_cache_url} -u #{ENV["DOCKER_REGISTRY_CACHE_USERNAME"]} -p #{ENV["DOCKER_REGISTRY_CACHE_PASSWORD"]}")
+    puts "Authenticating to Docker registry (#{REGISTRY_CACHE_URL})"
+    system("sudo docker login #{REGISTRY_CACHE_URL} -u #{ENV["DOCKER_REGISTRY_CACHE_USERNAME"]} -p #{ENV["DOCKER_REGISTRY_CACHE_PASSWORD"]}")
 
     puts "Pulling the existing image to avoid rebuilding if possible"
     system("sudo docker pull #{registry_cache_image_url} || true")
