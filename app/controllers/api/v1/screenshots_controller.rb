@@ -10,13 +10,20 @@ module API
             raise "X-Filename header missing"
           end
 
-          spaces_file_upload = SpacesFileUpload.new(
-            filename: "build-#{run.build.id[0..7]}/#{request.headers["X-Filename"]}",
-            body: request.body.read,
-            content_type: request.headers["Content-Type"]
-          )
+          ActiveRecord::Base.transaction do
+            screenshot = Screenshot.create!(
+              build: run.build,
+              path: "build-#{run.build.id[0..7]}/#{request.headers["X-Filename"]}"
+            )
 
-          spaces_file_upload.put
+            spaces_file_upload = SpacesFileUpload.new(
+              filename: screenshot.path,
+              body: request.body.read,
+              content_type: request.headers["Content-Type"]
+            )
+
+            spaces_file_upload.put
+          end
         rescue StandardError => e
           render(json: { error: e.message }, status: :bad_request)
           return

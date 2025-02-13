@@ -19,12 +19,25 @@ RSpec.describe "Screenshots", type: :request do
       api_v1_run_screenshots_path(run_id: run.id),
       params: { screenshot: screenshot_file },
       headers: api_authorization_headers(run.build.project.user).merge(
-        "Content-Type" => "image/png",
-        "X-Filename" => "screenshot.png"
+        "Content-Type" => "application/tar",
+        "X-Filename" => "screenshot.tar.gz"
       )
     )
 
     expect(response.status).to eq(200)
+  end
+
+  it "saves a screenshot record" do
+    expect {
+      post(
+        api_v1_run_screenshots_path(run_id: run.id),
+        params: { screenshot: screenshot_file },
+        headers: api_authorization_headers(run.build.project.user).merge(
+          "Content-Type" => "application/tar",
+          "X-Filename" => "screenshot.tar.gz"
+        )
+      )
+    }.to change { Screenshot.count }.by(1)
   end
 
   context "raw error" do
