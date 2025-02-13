@@ -7,7 +7,7 @@ class SpacesFileUpload
     @content_type = content_type
 
     @s3_client = Aws::S3::Client.new(
-      endpoint: "https://capybara-screenshots-production.nyc3.digitaloceanspaces.com",
+      endpoint: "https://nyc3.digitaloceanspaces.com",
       access_key_id: ENV["DIGITALOCEAN_SPACES_ACCESS_KEY_ID"],
       secret_access_key: ENV["DIGITALOCEAN_SPACES_SECRET_ACCESS_KEY"],
       region: "us-east-1"
