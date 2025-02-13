@@ -2,31 +2,53 @@ require "base64"
 
 module SaturnCIRunnerAPI
   class Stream
-    def initialize(log_file_path, api_path)
+    def initialize(log_file_path, api_path, wait_interval: 1)
       @log_file_path = log_file_path
       @api_path = api_path
+      @wait_interval = wait_interval
+      @keep_alive = true
     end
 
     def start
-      Thread.new do
+      @thread = Thread.new do
         most_recent_total_line_count = 0
+        sent_content = []
 
         while true
-          all_lines = File.readlines(@log_file_path)
+          all_lines = log_file_content
           newest_content = all_lines[most_recent_total_line_count..-1].join("\n")
 
-          SaturnCIRunnerAPI::ContentRequest.new(
-            host: ENV["HOST"],
-            api_path: @api_path,
-            content_type: "text/plain",
-            content: Base64.encode64(newest_content + "\n")
-          ).execute
+          if newest_content.length > 0
+            send_content(newest_content)
+            sent_content << newest_content
+          end
 
           most_recent_total_line_count = all_lines.count
 
-          sleep(1)
+          sleep(@wait_interval)
+          break unless @keep_alive
         end
+
+        sent_content
       end
+    end
+
+    def kill
+      @keep_alive = false
+      @thread.join
+    end
+
+    def send_content(newest_content)
+      SaturnCIRunnerAPI::ContentRequest.new(
+        host: ENV["HOST"],
+        api_path: @api_path,
+        content_type: "text/plain",
+        content: Base64.encode64(newest_content + "\n")
+      ).execute
+    end
+
+    def log_file_content
+      File.readlines(@log_file_path)
     end
   end
 end
