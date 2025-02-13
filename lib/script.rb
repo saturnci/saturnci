@@ -14,7 +14,7 @@ class Script
     client = SaturnCIRunnerAPI::Client.new(ENV["HOST"])
 
     puts "Starting to stream system logs"
-    SaturnCIRunnerAPI::Stream.new(
+    system_log_stream = SaturnCIRunnerAPI::Stream.new(
       "/var/log/syslog",
       "runs/#{ENV["RUN_ID"]}/system_logs"
     ).start
@@ -135,6 +135,8 @@ class Script
     puts
 
     push_docker_image(registry_cache_image_url)
+
+    system_log_stream.kill
 
     puts "Deleting runner"
     sleep(5)
