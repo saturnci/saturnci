@@ -11,7 +11,7 @@ module API
           end
 
           spaces_file_upload = SpacesFileUpload.new(
-            filename: "screenshots/#{run.build.id}/#{request.headers["X-Filename"]}",
+            filename: "build-#{run.build.id[0..7]}/#{request.headers["X-Filename"]}",
             body: request.body.read,
             content_type: request.headers["Content-Type"]
           )

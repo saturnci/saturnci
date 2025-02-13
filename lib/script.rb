@@ -135,7 +135,7 @@ class Script
     puts response.body
     puts
 
-    send_screenshots(source: "tmp/capybara")
+    send_screenshot_tar_file(source: "tmp/capybara")
 
     push_docker_image(registry_cache_image_url)
 
@@ -165,24 +165,20 @@ class Script
     puts status.success? ? "clone successful" : "clone failed: #{stderr}"
   end
 
-  def self.send_screenshots(source:)
-    screenshot_paths = Dir.glob("#{source}/*").select { |f| File.file?(f) }
-    puts "Screenshots:"
-    puts screenshot_paths
+  def self.send_screenshot_tar_file(source:)
+    screenshot_tar_file = SaturnCIRunnerAPI::ScreenshotTarFile.new(source: source)
+    puts "Screenshots tarred at: #{screenshot_tar_file.path}"
 
-    screenshot_paths.each do |screenshot_path|
-      screenshot_upload_request = SaturnCIRunnerAPI::FileContentRequest.new(
-        host: ENV["HOST"],
-        api_path: "runs/#{ENV["RUN_ID"]}/screenshots",
-        content_type: "image/png",
-        file_path: screenshot_path
-      )
+    screenshot_upload_request = SaturnCIRunnerAPI::FileContentRequest.new(
+      host: ENV["HOST"],
+      api_path: "runs/#{ENV["RUN_ID"]}/screenshots",
+      content_type: "application/tar",
+      file_path: screenshot_tar_file.path
+    )
 
-      response = screenshot_upload_request.execute
-      puts "Screenshot response code: #{response.code}"
-      puts response.body
-      puts
-    end
+    response = screenshot_upload_request.execute
+    puts "Screenshot tar response code: #{response.code}"
+    puts response.body
   end
 
   def self.push_docker_image(registry_cache_image_url)
