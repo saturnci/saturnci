@@ -137,10 +137,9 @@ class Script
 
     push_docker_image(registry_cache_image_url)
 
-    system_log_stream.kill
-
     puts "Deleting runner"
     sleep(5)
+    system_log_stream.kill
     client.delete("runs/#{ENV["RUN_ID"]}/runner")
   end
 
