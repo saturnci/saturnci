@@ -105,6 +105,16 @@ spec:
             secretKeyRef:
               name: saturn-secrets
               key: ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT
+        - name: DIGITALOCEAN_SPACES_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: DIGITALOCEAN_SPACES_ACCESS_KEY
+        - name: DIGITALOCEAN_SPACES_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: DIGITALOCEAN_SPACES_SECRET_KEY
       initContainers:
       - name: saturn-migrations
         image: registry.digitalocean.com/saturnci/saturnci:$TAG
@@ -197,3 +207,13 @@ spec:
             secretKeyRef:
               name: saturn-secrets
               key: ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT
+        - name: DIGITALOCEAN_SPACES_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: DIGITALOCEAN_SPACES_ACCESS_KEY
+        - name: DIGITALOCEAN_SPACES_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: DIGITALOCEAN_SPACES_SECRET_KEY
