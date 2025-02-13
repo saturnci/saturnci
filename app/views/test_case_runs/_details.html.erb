@@ -32,10 +32,13 @@
       <% end %>
     </div>
 
-    Screenshots:
+    <% if test_case_run.run.build.screenshot.present? %>
+      <br>
+      <h3>Screenshots for this build:</h3>
 
-    <div>
-      <%= link_to "screenshots.tar.gz", "https://capybara-screenshots-production.nyc3.digitaloceanspaces.com/build-#{test_case_run.run.build.id[0..7]}/screenshots.tar.gz", target: "_blank" %>
-    </div>
+      <div>
+        <%= link_to test_case_run.run.build.screenshot.label, test_case_run.run.build.screenshot.url, target: "_blank" %>
+      </div>
+    <% end %>
   <% end %>
 <% end %>
