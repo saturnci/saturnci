@@ -135,23 +135,7 @@ class Script
     puts response.body
     puts
 
-    screenshot_paths = Dir.glob("tmp/capybara/*").select { |f| File.file?(f) }
-    puts "Screenshots:"
-    puts screenshot_paths
-
-    screenshot_paths.each do |screenshot_path|
-      screenshot_upload_request = SaturnCIRunnerAPI::FileContentRequest.new(
-        host: ENV["HOST"],
-        api_path: "runs/#{ENV["RUN_ID"]}/screenshots",
-        content_type: "image/png",
-        file_path: screenshot_path
-      )
-
-      response = screenshot_upload_request.execute
-      puts "Screenshot response code: #{response.code}"
-      puts response.body
-      puts
-    end
+    send_screenshots
 
     push_docker_image(registry_cache_image_url)
 
@@ -179,6 +163,26 @@ class Script
     token = client.post("github_tokens", github_installation_id: ENV["GITHUB_INSTALLATION_ID"]).body
     _, stderr, status = Open3.capture3("git clone --recurse-submodules https://x-access-token:#{token}@github.com/#{source} #{destination}")
     puts status.success? ? "clone successful" : "clone failed: #{stderr}"
+  end
+
+  def self.send_screenshots
+    screenshot_paths = Dir.glob("tmp/capybara/*").select { |f| File.file?(f) }
+    puts "Screenshots:"
+    puts screenshot_paths
+
+    screenshot_paths.each do |screenshot_path|
+      screenshot_upload_request = SaturnCIRunnerAPI::FileContentRequest.new(
+        host: ENV["HOST"],
+        api_path: "runs/#{ENV["RUN_ID"]}/screenshots",
+        content_type: "image/png",
+        file_path: screenshot_path
+      )
+
+      response = screenshot_upload_request.execute
+      puts "Screenshot response code: #{response.code}"
+      puts response.body
+      puts
+    end
   end
 
   def self.push_docker_image(registry_cache_image_url)
