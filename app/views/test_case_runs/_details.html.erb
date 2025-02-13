@@ -31,5 +31,14 @@
         </div>
       <% end %>
     </div>
+
+    <% if test_case_run.run.build.screenshot.present? %>
+      <br>
+      <h3>Screenshots for this build:</h3>
+
+      <div>
+        <%= link_to test_case_run.run.build.screenshot.label, test_case_run.run.build.screenshot.url, target: "_blank" %>
+      </div>
+    <% end %>
   <% end %>
 <% end %>

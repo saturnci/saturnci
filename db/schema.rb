@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_13_164824) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_13_222650) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -118,6 +118,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_13_164824) do
     t.index ["runner_id"], name: "index_runs_on_runner_id", unique: true
   end
 
+  create_table "screenshots", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "build_id", null: false
+    t.string "path"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["build_id"], name: "index_screenshots_on_build_id"
+    t.index ["build_id"], name: "unique_index_screenshots_on_build_id", unique: true
+  end
+
   create_table "solid_cable_messages", force: :cascade do |t|
     t.binary "channel", null: false
     t.binary "payload", null: false
@@ -176,5 +185,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_13_164824) do
   add_foreign_key "projects", "users"
   add_foreign_key "run_events", "runs"
   add_foreign_key "runs", "builds"
+  add_foreign_key "screenshots", "builds"
   add_foreign_key "test_case_runs", "runs"
 end
