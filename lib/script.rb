@@ -119,7 +119,7 @@ class Script
       file_path: "tmp/json_output.json"
     )
     response = test_output_request.execute
-    puts "Response code: #{response.code}"
+    puts "JSON output response code: #{response.code}"
     puts response.body
     puts
 
@@ -131,9 +131,27 @@ class Script
       file_path: TEST_RESULTS_FILENAME
     )
     response = test_reports_request.execute
-    puts "Response code: #{response.code}"
+    puts "Report response code: #{response.code}"
     puts response.body
     puts
+
+    screenshot_paths = Dir.glob("tmp/capybara/*").select { |f| File.file?(f) }
+    puts "Screenshots:"
+    puts screenshot_paths
+
+    screenshot_paths.each do |screenshot_path|
+      screenshot_upload_request = SaturnCIRunnerAPI::FileContentRequest.new(
+        host: ENV["HOST"],
+        api_path: "runs/#{ENV["RUN_ID"]}/screenshots",
+        content_type: "image/png",
+        file_path: screenshot_path
+      )
+
+      response = screenshot_upload_request.execute
+      puts "Screenshot response code: #{response.code}"
+      puts response.body
+      puts
+    end
 
     push_docker_image(registry_cache_image_url)
 
