@@ -136,6 +136,7 @@ class Script
     puts
 
     send_screenshots(source: "tmp/capybara")
+    send_screenshot_zip_file(source: "tmp/capybara")
 
     push_docker_image(registry_cache_image_url)
 
@@ -183,6 +184,23 @@ class Script
       puts response.body
       puts
     end
+  end
+
+  def self.send_screenshot_zip_file(source:)
+    screenshot_zip_file = SaturnCIRunnerAPI::ScreenshotZipFile.new(source: source)
+    screenshot_zip_file.add_files
+    puts "Screenshots zipped at: #{screenshot_zip_file.path}"
+
+    #screenshot_upload_request = SaturnCIRunnerAPI::FileContentRequest.new(
+    #  host: ENV["HOST"],
+    #  api_path: "runs/#{ENV["RUN_ID"]}/screenshots",
+    #  content_type: "application/zip",
+    #  file_path: zip_file_path
+    #)
+
+    #response = screenshot_upload_request.execute
+    #puts "Screenshot zip response code: #{response.code}"
+    #puts response.body
   end
 
   def self.push_docker_image(registry_cache_image_url)
