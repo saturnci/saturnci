@@ -17,7 +17,8 @@ class Script
     system_log_stream = SaturnCIRunnerAPI::Stream.new(
       "/var/log/syslog",
       "runs/#{ENV["RUN_ID"]}/system_logs"
-    ).start
+    )
+    system_log_stream.start
 
     puts "Runner ready"
     client.post("runs/#{ENV["RUN_ID"]}/run_events", type: "runner_ready")
