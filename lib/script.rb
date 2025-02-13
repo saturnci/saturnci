@@ -135,7 +135,7 @@ class Script
     puts response.body
     puts
 
-    send_screenshots(source: "tmp/capybara")
+    send_screenshots
 
     push_docker_image(registry_cache_image_url)
 
@@ -165,8 +165,8 @@ class Script
     puts status.success? ? "clone successful" : "clone failed: #{stderr}"
   end
 
-  def self.send_screenshots(source:)
-    screenshot_paths = Dir.glob("#{source}/*").select { |f| File.file?(f) }
+  def self.send_screenshots
+    screenshot_paths = Dir.glob("tmp/capybara/*").select { |f| File.file?(f) }
     puts "Screenshots:"
     puts screenshot_paths
 
