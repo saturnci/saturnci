@@ -61,7 +61,6 @@ describe "Delete build", type: :system do
     it "removes the build" do
       visit project_build_path(id: run.build.id, project_id: run.build.project.id)
       click_on "Delete"
-      expect(page).to have_content("This test will fail")
       expect(page).not_to have_content(run.build.commit_hash)
     end
   end
