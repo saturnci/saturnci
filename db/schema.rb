@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_06_201312) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_13_164824) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -59,6 +59,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_06_201312) do
     t.jsonb "body", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "project_id"
+    t.index ["project_id"], name: "index_github_events_on_project_id"
   end
 
   create_table "project_secrets", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -110,6 +112,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_06_201312) do
     t.datetime "deleted_at"
     t.boolean "terminate_on_completion", default: true, null: false
     t.jsonb "json_output"
+    t.text "complete_syslog"
     t.index ["build_id", "order_index"], name: "index_runs_on_build_id_and_order_index", unique: true
     t.index ["build_id"], name: "index_runs_on_build_id"
     t.index ["runner_id"], name: "index_runs_on_runner_id", unique: true
@@ -167,6 +170,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_06_201312) do
   add_foreign_key "builds", "projects"
   add_foreign_key "charges", "runs"
   add_foreign_key "github_accounts", "users"
+  add_foreign_key "github_events", "projects"
   add_foreign_key "project_secrets", "projects"
   add_foreign_key "projects", "github_accounts"
   add_foreign_key "projects", "users"
