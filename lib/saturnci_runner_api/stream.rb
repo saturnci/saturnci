@@ -35,6 +35,7 @@ module SaturnCIRunnerAPI
 
     def kill
       @keep_alive = false
+      @thread.join
     end
 
     def send_content(newest_content)
