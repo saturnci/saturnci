@@ -1,5 +1,3 @@
-require "aws-sdk-s3"
-
 module API
   module V1
     class ScreenshotsController < APIController

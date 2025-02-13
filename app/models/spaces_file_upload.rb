@@ -1,3 +1,5 @@
+require "aws-sdk-s3"
+
 class SpacesFileUpload
   def initialize(filename:, body:, content_type:)
     @filename = filename
