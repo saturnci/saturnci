@@ -18,7 +18,7 @@ module SaturnCIRunnerAPI
           all_lines = log_file_content
           newest_content = all_lines[most_recent_total_line_count..-1].join("\n")
 
-          if newest_content.present?
+          if newest_content.length > 0
             send_content(newest_content)
             sent_content << newest_content
           end
