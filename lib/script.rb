@@ -14,10 +14,11 @@ class Script
     client = SaturnCIRunnerAPI::Client.new(ENV["HOST"])
 
     puts "Starting to stream system logs"
-    SaturnCIRunnerAPI::Stream.new(
+    system_log_stream = SaturnCIRunnerAPI::Stream.new(
       "/var/log/syslog",
       "runs/#{ENV["RUN_ID"]}/system_logs"
-    ).start
+    )
+    system_log_stream.start
 
     puts "Runner ready"
     client.post("runs/#{ENV["RUN_ID"]}/run_events", type: "runner_ready")
@@ -138,6 +139,7 @@ class Script
 
     puts "Deleting runner"
     sleep(5)
+    system_log_stream.kill
     client.delete("runs/#{ENV["RUN_ID"]}/runner")
   end
 
