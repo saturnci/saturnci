@@ -1,3 +1,5 @@
+require "zip"
+
 class SaturnCIRunnerAPI::ScreenshotZipFile
   def initialize(source:)
     @source = source
