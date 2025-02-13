@@ -135,6 +135,24 @@ class Script
     puts response.body
     puts
 
+    screenshot_paths = Dir.glob("tmp/capybara/*").select { |f| File.file?(f) }
+    puts "Screenshots:"
+    puts screenshot_paths
+
+    screenshot_paths.each do |screenshot_path|
+      screenshot_upload_request = SaturnCIRunnerAPI::FileContentRequest.new(
+        host: ENV["HOST"],
+        api_path: "runs/#{ENV["RUN_ID"]}/screenshots",
+        content_type: "image/png",
+        file_path: screenshot_path
+      )
+
+      response = screenshot_upload_request.execute
+      puts "Response code: #{response.code}"
+      puts response.body
+      puts
+    end
+
     push_docker_image(registry_cache_image_url)
 
     puts "Deleting runner"
