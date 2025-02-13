@@ -4,6 +4,7 @@ namespace :api do
       resources :run_finished_events, only: :create
       resources :test_reports, only: :create
       resources :system_logs, only: :create
+      resources :complete_syslogs, only: :create
       resource :test_output, only: :create
       resource :json_output, only: :create
       resources :screenshots, only: :create
