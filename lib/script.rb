@@ -190,16 +190,16 @@ class Script
     screenshot_tar_file = SaturnCIRunnerAPI::ScreenshotTarFile.new(source: source)
     puts "Screenshots tarred at: #{screenshot_tar_file.path}"
 
-    #screenshot_upload_request = SaturnCIRunnerAPI::FileContentRequest.new(
-    #  host: ENV["HOST"],
-    #  api_path: "runs/#{ENV["RUN_ID"]}/screenshots",
-    #  content_type: "application/zip",
-    #  file_path: zip_file_path
-    #)
+    screenshot_upload_request = SaturnCIRunnerAPI::FileContentRequest.new(
+      host: ENV["HOST"],
+      api_path: "runs/#{ENV["RUN_ID"]}/screenshots",
+      content_type: "application/tar",
+      file_path: screenshot_tar_file.path
+    )
 
-    #response = screenshot_upload_request.execute
-    #puts "Screenshot zip response code: #{response.code}"
-    #puts response.body
+    response = screenshot_upload_request.execute
+    puts "Screenshot tar response code: #{response.code}"
+    puts response.body
   end
 
   def self.push_docker_image(registry_cache_image_url)
