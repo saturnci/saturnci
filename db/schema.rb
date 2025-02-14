@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_14_183355) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_14_215723) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -53,6 +53,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_14_183355) do
     t.jsonb "installation_response_payload"
     t.index ["user_id", "github_installation_id"], name: "index_saturn_installations_on_user_and_github_id", unique: true
     t.index ["user_id"], name: "index_github_accounts_on_user_id"
+  end
+
+  create_table "github_check_runs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "build_id", null: false
+    t.string "github_check_run_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["build_id", "github_check_run_id"], name: "index_github_check_runs_on_build_id_and_github_check_run_id", unique: true
+    t.index ["build_id"], name: "index_github_check_runs_on_build_id"
   end
 
   create_table "github_events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -178,6 +187,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_14_183355) do
   add_foreign_key "builds", "projects"
   add_foreign_key "charges", "runs"
   add_foreign_key "github_accounts", "users"
+  add_foreign_key "github_check_runs", "builds"
   add_foreign_key "github_events", "projects"
   add_foreign_key "project_secrets", "projects"
   add_foreign_key "projects", "github_accounts"
