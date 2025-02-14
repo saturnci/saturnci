@@ -133,7 +133,10 @@ class Script
     puts
 
     puts "Run finished"
-    client.post("runs/#{ENV["RUN_ID"]}/run_finished_events")
+    response = client.post("runs/#{ENV["RUN_ID"]}/run_finished_events")
+    puts "Run finished response code: #{response.code}"
+    puts response.body
+    puts
 
     send_screenshot_tar_file(source_dir: "tmp/capybara")
     push_docker_image(registry_cache_image_url)
