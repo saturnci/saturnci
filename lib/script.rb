@@ -108,9 +108,6 @@ class Script
     Process.wait(test_suite_pid)
     sleep(5)
 
-    puts "Run finished"
-    client.post("runs/#{ENV["RUN_ID"]}/run_finished_events")
-
     puts "Sending JSON output"
     test_output_request = SaturnCIRunnerAPI::FileContentRequest.new(
       host: ENV["HOST"],
@@ -132,6 +129,12 @@ class Script
     )
     response = test_reports_request.execute
     puts "Report response code: #{response.code}"
+    puts response.body
+    puts
+
+    puts "Run finished"
+    response = client.post("runs/#{ENV["RUN_ID"]}/run_finished_events")
+    puts "Run finished response code: #{response.code}"
     puts response.body
     puts
 
