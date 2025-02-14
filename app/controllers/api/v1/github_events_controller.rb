@@ -15,6 +15,8 @@ module API
           GitHubEvents::Installation.new(payload).process
         when "push"
           GitHubEvents::Push.new(payload, params[:repository][:full_name]).process
+        when "pull_request"
+          GitHubEvents::PullRequest.new(payload).process
         end
 
         head :ok
