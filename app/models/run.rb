@@ -5,6 +5,7 @@ class Run < ApplicationRecord
   has_many :test_case_runs, dependent: :destroy
   has_many :run_events, dependent: :destroy
   has_one :charge, foreign_key: "run_id"
+  has_one :screenshot
 
   alias_attribute :started_at, :created_at
 
