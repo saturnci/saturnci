@@ -115,6 +115,11 @@ spec:
             secretKeyRef:
               name: saturn-secrets
               key: DIGITALOCEAN_SPACES_SECRET_ACCESS_KEY
+        - name: DIGITALOCEAN_SPACES_BUCKET_NAME
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: DIGITALOCEAN_SPACES_BUCKET_NAME
       initContainers:
       - name: saturn-migrations
         image: registry.digitalocean.com/saturnci/saturnci:$TAG
@@ -217,3 +222,8 @@ spec:
             secretKeyRef:
               name: saturn-secrets
               key: DIGITALOCEAN_SPACES_SECRET_ACCESS_KEY
+        - name: DIGITALOCEAN_SPACES_BUCKET_NAME
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: DIGITALOCEAN_SPACES_BUCKET_NAME
