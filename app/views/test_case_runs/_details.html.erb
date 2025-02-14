@@ -39,7 +39,7 @@
 
       <% test_case_run.run.build.runs.map(&:screenshot).compact.each do |screenshot| %>
         <div>
-          <%= link_to screenshot.label, screenshot.url, target: "_blank" %>
+          <%= link_to screenshot.label, screenshot.url, target: "_blank", class: "screenshot-link" %>
         </div>
       <% end %>
     <% end %>
