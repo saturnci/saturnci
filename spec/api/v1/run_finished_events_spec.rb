@@ -2,6 +2,14 @@ require "rails_helper"
 include APIAuthenticationHelper
 
 RSpec.describe "run finished events", type: :request do
+  before do
+    github_check_run_stub = instance_double("GitHubCheckRun").tap do |stub|
+      allow(stub).to receive(:finish!)
+    end
+
+    allow(GitHubCheckRun).to receive(:new).and_return(github_check_run_stub)
+  end
+
   describe "POST /api/v1/runs/:id/run_finished_events" do
     let!(:run) { create(:run) }
     let!(:user) { run.build.project.user }

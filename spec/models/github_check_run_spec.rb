@@ -2,9 +2,9 @@ require "rails_helper"
 require "octokit"
 
 describe GitHubCheckRun do
-  let(:project) { create(:project, github_repo_full_name: "user/test") }
-  let(:build) { create(:build, project: project, commit_hash: "abc123") }
-  let(:github_client) { instance_double(Octokit::Client) }
+  let!(:project) { create(:project, github_repo_full_name: "user/test") }
+  let!(:build) { create(:build, project: project, commit_hash: "abc123") }
+  let!(:github_client) { instance_double(Octokit::Client) }
 
   describe "#start!" do
     it "creates a check run and stores the check_run_id" do
@@ -19,6 +19,17 @@ describe GitHubCheckRun do
 
       expect(github_client).to have_received(:create_check_run)
       expect(check_run.reload.github_check_run_id).to eq("789")
+    end
+  end
+
+  describe "#finish!" do
+    it "updates the check run" do
+      allow(github_client).to receive(:update_check_run)
+
+      check_run = GitHubCheckRun.new(build:, github_check_run_id: "789")
+      check_run.finish!(github_client:)
+
+      expect(github_client).to have_received(:update_check_run)
     end
   end
 end
