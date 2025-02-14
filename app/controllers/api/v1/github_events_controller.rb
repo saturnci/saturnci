@@ -15,6 +15,8 @@ module API
           GitHubEvents::Installation.new(payload).process
         when "push"
           GitHubEvents::Push.new(payload, params[:repository][:full_name]).process
+        when "check_suite"
+          GitHubEvents::CheckSuite.new(payload).process
         end
 
         head :ok
