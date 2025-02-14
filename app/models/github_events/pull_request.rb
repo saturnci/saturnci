@@ -14,6 +14,7 @@ module GitHubEvents
       build = Build.new(project: project)
       build.assign_attributes(build_specification)
       build.start!
+      GitHubCheckRun.new(build:).start!
     end
 
     def build_specification
