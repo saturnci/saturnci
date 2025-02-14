@@ -108,9 +108,6 @@ class Script
     Process.wait(test_suite_pid)
     sleep(5)
 
-    puts "Run finished"
-    client.post("runs/#{ENV["RUN_ID"]}/run_finished_events")
-
     puts "Sending JSON output"
     test_output_request = SaturnCIRunnerAPI::FileContentRequest.new(
       host: ENV["HOST"],
@@ -134,6 +131,9 @@ class Script
     puts "Report response code: #{response.code}"
     puts response.body
     puts
+
+    puts "Run finished"
+    client.post("runs/#{ENV["RUN_ID"]}/run_finished_events")
 
     send_screenshot_tar_file(source_dir: "tmp/capybara")
     push_docker_image(registry_cache_image_url)
