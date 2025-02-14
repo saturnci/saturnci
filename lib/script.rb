@@ -151,6 +151,10 @@ class Script
     puts response.body
     puts
 
+  rescue StandardError => e
+    puts "Error: #{e.message}"
+    puts e.backtrace
+  ensure
     puts "Deleting runner"
     sleep(5)
     system_log_stream.kill
