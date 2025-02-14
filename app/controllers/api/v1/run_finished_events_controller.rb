@@ -16,7 +16,7 @@ module API
                 locals: { build: run.build }
               )
 
-              GitHubCheckRun.new(build: run.build).finish!
+              GitHubCheckRun.find_by(build: run.build)&.finish!
             end
           end
         rescue StandardError => e
