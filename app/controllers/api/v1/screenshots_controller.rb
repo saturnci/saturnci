@@ -12,8 +12,8 @@ module API
 
           ActiveRecord::Base.transaction do
             screenshot = Screenshot.create!(
-              build: run.build,
-              path: "build-#{run.build.id[0..7]}/#{request.headers["X-Filename"]}"
+              run:,
+              path: "run-#{run.abbreviated_hash}/run-#{run.abbreviated_hash}-#{request.headers["X-Filename"]}"
             )
 
             spaces_file_upload = SpacesFileUpload.new(

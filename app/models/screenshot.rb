@@ -1,5 +1,5 @@
 class Screenshot < ApplicationRecord
-  belongs_to :build
+  belongs_to :run
   DEFAULT_EXPIRY = 3600
 
   def url
