@@ -16,7 +16,7 @@ class SpacesFileUpload
 
   def put
     @s3_client.put_object(
-      bucket: "capybara-screenshots-production",
+      bucket: ENV["DIGITALOCEAN_SPACES_BUCKET_NAME"],
       acl: "public-read",
       key: @filename,
       body: @body,
