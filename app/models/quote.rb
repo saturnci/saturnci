@@ -8,7 +8,6 @@ class Quote
     "\"Experience keeps a dear school, but fools will learn in no other.\" - Benjamin Franklin",
     "\"The used key is always bright.\" - Benjamin Franklin",
     "\"The recipe for great work is: very exacting taste, plus the ability to gratify it.\" - Paul Graham",
-    "\"If you want to build a ship, don’t drum up the men to gather wood, divide the work, and give orders. Instead, teach them to yearn for the vast and endless sea.\" - Antoine de Saint-Exupéry",
     "\"Opportunity is missed by most people because it is dressed in overalls and looks like work.\" - Thomas A. Edison",
   ]
 
