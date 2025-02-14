@@ -169,7 +169,9 @@ class Script
   end
 
   def self.send_screenshot_tar_file(source_dir:)
-    return unless Dir.exist?(source_dir)
+    unless Dir.exist?(source_dir)
+      puts "No screenshots found in #{source_dir}"
+    end
 
     screenshot_tar_file = SaturnCIRunnerAPI::ScreenshotTarFile.new(source_dir: source_dir)
     puts "Screenshots tarred at: #{screenshot_tar_file.path}"
