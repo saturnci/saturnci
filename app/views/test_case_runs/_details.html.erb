@@ -1,46 +1,48 @@
 <%= turbo_frame_tag "test_case_run_details", class: "test-case-run-details", data: { turbo_action: "advance" } do %>
   <% if test_case_run.present? %>
-    <div class="test-case-run">
-      <header class="test-case-run-header-<%= test_case_run.status %>">
-        <h2 class="font-fixed">
-          <%= test_case_run.tidy_path %>:<%= test_case_run.line_number %>
-        </h2>
+    <% cache do %>
+      <div class="test-case-run">
+        <header class="test-case-run-header-<%= test_case_run.status %>">
+          <h2 class="font-fixed">
+            <%= test_case_run.tidy_path %>:<%= test_case_run.line_number %>
+          </h2>
 
-        <h3>
-          <%= test_case_run.description %>
-        </h3>
-      </header>
+          <h3>
+            <%= test_case_run.description %>
+          </h3>
+        </header>
 
-      <% if test_case_run.exception.present? %>
-        <div class="code-section">
-          <h3>Error message</h3>
-          <div class="code text-red">
-            <%= test_case_run.exception_message.gsub("\n", "<br>").html_safe %>
+        <% if test_case_run.exception.present? %>
+          <div class="code-section">
+            <h3>Error message</h3>
+            <div class="code text-red">
+              <%= test_case_run.exception_message.gsub("\n", "<br>").html_safe %>
+            </div>
           </div>
-        </div>
 
-        <div class="code-section">
-          <h3>Backtrace</h3>
-          <div class="code">
-            <%= test_case_run.exception_backtrace.gsub("\n", "<br>").html_safe %>
+          <div class="code-section">
+            <h3>Backtrace</h3>
+            <div class="code">
+              <%= test_case_run.exception_backtrace.gsub("\n", "<br>").html_safe %>
+            </div>
           </div>
-        </div>
-      <% else %>
-        <div>
-          Duration: <%= number_with_precision(test_case_run.duration, precision: 2) %> seconds
-        </div>
-      <% end %>
-    </div>
+        <% else %>
+          <div>
+            Duration: <%= number_with_precision(test_case_run.duration, precision: 2) %> seconds
+          </div>
+        <% end %>
+      </div>
 
 
-    <% if test_case_run.run.build.runs.map(&:screenshot).compact.any? %>
-      <br>
-      <h3>Screenshots for this build:</h3>
+      <% if test_case_run.run.build.runs.map(&:screenshot).compact.any? %>
+        <br>
+        <h3>Screenshots for this build:</h3>
 
-      <% test_case_run.run.build.runs.map(&:screenshot).compact.each do |screenshot| %>
-        <div>
-          <%= link_to screenshot.label, screenshot.url, target: "_blank", class: "screenshot-link" %>
-        </div>
+        <% test_case_run.run.build.runs.map(&:screenshot).compact.each do |screenshot| %>
+          <div>
+            <%= link_to screenshot.label, screenshot.url, target: "_blank", class: "screenshot-link" %>
+          </div>
+        <% end %>
       <% end %>
     <% end %>
   <% end %>
