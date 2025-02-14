@@ -125,3 +125,7 @@
 .test-case-run-status-failed a {
   color: red;
 }
+
+.screenshot-link {
+  color: #00F !important;
+}
