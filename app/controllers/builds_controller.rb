@@ -10,9 +10,7 @@ class BuildsController < ApplicationController
   end
 
   def show
-    @build = Rails.cache.fetch("build/#{params[:id]}") do
-      Build.includes(:test_case_runs).find(params[:id])
-    end
+    @build = Build.find(params[:id])
 
     authorize @build
 
