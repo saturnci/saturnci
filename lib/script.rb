@@ -136,9 +136,12 @@ class Script
     puts
 
     send_screenshot_tar_file(source_dir: "tmp/capybara")
-
     push_docker_image(registry_cache_image_url)
 
+  rescue StandardError => e
+    puts "Error: #{e.message}"
+    puts e.backtrace
+  ensure
     puts "Sending /var/log/syslog"
     syslog_request = SaturnCIRunnerAPI::FileContentRequest.new(
       host: ENV["HOST"],
@@ -151,10 +154,6 @@ class Script
     puts response.body
     puts
 
-  rescue StandardError => e
-    puts "Error: #{e.message}"
-    puts e.backtrace
-  ensure
     puts "Deleting runner"
     sleep(5)
     system_log_stream.kill
