@@ -105,9 +105,14 @@
   background-color: #DDD;
 }
 
-.build-overview-test-case-runs a.active {
+.build-overview-test-case-runs .test-case-run-status-failed a.active {
+  background-color: red;
   color: #FFF;
+}
+
+.build-overview-test-case-runs .test-case-run-status-passed a.active {
   background-color: #00F;
+  color: #FFF;
 }
 
 .build-overview-test-case-runs li:nth-child(odd) {
