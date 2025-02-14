@@ -8,14 +8,14 @@ module API
           run.finish!
 
           if run.build.runs.all?(&:finished?)
-            GitHubCheckRun.new(build: run.build).finish!
-
             Turbo::StreamsChannel.broadcast_update_to(
               "build_status_#{run.build.id}",
               target: "build_status_#{run.build.id}",
               partial: "builds/build_link_content",
               locals: { build: run.build }
             )
+
+            GitHubCheckRun.new(build: run.build).finish!
           end
         end
 

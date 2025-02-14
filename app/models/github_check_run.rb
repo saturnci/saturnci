@@ -1,7 +1,7 @@
 class GitHubCheckRun < ApplicationRecord
   belongs_to :build
 
-  def start!(github_client:)
+  def start!(github_client: default_github_client)
     response = github_client.create_check_run(
       build.project.github_repo_full_name,
       "SaturnCI",
@@ -13,19 +13,19 @@ class GitHubCheckRun < ApplicationRecord
     update!(github_check_run_id: response.id)
   end
 
-  def finish!
+  def finish!(github_client: default_github_client)
     github_client.update_check_run(
       build.project.github_repo_full_name,
-      build.github_check_run_id,
+      github_check_run_id,
       status: "completed",
-      conclusion: build.passed? ? "success" : "failure",
+      conclusion: build.status == "Passed" ? "success" : "failure",
       completed_at: Time.now.iso8601
     )
   end
 
   private
 
-  def github_client
+  def default_github_client
     build.project.github_account.installation_access_octokit_client
   end
 end
