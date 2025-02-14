@@ -5,11 +5,13 @@
   <% end %>
 
   <%= turbo_frame_tag "build_body", class: "build-body", data: { turbo_action: "advance" } do %>
-    <%= render "builds/menu",
-      build: build,
-      run: nil,
-      current_tab_name: "overview",
-      target_tab_name: "test_output" %>
+    <% cache build do %>
+      <%= render "builds/menu",
+        build: build,
+        run: nil,
+        current_tab_name: "overview",
+        target_tab_name: "test_output" %>
+    <% end %>
 
     <div class="build-overview-wrapper">
       <% if build.finished? %>
