@@ -1,7 +1,7 @@
 require "rails_helper"
 include APIAuthenticationHelper
 
-describe "Check Suite", type: :request do
+describe "Pull Request", type: :request do
   let!(:project) do
     create(:project, github_repo_full_name: "user/test") do |project|
       project.user.github_accounts.create!(
@@ -12,24 +12,21 @@ describe "Check Suite", type: :request do
 
   let!(:payload) do
     {
-      "action": "requested",
+      "action": "opened",
       "repository": {
         "id": 123,
         "name": "test",
         "full_name": "user/test"
       },
-      "check_suite": {
+      "pull_request": {
         "id": 456,
-        "head_branch": "main",
-        "head_sha": "abc123",
-        "status": "queued",
-        "head_commit": {
-          "id": "abc123",
-          "message": "Initial commit",
-          "author": {
-            "name": "Author Name",
-            "email": "author@example.com"
-          }
+        "title": "Add new feature",
+        "head": {
+          "ref": "feature-branch",
+          "sha": "abc123"
+        },
+        "user": {
+          "login": "contributor"
         }
       }
     }.to_json
@@ -38,11 +35,11 @@ describe "Check Suite", type: :request do
   let!(:headers) do
     api_authorization_headers(project.user).merge(
       "CONTENT_TYPE" => "application/json",
-      "X-GitHub-Event" => "check_suite"
+      "X-GitHub-Event" => "pull_request"
     )
   end
 
-  describe "check suite event" do
+  describe "pull request opened event" do
     it "returns 200" do
       post(
         "/api/v1/github_events",
@@ -63,7 +60,7 @@ describe "Check Suite", type: :request do
       }.to change { project.builds.count }.by(1)
     end
 
-    it "sets the branch name for the build" do
+    it "sets the correct branch name, commit hash, commit message, and author name for the build" do
       post(
         "/api/v1/github_events",
         params: payload,
@@ -71,7 +68,10 @@ describe "Check Suite", type: :request do
       )
 
       build = Build.last
-      expect(build.branch_name).to eq("main")
+      expect(build.branch_name).to eq("feature-branch")
+      expect(build.commit_hash).to eq("abc123")
+      expect(build.commit_message).to eq("Add new feature")
+      expect(build.author_name).to eq("contributor")
     end
   end
 end
