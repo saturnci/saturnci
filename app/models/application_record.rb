@@ -8,4 +8,8 @@ class ApplicationRecord < ActiveRecord::Base
       end
     end.first
   end
+
+  def abbreviated_hash
+    id[0..7]
+  end
 end
