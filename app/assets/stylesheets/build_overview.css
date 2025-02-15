@@ -10,8 +10,19 @@
   flex-direction: row;
 }
 
-.test-case-run-details, .test-case-run-list {
+.test-case-run-details {
   overflow-y: auto;
+  max-height: 100%;
+}
+
+.test-case-run-list {
+  overflow-y: hidden;
+  max-height: 100%;
+}
+
+.test-case-run-list-body {
+  overflow-y: auto;
+  overflow-x: hidden;
   max-height: 100%;
 }
 
@@ -25,6 +36,13 @@
   border-left: 2px solid #999;
   background-color: #EEE;
   width: 300px;
+}
+
+.test-case-run-list-header {
+  border-bottom: 2px solid #999;
+  position: sticky;
+  padding: 10px;
+  color: #666;
 }
 
 .test-case-run {
