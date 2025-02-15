@@ -6,4 +6,8 @@ class RunPolicy < ApplicationPolicy
   def update?
     record.build.project.user == user
   end
+
+  def destroy?
+    record.build.project.user == user
+  end
 end
