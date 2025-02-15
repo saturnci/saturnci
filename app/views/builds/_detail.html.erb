@@ -25,6 +25,14 @@
 
           <%= render "builds/test_case_run_list", build:, active_test_case_run: test_case_run %>
         </div>
+      <% else %>
+        <div style="padding: 20px 10px">
+          <% if build.status == "Running" %>
+            Waiting for build to finish...
+          <% else %>
+            Build not started
+          <% end %>
+        </div>
       <% end %>
     </div>
   <% end %>
