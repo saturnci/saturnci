@@ -4,7 +4,6 @@ module API
       skip_before_action :verify_authenticity_token
       skip_before_action :authenticate_user_or_404!
       before_action :authenticate_api_user!
-      skip_after_action :verify_authorized
 
       def authenticate_api_user!
         authenticate_or_request_with_http_basic do |user_id, api_token|
