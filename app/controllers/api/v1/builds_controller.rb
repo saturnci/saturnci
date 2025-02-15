@@ -8,6 +8,8 @@ module API
           .limit(DEFAULT_LIMIT)
           .as_json(methods: %w[status duration_formatted])
 
+        authorize :build, :index?
+
         render json: builds
       end
     end

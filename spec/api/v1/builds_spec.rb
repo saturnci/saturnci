@@ -8,6 +8,8 @@ RSpec.describe "builds", type: :request do
 
   let!(:user) { build.project.user }
 
+  before { user.update!(super_admin: true) }
+
   describe "GET /api/v1/builds" do
     it "returns a 200 response" do
       get(
