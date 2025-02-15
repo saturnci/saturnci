@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class BuildComponent < ViewComponent::Base
   renders_one :body
 
