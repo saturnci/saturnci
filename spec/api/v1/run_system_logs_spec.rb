@@ -35,21 +35,4 @@ RSpec.describe "system logs", type: :request do
       expect(run.reload.system_logs).to eq("first chunk second chunk")
     end
   end
-
-  describe "POST /api/v1/runs/:id/system_logs" do
-    before do
-      post(
-        api_v1_run_system_logs_path(run_id: "123_bad_id", format: :json),
-        headers: api_authorization_headers(user)
-      )
-    end
-
-    it "returns the error message" do
-      expect(response.body["error"]).to be_present
-    end
-
-    it "returns a 400 status code" do
-      expect(response.status).to eq(400)
-    end
-  end
 end

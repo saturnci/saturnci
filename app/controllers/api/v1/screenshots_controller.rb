@@ -4,6 +4,8 @@ module API
       def create
         begin
           run = Run.find(params[:run_id])
+          authorize run, :update?
+
           request.body.rewind
 
           if request.headers["X-Filename"].blank?

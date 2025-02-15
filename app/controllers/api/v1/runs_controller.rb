@@ -3,11 +3,14 @@ module API
     class RunsController < APIController
       def index
         @runs = Run.running
+        authorize @runs
+
         render "index", formats: [:json]
       end
 
       def show
         run = Run.find_by_abbreviated_hash(params[:id])
+        authorize run
 
         render json: run.as_json.merge(
           ip_address: RunnerNetwork.new(run.runner_id).ip_address,
@@ -17,6 +20,8 @@ module API
 
       def update
         run = Run.find_by_abbreviated_hash(params[:id])
+        authorize run
+
         run.terminate_on_completion = params[:terminate_on_completion]
         run.save!
 

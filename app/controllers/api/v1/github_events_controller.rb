@@ -19,6 +19,7 @@ module API
           GitHubEvents::PullRequest.new(payload).process
         end
 
+        skip_authorization
         head :ok
       end
     end

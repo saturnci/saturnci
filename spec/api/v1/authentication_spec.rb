@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "API::V1::YourEndpoint", type: :request do
-  let!(:user) { create(:user) }
+  let!(:user) { create(:user, super_admin: true) }
 
   describe "GET /api/v1/builds" do
     context "with valid credentials" do

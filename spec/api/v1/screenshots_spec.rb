@@ -1,7 +1,7 @@
 require "rails_helper"
 include APIAuthenticationHelper
 
-RSpec.describe "Screenshots", type: :request do
+describe "Screenshots", type: :request do
   let!(:run) { create(:run) }
 
   let!(:screenshot_file) do
