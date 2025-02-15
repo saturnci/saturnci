@@ -8,6 +8,7 @@ module API
 
       def show
         run = Run.find_by_abbreviated_hash(params[:id])
+        authorize run
 
         render json: run.as_json.merge(
           ip_address: RunnerNetwork.new(run.runner_id).ip_address,
