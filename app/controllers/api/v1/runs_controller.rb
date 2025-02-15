@@ -3,6 +3,8 @@ module API
     class RunsController < APIController
       def index
         @runs = Run.running
+        authorize @runs
+
         render "index", formats: [:json]
       end
 
@@ -18,6 +20,8 @@ module API
 
       def update
         run = Run.find_by_abbreviated_hash(params[:id])
+        authorize run
+
         run.terminate_on_completion = params[:terminate_on_completion]
         run.save!
 
