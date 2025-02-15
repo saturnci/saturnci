@@ -1,4 +1,8 @@
 class BuildPolicy < ApplicationPolicy
+  def index?
+    user.super_admin?
+  end
+
   def create?
     record.project.user == user
   end
