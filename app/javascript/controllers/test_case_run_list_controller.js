@@ -13,7 +13,7 @@ export default class extends Controller {
 
   onScroll() {
     const list = this.element;
-    const buffer = 10;
+    const buffer = 400;
 
     if (list.scrollTop + list.clientHeight >= list.scrollHeight - buffer) {
       console.log("load more");
