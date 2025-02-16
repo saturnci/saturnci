@@ -3,9 +3,21 @@ class TestCaseRunsController < ApplicationController
     build = Build.find(params[:build_id])
     authorize build, :show?
 
-    test_case_runs = build.test_case_runs
+    test_case_runs = TestCaseRun.failed_first(build.test_case_runs)[TestCaseRunListComponent::INITIAL_BATCH_SIZE..-1]
 
-    render json: test_case_runs.map(&:as_json)
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(
+          "additional_test_case_runs",
+          partial: "test_case_runs/list_items",
+          locals: {
+            build:,
+            test_case_runs:,
+            active_test_case_run: nil
+          }
+        )
+      end
+    end
   end
 
   def show

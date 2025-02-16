@@ -3,22 +3,14 @@
     <%= test_case_run_count %> test cases, <%= failed_test_case_run_count %> failed
   </div>
 
-  <div class="test-case-run-list-body">
-    <ul class="build-overview-test-case-runs" data-controller="test-case-run-list">
-      <% test_case_runs.each do |test_case_run| %>
-        <% cache [test_case_run, test_case_run == active_test_case_run] do %>
-          <li class="test-case-run-status-<%= test_case_run.status %>">
-            <%= link_to "#{File.basename(test_case_run.path)}:#{test_case_run.line_number}",
-              project_test_case_run_path(test_case_run.project, test_case_run),
-              data: {
-                turbo_frame: "test_case_run_details",
-                action: "click->test-case-run-list#makeActive",
-                test_case_run_list_target: "link"
-              },
-              class: test_case_run == active_test_case_run ? "active" : "" %>
-          </li>
-        <% end %>
-      <% end %>
+  <div class="test-case-run-list-body"
+       data-controller="test-case-run-list"
+       data-test-case-run-list-build-id="<%= build.id %>">
+    <ul>
+      <%= render partial: "test_case_runs/list_items",
+        locals: { test_case_runs: test_case_runs, active_test_case_run: active_test_case_run } %>
+
+      <div id="additional_test_case_runs"></div>
     </ul>
   </div>
 </div>
