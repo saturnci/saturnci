@@ -8,6 +8,7 @@ class Run < ApplicationRecord
   has_one :screenshot
 
   alias_attribute :started_at, :created_at
+  delegate :project, to: :build
 
   scope :sorted, -> do
     order("runs.order_index")

@@ -9,6 +9,10 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
   mount ActionCable.server => '/cable'
 
+  resources :builds, only: [] do
+    resources :test_case_runs, only: :index
+  end
+
   get "runs/:id/:partial", to: "runs#show", as: "run"
   get "builds/:id(/:partial)", to: "builds#show", as: "build"
 

@@ -1,4 +1,13 @@
 class TestCaseRunsController < ApplicationController
+  def index
+    build = Build.find(params[:build_id])
+    authorize build, :show?
+
+    test_case_runs = build.test_case_runs
+
+    render json: test_case_runs.map(&:as_json)
+  end
+
   def show
     @test_case_run = TestCaseRun.find(params[:id])
     authorize @test_case_run
