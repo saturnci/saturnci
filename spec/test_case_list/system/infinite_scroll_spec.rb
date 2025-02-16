@@ -13,8 +13,7 @@ describe "Infinite scroll", type: :system do
   end
 
   before do
-    create_list(:test_case_run, 2, run:, path: "spec/models/apple_spec.rb")
-    create_list(:test_case_run, 28, run:, path: "spec/models/banana_spec.rb")
+    create_list(:test_case_run, 30, run:, path: "spec/models/apple_spec.rb")
 
     login_as(build.project.user)
     visit project_build_path(id: build.id, project_id: build.project.id)
