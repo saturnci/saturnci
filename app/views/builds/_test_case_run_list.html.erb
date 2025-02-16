@@ -1,4 +1,4 @@
-<ul class="build-overview-test-case-runs" data-controller="test-case-run">
+<ul class="build-overview-test-case-runs" data-controller="test-case-run-list">
   <% TestCaseRun.failed_first(build.test_case_runs).each do |test_case_run| %>
     <% cache [test_case_run, test_case_run == active_test_case_run] do %>
       <li class="test-case-run-status-<%= test_case_run.status %>">
@@ -6,8 +6,8 @@
           project_test_case_run_path(test_case_run.project, test_case_run),
           data: {
             turbo_frame: "test_case_run_details",
-            action: "click->test-case-run#makeActive",
-            test_case_run_target: "link"
+            action: "click->test-case-run-list#makeActive",
+            test_case_run_list_target: "link"
           },
           class: test_case_run == active_test_case_run ? "active" : "" %>
       </li>

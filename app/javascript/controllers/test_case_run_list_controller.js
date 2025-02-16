@@ -4,7 +4,6 @@ export default class extends Controller {
   static targets = ["link"];
 
   makeActive(event) {
-    console.log("make active");
     this.linkTargets.forEach(link => {
       link.classList.remove("active");
     });
