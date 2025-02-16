@@ -16,7 +16,7 @@
     <div class="build-overview">
       <% if build.finished? %>
         <%= render "test_case_runs/details", test_case_run: test_case_run %>
-        <%= render "builds/test_case_run_list", build:, active_test_case_run: test_case_run %>
+        <%= render "test_case_runs/list", build:, active_test_case_run: test_case_run %>
       <% else %>
         <div style="padding: 20px 10px">
           <% if build.status == "Running" %>
