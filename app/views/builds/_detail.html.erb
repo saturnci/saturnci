@@ -16,17 +16,7 @@
     <div class="build-overview">
       <% if build.finished? %>
         <%= render "test_case_runs/details", test_case_run: test_case_run %>
-
-        <div class="test-case-run-list">
-          <div class="test-case-run-list-header">
-            <%= build.test_case_runs.size %> test cases,
-            <%= build.test_case_runs.select { |tcr| tcr.status == "failed" }.size %> failed
-          </div>
-
-          <div class="test-case-run-list-body">
-            <%= render "builds/test_case_run_list", build:, active_test_case_run: test_case_run %>
-          </div>
-        </div>
+        <%= render "builds/test_case_run_list", build:, active_test_case_run: test_case_run %>
       <% else %>
         <div style="padding: 20px 10px">
           <% if build.status == "Running" %>
