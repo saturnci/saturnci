@@ -1,12 +1,11 @@
 <div class="test-case-run-list">
   <div class="test-case-run-list-header">
-    <%= build.test_case_runs.size %> test cases,
-    <%= build.test_case_runs.select { |tcr| tcr.status == "failed" }.size %> failed
+    <%= test_case_run_count %> test cases, <%= failed_test_case_run_count %> failed
   </div>
 
   <div class="test-case-run-list-body">
     <ul class="build-overview-test-case-runs" data-controller="test-case-run-list">
-      <% TestCaseRun.failed_first(build.test_case_runs).each do |test_case_run| %>
+      <% test_case_runs.each do |test_case_run| %>
         <% cache [test_case_run, test_case_run == active_test_case_run] do %>
           <li class="test-case-run-status-<%= test_case_run.status %>">
             <%= link_to "#{File.basename(test_case_run.path)}:#{test_case_run.line_number}",
