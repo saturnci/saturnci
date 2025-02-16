@@ -3,7 +3,7 @@ class TestCaseRunsController < ApplicationController
     build = Build.find(params[:build_id])
     authorize build, :show?
 
-    test_case_runs = build.test_case_runs
+    test_case_runs = TestCaseRun.failed_first(build.test_case_runs)[TestCaseRunListComponent::INITIAL_BATCH_SIZE..-1]
 
     respond_to do |format|
       format.turbo_stream do

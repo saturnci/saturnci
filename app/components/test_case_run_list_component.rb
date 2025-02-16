@@ -1,6 +1,6 @@
 class TestCaseRunListComponent < ViewComponent::Base
   attr_reader :build, :active_test_case_run
-  LIMIT = 30
+  INITIAL_BATCH_SIZE = 30
 
   def initialize(build:, active_test_case_run:)
     @build = build
@@ -8,7 +8,7 @@ class TestCaseRunListComponent < ViewComponent::Base
   end
 
   def test_case_runs
-    TestCaseRun.failed_first(build.test_case_runs)[0..(LIMIT - 1)]
+    TestCaseRun.failed_first(build.test_case_runs)[0..(INITIAL_BATCH_SIZE - 1)]
   end
 
   def test_case_run_count
