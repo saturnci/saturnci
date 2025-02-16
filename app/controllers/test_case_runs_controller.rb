@@ -8,9 +8,13 @@ class TestCaseRunsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
-          "test_case_runs",
-          partial: "test_case_runs/list",
-          locals: { test_case_runs: test_case_runs, build: build }
+          "additional_test_case_runs",
+          partial: "test_case_runs/list_items",
+          locals: {
+            build:,
+            test_case_runs:,
+            active_test_case_run: nil
+          }
         )
       end
     end
