@@ -12,14 +12,19 @@
   </tr>
   <% @users.each do |user| %>
     <tr>
-      <td><%= user.created_at %></td>
+      <td>
+        <%= l(user.created_at.in_time_zone(Rails.application.config.admin_time_zone)) %>
+      </td>
+
       <td><%= user.name %></td>
       <td><%= user.email %></td>
       <td class="number"><%= user.projects.count %></td>
       <td class="number"><%= user.runs.finished.count %></td>
+
       <td>
-        <%= user.runs.finished.order("created_at desc").first&.created_at %>
+        <%= l(user.runs.finished.order("created_at desc").first&.created_at.in_time_zone(Rails.application.config.admin_time_zone)) %>
       </td>
+
       <td>
         <%= link_to "Become",
           admin_user_impersonations_path(user_id: user.id),
