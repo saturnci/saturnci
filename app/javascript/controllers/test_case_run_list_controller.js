@@ -22,10 +22,7 @@ export default class extends Controller {
   }
 
   async loadMore() {
-    const buildId = this.data.get("buildId");
-    const url = `/builds/${buildId}/test_case_runs`;
-
-    const response = await fetch(url, {
+    const response = await fetch(this.data.get("url"), {
       headers: { "Accept": "text/vnd.turbo-stream.html" },
     });
 
