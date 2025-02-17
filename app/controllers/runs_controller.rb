@@ -1,21 +1,4 @@
 class RunsController < ApplicationController
-  def create
-    build = Build.find(params[:build_id])
-    authorize build
-
-    build.start!
-
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.replace(
-          build,
-          partial: "builds/build_link",
-          locals: { build: build, active_build: nil }
-        )
-      end
-    end
-  end
-
   def show
     @run = Run.find(params[:id])
     authorize @run

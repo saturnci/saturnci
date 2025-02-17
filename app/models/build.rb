@@ -76,11 +76,6 @@ class Build < ApplicationRecord
     run_durations.max
   end
 
-  def started_at
-    return unless runs.any?
-    runs.order("created_at asc").first.created_at
-  end
-
   def delete_runners
     runs.each(&:delete_runner)
   end
