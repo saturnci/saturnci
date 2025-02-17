@@ -1,7 +1,7 @@
 require "rails_helper"
 include APIAuthenticationHelper
 
-RSpec.describe "test reports", type: :request do
+describe "test reports", type: :request do
   describe "POST /api/v1/runs/:id/test_reports" do
     let!(:run) { create(:run) }
 

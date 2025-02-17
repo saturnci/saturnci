@@ -1,0 +1,12 @@
+<%= form_with(model: @user_email, local: true) do |form| %>
+  <%= render ErrorMessagesComponent.new(resource: @user_email) %>
+
+  <div>
+    <%= form.label :email %>
+    <%= form.text_field :email %>
+  </div>
+
+  <div>
+    <%= form.submit "Continue" %>
+  </div>
+<% end %>

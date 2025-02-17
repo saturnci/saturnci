@@ -7,6 +7,8 @@ module API
 
       def create
         run = Run.find(params[:run_id])
+        authorize run, :update?
+
         new_content = Base64.decode64(request.body.read)
         existing_content = run.attributes[TAB_NAME].to_s
         run.update!(TAB_NAME => existing_content + new_content)

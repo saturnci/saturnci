@@ -8,7 +8,7 @@ describe SaturnCICLI::ConnectionDetails do
         body: { rsa_key: Base64.encode64("FAKE_RSA_KEY_CONTENT") }.to_json
       )
 
-      allow(response).to receive(:code).and_return(200)
+      allow(response).to receive(:code).and_return("200")
 
       SaturnCICLI::ConnectionDetails.new(request: -> { response })
     end
