@@ -3,14 +3,14 @@ require "rails_helper"
 describe SaturnCICLI::ConnectionDetails do
   describe "#rsa_key_path" do
     let!(:connection_details) do
-      SaturnCICLI::ConnectionDetails.new(
-        request: -> do
-          double(
-            "Response",
-            body: { rsa_key: Base64.encode64("FAKE_RSA_KEY_CONTENT") }.to_json
-          )
-        end
+      response = double(
+        "Response",
+        body: { rsa_key: Base64.encode64("FAKE_RSA_KEY_CONTENT") }.to_json
       )
+
+      allow(response).to receive(:code).and_return(200)
+
+      SaturnCICLI::ConnectionDetails.new(request: -> { response })
     end
 
     it "returns a path" do
