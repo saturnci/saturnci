@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   mount ActionCable.server => '/cable'
 
   resources :builds, only: [] do
+    resources :runs, only: :create
     resources :test_case_runs, only: :index
   end
 
