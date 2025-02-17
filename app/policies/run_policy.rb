@@ -1,6 +1,6 @@
 class RunPolicy < ApplicationPolicy
   def index?
-    return true if user.admin?
+    return true if user.super_admin?
     record.all? { |run| run.build.project.user == user }
   end
 
