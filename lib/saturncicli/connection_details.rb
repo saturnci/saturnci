@@ -11,6 +11,11 @@ module SaturnCICLI
 
     def refresh
       response = @request.call
+
+      if response.code != "200"
+        puts response.body
+      end
+
       @run = JSON.parse(response.body)
       self
     end
