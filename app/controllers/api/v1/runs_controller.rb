@@ -6,6 +6,8 @@ module API
         authorize @runs
 
         render "index", formats: [:json]
+      rescue StandardError => e
+        render(json: { error: e.message }, status: :bad_request)
       end
 
       def show
