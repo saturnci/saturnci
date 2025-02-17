@@ -4,6 +4,7 @@ export default class extends Controller {
   static targets = ["link"];
 
   connect() {
+    this.moreHaveBeenLoaded = false;
     this.element.addEventListener("scroll", this.onScroll.bind(this));
   }
 
@@ -22,6 +23,12 @@ export default class extends Controller {
   }
 
   async loadMore() {
+    if (this.moreHaveBeenLoaded) {
+      return;
+    }
+
+    this.moreHaveBeenLoaded = true;
+
     const response = await fetch(this.data.get("url"), {
       headers: { "Accept": "text/vnd.turbo-stream.html" },
     });
