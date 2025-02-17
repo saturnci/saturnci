@@ -5,7 +5,7 @@
 
   <div class="test-case-run-list-body"
        data-controller="test-case-run-list"
-       data-test-case-run-list-build-id="<%= build.id %>">
+       data-test-case-run-list-url="<%= build_test_case_runs_path(build) %>">
     <ul>
       <%= render partial: "test_case_runs/list_items",
         locals: { test_case_runs: test_case_runs, active_test_case_run: active_test_case_run } %>
