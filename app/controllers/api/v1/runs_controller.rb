@@ -18,6 +18,8 @@ module API
           ip_address: RunnerNetwork.new(run.runner_id).ip_address,
           rsa_key: rsa_key(run)
         )
+      rescue StandardError => e
+        render(json: { error: e.message }, status: :bad_request)
       end
 
       def update
