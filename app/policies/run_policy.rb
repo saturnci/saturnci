@@ -5,14 +5,17 @@ class RunPolicy < ApplicationPolicy
   end
 
   def show?
+    return true if user.super_admin?
     record.build.project.user == user
   end
 
   def update?
+    return true if user.super_admin?
     record.build.project.user == user
   end
 
   def destroy?
+    return true if user.super_admin?
     record.build.project.user == user
   end
 end
