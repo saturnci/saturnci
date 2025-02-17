@@ -3,8 +3,13 @@ class GitHubAccountsController < ApplicationController
 
   def index
     if user_signed_in?
-      @github_accounts = current_user.github_accounts
-      authorize @github_accounts
+      if current_user.email.present?
+        @github_accounts = current_user.github_accounts
+        authorize @github_accounts
+      else
+        skip_authorization
+        redirect_to new_user_email_path
+      end
     else
       skip_authorization
       redirect_to new_user_session_path
