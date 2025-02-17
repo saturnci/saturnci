@@ -4,7 +4,7 @@ describe "Delete build", type: :system do
   let!(:run) { create(:run) }
 
   before do
-    login_as(run.build.project.user, scope: :user)
+    login_as(run.build.project.user)
   end
 
   context "runner still exists on Digital Ocean" do

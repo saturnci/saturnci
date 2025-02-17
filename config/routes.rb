@@ -3,6 +3,8 @@ def draw(routes_name)
 end
 
 Rails.application.routes.draw do
+  get "user_emails/new"
+  get "user_emails/create"
   get "saturnci_github_app_authorizations/new"
   root to: "github_accounts#index"
 
@@ -41,6 +43,7 @@ Rails.application.routes.draw do
 
   resources :rebuilds, only: :create
   resources :build_cancellations, only: :create
+  resources :user_emails, only: %i(new create)
 
   draw :admin
   draw :api
