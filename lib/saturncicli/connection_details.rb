@@ -13,7 +13,8 @@ module SaturnCICLI
       response = @request.call
 
       if response.code != "200"
-        puts response.body
+        puts JSON.parse(response.body)
+        exit
       end
 
       @run = JSON.parse(response.body)
