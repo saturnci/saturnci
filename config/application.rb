@@ -32,6 +32,7 @@ module Saturn
     config.eager_load_paths << Rails.root.join("lib")
 
     config.active_support.to_time_preserves_timezone = :zone
+    config.admin_time_zone = "Eastern Time (US & Canada)"
 
     # Don't generate system test files.
     config.generators.system_tests = nil
