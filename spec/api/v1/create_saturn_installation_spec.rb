@@ -6,13 +6,13 @@ describe API::V1::GitHubEventsController, type: :controller do
   let!(:user) { create(:user, uid: "55555", provider: "github") }
 
   before do
-    request.headers["X-GitHub-Event"] = "created"
+    request.headers["X-GitHub-Event"] = "installation"
   end
 
   context "personal account" do
     let!(:payload) do
       {
-        "action" => "created",
+        "action" => "installation",
         "installation" => {
           "id" => "12345",
           "account" => {
@@ -43,7 +43,7 @@ describe API::V1::GitHubEventsController, type: :controller do
   context "organization" do
     let!(:payload) do
       {
-        "action" => "created",
+        "action" => "installation",
         "installation" => {
           "id" => 46029919,
           "account" => {
