@@ -5,6 +5,8 @@ module GitHubEvents
     end
 
     def process
+      Rails.logger.info "Processing GitHub Installation event"
+
       user.github_accounts.create!(
         github_installation_id: @payload["installation"]["id"],
         github_app_installation_url: @payload["installation"]["html_url"],
@@ -16,10 +18,14 @@ module GitHubEvents
     private
 
     def user
+      Rails.logger.info "GitHub account id: #{github_account_id}"
+
       User.find_by!(uid: github_account_id, provider: "github")
     end
 
     def github_account_id
+      Rails.logger.info "Account type: #{@payload["installation"]["account"]["type"]}"
+
       if @payload["installation"]["account"]["type"] == "Organization"
         @payload["sender"]["id"]
       else
