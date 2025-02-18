@@ -14,7 +14,7 @@ module API
         Rails.logger.info "Event type: #{event_type}"
 
         case event_type
-        when "created"
+        when "installation"
           GitHubEvents::Installation.new(payload).process
         when "push"
           GitHubEvents::Push.new(payload, params[:repository][:full_name]).process

@@ -9,7 +9,7 @@ describe "GitHub Events", type: :request do
 
     let!(:payload) do
       {
-        "action" => "created",
+        "action" => "installation",
         "installation" => {
           "id" => "12345",
           "account" => {
@@ -29,7 +29,7 @@ describe "GitHub Events", type: :request do
           params: payload,
           headers: api_authorization_headers(user).merge(
             "CONTENT_TYPE" => "application/json",
-            "X-GitHub-Event" => "created"
+            "X-GitHub-Event" => "installation"
           )
         )
       }.to change { GitHubAccount.count }.by(1)
