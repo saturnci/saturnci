@@ -10,7 +10,10 @@ module API
 
         GitHubEvent.create!(body: payload)
 
-        case request.headers["X-GitHub-Event"]
+        event_type = request.headers["X-GitHub-Event"]
+        Rails.logger.info "Event type: #{event_type}"
+
+        case event_type
         when "created"
           GitHubEvents::Installation.new(payload).process
         when "push"
@@ -19,6 +22,7 @@ module API
           GitHubEvents::PullRequest.new(payload).process
         end
 
+        Rails.logger.info "Finished processing GitHub webhook"
         skip_authorization
         head :ok
       end
