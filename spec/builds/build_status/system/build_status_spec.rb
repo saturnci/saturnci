@@ -50,7 +50,10 @@ describe "Build status", type: :system do
 
       it "maintains the currently active build" do
         visit project_build_path(id: run.build.id, project_id: run.build.project.id)
-        expect(page).to have_content("Running", count: 2)
+
+        within ".build-list" do
+          expect(page).to have_content("Running", count: 2)
+        end
 
         http_request(
           api_authorization_headers: api_authorization_headers(user),
