@@ -25,7 +25,13 @@ module SaturnCIRunnerAPI
     end
 
     def pull_image
-      system("sudo docker pull #{image_url} || true")
+      output = `sudo docker pull #{image_url} 2>&1`
+
+      if output.include?("not found") || output.include?("manifest unknown")
+        "Docker registry cache MISS: No matching image found in the registry."
+      else
+        "Docker registry cache HIT: Image found and pulled successfully."
+      end
     end
 
     def push_image
