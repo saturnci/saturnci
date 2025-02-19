@@ -1,7 +1,7 @@
 module SaturnCIRunnerAPI
   class DockerComposeConfiguration
-    def initialize(registry_cache_image_url:, env_vars:)
-      @registry_cache_image_url = registry_cache_image_url
+    def initialize(docker_registry_cache_image_url:, env_vars:)
+      @docker_registry_cache_image_url = docker_registry_cache_image_url
       @env_vars = env_vars
     end
 
@@ -10,7 +10,7 @@ module SaturnCIRunnerAPI
     end
 
     def script_env_vars
-      "SATURN_TEST_APP_IMAGE_URL=#{@registry_cache_image_url}"
+      "SATURN_TEST_APP_IMAGE_URL=#{@docker_registry_cache_image_url}"
     end
   end
 end
