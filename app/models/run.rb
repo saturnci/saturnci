@@ -102,6 +102,10 @@ class Run < ApplicationRecord
     self
   end
 
+  def system_logs
+    runner_system_log&.content
+  end
+
   private
 
   def parsed_exit_code

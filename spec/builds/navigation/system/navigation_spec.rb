@@ -6,17 +6,10 @@ describe "Navigation", type: :system do
       let!(:build) { create(:build) }
 
       let!(:run_1) { create(:run, build:, order_index: 1) }
-
-      let!(:run_2) do
-        create(
-          :run,
-          build:,
-          order_index: 2,
-          system_logs: "runner 2 system logs"
-        )
-      end
+      let!(:run_2) { create(:run, build:, order_index: 2) }
 
       before do
+        create(:runner_system_log, run: run_2, content: "runner 2 system logs")
         login_as(build.project.user)
       end
 

@@ -2,11 +2,13 @@ require "rails_helper"
 
 describe "System logs scrolling", type: :system do
   let!(:run) do
-    create(:run, system_logs: ("line\n" * 500) + "bottom line")
+    create(:run) do |run|
+      create(:runner_system_log, run:, content: ("line\n" * 500) + "bottom line")
+    end
   end
 
   before do
-    login_as(run.build.project.user, scope: :user)
+    login_as(run.build.project.user)
     visit run_path(run, "system_logs")
   end
 

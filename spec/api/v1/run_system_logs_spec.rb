@@ -1,7 +1,7 @@
 require "rails_helper"
 include APIAuthenticationHelper
 
-RSpec.describe "system logs", type: :request do
+describe "system logs", type: :request do
   let!(:run) { create(:run) }
   let!(:user) { run.build.project.user }
 
