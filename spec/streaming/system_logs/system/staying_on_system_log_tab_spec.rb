@@ -4,7 +4,9 @@ describe "Staying on system log tab", type: :system do
   include SaturnAPIHelper
 
   let!(:run) do
-    create(:run, system_logs: "original system log content")
+    create(:run) do |run|
+      create(:runner_system_log, run:, content: "original system log content")
+    end
   end
 
   let!(:user) { run.build.project.user }

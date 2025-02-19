@@ -6,7 +6,9 @@ describe "Visiting different build", type: :system do
   include NavigationHelper
 
   let!(:original_run) do
-    create(:run, system_logs: "original system log content")
+    create(:run) do |run|
+      create(:runner_system_log, run:, content: "original system log content")
+    end
   end
 
   before do
@@ -16,7 +18,9 @@ describe "Visiting different build", type: :system do
 
   context "visiting a different build" do
     let!(:other_run) do
-      create(:run, system_logs: "other run system logs") do |j|
+      create(:run) do |j|
+        create(:runner_system_log, run: j, content: "other run system logs")
+
         j.build.update!(
           project: original_run.build.project,
           commit_message: "Make other change."

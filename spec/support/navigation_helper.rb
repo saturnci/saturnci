@@ -21,6 +21,6 @@ module NavigationHelper
 
   def navigate_to_run_tab(run)
     click_on run.name
-    expect(page).to have_content(run.system_logs) # to prevent race condition
+    expect(page).to have_content(run.runner_system_log.content) # to prevent race condition
   end
 end

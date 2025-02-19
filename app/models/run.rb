@@ -6,6 +6,7 @@ class Run < ApplicationRecord
   has_many :run_events, dependent: :destroy
   has_one :charge, foreign_key: "run_id"
   has_one :screenshot
+  has_one :runner_system_log
 
   alias_attribute :started_at, :created_at
   delegate :project, to: :build
@@ -99,6 +100,10 @@ class Run < ApplicationRecord
     end
 
     self
+  end
+
+  def system_logs
+    runner_system_log&.content
   end
 
   private
