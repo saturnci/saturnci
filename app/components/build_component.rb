@@ -25,7 +25,7 @@ class BuildComponent < ViewComponent::Base
     @build_filter_component ||= BuildFilterComponent.new(
       build: @build,
       branch_name: @branch_name,
-      statuses: @statuses,
+      checked_statuses: @statuses,
       current_tab_name: @current_tab_name
     )
   end
