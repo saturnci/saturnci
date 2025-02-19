@@ -23,7 +23,7 @@
           <div class="code-section">
             <h3>Backtrace</h3>
             <div class="code">
-              <%= test_case_run.exception_backtrace.gsub("\n", "<br>").html_safe %>
+              <%= test_case_run.exception_backtrace.to_s.gsub("\n", "<br>").html_safe %>
             </div>
           </div>
         <% else %>
