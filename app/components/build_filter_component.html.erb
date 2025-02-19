@@ -5,14 +5,16 @@
       prompt: "Branch" %>
   </div>
 
-  <div style="margin: 10px 0">
+  <div class="build-filter-form-status">
     Build status:
-    <% %w(Passed Failed).each do |status| %>
-      <span class="checkbox-container">
-        <%= label_tag "status_#{status.downcase}", status %>
-        <%= check_box_tag "statuses[]", status, checked?(status), id: "status_#{status.downcase}" %>
-      </span>
-    <% end %>
+    <div class="build-filter-form-checkboxes">
+      <% statuses.each do |status| %>
+        <%= label_tag "status_#{status.parameterize}", status, class: "build-filter-form-checkbox-label" do %>
+          <%= check_box_tag "statuses[]", status, checked?(status), id: "status_#{status.parameterize}" %>
+          <%= status %>
+        <% end %>
+      <% end %>
+    </div>
   </div>
 
   <div class="flex">

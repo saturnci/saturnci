@@ -13,11 +13,24 @@
   width: 100%;
 }
 
-.build-filter-form .checkbox-container {
-  margin-left: 6px;
+.build-filter-form-status {
+  margin: 15px 0 20px 0;
 }
 
-.build-filter-form .checkbox-container input {
+.build-filter-form-checkboxes {
+  flex-wrap: wrap;
+  display: flex;
+  gap: 5px;
+}
+
+.build-filter-form-checkbox-label {
+  display: flex;
+  white-space: nowrap;
+  width: 120px;
+  gap: 5px;
+}
+
+.build-filter-form-checkbox-label input {
   margin-left: 0;
   margin-right: 0;
   position: relative;
