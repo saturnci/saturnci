@@ -1,0 +1,4 @@
+#!/bin/bash
+kubectl delete -f production/registry/deployment.yaml
+kubectl apply -f production/registry/deployment.yaml
+kubectl get pods
