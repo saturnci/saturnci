@@ -4,7 +4,11 @@ describe "Navigating from test output tab", type: :system do
   include SaturnAPIHelper
   include NavigationHelper
 
-  let!(:run) { create(:run, system_logs: "stuff") }
+  let!(:run) do
+    create(:run) do |run|
+      create(:runner_system_log, run:, content: "stuff")
+    end
+  end
 
   before do
     login_as(run.build.project.user, scope: :user)

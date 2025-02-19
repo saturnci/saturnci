@@ -1,7 +1,7 @@
 require "rails_helper"
 include APIAuthenticationHelper
 
-RSpec.describe "JSON output", type: :request do
+describe "JSON output", type: :request do
   let!(:run) { create(:run) }
 
   let!(:raw_data) do
