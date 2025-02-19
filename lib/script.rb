@@ -54,7 +54,7 @@ class Script
     system("sudo chmod 755 .saturnci/pre.sh")
 
     docker_compose_configuration = SaturnCIRunnerAPI::DockerComposeConfiguration.new(
-      docker_registry_cache.image_url: docker_registry_cache.image_url,
+      docker_registry_cache_image_url: docker_registry_cache.image_url,
       env_vars: ENV["USER_ENV_VAR_KEYS"].split(",").map { |key| [key, ENV[key]] }.to_h
     )
 
@@ -189,13 +189,13 @@ class Script
     puts response.body
   end
 
-  def self.push_docker_image(docker_registry_cache.image_url)
+  def self.push_docker_image(docker_registry_cache_image_url)
     puts "$(sudo docker image ls)"
     puts `$(sudo docker image ls)`
 
     puts "Performing docker tag and push"
-    system("sudo docker tag #{SaturnCIRunnerAPI::DockerRegistryCache::URL}/saturn_test_app #{docker_registry_cache.image_url}")
-    system("sudo docker push #{docker_registry_cache.image_url}")
+    system("sudo docker tag #{SaturnCIRunnerAPI::DockerRegistryCache::URL}/saturn_test_app #{docker_registry_cache_image_url}")
+    system("sudo docker push #{docker_registry_cache_image_url}")
     puts "Docker push finished"
   end
 end
