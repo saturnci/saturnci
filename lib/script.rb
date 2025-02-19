@@ -1,7 +1,6 @@
 require "net/http"
 require "uri"
 require "json"
-require "digest"
 require "fileutils"
 
 PROJECT_DIR = "/home/ubuntu/project"
@@ -33,11 +32,11 @@ class Script
     puts "Checking out commit #{ENV["COMMIT_HASH"]}"
     system("git checkout #{ENV["COMMIT_HASH"]}")
 
-    docker_registry_cache_checksum = Digest::SHA256.hexdigest(File.read("Gemfile.lock") + File.read(".saturnci/Dockerfile"))
-    puts "Docker registry cache checksum: #{docker_registry_cache_checksum}"
+    docker_registry_cache = SaturnCIRunnerAPI::DockerRegistryCache.new
+    puts "Docker registry cache checksum: #{docker_registry_cache.checksum}"
 
     # This pulls a cached Docker image
-    registry_cache_image_url = "#{REGISTRY_CACHE_URL}/saturn_test_app:#{docker_registry_cache_checksum}"
+    registry_cache_image_url = "#{REGISTRY_CACHE_URL}/saturn_test_app:#{docker_registry_cache.checksum}"
     puts "Registry cache image URL: #{registry_cache_image_url}"
 
     # Registry cache IP is sometimes wrong without this.
