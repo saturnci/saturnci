@@ -31,20 +31,19 @@ class Script
     puts "Checking out commit #{ENV["COMMIT_HASH"]}"
     system("git checkout #{ENV["COMMIT_HASH"]}")
 
-    docker_registry_cache = SaturnCIRunnerAPI::DockerRegistryCache.new
-    puts "Docker registry cache checksum: #{docker_registry_cache.checksum}"
+    docker_registry_cache = SaturnCIRunnerAPI::DockerRegistryCache.new(
+      username: ENV["DOCKER_REGISTRY_CACHE_USERNAME"],
+      password: ENV["DOCKER_REGISTRY_CACHE_PASSWORD"]
+    )
 
-    # This pulls a cached Docker image
+    puts "Docker registry cache checksum: #{docker_registry_cache.checksum}"
     puts "Registry cache image URL: #{docker_registry_cache.image_url}"
 
-    # Registry cache IP is sometimes wrong without this.
-    system("sudo systemd-resolve --flush-caches")
-
     puts "Authenticating to Docker registry (#{SaturnCIRunnerAPI::DockerRegistryCache::URL})"
-    system("sudo docker login #{SaturnCIRunnerAPI::DockerRegistryCache::URL} -u #{ENV["DOCKER_REGISTRY_CACHE_USERNAME"]} -p #{ENV["DOCKER_REGISTRY_CACHE_PASSWORD"]}")
+    docker_registry_cache.authenticate
 
     puts "Pulling the existing image to avoid rebuilding if possible"
-    system("sudo docker pull #{docker_registry_cache.image_url} || true")
+    docker_registry_cache.pull
 
     puts "Copying database.yml"
     system("sudo cp .saturnci/database.yml config/database.yml")
