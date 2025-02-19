@@ -1,13 +1,11 @@
-# frozen_string_literal: true
-
 require "rails_helper"
 
-RSpec.describe BuildFilterComponent, type: :component do
+describe BuildFilterComponent, type: :component do
   let!(:build_filter_component) do
     BuildFilterComponent.new(
       build: nil,
       branch_name: nil,
-      statuses: ["Passed"],
+      checked_statuses: ["Passed"],
       current_tab_name: nil
     )
   end
