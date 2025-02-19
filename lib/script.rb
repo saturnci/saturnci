@@ -6,7 +6,6 @@ require "fileutils"
 PROJECT_DIR = "/home/ubuntu/project"
 RSPEC_DOCUMENTATION_OUTPUT_FILENAME = "tmp/rspec_documentation_output.txt"
 TEST_RESULTS_FILENAME = "tmp/test_results.txt"
-REGISTRY_CACHE_URL = "registrycache.saturnci.com:5000"
 
 class Script
   def self.execute
@@ -36,17 +35,16 @@ class Script
     puts "Docker registry cache checksum: #{docker_registry_cache.checksum}"
 
     # This pulls a cached Docker image
-    registry_cache_image_url = "#{REGISTRY_CACHE_URL}/saturn_test_app:#{docker_registry_cache.checksum}"
-    puts "Registry cache image URL: #{registry_cache_image_url}"
+    puts "Registry cache image URL: #{docker_registry_cache.image_url}"
 
     # Registry cache IP is sometimes wrong without this.
     system("sudo systemd-resolve --flush-caches")
 
-    puts "Authenticating to Docker registry (#{REGISTRY_CACHE_URL})"
-    system("sudo docker login #{REGISTRY_CACHE_URL} -u #{ENV["DOCKER_REGISTRY_CACHE_USERNAME"]} -p #{ENV["DOCKER_REGISTRY_CACHE_PASSWORD"]}")
+    puts "Authenticating to Docker registry (#{SaturnCIRunnerAPI::DockerRegistryCache::URL})"
+    system("sudo docker login #{SaturnCIRunnerAPI::DockerRegistryCache::URL} -u #{ENV["DOCKER_REGISTRY_CACHE_USERNAME"]} -p #{ENV["DOCKER_REGISTRY_CACHE_PASSWORD"]}")
 
     puts "Pulling the existing image to avoid rebuilding if possible"
-    system("sudo docker pull #{registry_cache_image_url} || true")
+    system("sudo docker pull #{docker_registry_cache.image_url} || true")
 
     puts "Copying database.yml"
     system("sudo cp .saturnci/database.yml config/database.yml")
@@ -56,7 +54,7 @@ class Script
     system("sudo chmod 755 .saturnci/pre.sh")
 
     docker_compose_configuration = SaturnCIRunnerAPI::DockerComposeConfiguration.new(
-      registry_cache_image_url: registry_cache_image_url,
+      docker_registry_cache.image_url: docker_registry_cache.image_url,
       env_vars: ENV["USER_ENV_VAR_KEYS"].split(",").map { |key| [key, ENV[key]] }.to_h
     )
 
@@ -138,7 +136,7 @@ class Script
     puts
 
     send_screenshot_tar_file(source_dir: "tmp/capybara")
-    push_docker_image(registry_cache_image_url)
+    push_docker_image(docker_registry_cache.image_url)
 
   rescue StandardError => e
     puts "Error: #{e.message}"
@@ -191,13 +189,13 @@ class Script
     puts response.body
   end
 
-  def self.push_docker_image(registry_cache_image_url)
+  def self.push_docker_image(docker_registry_cache.image_url)
     puts "$(sudo docker image ls)"
     puts `$(sudo docker image ls)`
 
     puts "Performing docker tag and push"
-    system("sudo docker tag #{REGISTRY_CACHE_URL}/saturn_test_app #{registry_cache_image_url}")
-    system("sudo docker push #{registry_cache_image_url}")
+    system("sudo docker tag #{SaturnCIRunnerAPI::DockerRegistryCache::URL}/saturn_test_app #{docker_registry_cache.image_url}")
+    system("sudo docker push #{docker_registry_cache.image_url}")
     puts "Docker push finished"
   end
 end
