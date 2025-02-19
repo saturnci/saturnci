@@ -43,7 +43,7 @@ class Script
     docker_registry_cache.authenticate
 
     puts "Pulling the existing image to avoid rebuilding if possible"
-    docker_registry_cache.pull_image
+    puts docker_registry_cache.pull_image
 
     puts "Copying database.yml"
     system("sudo cp .saturnci/database.yml config/database.yml")

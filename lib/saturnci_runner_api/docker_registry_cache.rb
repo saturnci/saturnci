@@ -25,7 +25,13 @@ module SaturnCIRunnerAPI
     end
 
     def pull_image
-      system("sudo docker pull #{image_url} || true")
+      output = `sudo docker pull #{image_url} 2>&1`
+
+      if output.include?("Image is up to date")
+        "Docker registry cache HIT"
+      else
+        "Docker registry cache MISS"
+      end
     end
 
     def push_image
