@@ -1,0 +1,2 @@
+class RunnerSystemLog < ApplicationRecord
+end

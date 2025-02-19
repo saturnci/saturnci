@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_14_215723) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_19_181113) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -106,6 +106,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_14_215723) do
     t.index ["run_id"], name: "index_run_events_on_run_id"
   end
 
+  create_table "runner_system_logs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "run_id", null: false
+    t.text "content", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["run_id"], name: "index_runner_system_logs_on_run_id"
+  end
+
   create_table "runs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "build_id", null: false
     t.string "runner_id"
@@ -193,6 +201,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_14_215723) do
   add_foreign_key "projects", "github_accounts"
   add_foreign_key "projects", "users"
   add_foreign_key "run_events", "runs"
+  add_foreign_key "runner_system_logs", "runs"
   add_foreign_key "runs", "builds"
   add_foreign_key "screenshots", "runs"
   add_foreign_key "test_case_runs", "runs"
