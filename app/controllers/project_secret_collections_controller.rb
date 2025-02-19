@@ -4,7 +4,7 @@ class ProjectSecretCollectionsController < ApplicationController
   def show
     @project = Project.find(params[:project_id])
     @project_secret_collection = ProjectSecretCollection.new
-    @project_secret_collection.project_secrets = @project.project_secrets.to_a
+    @project_secret_collection.project_secrets = @project.project_secrets.order("key").to_a
 
     NUMBER_OF_EMPTY_PROJECT_SECRET_FIELDS.times do
       @project_secret_collection.project_secrets << ProjectSecret.new
