@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe SaturnCIRunnerAPI::PreScriptCommand do
   let!(:docker_compose_configuration) do
     SaturnCIRunnerAPI::DockerComposeConfiguration.new(
-      registry_cache_image_url: "registrycache.saturnci.com:5000/saturn_test_app:123456",
+      docker_registry_cache_image_url: "registrycache.saturnci.com:5000/saturn_test_app:123456",
       env_vars: { "FOO" => "bar", "BAR" => "baz" }
     )
   end
