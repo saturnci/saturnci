@@ -135,7 +135,13 @@ class Script
     puts
 
     send_screenshot_tar_file(source_dir: "tmp/capybara")
-    push_docker_image(docker_registry_cache.image_url)
+
+    puts "$(sudo docker image ls)"
+    puts `$(sudo docker image ls)`
+
+    puts "Performing docker tag and push"
+    docker_registry_cache.push_image
+    puts "Docker push finished"
 
   rescue StandardError => e
     puts "Error: #{e.message}"
@@ -186,16 +192,6 @@ class Script
     response = screenshot_upload_request.execute
     puts "Screenshot tar response code: #{response.code}"
     puts response.body
-  end
-
-  def self.push_docker_image(docker_registry_cache_image_url)
-    puts "$(sudo docker image ls)"
-    puts `$(sudo docker image ls)`
-
-    puts "Performing docker tag and push"
-    system("sudo docker tag #{SaturnCIRunnerAPI::DockerRegistryCache::URL}/saturn_test_app #{docker_registry_cache_image_url}")
-    system("sudo docker push #{docker_registry_cache_image_url}")
-    puts "Docker push finished"
   end
 end
 

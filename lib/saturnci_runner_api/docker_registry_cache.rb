@@ -13,7 +13,7 @@ module SaturnCIRunnerAPI
     end
 
     def checksum
-      Digest::SHA256.hexdigest(File.read("Gemfile.lock") + File.read(".saturnci/Dockerfile"))
+      @checksum ||= Digest::SHA256.hexdigest(File.read("Gemfile.lock") + File.read(".saturnci/Dockerfile"))
     end
 
     def image_url
@@ -26,6 +26,11 @@ module SaturnCIRunnerAPI
 
     def pull
       system("sudo docker pull #{image_url} || true")
+    end
+
+    def push_image
+      system("sudo docker tag #{URL}/saturn_test_app #{image_url}")
+      system("sudo docker push #{image_url}")
     end
   end
 end
