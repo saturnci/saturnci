@@ -1,18 +1,27 @@
 <%= form_tag(build_path(@build, @current_tab_name), method: :get, class: "build-filter-form") do %>
-  <div>
-    <%= select_tag "branch_name",
-      options_for_select(branch_names, @branch_name),
-      prompt: "Branch" %>
+  <div class="form-group">
+    <label class="form-group-label">Branch</label>
+
+    <div>
+      <%= select_tag "branch_name",
+        options_for_select(branch_names, @branch_name),
+        prompt: "All branches" %>
+    </div>
   </div>
 
-  <div style="margin: 10px 0">
-    Build status:
-    <% %w(Passed Failed).each do |status| %>
-      <span class="checkbox-container">
-        <%= label_tag "status_#{status.downcase}", status %>
-        <%= check_box_tag "statuses[]", status, checked?(status), id: "status_#{status.downcase}" %>
-      </span>
-    <% end %>
+  <div class="form-group">
+    <label class="form-group-label">Build status</label>
+
+    <div class="build-filter-form-status">
+      <div class="build-filter-form-checkboxes">
+        <% statuses.each do |status| %>
+          <%= label_tag "status_#{status.parameterize}", status, class: "build-filter-form-checkbox-label" do %>
+            <%= check_box_tag "statuses[]", status, checked?(status), id: "status_#{status.parameterize}" %>
+            <%= status %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
   </div>
 
   <div class="flex">
