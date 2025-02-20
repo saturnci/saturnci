@@ -18,6 +18,8 @@ services:
       DATABASE_HOST: postgres
       DATABASE_PORT: 5432
       RAILS_ENV: test
+    networks:
+      - saturnci_network
 
   postgres:
     image: postgres:17.2-alpine
@@ -38,6 +40,8 @@ services:
       retries: 10
     logging:
       driver: none
+    networks:
+      - saturnci_network
 
   chrome:
     image: seleniarm/standalone-chromium
@@ -45,6 +49,12 @@ services:
     shm_size: 2g
     ports:
       - "4444:4444"
+    networks:
+      - saturnci_network
 
 volumes:
   postgresql:
+
+networks:
+  saturnci_network:
+    driver: bridge
