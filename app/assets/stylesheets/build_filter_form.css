@@ -1,23 +1,35 @@
 .build-filter-form, .build-count {
   background-color: #DDD;
-  padding-left: 8px;
-  padding-right: 8px;
+  padding-left: 12px;
+  padding-right: 12px;
 }
 
 .build-filter-form {
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 .build-filter-form select {
   width: 100%;
 }
 
-.build-filter-form .checkbox-container {
-  margin-left: 6px;
+.build-filter-form-status {
 }
 
-.build-filter-form .checkbox-container input {
+.build-filter-form-checkboxes {
+  flex-wrap: wrap;
+  display: flex;
+  gap: 5px;
+}
+
+.build-filter-form-checkbox-label {
+  display: flex;
+  white-space: nowrap;
+  width: 120px;
+  gap: 5px;
+}
+
+.build-filter-form-checkbox-label input {
   margin-left: 0;
   margin-right: 0;
   position: relative;

@@ -1,4 +1,12 @@
 class BuildFilterComponent < ViewComponent::Base
+  STATUSES = [
+    "Passed",
+    "Failed",
+    "Running",
+    "Cancelled",
+    "Not Started"
+  ]
+
   def initialize(build:, branch_name:, checked_statuses:, current_tab_name:)
     @build = build
     @branch_name = branch_name
@@ -12,5 +20,9 @@ class BuildFilterComponent < ViewComponent::Base
 
   def branch_names
     @build.project.builds.map(&:branch_name).uniq
+  end
+
+  def statuses
+    STATUSES
   end
 end
