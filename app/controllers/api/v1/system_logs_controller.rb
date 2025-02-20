@@ -14,8 +14,6 @@ module API
           runner_system_log = RunnerSystemLog.find_or_create_by(run:)
           runner_system_log.update!(content: runner_system_log.content + new_content)
 
-          legacy_update(run, new_content)
-
           Streaming::RunOutputStream.new(run: run, tab_name: TAB_NAME).broadcast
         rescue StandardError => e
           render(json: { error: e.message }, status: :bad_request)
@@ -23,13 +21,6 @@ module API
         end
 
         head :ok
-      end
-
-      private
-
-      def legacy_update(run, new_content)
-        existing_content = run.attributes[TAB_NAME].to_s
-        run.update!(TAB_NAME => existing_content + new_content)
       end
     end
   end
