@@ -18,7 +18,7 @@ if ENV["DOCKER_ENV"].present?
   Capybara.javascript_driver = :selenium_headless
   Capybara.server_host = "0.0.0.0"
   Capybara.server_port = '3000'
-  Capybara.app_host = "http://#{IPSocket.getaddress(Socket.gethostname)}:3000"
+  Capybara.app_host = "http://localhost:3000"
   Capybara.always_include_port = true
 else
   Capybara.register_driver :selenium_headless do |app|
