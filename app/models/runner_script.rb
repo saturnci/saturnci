@@ -35,7 +35,7 @@ class RunnerScript
       export USER_ENV_VAR_KEYS="#{@run.build.project.project_secrets.map(&:key).join(",")}"
       #{@run.build.project.project_secrets.map { |secret| "export #{secret.key}=#{secret.value}" }.join("\n")}
 
-      cat env > /tmp/.env.saturnci
+      env > /tmp/.env.saturnci
 
       RUBY_SCRIPT_PATH=/tmp/runner_script.rb
       echo #{encoded_script} | base64 --decode > $RUBY_SCRIPT_PATH
