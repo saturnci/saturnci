@@ -13,14 +13,14 @@ describe "Infinite scroll", type: :system do
   end
 
   before do
-    create_list(:test_case_run, 30, run:, path: "spec/models/apple_spec.rb")
+    create_list(:test_case_run, 100, run:, path: "spec/models/apple_spec.rb")
 
     login_as(build.project.user)
     visit project_build_path(id: build.id, project_id: build.project.id)
   end
 
-  it "initially shows only the first 30 test case runs" do
-    expect(all(".test-case-run-list-body ul li").count).to eq(30)
+  it "initially shows only the first 100 test case runs" do
+    expect(all(".test-case-run-list-body ul li").count).to eq(100)
   end
 
   describe "scrolling to the bottom" do
@@ -35,7 +35,7 @@ describe "Infinite scroll", type: :system do
     end
 
     it "results in 31 test case runs" do
-      expect(all(".test-case-run-list-body ul li").count).to eq(31)
+      expect(all(".test-case-run-list-body ul li").count).to eq(101)
     end
   end
 
