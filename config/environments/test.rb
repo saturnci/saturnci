@@ -59,6 +59,6 @@ Rails.application.configure do
   config.logger = ActiveSupport::Logger.new(STDOUT)
   config.log_level = :error
 
-  config.hosts << "www.example.com"
-  config.hosts << IPAddr.new("0.0.0.0/0")
+  # Allow connection from any host
+  config.hosts.clear
 end
