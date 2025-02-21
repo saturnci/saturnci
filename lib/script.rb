@@ -58,7 +58,9 @@ class Script
       env_vars: ENV["USER_ENV_VAR_KEYS"].split(",").map { |key| [key, ENV[key]] }.to_h
     )
 
-    docker_compose_start_command = SaturnCIRunnerAPI::DockerComposeStartCommand.new
+    docker_compose_start_command = SaturnCIRunnerAPI::DockerComposeStartCommand.new(
+      docker_compose_configuration: docker_compose_configuration
+    )
     puts "docker-compose start command: #{docker_compose_start_command.to_s}"
     system(docker_compose_start_command.to_s)
 
