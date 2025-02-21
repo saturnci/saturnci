@@ -8,7 +8,7 @@ module SaturnCIRunnerAPI
     end
 
     def to_s
-      "script -f #{@rspec_documentation_output_filename} -c \"sudo #{@docker_compose_configuration.script_env_vars} docker exec saturn_test_app #{rspec_command}\""
+      "script -f #{@rspec_documentation_output_filename} -c \"sudo #{@docker_compose_configuration.script_env_vars} docker exec -t saturn_test_app #{rspec_command}\""
     end
 
     private
