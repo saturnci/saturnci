@@ -93,7 +93,6 @@ class Script
     selected_tests = chunks[ENV['RUN_ORDER_INDEX'].to_i - 1]
     test_files_string = selected_tests.join(' ')
 
-    system("docker-compose -f .saturnci/docker-compose.yml down")
     test_suite_command = SaturnCIRunnerAPI::TestSuiteCommand.new(
       docker_compose_configuration: docker_compose_configuration,
       test_files_string: test_files_string,
