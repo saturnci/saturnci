@@ -1,6 +1,7 @@
 module SaturnCIRunnerAPI
   class TestSuiteCommand
-    def initialize(docker_compose_configuration:, test_files_string:, rspec_seed:, rspec_documentation_output_filename:)
+    def initialize(env_file_path:, docker_compose_configuration:, test_files_string:, rspec_seed:, rspec_documentation_output_filename:)
+      @env_file_path = env_file_path
       @docker_compose_configuration = docker_compose_configuration
       @test_files_string = test_files_string
       @rspec_seed = rspec_seed
