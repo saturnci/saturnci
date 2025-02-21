@@ -2,6 +2,9 @@ version: "3.8"
 
 services:
   saturn_test_app:
+    networks:
+      saturnci_network:
+        ipv4_address: 192.168.1.100
     hostname: saturn_test_app
     build:
       context: ../
@@ -41,6 +44,10 @@ services:
       driver: none
 
   chrome:
+    networks:
+      - saturnci_network
+    extra_hosts:
+      - "test.saturn_test_app:192.168.1.100"
     image: seleniarm/standalone-chromium
     hostname: chrome
     shm_size: 2g
@@ -49,3 +56,10 @@ services:
 
 volumes:
   postgresql:
+
+networks:
+  saturnci_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
