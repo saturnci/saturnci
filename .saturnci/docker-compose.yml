@@ -25,6 +25,8 @@ services:
       RAILS_ENV: test
 
   postgres:
+    networks:
+      - saturnci_network
     image: postgres:17.2-alpine
     volumes:
       - postgresql:/var/lib/postgresql/data:delegated
