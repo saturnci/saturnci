@@ -25,7 +25,6 @@ class Script
 
     Dir.chdir(PROJECT_DIR)
     FileUtils.mkdir_p('tmp')
-    system("source /tmp/saturnci.env")
 
     client.post("runs/#{ENV["RUN_ID"]}/run_events", type: "repository_cloned")
 
@@ -40,6 +39,7 @@ class Script
     puts "Docker registry cache checksum: #{docker_registry_cache.checksum}"
     puts "Registry cache image URL: #{docker_registry_cache.image_url}"
     system("echo 'SATURN_TEST_APP_IMAGE_URL=#{docker_registry_cache.image_url}' >> /tmp/saturnci.env")
+    system("source /tmp/saturnci.env")
 
     puts "Authenticating to Docker registry (#{SaturnCIRunnerAPI::DockerRegistryCache::URL})"
     docker_registry_cache.authenticate
