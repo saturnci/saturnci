@@ -38,7 +38,7 @@ class Script
 
     puts "Docker registry cache checksum: #{docker_registry_cache.checksum}"
     puts "Registry cache image URL: #{docker_registry_cache.image_url}"
-    system("echo 'SATURN_TEST_APP_IMAGE_URL=#{docker_registry_cache.image_url}' >> /tmp/saturnci.env")
+    system("echo 'SATURN_TEST_APP_IMAGE_URL=#{docker_registry_cache.image_url}' >> #{ENV["SATURNCI_ENV_FILE_PATH"]}")
 
     puts "Authenticating to Docker registry (#{SaturnCIRunnerAPI::DockerRegistryCache::URL})"
     docker_registry_cache.authenticate
@@ -59,7 +59,8 @@ class Script
     )
 
     pre_script_command = SaturnCIRunnerAPI::PreScriptCommand.new(
-      docker_compose_configuration: docker_compose_configuration
+      docker_compose_configuration: docker_compose_configuration,
+      env_file_path: ENV["SATURNCI_ENV_FILE_PATH"]
     )
     puts "pre.sh command: #{pre_script_command.to_s}"
     system(pre_script_command.to_s)
@@ -94,6 +95,7 @@ class Script
     test_files_string = selected_tests.join(' ')
 
     test_suite_command = SaturnCIRunnerAPI::TestSuiteCommand.new(
+      env_file_path: ENV["SATURNCI_ENV_FILE_PATH"],
       docker_compose_configuration: docker_compose_configuration,
       test_files_string: test_files_string,
       rspec_seed: ENV["RSPEC_SEED"],

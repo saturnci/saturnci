@@ -1,7 +1,8 @@
 module SaturnCIRunnerAPI
   class PreScriptCommand
-    def initialize(docker_compose_configuration:)
+    def initialize(docker_compose_configuration:, env_file_path:)
       @docker_compose_configuration = docker_compose_configuration
+      @env_file_path = env_file_path
     end
 
     def to_s
@@ -9,7 +10,7 @@ module SaturnCIRunnerAPI
     end
 
     def docker_compose_command
-      "docker-compose -f .saturnci/docker-compose.yml run #{@docker_compose_configuration.env_vars} saturn_test_app ./.saturnci/pre.sh"
+      "docker-compose --env-file #{@env_file_path} -f .saturnci/docker-compose.yml run saturn_test_app ./.saturnci/pre.sh"
     end
   end
 end
