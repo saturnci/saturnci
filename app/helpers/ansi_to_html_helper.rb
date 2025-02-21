@@ -12,6 +12,7 @@ module ANSIToHTMLHelper
     /\e\[\d+A/ => '', # Move cursor up
     /\e\[\d+B/ => '', # Move cursor down
     /\e\[2K/ => '',   # Clear Line
+    /\r/ => '',       # Strip carriage returns
   }
 
   def ansi_to_html(ansi_string)
