@@ -5,7 +5,7 @@ module SaturnCIRunnerAPI
     end
 
     def to_s
-      "docker-compose -f .saturnci/docker-compose.yml up -d"
+      "docker-compose --env-file .saturnci/.env -f .saturnci/docker-compose.yml up -d"
     end
   end
 end
