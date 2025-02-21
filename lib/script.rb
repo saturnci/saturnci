@@ -59,7 +59,7 @@ class Script
       env_vars: ENV["USER_ENV_VAR_KEYS"].split(",").map { |key| [key, ENV[key]] }.to_h
     )
 
-    docker_compose_start_command = "docker-compose --env-file #{ENV["SATURNCI_ENV_FILE_PATH"]} -f .saturnci/docker-compose.yml up -d"
+    docker_compose_start_command = "docker-compose -f .saturnci/docker-compose.yml up -d"
     puts "docker-compose start command: #{docker_compose_start_command}"
     system(docker_compose_start_command)
 
