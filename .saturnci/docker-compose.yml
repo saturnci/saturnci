@@ -7,6 +7,7 @@ services:
     build:
       context: ../
       dockerfile: .saturnci/Dockerfile
+    command: ["tail", "-f", "/dev/null"]
     image: ${SATURN_TEST_APP_IMAGE_URL}
     volumes:
       - ../:/code
