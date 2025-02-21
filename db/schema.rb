@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_20_172006) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_21_152604) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -128,7 +128,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_172006) do
     t.datetime "deleted_at"
     t.boolean "terminate_on_completion", default: true, null: false
     t.jsonb "json_output"
-    t.text "complete_syslog"
     t.index ["build_id", "order_index"], name: "index_runs_on_build_id_and_order_index", unique: true
     t.index ["build_id"], name: "index_runs_on_build_id"
     t.index ["runner_id"], name: "index_runs_on_runner_id", unique: true
