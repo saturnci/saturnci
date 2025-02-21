@@ -1,6 +1,6 @@
 class TestCaseRunListComponent < ViewComponent::Base
   attr_reader :build, :active_test_case_run
-  INITIAL_BATCH_SIZE = 30
+  INITIAL_BATCH_SIZE = 100
 
   def initialize(build:, active_test_case_run:)
     @build = build
