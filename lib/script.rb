@@ -53,14 +53,9 @@ class Script
     client.post("runs/#{ENV["RUN_ID"]}/run_events", type: "pre_script_started")
     system("sudo chmod 755 .saturnci/pre.sh")
 
-    docker_compose_configuration = SaturnCIRunnerAPI::DockerComposeConfiguration.new(
-      docker_registry_cache_image_url: docker_registry_cache.image_url,
-      env_vars: ENV["USER_ENV_VAR_KEYS"].split(",").map { |key| [key, ENV[key]] }.to_h
-    )
-
     pre_script_command = SaturnCIRunnerAPI::PreScriptCommand.new(
-      docker_compose_configuration: docker_compose_configuration,
-      env_file_path: ENV["SATURNCI_ENV_FILE_PATH"]
+      env_file_path: ENV["SATURNCI_ENV_FILE_PATH"],
+      docker_registry_cache_image_url: docker_registry_cache.image_url
     )
     puts "pre.sh command: #{pre_script_command.to_s}"
     system(pre_script_command.to_s)
@@ -96,7 +91,7 @@ class Script
 
     test_suite_command = SaturnCIRunnerAPI::TestSuiteCommand.new(
       env_file_path: ENV["SATURNCI_ENV_FILE_PATH"],
-      docker_compose_configuration: docker_compose_configuration,
+      docker_registry_cache_image_url: docker_registry_cache.image_url,
       test_files_string: test_files_string,
       rspec_seed: ENV["RSPEC_SEED"],
       rspec_documentation_output_filename: RSPEC_DOCUMENTATION_OUTPUT_FILENAME

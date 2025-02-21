@@ -33,7 +33,6 @@ class RunnerScript
       export GITHUB_REPO_FULL_NAME=#{@run.build.project.github_repo_full_name}
       export SATURNCI_ENV_FILE_PATH=/tmp/saturnci.env
 
-      export USER_ENV_VAR_KEYS="#{@run.build.project.project_secrets.map(&:key).join(",")}"
       #{@run.build.project.project_secrets.map { |secret| "export #{secret.key}=#{secret.value}" }.join("\n")}
 
       env > $SATURNCI_ENV_FILE_PATH

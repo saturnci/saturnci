@@ -1,12 +1,12 @@
 module SaturnCIRunnerAPI
   class PreScriptCommand
-    def initialize(docker_compose_configuration:, env_file_path:)
-      @docker_compose_configuration = docker_compose_configuration
+    def initialize(env_file_path:, docker_registry_cache_image_url:)
       @env_file_path = env_file_path
+      @docker_registry_cache_image_url = docker_registry_cache_image_url
     end
 
     def to_s
-      "script -c \"sudo #{@docker_compose_configuration.script_env_vars} #{docker_compose_command.strip}\""
+      "script -c \"sudo SATURN_TEST_APP_IMAGE_URL=#{@docker_registry_cache_image_url} #{docker_compose_command.strip}\""
     end
 
     def docker_compose_command
