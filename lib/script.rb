@@ -38,8 +38,8 @@ class Script
 
     puts "Docker registry cache checksum: #{docker_registry_cache.checksum}"
     puts "Registry cache image URL: #{docker_registry_cache.image_url}"
-    system("echo 'SATURN_TEST_APP_IMAGE_URL=#{docker_registry_cache.image_url}' >> /tmp/saturnci.env")
-    system("source /tmp/saturnci.env")
+    system("echo 'SATURN_TEST_APP_IMAGE_URL=#{docker_registry_cache.image_url}' >> #{ENV["SATURNCI_ENV_FILE_PATH"]}")
+    system("source #{ENV["SATURNCI_ENV_FILE_PATH"]}")
 
     puts "Authenticating to Docker registry (#{SaturnCIRunnerAPI::DockerRegistryCache::URL})"
     docker_registry_cache.authenticate
@@ -59,7 +59,7 @@ class Script
       env_vars: ENV["USER_ENV_VAR_KEYS"].split(",").map { |key| [key, ENV[key]] }.to_h
     )
 
-    docker_compose_start_command = "docker-compose --env-file /tmp/saturnci.env -f .saturnci/docker-compose.yml up -d"
+    docker_compose_start_command = "docker-compose --env-file #{ENV["SATURNCI_ENV_FILE_PATH"]} -f .saturnci/docker-compose.yml up -d"
     puts "docker-compose start command: #{docker_compose_start_command}"
     system(docker_compose_start_command)
 
