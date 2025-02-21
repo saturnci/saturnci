@@ -1,11 +1,11 @@
 module SaturnCIRunnerAPI
-  class PreScriptCommand
+  class DockerComposeStartCommand
     def initialize(docker_compose_configuration:)
       @docker_compose_configuration = docker_compose_configuration
     end
 
     def to_s
-      "script -c \"sudo #{@docker_compose_configuration.script_env_vars} docker exec saturn_test_app ./.saturnci/pre.sh\""
+      "#{@docker_compose_configuration.env_vars} docker-compose -f .saturnci/docker-compose.yml up -d"
     end
   end
 end
