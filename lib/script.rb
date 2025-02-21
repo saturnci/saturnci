@@ -148,18 +148,6 @@ class Script
     puts "Error: #{e.message}"
     puts e.backtrace
   ensure
-    puts "Sending /var/log/syslog"
-    syslog_request = SaturnCIRunnerAPI::FileContentRequest.new(
-      host: ENV["HOST"],
-      api_path: "runs/#{ENV["RUN_ID"]}/complete_syslogs",
-      content_type: "text/plain",
-      file_path: "/var/log/syslog"
-    )
-    response = syslog_request.execute
-    puts "syslog response code: #{response.code}"
-    puts response.body
-    puts
-
     puts "Deleting runner"
     sleep(5)
     system_log_stream.kill
