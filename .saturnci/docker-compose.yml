@@ -30,7 +30,7 @@ services:
       - postgresql:/var/lib/postgresql/data:delegated
       - ./init.sql:/data/application/init.sql
     ports:
-      - "127.0.0.1:5432:5432"
+      - "5432:5432"
     environment:
       PSQL_HISTFILE: /usr/src/app/log/.psql_history
       POSTGRES_USER: saturn
