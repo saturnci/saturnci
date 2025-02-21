@@ -1,0 +1,9 @@
+.:53 {
+    log
+    errors
+    template IN A {
+        match .*\.saturn_test_app
+        answer "{{ .Name }} 60 IN A 192.168.1.100"
+    }
+    forward . /etc/resolv.conf
+}

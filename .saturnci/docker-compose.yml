@@ -15,6 +15,7 @@ services:
     depends_on:
       - postgres
       - chrome
+      - dns
     environment:
       DOCKER_ENV: "true"
       DATABASE_USERNAME: saturn
@@ -43,11 +44,21 @@ services:
     logging:
       driver: none
 
+  dns:
+    image: coredns/coredns:latest
+    container_name: saturnci_dns
+    networks:
+      saturnci_network:
+        ipv4_address: 192.168.1.199
+    volumes:
+      - ./Corefile:/Corefile
+    command: [ "-conf", "/Corefile" ]
+    restart: unless-stopped
+
   chrome:
     networks:
       - saturnci_network
-    extra_hosts:
-      - "test.saturn_test_app:192.168.1.100"
+    dns: 192.168.1.199
     image: seleniarm/standalone-chromium
     hostname: chrome
     shm_size: 2g
