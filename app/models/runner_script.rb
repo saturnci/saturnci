@@ -31,11 +31,12 @@ class RunnerScript
       export RSPEC_SEED=#{@run.build.seed}
       export GITHUB_INSTALLATION_ID=#{@github_installation_id}
       export GITHUB_REPO_FULL_NAME=#{@run.build.project.github_repo_full_name}
+      export SATURNCI_ENV_FILE_PATH=/tmp/.saturnci.env
 
       export USER_ENV_VAR_KEYS="#{@run.build.project.project_secrets.map(&:key).join(",")}"
       #{@run.build.project.project_secrets.map { |secret| "export #{secret.key}=#{secret.value}" }.join("\n")}
 
-      env > /tmp/saturnci.env
+      env > $SATURNCI_ENV_FILE_PATH
 
       RUBY_SCRIPT_PATH=/tmp/runner_script.rb
       echo #{encoded_script} | base64 --decode > $RUBY_SCRIPT_PATH
