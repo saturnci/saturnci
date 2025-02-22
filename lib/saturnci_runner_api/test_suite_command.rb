@@ -12,7 +12,7 @@ module SaturnCIRunnerAPI
     end
 
     def docker_compose_command
-      "docker-compose -f .saturnci/docker-compose.yml run #{@docker_compose_configuration.env_vars} saturn_test_app #{rspec_command}"
+      "docker-compose -f .saturnci/docker-compose.yml run saturn_test_app #{rspec_command}"
     end
 
     private

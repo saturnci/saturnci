@@ -61,7 +61,7 @@ class Script
     )
 
     pre_script_command = "docker-compose -f .saturnci/docker-compose.yml run saturn_test_app ./.saturnci/pre.sh"
-    puts "pre.sh command: #{pre_script_command}"
+    puts "pre.sh command: \"#{pre_script_command}\""
     system(pre_script_command)
     puts "pre.sh exit code: #{$?.exitstatus}"
 
