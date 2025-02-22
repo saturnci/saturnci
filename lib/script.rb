@@ -89,7 +89,7 @@ class Script
     test_files_string = selected_tests.join(' ')
 
     test_suite_command = SaturnCIRunnerAPI::TestSuiteCommand.new(
-      dockr_registry_cache_image_url: docker_registry_cache.image_url,
+      docker_registry_cache_image_url: docker_registry_cache.image_url,
       test_files_string: test_files_string,
       rspec_seed: ENV["RSPEC_SEED"],
       rspec_documentation_output_filename: RSPEC_DOCUMENTATION_OUTPUT_FILENAME
