@@ -129,12 +129,6 @@ class Script
     puts response.body
     puts
 
-    puts "Run finished"
-    response = client.post("runs/#{ENV["RUN_ID"]}/run_finished_events")
-    puts "Run finished response code: #{response.code}"
-    puts response.body
-    puts
-
     send_screenshot_tar_file(source_dir: "tmp/capybara")
 
     puts "$(sudo docker image ls)"
@@ -148,6 +142,12 @@ class Script
     puts "Error: #{e.message}"
     puts e.backtrace
   ensure
+    puts "Run finished"
+    response = client.post("runs/#{ENV["RUN_ID"]}/run_finished_events")
+    puts "Run finished response code: #{response.code}"
+    puts response.body
+    puts
+
     puts "Deleting runner"
     sleep(5)
     system_log_stream.kill
