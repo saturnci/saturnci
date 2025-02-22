@@ -25,7 +25,7 @@ class Script
 
     Dir.chdir(PROJECT_DIR)
     FileUtils.mkdir_p('tmp')
-    FileUtils.copy(ENV["SATURNCI_ENV_FILE_PATH"], File.join(PROJECT_DIR, ".saturnci.env"))
+    FileUtils.copy(ENV["SATURNCI_ENV_FILE_PATH"], File.join(PROJECT_DIR, ".saturnci", ".saturnci.env"))
 
     client.post("runs/#{ENV["RUN_ID"]}/run_events", type: "repository_cloned")
 
