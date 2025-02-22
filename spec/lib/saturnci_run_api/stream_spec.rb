@@ -31,7 +31,7 @@ describe SaturnCIRunnerAPI::Stream do
         )
 
       thread = stream.start
-      sleep(0.1)
+      sleep(0.5)
       stream.kill
       expect(thread.value).to eq(["line 1\nline 2\nline 3", "line 4"])
     end

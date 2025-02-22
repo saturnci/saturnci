@@ -38,7 +38,9 @@ class Script
 
     puts "Docker registry cache checksum: #{docker_registry_cache.checksum}"
     puts "Registry cache image URL: #{docker_registry_cache.image_url}"
-    system("echo 'SATURN_TEST_APP_IMAGE_URL=#{docker_registry_cache.image_url}' >> /tmp/saturnci.env")
+    system("echo 'SATURN_TEST_APP_IMAGE_URL=#{docker_registry_cache.image_url}' >> #{ENV["SATURNCI_ENV_FILE_PATH"]}")
+    system("source #{ENV["SATURNCI_ENV_FILE_PATH"]}")
+    system("cp #{ENV["SATURNCI_ENV_FILE_PATH"]} #{PROJECT_DIR}/.saturnci/.saturnci.env")
 
     puts "Authenticating to Docker registry (#{SaturnCIRunnerAPI::DockerRegistryCache::URL})"
     docker_registry_cache.authenticate
@@ -53,16 +55,9 @@ class Script
     client.post("runs/#{ENV["RUN_ID"]}/run_events", type: "pre_script_started")
     system("sudo chmod 755 .saturnci/pre.sh")
 
-    docker_compose_configuration = SaturnCIRunnerAPI::DockerComposeConfiguration.new(
-      docker_registry_cache_image_url: docker_registry_cache.image_url,
-      env_vars: ENV["USER_ENV_VAR_KEYS"].split(",").map { |key| [key, ENV[key]] }.to_h
-    )
-
-    pre_script_command = SaturnCIRunnerAPI::PreScriptCommand.new(
-      docker_compose_configuration: docker_compose_configuration
-    )
-    puts "pre.sh command: #{pre_script_command.to_s}"
-    system(pre_script_command.to_s)
+    pre_script_command = "SATURN_TEST_APP_IMAGE_URL=#{docker_registry_cache.image_url} docker-compose -f .saturnci/docker-compose.yml run saturn_test_app ./.saturnci/pre.sh"
+    puts "pre.sh command: \"#{pre_script_command}\""
+    system(pre_script_command)
     puts "pre.sh exit code: #{$?.exitstatus}"
 
     if $?.exitstatus == 0
@@ -94,7 +89,7 @@ class Script
     test_files_string = selected_tests.join(' ')
 
     test_suite_command = SaturnCIRunnerAPI::TestSuiteCommand.new(
-      docker_compose_configuration: docker_compose_configuration,
+      docker_registry_cache_image_url: docker_registry_cache.image_url,
       test_files_string: test_files_string,
       rspec_seed: ENV["RSPEC_SEED"],
       rspec_documentation_output_filename: RSPEC_DOCUMENTATION_OUTPUT_FILENAME
