@@ -12,6 +12,8 @@ services:
     depends_on:
       - postgres
       - chrome
+    env_file:
+      - .saturnci.env
     environment:
       DOCKER_ENV: "true"
       DATABASE_USERNAME: saturn
