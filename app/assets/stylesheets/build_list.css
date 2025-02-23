@@ -3,6 +3,7 @@
   z-index: 1;
   background-color: #EEE;
   box-shadow: 3px 0 10px rgba(0, 0, 0, 0.5);
+  border-top: 2px solid #BBB;
 }
 
 .build-list-wrapper {
