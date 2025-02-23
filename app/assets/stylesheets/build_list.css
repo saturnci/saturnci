@@ -12,7 +12,7 @@
   overflow-y: hidden;
   display: flex;
   flex-direction: column;
-  padding: 0 10px 10px 10px;
+  padding: 0 10px;
 }
 
 .build-list {
@@ -20,7 +20,9 @@
   overflow-x: hidden;
   max-height: 100%;
   background-color: #FFF;
-  border: 2px solid #CCC;
+  border-top: 2px solid #CCC;
+  border-left: 2px solid #CCC;
+  border-right: 2px solid #CCC;
 }
 
 .build-list ul {
