@@ -15,11 +15,9 @@ ul.run-menu li {
 }
 
 ul.run-menu li a {
-  background: linear-gradient(to bottom, #EEE, #CCC);
-  border-top: 2px solid #CCC;
+  background-color: #DDD;
+  border-top: 2px solid #DDD;
   border-bottom: 2px solid #CCC;
-  border-left: 2px solid #CCC;
-  border-right: 2px solid #CCC;
   margin: 0;
   padding: 6px 11px 6px 11px !important;
 }
