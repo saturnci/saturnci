@@ -1,2 +1,0 @@
-class JobEvent < RunEvent
-end

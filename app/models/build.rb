@@ -1,7 +1,6 @@
 class Build < ApplicationRecord
   acts_as_paranoid
   belongs_to :project
-  has_many :jobs
   has_many :runs
   has_many :test_case_runs, through: :runs
 
