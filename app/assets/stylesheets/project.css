@@ -12,6 +12,8 @@
   line-height: 40px;
   padding: 0 10px;
   background-color: #CCC;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+  z-index: 1;
 }
 
 .project-header h2 {
