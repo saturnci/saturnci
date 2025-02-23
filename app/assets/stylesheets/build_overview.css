@@ -22,6 +22,7 @@
 }
 
 .test-case-run {
+  padding-top: 10px;
   overflow: auto;
 }
 
