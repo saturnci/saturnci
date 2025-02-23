@@ -26,9 +26,11 @@ describe "Branch filtering", type: :system do
   context "main branch is selected" do
     before do
       visit project_path(project)
+      click_on "Filters"
 
       select "main", from: "branch_name"
       click_button "Apply"
+      click_on "Filters"
     end
 
     it "only shows builds from the main branch" do
@@ -59,8 +61,10 @@ describe "Branch filtering", type: :system do
     it "only shows builds from the filters branch" do
       visit project_path(project)
 
+      click_on "Filters"
       select "filters", from: "branch_name"
       click_button "Apply"
+      click_on "Filters"
 
       within ".build-list" do
         expect(page).not_to have_content("Commit from 'main' branch")

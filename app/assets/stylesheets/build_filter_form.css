@@ -4,7 +4,8 @@
 }
 
 .build-filter-form {
-  padding-top: 15px;
+  display: none;
+  padding-top: 0;
   padding-bottom: 15px;
 }
 
@@ -36,8 +37,20 @@
 }
 
 .build-count {
-  margin-top: 10px;
+  margin: 0;
+  padding-top: 6px;
   padding-bottom: 6px;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.filter-toggle-link {
   color: #666;
-  font-size: 80%;
+  text-decoration: none;
+  display: none;
+}
+
+.build-count, .filter-toggle-link {
+  color: #666;
 }

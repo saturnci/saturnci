@@ -14,12 +14,14 @@ describe "Status filtering", type: :system do
   before do
     login_as(passed_run.build.project.user, scope: :user)
     visit run_path(passed_run, "test_output")
+    click_on "Filters"
   end
 
   context "passed builds only" do
     before do
       check "Passed"
       click_on "Apply"
+      click_on "Filters"
     end
 
     it "includes the passed build" do
@@ -39,6 +41,7 @@ describe "Status filtering", type: :system do
     before do
       check "Failed"
       click_on "Apply"
+      click_on "Filters"
     end
 
     it "includes the failed build" do
@@ -59,6 +62,7 @@ describe "Status filtering", type: :system do
       check "Passed"
       check "Failed"
       click_on "Apply"
+      click_on "Filters"
     end
 
     it "includes the failed build" do
@@ -78,6 +82,7 @@ describe "Status filtering", type: :system do
     it "'Passed' stays checked after form submission" do
       check "Passed"
       click_on "Apply"
+      click_on "Filters"
 
       # to prevent race condition
       within ".build-list" do
@@ -90,6 +95,7 @@ describe "Status filtering", type: :system do
     it "'Failed' stays checked after form submission" do
       check "Failed"
       click_on "Apply"
+      click_on "Filters"
 
       # to prevent race condition
       within ".build-list" do
@@ -107,8 +113,10 @@ describe "Status filtering", type: :system do
 
     before do
       visit project_build_path(failed_run.build.project, failed_run.build)
+      click_on "Filters"
       check "Passed"
       click_on "Apply"
+      click_on "Filters"
     end
 
     it "includes the passed build" do
