@@ -14,5 +14,11 @@ describe "Showing and hiding filters", type: :system do
       click_on "Hide filters"
       expect(page).not_to have_content("Build status")
     end
+
+    it "hides the 'hide' link" do
+      expect(page).to have_content("Hide filters")
+      click_on "Hide filters"
+      expect(page).not_to have_content("Hide filters")
+    end
   end
 end
