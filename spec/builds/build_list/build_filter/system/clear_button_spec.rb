@@ -21,14 +21,16 @@ describe "Clearing filter selections", type: :system do
         commit_message: "Commit from 'filter' branch"
       )
 
-      login_as(project.user, scope: :user)
+      login_as(project.user)
     end
 
     it "clears branch selection" do
       visit project_path(project)
 
+      click_on "Filters"
       select "main", from: "branch_name"
       click_button "Apply"
+      click_on "Filters"
 
       # To prevent race condition
       within ".build-list" do
@@ -70,11 +72,14 @@ describe "Clearing filter selections", type: :system do
     it "clears status selection" do
       visit project_path(failed_build.project)
 
+      click_on "Filters"
       check "Passed"
       click_button "Apply"
+      click_on "Filters"
       expect(page).not_to have_content("This branch failed")
 
       click_button "Clear"
+      click_on "Filters"
       expect(page).to have_content("This branch failed")
     end
   end
