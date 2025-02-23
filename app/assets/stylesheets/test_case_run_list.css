@@ -19,13 +19,13 @@
 }
 
 .test-case-run-list {
-  border-left: 2px solid #999;
+  border-left: 2px solid #CCC;
   background-color: #EEE;
   width: 300px;
 }
 
 .test-case-run-list-header {
-  border-bottom: 2px solid #999;
+  border-bottom: 2px solid #CCC;
   padding: 10px;
   color: #666;
 }

@@ -16,7 +16,7 @@
   overflow-y: auto;
   min-height: 0;
   background-color: #FFF;
-  border: 1px solid #999;
+  border: 2px solid #CCC;
 }
 
 .build-list ul {
