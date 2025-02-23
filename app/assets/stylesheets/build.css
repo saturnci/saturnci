@@ -45,6 +45,8 @@
   flex-direction: row;
   justify-content: space-between;
   color: #000;
+  margin-top: 5px;
+  margin-left: 5px;
 }
 
 .build-header h2 {
@@ -66,4 +68,5 @@
 .build-action-buttons {
   display: flex;
   gap: 4px;
+  margin-top: 5px;
 }
