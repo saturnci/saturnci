@@ -55,6 +55,7 @@
   font-size: 12px;
   background-color: #000;
   padding: 10px;
+  border-radius: 5px;
 }
 
 .test-case-run .code-section {
