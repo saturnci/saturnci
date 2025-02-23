@@ -5,13 +5,12 @@
 }
 
 .project-header {
-  padding: 0;
-  margin: 0;
   display: flex;
   justify-content: space-between;
   line-height: 40px;
+  margin: 0;
   padding: 0 10px;
-  background-color: #CCC;
+  background: linear-gradient(to bottom, #EEE, #CCC);
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
   z-index: 1;
 }
