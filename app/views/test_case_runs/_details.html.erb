@@ -20,12 +20,14 @@
             </div>
           </div>
 
-          <div class="code-section">
-            <h3>Backtrace</h3>
-            <div class="code text-white">
-              <%= test_case_run.exception_backtrace.to_s.gsub("\n", "<br>").html_safe %>
+          <% if test_case_run.exception_backtrace.present? %>
+            <div class="code-section">
+              <h3>Backtrace</h3>
+              <div class="code text-white">
+                <%= test_case_run.exception_backtrace.to_s.gsub("\n", "<br>").html_safe %>
+              </div>
             </div>
-          </div>
+          <% end %>
         <% else %>
           <br>
           Duration: <%= number_with_precision(test_case_run.duration, precision: 2) %> seconds
