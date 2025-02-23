@@ -1,7 +1,5 @@
-<div style="padding: 20px 10px">
-  <% if build.status == "Running" %>
-    Waiting for build to finish...
-  <% else %>
-    Build not started
-  <% end %>
-</div>
+<% if build.status == "Running" %>
+  Waiting for build to finish...
+<% else %>
+  Build not started
+<% end %>
