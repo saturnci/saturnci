@@ -16,7 +16,7 @@
 
 html, body {
   margin: 0;
-  padding: 0 5px 0 5px;
+  padding: 0;
   height: 100%;
   background-color: #FFF;
 }
@@ -37,9 +37,17 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0;
 }
 
-header {
-  margin-top: 5px;
-  margin-bottom: 10px;
+.main-header {
+  margin: 0;
+  padding: 10px;
+}
+
+.main-header a {
+  color: #00F;
+}
+
+.container {
+  padding: 10px;
 }
 
 pre {
