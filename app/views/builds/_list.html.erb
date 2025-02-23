@@ -1,16 +1,16 @@
 <div class="left-pane" data-controller="left-pane">
   <% if build_list.builds.any? %>
-    <%= render build_filter_component %>
-
     <div class="build-count">
       <%= pluralize(build_list.builds.count, "build") %>
 
-      <%= link_to "Hide filters", "#",
+      <%= link_to "Hide filters", "#", class: "filter-toggle-link",
         data: { action: "left-pane#hideFilters", left_pane_target: "hideFiltersLink" } %>
 
-      <%= link_to "Show filters", "#",
+      <%= link_to "Show filters", "#", class: "filter-toggle-link",
         data: { action: "left-pane#showFilters", left_pane_target: "showFiltersLink" } %>
     </div>
+
+    <%= render build_filter_component %>
 
     <div class="build-list-wrapper">
       <div class="build-list">

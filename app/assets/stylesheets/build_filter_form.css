@@ -4,7 +4,7 @@
 }
 
 .build-filter-form {
-  padding-top: 15px;
+  padding-top: 0;
   padding-bottom: 15px;
 }
 
@@ -41,4 +41,11 @@
   padding-bottom: 6px;
   color: #666;
   font-size: 80%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.filter-toggle-link {
+  color: #666;
+  text-decoration: none;
 }
