@@ -2,7 +2,7 @@
   <% if test_case_run.present? %>
     <% cache do %>
       <div class="test-case-run">
-        <header class="test-case-run-header-<%= test_case_run.status %>">
+        <header>
           <h2 class="font-fixed">
             <%= test_case_run.tidy_path %>:<%= test_case_run.line_number %>
           </h2>
@@ -22,7 +22,7 @@
 
           <div class="code-section">
             <h3>Backtrace</h3>
-            <div class="code">
+            <div class="code text-white">
               <%= test_case_run.exception_backtrace.to_s.gsub("\n", "<br>").html_safe %>
             </div>
           </div>
