@@ -56,7 +56,7 @@ describe Build, type: :model do
 
     it "creates a new run_event with type runner_requested" do
       expect { build.start! }
-        .to change { JobEvent.where(type: "runner_requested").count }.by(1)
+        .to change { RunEvent.where(type: "runner_requested").count }.by(1)
     end
   end
 
