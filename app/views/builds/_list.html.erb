@@ -5,9 +5,11 @@
     <div class="build-count">
       <%= pluralize(build_list.builds.count, "build") %>
 
-      <%= link_to "Hide filters",
-        "#",
+      <%= link_to "Hide filters", "#",
         data: { action: "left-pane#hideFilters", left_pane_target: "hideFiltersLink" } %>
+
+      <%= link_to "Show filters", "#",
+        data: { action: "left-pane#showFilters", left_pane_target: "showFiltersLink" } %>
     </div>
 
     <div class="build-list-wrapper">
