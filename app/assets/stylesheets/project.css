@@ -22,7 +22,13 @@
 
 .project-header a {
   display: block;
-  color: #000;
+  color: #444;
+  font-weight: normal;
+  text-decoration: none;
+}
+
+.project-header a:hover {
+  color: #00F;
 }
 
 .project-inner {
