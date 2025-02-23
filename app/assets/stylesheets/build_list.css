@@ -1,12 +1,12 @@
 .build-list-container {
   width: 400px;
-  border-right: 5px solid #CCC;
 }
 
 .build-list {
   max-height: 100%;
   overflow-y: auto;
   min-height: 0;
+  border: 2px solid #CCC;
 }
 
 .build-list ul {

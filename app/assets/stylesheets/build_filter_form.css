@@ -37,9 +37,7 @@
 }
 
 .build-count {
-  padding-top: 6px;
   padding-bottom: 6px;
   color: #666;
-  border-top: 2px solid #CCC;
   font-size: 80%;
 }
