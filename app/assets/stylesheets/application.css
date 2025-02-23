@@ -38,9 +38,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .main-header {
-  background-color: #DDD;
   margin: 0;
   padding: 10px;
+}
+
+.main-header a {
+  color: #00F;
 }
 
 pre {

@@ -11,8 +11,7 @@
   justify-content: space-between;
   line-height: 40px;
   padding: 0 10px;
-  background-color: #EEE;
-  border-bottom: 5px solid #CCC;
+  background-color: #CCC;
 }
 
 .project-header h2 {
@@ -23,6 +22,7 @@
 
 .project-header a {
   display: block;
+  color: #000;
 }
 
 .project-inner {
