@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Job, type: :model do
+RSpec.describe Run, type: :model do
   describe "#status" do
     context "exit code is nil" do
       it "returns 'Running'" do
