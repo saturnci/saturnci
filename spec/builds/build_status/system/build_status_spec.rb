@@ -6,15 +6,15 @@ describe "Build status", type: :system do
   let!(:run) { create(:run) }
   let!(:user) { run.build.project.user }
 
-  before do
-    login_as(user, scope: :user)
-  end
+  before { login_as(user) }
 
   context "build goes from running to passed" do
     context "no page refresh" do
       it "changes the status from running to passed" do
         visit project_build_path(id: run.build.id, project_id: run.build.project.id)
         expect(page).to have_content("Running")
+
+        run.update!(test_output: "COMMAND_EXIT_CODE=\"0\"")
 
         http_request(
           api_authorization_headers: api_authorization_headers(user),
@@ -29,6 +29,8 @@ describe "Build status", type: :system do
       it "maintains the 'passed' status" do
         visit project_build_path(id: run.build.id, project_id: run.build.project.id)
         expect(page).to have_content("Running")
+
+        run.update!(test_output: "COMMAND_EXIT_CODE=\"0\"")
 
         http_request(
           api_authorization_headers: api_authorization_headers(user),

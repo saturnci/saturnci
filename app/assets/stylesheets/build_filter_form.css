@@ -40,8 +40,7 @@
   margin: 0;
   padding-top: 6px;
   padding-bottom: 6px;
-  color: #666;
-  font-size: 80%;
+  font-size: 14px;
   display: flex;
   justify-content: space-between;
 }
@@ -50,4 +49,8 @@
   color: #666;
   text-decoration: none;
   display: none;
+}
+
+.build-count, .filter-toggle-link {
+  color: #666;
 }
