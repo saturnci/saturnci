@@ -4,22 +4,22 @@ RSpec.describe Job, type: :model do
   describe "#status" do
     context "exit code is nil" do
       it "returns 'Running'" do
-        job = create(:job)
-        expect(job.status).to eq("Running")
+        run = create(:run)
+        expect(run.status).to eq("Running")
       end
     end
 
     context "exit code is 0" do
       it "returns 'Passed'" do
-        job = create(:job, exit_code: 0)
-        expect(job.status).to eq("Passed")
+        run = create(:run, exit_code: 0)
+        expect(run.status).to eq("Passed")
       end
     end
 
     context "exit code is not 0" do
       it "returns 'Failed'" do
-        job = create(:job, exit_code: 1)
-        expect(job.status).to eq("Failed")
+        run = create(:run, exit_code: 1)
+        expect(run.status).to eq("Failed")
       end
     end
   end
