@@ -1,3 +1,5 @@
-<h1><%= @github_account.account_name %></h1>
+<div class="container">
+  <h1><%= @github_account.account_name %></h1>
 
-<pre><%= JSON.pretty_generate(@github_account.installation_response_payload) %></pre>
+  <pre><%= JSON.pretty_generate(@github_account.installation_response_payload) %></pre>
+</div>

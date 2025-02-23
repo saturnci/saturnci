@@ -1,12 +1,21 @@
-.build-list-container {
+.left-pane {
   width: 400px;
-  border-right: 2px solid #888;
+  z-index: 1;
+  background-color: #EEE;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.build-list-wrapper {
+  height: 100%;
+  padding: 0 10px;
 }
 
 .build-list {
   max-height: 100%;
   overflow-y: auto;
   min-height: 0;
+  background-color: #FFF;
+  border: 2px solid #CCC;
 }
 
 .build-list ul {

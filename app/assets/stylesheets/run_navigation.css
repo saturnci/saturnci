@@ -5,7 +5,7 @@
 
 ul.run-menu {
   text-align: center;
-  padding: 8px 0 0 10px;
+  padding: 8px 0 0 20px;
 }
 
 ul.run-menu li {
@@ -15,20 +15,21 @@ ul.run-menu li {
 }
 
 ul.run-menu li a {
-  background-color: #CCC;
-  border-top: 2px solid #CCC;
-  border-bottom: 2px solid #999;
+  background-color: #DDD;
+  border-top: 2px solid #DDD;
+  border-bottom: 2px solid #CCC;
   margin: 0;
   padding: 6px 11px 6px 11px !important;
 }
 
 ul.run-menu li a.active {
-  border-top: 2px solid #999;
-  border-left: 2px solid #999;
-  border-right: 2px solid #999;
+  border-top: 2px solid #CCC;
+  border-left: 2px solid #CCC;
+  border-right: 2px solid #CCC;
   border-bottom: 2px solid #EEE;
   padding-left: 9px !important;
   padding-right: 9px !important;
   color: #000;
+  background: none;
   background-color: #EEE;
 }

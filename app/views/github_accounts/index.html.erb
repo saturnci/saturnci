@@ -1,50 +1,53 @@
-<h1>GitHub Accounts</h1>
-<br>
+<div class="container">
+  <h1>GitHub Accounts</h1>
+  <br>
 
-<%= link_to "Add Account", ENV["SATURNCI_INSTALLATION_URL"] %>
-<br>
+  <%= link_to "Add Account", ENV["SATURNCI_INSTALLATION_URL"] %>
+  <br>
+  <br>
 
-<% if @github_accounts.any? %>
-  <% @github_accounts.each do |github_account| %>
-    <div class="saturnci-github-app-installation">
-      <h2><%= github_account.account_name %></h2>
-      <div>Created: <%= I18n.l(github_account.created_at) %> UTC</div>
-
-      <div>
-        GitHub installation ID:
-        <%= link_to github_account.github_installation_id,
-          github_account.github_app_installation_url,
-          target: "_blank" %>
-      </div>
-
-      <div>
-        <%= link_to "Details",
-          github_account_path(github_account) %>
-      </div>
-
-      <div>
-        <%= link_to "Remove Account",
-          github_account_path(github_account),
-          data: { turbo_method: :delete } %>
-      </div>
-
-      <br>
-
-      <div>
-        Projects:
-        <ul>
-          <% github_account.projects.each do |project| %>
-            <li><%= link_to project, project %></li>
-          <% end %>
-        </ul>
+  <% if @github_accounts.any? %>
+    <% @github_accounts.each do |github_account| %>
+      <div class="saturnci-github-app-installation">
+        <h2><%= github_account.account_name %></h2>
+        <div>Created: <%= I18n.l(github_account.created_at) %> UTC</div>
 
         <div>
-          <%= link_to "Add Project",
-            new_github_account_project_integration_path(github_account) %>
+          GitHub installation ID:
+          <%= link_to github_account.github_installation_id,
+            github_account.github_app_installation_url,
+            target: "_blank" %>
+        </div>
+
+        <div>
+          <%= link_to "Details",
+            github_account_path(github_account) %>
+        </div>
+
+        <div>
+          <%= link_to "Remove Account",
+            github_account_path(github_account),
+            data: { turbo_method: :delete } %>
+        </div>
+
+        <br>
+
+        <div>
+          Projects:
+          <ul>
+            <% github_account.projects.each do |project| %>
+              <li><%= link_to project, project %></li>
+            <% end %>
+          </ul>
+
+          <div>
+            <%= link_to "Add Project",
+              new_github_account_project_integration_path(github_account) %>
+          </div>
         </div>
       </div>
-    </div>
+    <% end %>
+  <% else %>
+    (No accounts)
   <% end %>
-<% else %>
-  (No accounts)
-<% end %>
+</div>

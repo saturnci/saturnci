@@ -1,6 +1,6 @@
 .build-overview {
   background-color: #EEE;
-  border-top: 2px solid #999;
+  border-top: 2px solid #CCC;
 
   flex-grow: 1;
   max-height: 100%;
@@ -18,10 +18,11 @@
 .test-case-run-details {
   flex: 1;
   width: 0;
-  padding: 5px 10px 30px 10px;
+  padding: 5px 10px 30px 20px;
 }
 
 .test-case-run {
+  padding-top: 10px;
   overflow: auto;
 }
 

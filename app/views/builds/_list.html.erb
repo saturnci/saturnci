@@ -1,4 +1,4 @@
-<div class="build-list-container">
+<div class="left-pane">
   <% if build_list.builds.any? %>
     <%= render build_filter_component %>
 
@@ -6,14 +6,16 @@
       <%= pluralize(build_list.builds.count, "build") %>
     </div>
 
-    <div class="build-list">
-      <ul data-controller="build-list" id="build-list">
-        <% build_list.builds.each do |build| %>
-          <%= render "builds/build_link",
-            build: build,
-            active_build: @build %>
-        <% end %>
-      </ul>
+    <div class="build-list-wrapper">
+      <div class="build-list">
+        <ul data-controller="build-list" id="build-list">
+          <% build_list.builds.each do |build| %>
+            <%= render "builds/build_link",
+              build: build,
+              active_build: @build %>
+          <% end %>
+        </ul>
+      </div>
     </div>
   <% else %>
     (No builds)
