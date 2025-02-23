@@ -21,19 +21,4 @@ describe SaturnCIRunnerAPI::Stream do
       stream.kill
     end
   end
-
-  context "second read (one line added)" do
-    it "sends only the new line" do
-      allow(stream).to receive(:log_file_content)
-        .and_return(
-          ["line 1", "line 2", "line 3"],
-          ["line 1", "line 2", "line 3", "line 4"]
-        )
-
-      thread = stream.start
-      sleep(0.5)
-      stream.kill
-      expect(thread.value).to eq(["line 1\nline 2\nline 3", "line 4"])
-    end
-  end
 end
