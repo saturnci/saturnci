@@ -8,7 +8,7 @@ export default class extends Controller {
   ];
 
   connect() {
-    this.showFiltersLinkTarget.style.display = "none";
+    this.showFiltersLinkTarget.style.display = "inline";
   }
 
   hideFilters(event) {

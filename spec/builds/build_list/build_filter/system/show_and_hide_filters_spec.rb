@@ -9,6 +9,8 @@ describe "Showing and hiding filters", type: :system do
   end
 
   describe "Hiding filters" do
+    before { click_on "Show filters" }
+
     it "makes the filter form go away" do
       expect(page).to have_content("Build status")
       click_on "Hide filters"
@@ -29,8 +31,6 @@ describe "Showing and hiding filters", type: :system do
   end
 
   describe "Showing filters" do
-    before { click_on "Hide filters" }
-
     it "shows the filter form" do
       expect(page).not_to have_content("Build status")
       click_on "Show filters"

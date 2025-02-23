@@ -4,6 +4,7 @@
 }
 
 .build-filter-form {
+  display: none;
   padding-top: 0;
   padding-bottom: 15px;
 }
@@ -48,4 +49,5 @@
 .filter-toggle-link {
   color: #666;
   text-decoration: none;
+  display: none;
 }
