@@ -1,9 +1,12 @@
 .test-case-run-list {
   overflow-y: hidden;
-  max-height: 100%;
   display: flex;
   flex-direction: column;
+  border-left: 2px solid #CCC;
+  background-color: #EEE;
+  width: 300px;
 }
+
 
 .test-case-run-list-body {
   overflow-y: auto;
@@ -16,12 +19,6 @@
 .test-case-run-list-body ul {
   padding: 0;
   margin: 0;
-}
-
-.test-case-run-list {
-  border-left: 2px solid #CCC;
-  background-color: #EEE;
-  width: 300px;
 }
 
 .test-case-run-list-header {

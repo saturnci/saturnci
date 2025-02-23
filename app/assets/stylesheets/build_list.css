@@ -4,17 +4,21 @@
   background-color: #EEE;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
   border-right: 2px solid #CCC;
+  display: flex;
+  flex-direction: column;
 }
 
 .build-list-wrapper {
-  height: 100%;
-  padding: 0 10px;
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px 10px 10px;
 }
 
 .build-list {
-  max-height: 100%;
   overflow-y: auto;
-  min-height: 0;
+  overflow-x: hidden;
+  max-height: 100%;
   background-color: #FFF;
   border: 2px solid #CCC;
 }
