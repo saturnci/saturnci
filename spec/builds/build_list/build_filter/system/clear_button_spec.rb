@@ -21,7 +21,7 @@ describe "Clearing filter selections", type: :system do
         commit_message: "Commit from 'filter' branch"
       )
 
-      login_as(project.user, scope: :user)
+      login_as(project.user)
     end
 
     it "clears branch selection" do
