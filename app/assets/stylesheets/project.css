@@ -10,8 +10,8 @@
   line-height: 40px;
   margin: 0;
   padding: 0 10px;
-  background: linear-gradient(to bottom, #EEE, #CCC);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+  background-color: #EEE;
+  box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.4);
   z-index: 1;
 }
 
