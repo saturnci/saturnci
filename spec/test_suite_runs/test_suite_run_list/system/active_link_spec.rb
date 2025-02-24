@@ -11,12 +11,12 @@ describe "Active link", type: :system do
     create(:build, :with_run, project: project)
   end
 
-  let!(:build_link_1) do
-    PageObjects::BuildLink.new(page, build_1)
+  let!(:test_suite_run_link_1) do
+    PageObjects::TestSuiteRunLink.new(page, build_1)
   end
 
-  let!(:build_link_2) do
-    PageObjects::BuildLink.new(page, build_2)
+  let!(:test_suite_run_link_2) do
+    PageObjects::TestSuiteRunLink.new(page, build_2)
   end
 
   before do
@@ -26,22 +26,22 @@ describe "Active link", type: :system do
 
   context "link clicked" do
     it "sets that build to active" do
-      build_link_2.click
-      expect(build_link_2).to be_active
+      test_suite_run_link_2.click
+      expect(test_suite_run_link_2).to be_active
     end
 
     it "sets other builds to inactive" do
-      build_link_2.click
-      expect(build_link_2).to be_active
+      test_suite_run_link_2.click
+      expect(test_suite_run_link_2).to be_active
 
-      build_link_1.click
-      expect(build_link_2).not_to be_active
+      test_suite_run_link_1.click
+      expect(test_suite_run_link_2).not_to be_active
     end
   end
 
   context "page load" do
-    it "sets the first build link to active" do
-      expect(build_link_1).to be_active
+    it "sets the first test suite run link to active" do
+      expect(test_suite_run_link_1).to be_active
     end
   end
 end

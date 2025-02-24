@@ -1,4 +1,4 @@
-class BuildLink
+class TestSuiteRunLink
   include Rails.application.routes.url_helpers
   DEFAULT_PARTIAL = "test_output"
 
@@ -24,7 +24,7 @@ class BuildLink
 
   def cache_key
     [
-      "build_link_path",
+      "test_suite_run_link_path",
       @build.id,
       @build.updated_at.to_i
     ].join("/")

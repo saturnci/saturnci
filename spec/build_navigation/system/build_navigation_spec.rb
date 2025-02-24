@@ -11,7 +11,7 @@ describe "Build navigation", type: :system do
   describe "clicking on second build after having visited first build" do
     before do
       visit project_build_path(first_build.project, first_build)
-      click_on "build_link_#{second_build.id}"
+      click_on "test_suite_run_link_#{second_build.id}"
       expect(page).to have_content(pane_heading(second_build)) # to prevent race condition
     end
 

@@ -88,7 +88,7 @@ class TestSuiteRun < ApplicationRecord
     broadcast_prepend_to(
       [project.user, "builds"],
       target: "build-list",
-      partial: "builds/build_link",
+      partial: "test_suite_runs/test_suite_run_link",
       locals: { build: self, active_build: nil }
     )
   end
