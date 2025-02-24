@@ -24,7 +24,7 @@ Rails.application.routes.draw do
       resource :project_secret_collection, only: %i(show update)
     end
 
-    resources :builds, only: %i(show create destroy) do
+    resources :builds, only: %i(index show create destroy) do
       resources :runs, only: :show do
         get ":partial", to: "runs#show", on: :member, as: "run_detail_content"
       end

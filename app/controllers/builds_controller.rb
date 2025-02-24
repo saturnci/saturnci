@@ -1,4 +1,30 @@
 class BuildsController < ApplicationController
+  def index
+    project = Project.find(params[:project_id])
+    authorize project, :show?
+
+    builds = project.builds
+
+    test_suite_run_list = TestSuiteRunList.new(
+      project,
+      branch_name: nil,
+      statuses: nil
+    )
+
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(
+          "additional_test_suite_runs",
+          partial: "test_suite_runs/list_items",
+          locals: {
+            builds: test_suite_run_list.builds,
+            active_build: nil
+          }
+        )
+      end
+    end
+  end
+
   def create
     @project = Project.find(params[:project_id])
     build = Build.new(project: @project)

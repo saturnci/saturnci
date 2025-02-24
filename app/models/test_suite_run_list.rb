@@ -1,12 +1,12 @@
 class TestSuiteRunList
-  def initialize(build, branch_name:, statuses:)
-    @build = build
+  def initialize(project, branch_name:, statuses:)
+    @project = project
     @branch_name = branch_name
     @statuses = statuses
   end
 
   def builds
-    builds = @build.project.builds.order("created_at desc")
+    builds = @project.builds.order("created_at desc").limit(20)
 
     if @branch_name.present?
       builds = builds.where(branch_name: @branch_name)

@@ -17,4 +17,12 @@ class TestSuiteRunLinkComponent < ViewComponent::Base
   def path
     TestSuiteRunLinkPath.new(@build).value
   end
+
+  def data
+    {
+      turbo_frame: "build",
+      action: "click->test-suite-run-list#makeActive",
+      test_suite_run_list_target: "link"
+    }
+  end
 end
