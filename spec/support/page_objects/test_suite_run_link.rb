@@ -6,7 +6,7 @@ module PageObjects
     end
 
     def click
-      @page.click_on "build_link_#{@build.id}"
+      @page.click_on "test_suite_run_link_#{@build.id}"
     end
 
     def active?
@@ -16,7 +16,7 @@ module PageObjects
     private
 
     def css_classes
-      @page.find("#build_link_#{@build.id}")[:class].split
+      @page.find("#test_suite_run_link_#{@build.id}")[:class].split
     end
   end
 end

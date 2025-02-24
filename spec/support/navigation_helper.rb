@@ -6,7 +6,7 @@ module NavigationHelper
   def navigate_to_build(build)
     # It's important that we visit the other run via Turbo,
     # not via a full page reload
-    click_on "build_link_#{build.id}"
+    click_on "test_suite_run_link_#{build.id}"
     expect(page).to have_content("Commit: #{build.commit_hash}") # to prevent race condition
   end
 
