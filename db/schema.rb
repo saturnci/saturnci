@@ -10,27 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_21_152604) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_23_234437) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
-
-  create_table "builds", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "project_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "report"
-    t.string "branch_name", null: false
-    t.string "commit_hash", null: false
-    t.string "commit_message", null: false
-    t.string "author_name", null: false
-    t.string "build_machine_id"
-    t.text "test_output"
-    t.integer "seed", null: false
-    t.string "cached_status"
-    t.datetime "deleted_at"
-    t.string "api_token"
-    t.index ["project_id"], name: "index_builds_on_project_id"
-  end
 
   create_table "charges", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "run_id", null: false
@@ -167,6 +149,24 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_21_152604) do
     t.index ["run_id"], name: "index_test_case_runs_on_run_id"
   end
 
+  create_table "test_suite_runs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "project_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "report"
+    t.string "branch_name", null: false
+    t.string "commit_hash", null: false
+    t.string "commit_message", null: false
+    t.string "author_name", null: false
+    t.string "build_machine_id"
+    t.text "test_output"
+    t.integer "seed", null: false
+    t.string "cached_status"
+    t.datetime "deleted_at"
+    t.string "api_token"
+    t.index ["project_id"], name: "index_test_suite_runs_on_project_id"
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", default: ""
     t.string "encrypted_password", default: "", null: false
@@ -190,17 +190,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_21_152604) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "builds", "projects"
   add_foreign_key "charges", "runs"
   add_foreign_key "github_accounts", "users"
-  add_foreign_key "github_check_runs", "builds"
+  add_foreign_key "github_check_runs", "test_suite_runs", column: "build_id"
   add_foreign_key "github_events", "projects"
   add_foreign_key "project_secrets", "projects"
   add_foreign_key "projects", "github_accounts"
   add_foreign_key "projects", "users"
   add_foreign_key "run_events", "runs"
   add_foreign_key "runner_system_logs", "runs"
-  add_foreign_key "runs", "builds"
+  add_foreign_key "runs", "test_suite_runs", column: "build_id"
   add_foreign_key "screenshots", "runs"
   add_foreign_key "test_case_runs", "runs"
+  add_foreign_key "test_suite_runs", "projects"
 end

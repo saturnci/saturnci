@@ -1,4 +1,5 @@
 class Build < ApplicationRecord
+  self.table_name = "test_suite_runs"
   acts_as_paranoid
   belongs_to :project
   has_many :runs
