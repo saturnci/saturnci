@@ -1,4 +1,4 @@
-class BuildComponent < ViewComponent::Base
+class TestSuiteRunComponent < ViewComponent::Base
   renders_one :body
 
   def initialize(build:, current_tab_name: nil, branch_name: nil, statuses: nil, clear: false)
