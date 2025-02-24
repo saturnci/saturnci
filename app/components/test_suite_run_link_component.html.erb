@@ -1,5 +1,5 @@
 <%= link_to path,
-  data: { turbo_frame: "build", action: "click->build-list#makeActive", build_list_target: "link" },
+  data: { turbo_frame: "build", action: "click->test-suite-run-list#makeActive", test_suite_run_list_target: "link" },
   class: css_class,
   id: "test_suite_run_link_#{build.id}" do %>
 

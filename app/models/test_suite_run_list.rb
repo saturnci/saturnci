@@ -1,4 +1,4 @@
-class BuildList
+class TestSuiteRunList
   def initialize(build, branch_name:, statuses:)
     @build = build
     @branch_name = branch_name

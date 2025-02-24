@@ -1,7 +1,7 @@
 <div class="left-pane" data-controller="left-pane">
-  <% if build_list.builds.any? %>
+  <% if test_suite_run_list.builds.any? %>
     <div class="build-count">
-      <%= pluralize(build_list.builds.count, "test suite run") %>
+      <%= pluralize(test_suite_run_list.builds.count, "test suite run") %>
 
       <%= link_to "Hide filters", "#", class: "filter-toggle-link",
         data: { action: "left-pane#hideFilters", left_pane_target: "hideFiltersLink" } %>
@@ -14,8 +14,8 @@
 
     <div class="build-list-wrapper">
       <div class="build-list">
-        <ul data-controller="build-list" id="build-list">
-          <% build_list.builds.each do |build| %>
+        <ul data-controller="test-suite-run-list" id="build-list">
+          <% test_suite_run_list.builds.each do |build| %>
             <%= render "test_suite_runs/test_suite_run_link",
               build: build,
               active_build: @build %>
