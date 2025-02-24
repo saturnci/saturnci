@@ -1,11 +1,11 @@
 <li id="<%= dom_id(build) %>">
-  <%= link_to BuildLink.new(build).path,
+  <%= link_to TestSuiteRunLink.new(build).path,
     data: { turbo_frame: "build", action: "click->build-list#makeActive", build_list_target: "link" },
     class: build == active_build ? "active" : "",
-    id: "build_link_#{build.id}" do %>
+    id: "test_suite_run_link_#{build.id}" do %>
 
     <div id="build_status_<%= build.id %>">
-      <%= render "builds/build_link_content", build: %>
+      <%= render "test_suite_runs/test_suite_run_link_content", build: build %>
     </div>
   <% end %>
 </li>

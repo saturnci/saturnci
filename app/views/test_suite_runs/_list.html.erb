@@ -16,7 +16,7 @@
       <div class="build-list">
         <ul data-controller="build-list" id="build-list">
           <% build_list.builds.each do |build| %>
-            <%= render "builds/build_link",
+            <%= render "test_suite_runs/test_suite_run_link",
               build: build,
               active_build: @build %>
           <% end %>
