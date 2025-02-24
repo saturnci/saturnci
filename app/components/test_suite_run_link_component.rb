@@ -1,9 +1,10 @@
-class TestSuiteRunLink
-  include Rails.application.routes.url_helpers
+class TestSuiteRunLinkComponent < ViewComponent::Base
   DEFAULT_PARTIAL = "test_output"
+  attr_reader :build
 
-  def initialize(build)
+  def initialize(build, active_build: nil)
     @build = build
+    @active_build = active_build
   end
 
   def path
@@ -14,6 +15,10 @@ class TestSuiteRunLink
         run_path(first_failed_run || @build.runs.sorted.first, DEFAULT_PARTIAL)
       end
     end
+  end
+
+  def css_class
+    @build == @active_build ? "active" : ""
   end
 
   private
