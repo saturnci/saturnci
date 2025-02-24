@@ -16,7 +16,7 @@ class Run < ApplicationRecord
   end
 
   scope :running, -> do
-    joins(:build).where(exit_code: nil).order("builds.created_at desc, runs.order_index asc")
+    joins(:build).where(exit_code: nil).order("test_suite_runs.created_at desc, runs.order_index asc")
   end
 
   scope :finished, -> do
