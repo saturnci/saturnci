@@ -24,7 +24,7 @@ class TestSuiteRunLink
 
   def cache_key
     [
-      "build_link_path",
+      "test_suite_run_link_path",
       @build.id,
       @build.updated_at.to_i
     ].join("/")
