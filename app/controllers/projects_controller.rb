@@ -14,7 +14,7 @@ class ProjectsController < ApplicationController
 
     if @project.builds.any?
       build = @project.builds.order("created_at desc").first
-      redirect_to TestSuiteRunLink.new(build).path
+      redirect_to TestSuiteRunLinkPath.new(build).value
     elsif @project.builds.with_deleted.empty?
       build = BuildFromCommitFactory.new(
         BuildFromCommitFactory.most_recent_commit(@project)
@@ -23,7 +23,7 @@ class ProjectsController < ApplicationController
       build.project = @project
       build.save!
 
-      redirect_to TestSuiteRunLink.new(build).path
+      redirect_to TestSuiteRunLinkPath.new(build).value
     end
   end
 
