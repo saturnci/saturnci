@@ -13,5 +13,6 @@ describe "Test suite run infinite scroll", type: :system do
   end
 
   it "initially only shows the first 50 test suite runs" do
+    expect(page).to have_css(".test-suite-run-link", count: 50)
   end
 end
