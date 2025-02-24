@@ -2,6 +2,7 @@ class Run < ApplicationRecord
   acts_as_paranoid
   self.table_name = "runs"
   belongs_to :build, touch: true
+  belongs_to :test_suite_run, class_name: "TestSuiteRun", foreign_key: "build_id", touch: true
   has_many :test_case_runs, dependent: :destroy
   has_many :run_events, dependent: :destroy
   has_one :charge, foreign_key: "run_id"
