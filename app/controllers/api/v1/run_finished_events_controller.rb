@@ -13,7 +13,7 @@ module API
               Turbo::StreamsChannel.broadcast_update_to(
                 "build_status_#{run.build.id}",
                 target: "build_status_#{run.build.id}",
-                partial: "builds/test_suite_run_link_content",
+                partial: "test_suite_runs/test_suite_run_link_content",
                 locals: { build: run.build }
               )
 
