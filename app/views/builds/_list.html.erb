@@ -1,7 +1,7 @@
 <div class="left-pane" data-controller="left-pane">
   <% if build_list.builds.any? %>
     <div class="build-count">
-      <%= pluralize(build_list.builds.count, "build") %>
+      <%= pluralize(build_list.builds.count, "test suite run") %>
 
       <%= link_to "Hide filters", "#", class: "filter-toggle-link",
         data: { action: "left-pane#hideFilters", left_pane_target: "hideFiltersLink" } %>
@@ -24,7 +24,7 @@
       </div>
     </div>
   <% else %>
-    (No builds)
+    (No test suite runs)
   <% end %>
 </div>
 

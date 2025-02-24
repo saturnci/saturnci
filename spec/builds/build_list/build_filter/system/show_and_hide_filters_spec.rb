@@ -12,9 +12,9 @@ describe "Showing and hiding filters", type: :system do
     before { click_on "Filters" }
 
     it "makes the filter form go away" do
-      expect(page).to have_content("Build status")
+      expect(page).to have_content("Status")
       click_on "Hide filters"
-      expect(page).not_to have_content("Build status")
+      expect(page).not_to have_content("Status")
     end
 
     it "hides the 'hide' link" do
@@ -32,9 +32,9 @@ describe "Showing and hiding filters", type: :system do
 
   describe "Showing filters" do
     it "shows the filter form" do
-      expect(page).not_to have_content("Build status")
+      expect(page).not_to have_content("Status")
       click_on "Filters"
-      expect(page).to have_content("Build status")
+      expect(page).to have_content("Status")
     end
 
     it "hides the 'show' link" do
