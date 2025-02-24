@@ -13,8 +13,8 @@ class TestSuiteRunComponent < ViewComponent::Base
     end
   end
 
-  def build_list
-    @build_list ||= BuildList.new(
+  def test_suite_run_list
+    @test_suite_run_list ||= TestSuiteRunList.new(
       @build,
       branch_name: @branch_name,
       statuses: @statuses
