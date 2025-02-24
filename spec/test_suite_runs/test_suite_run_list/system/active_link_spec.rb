@@ -12,11 +12,11 @@ describe "Active link", type: :system do
   end
 
   let!(:build_link_1) do
-    PageObjects::BuildLink.new(page, build_1)
+    PageObjects::TestSuiteRunLink.new(page, build_1)
   end
 
   let!(:build_link_2) do
-    PageObjects::BuildLink.new(page, build_2)
+    PageObjects::TestSuiteRunLink.new(page, build_2)
   end
 
   before do

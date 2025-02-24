@@ -1,5 +1,5 @@
 module PageObjects
-  class BuildLink
+  class TestSuiteRunLink
     def initialize(page, build)
       @page = page
       @build = build

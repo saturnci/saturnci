@@ -1,4 +1,4 @@
-class BuildLink
+class TestSuiteRunLink
   include Rails.application.routes.url_helpers
   DEFAULT_PARTIAL = "test_output"
 

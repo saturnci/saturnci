@@ -62,7 +62,7 @@ describe "Build status", type: :system do
           path: api_v1_run_run_finished_events_path(other_run)
         )
 
-        other_run_build_link = PageObjects::BuildLink.new(page, other_build)
+        other_run_build_link = PageObjects::TestSuiteRunLink.new(page, other_build)
         expect(other_run_build_link).not_to be_active
       end
     end
