@@ -23,7 +23,7 @@ class RunsController < ApplicationController
       return
     end
 
-    @build_component = BuildComponent.new(
+    @test_suite_run_component = TestSuiteRunComponent.new(
       build: @build,
       current_tab_name: params[:partial],
       branch_name: params[:branch_name],
