@@ -20,7 +20,7 @@ class BuildsController < ApplicationController
 
     if turbo_frame_request?
       render(
-        partial: "builds/overview",
+        partial: "test_suite_runs/overview",
         locals: {
           build: @build,
           test_case_run: test_case_run
