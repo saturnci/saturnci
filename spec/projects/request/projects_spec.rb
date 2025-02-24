@@ -12,7 +12,7 @@ describe "Projects", type: :request do
       it "redirects to the build" do
         get project_path(build.project)
 
-        expect(response).to redirect_to(TestSuiteRunLink.new(build).path)
+        expect(response).to redirect_to(TestSuiteRunLinkPath.new(build).value)
       end
     end
 

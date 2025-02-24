@@ -6,6 +6,7 @@ require_relative '../config/environment'
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
+require "view_component/test_helpers"
 
 WebMock.disable_net_connect!(
   allow: [
@@ -76,6 +77,7 @@ RSpec.configure do |config|
   config.include Warden::Test::Helpers, type: :system
   config.include Warden::Test::Helpers, type: :request
   config.include ActiveSupport::Testing::TimeHelpers
+  config.include ViewComponent::TestHelpers, type: :component
 
   config.before :suite do
     Warden.test_mode!

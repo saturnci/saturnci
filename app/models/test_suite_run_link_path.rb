@@ -1,4 +1,4 @@
-class TestSuiteRunLink
+class TestSuiteRunLinkPath
   include Rails.application.routes.url_helpers
   DEFAULT_PARTIAL = "test_output"
 
@@ -6,7 +6,7 @@ class TestSuiteRunLink
     @build = build
   end
 
-  def path
+  def value
     Rails.cache.fetch(cache_key) do
       if @build.finished? || @build.runs.empty?
         project_build_path(@build.project, @build)
