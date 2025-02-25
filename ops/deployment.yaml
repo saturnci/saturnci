@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: saturn
 spec:
-  replicas: 8
+  replicas: 4
   selector:
     matchLabels:
       app: saturn
