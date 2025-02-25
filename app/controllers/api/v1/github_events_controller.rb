@@ -8,12 +8,14 @@ module API
         payload = JSON.parse(payload_raw)
         Rails.logger.info "GitHub webhook payload: #{payload.inspect}"
 
-        GitHubEvent.create!(body: payload)
+        github_event = GitHubEvent.create!(
+          body: payload,
+          type: request.headers["X-GitHub-Event"]
+        )
 
-        event_type = request.headers["X-GitHub-Event"]
-        Rails.logger.info "Event type: #{event_type}"
+        Rails.logger.info "Event type: #{github_event.type}"
 
-        case event_type
+        case github_event.type
         when "installation"
           GitHubEvents::Installation.new(payload).process
         when "push"
