@@ -7,8 +7,8 @@ class BuildsController < ApplicationController
 
     test_suite_run_list = TestSuiteRunList.new(
       project,
-      branch_name: nil,
-      statuses: nil
+      branch_name: params[:branch_name],
+      statuses: params[:statuses]
     )
 
     respond_to do |format|

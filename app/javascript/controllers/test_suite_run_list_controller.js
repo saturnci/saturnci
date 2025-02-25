@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["link", "list"];
+  static targets = ["link", "list", "filterForm"];
 
   connect() {
     this.debouncing = false;
@@ -17,10 +17,9 @@ export default class extends Controller {
   }
 
   checkScrollPosition() {
-    const list = this.listTarget;
     const buffer = 800;
 
-    if (list.scrollTop + list.clientHeight >= list.scrollHeight - buffer) {
+    if (this.listTarget.scrollTop + this.listTarget.clientHeight >= this.listTarget.scrollHeight - buffer) {
       this.loadMore();
     }
   }
@@ -37,7 +36,12 @@ export default class extends Controller {
       this.checkScrollPosition();
     }, 1000);
 
-    const url = `${this.data.get("url")}?offset=${this.testSuiteRunCount()}`;
+    const offset = this.testSuiteRunCount();
+    const formData = new FormData(this.filterFormTarget);
+    formData.append("offset", offset);
+
+    const queryString = new URLSearchParams(formData).toString();
+    const url = `${this.element.dataset.testSuiteRunListUrl}?${queryString}`;
 
     const response = await fetch(url, {
       headers: { "Accept": "text/vnd.turbo-stream.html" },
