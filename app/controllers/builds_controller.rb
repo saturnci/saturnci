@@ -1,4 +1,28 @@
 class BuildsController < ApplicationController
+  def index
+    project = Project.find(params[:project_id])
+    authorize project, :show?
+
+    test_suite_run_list = TestSuiteRunList.new(
+      project,
+      branch_name: params[:branch_name],
+      statuses: params[:statuses]
+    )
+
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.append(
+          "additional_test_suite_runs",
+          partial: "test_suite_runs/list_items",
+          locals: {
+            builds: test_suite_run_list.builds.offset(params[:offset]).limit(TestSuiteRunList::CHUNK_SIZE),
+            active_build: nil
+          }
+        )
+      end
+    end
+  end
+
   def create
     @project = Project.find(params[:project_id])
     build = Build.new(project: @project)

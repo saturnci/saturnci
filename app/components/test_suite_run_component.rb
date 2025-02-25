@@ -15,7 +15,7 @@ class TestSuiteRunComponent < ViewComponent::Base
 
   def test_suite_run_list
     @test_suite_run_list ||= TestSuiteRunList.new(
-      @build,
+      @build.project,
       branch_name: @branch_name,
       statuses: @statuses
     )

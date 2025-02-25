@@ -1,4 +1,7 @@
-<div class="left-pane" data-controller="left-pane">
+<div class="left-pane"
+     data-controller="left-pane test-suite-run-list"
+     data-test-suite-run-list-url="<%= project_builds_path(@build.project) %>">
+
   <% if test_suite_run_list.builds.any? %>
     <div class="build-count">
       <%= pluralize(test_suite_run_list.builds.count, "test suite run") %>
@@ -13,13 +16,13 @@
     <%= render build_filter_component %>
 
     <div class="build-list-wrapper">
-      <div class="build-list">
-        <ul data-controller="test-suite-run-list" id="build-list">
-          <% test_suite_run_list.builds.each do |build| %>
-            <%= render "test_suite_runs/test_suite_run_link",
-              build: build,
-              active_build: @build %>
-          <% end %>
+      <div data-test-suite-run-list-target="list" class="test-suite-run-list build-list">
+
+        <ul id="build-list">
+          <%= render partial: "test_suite_runs/list_items",
+            locals: { builds: test_suite_run_list.initial_chunk_of_builds, active_build: @build } %>
+
+          <div id="additional_test_suite_runs"></div>
         </ul>
       </div>
     </div>
