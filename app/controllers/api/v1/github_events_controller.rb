@@ -29,7 +29,9 @@ module API
         Rails.logger.info "Finished processing GitHub webhook"
         skip_authorization
         head :ok
+
       rescue StandardError => e
+        skip_authorization
         render json: { error: e.message }, status: :unprocessable_entity
       end
     end
