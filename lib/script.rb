@@ -33,7 +33,8 @@ class Script
 
     docker_registry_cache = SaturnCIRunnerAPI::DockerRegistryCache.new(
       username: ENV["DOCKER_REGISTRY_CACHE_USERNAME"],
-      password: ENV["DOCKER_REGISTRY_CACHE_PASSWORD"]
+      password: ENV["DOCKER_REGISTRY_CACHE_PASSWORD"],
+      env_file_path: ENV["SATURNCI_ENV_FILE_PATH"]
     )
 
     puts "Docker registry cache checksum: #{docker_registry_cache.checksum}"
