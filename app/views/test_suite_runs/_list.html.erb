@@ -19,7 +19,7 @@
 
         <ul id="build-list">
           <%= render partial: "test_suite_runs/list_items",
-            locals: { builds: test_suite_run_list.builds, active_build: @build } %>
+            locals: { builds: test_suite_run_list.initial_chunk_of_builds, active_build: @build } %>
 
           <div id="additional_test_suite_runs"></div>
         </ul>

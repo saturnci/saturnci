@@ -42,6 +42,10 @@ describe "Test suite run infinite scroll", type: :system do
         expect(page).to have_css(".test-suite-run-link", count: 60)
       end
     end
+
+    it "shows the total number of test suite runs" do
+      expect(page).to have_content("100 test suite runs")
+    end
   end
 
   describe "chunking" do
