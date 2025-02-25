@@ -1,5 +1,11 @@
-<h2>GitHub Events (<%= @limit %> of <%= @all_github_events.count %>)</h2>
+<div class="container">
+  <h2>GitHub Events (<%= @limit %> of <%= @all_github_events.count %>)</h2>
 
-<% @github_events.each do |github_event| %>
-  <pre><%= JSON.pretty_generate(github_event.body).html_safe %></pre>
-<% end %>
+  <br>
+
+  <% @github_events.each do |github_event| %>
+    Event type: <%= github_event.type %>
+    <pre><%= JSON.pretty_generate(github_event.body).html_safe %>
+<%= "=" * 120 %></pre>
+  <% end %>
+</div>
