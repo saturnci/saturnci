@@ -22,12 +22,24 @@ describe "Test suite run infinite scroll", type: :system do
     describe "scrolling to the bottom" do
       before do
         scroll_to_bottom(".test-suite-run-list")
-        sleep(0.5) # wait for additional record to load
-        scroll_to_bottom(".test-suite-run-list")
+        sleep(0.5) # wait for additional records to load
       end
 
       it "shows 20 more test suite runs" do
         expect(page).to have_css(".test-suite-run-link", count: 40)
+      end
+    end
+
+    describe "scrolling to the bottom twice" do
+      before do
+        scroll_to_bottom(".test-suite-run-list")
+        sleep(0.5) # wait for additional records to load
+        scroll_to_bottom(".test-suite-run-list")
+        sleep(0.5) # wait for additional records to load
+      end
+
+      it "shows 20 more test suite runs" do
+        expect(page).to have_css(".test-suite-run-link", count: 60)
       end
     end
   end
@@ -56,7 +68,6 @@ describe "Test suite run infinite scroll", type: :system do
       before do
         scroll_to_bottom(".test-suite-run-list")
         sleep(0.5) # wait for additional record to load
-        scroll_to_bottom(".test-suite-run-list")
       end
 
       it "shows the 21st test suite run" do

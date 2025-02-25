@@ -1,4 +1,6 @@
 class BuildsController < ApplicationController
+  LIMIT = 20
+
   def index
     project = Project.find(params[:project_id])
     authorize project, :show?
@@ -13,11 +15,11 @@ class BuildsController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.replace(
+        render turbo_stream: turbo_stream.append(
           "additional_test_suite_runs",
           partial: "test_suite_runs/list_items",
           locals: {
-            builds: test_suite_run_list.builds.offset(20).limit(20),
+            builds: test_suite_run_list.builds.offset(params[:offset]).limit(LIMIT),
             active_build: nil
           }
         )

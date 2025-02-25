@@ -4,10 +4,8 @@ export default class extends Controller {
   static targets = ["link"];
 
   connect() {
-    this.moreHaveBeenLoaded = false;
+    this.debouncing = false;
     this.element.addEventListener("scroll", this.onScroll.bind(this));
-    console.log("connected");
-    console.log(this.element);
   }
 
   disconnect() {
@@ -15,17 +13,33 @@ export default class extends Controller {
   }
 
   onScroll() {
-    this.loadMore();
+    this.checkScrollPosition();
+  }
+
+  checkScrollPosition() {
+    const list = this.element;
+    const buffer = 800;
+
+    if (list.scrollTop + list.clientHeight >= list.scrollHeight - buffer) {
+      this.loadMore();
+    }
   }
 
   async loadMore() {
-    if (this.moreHaveBeenLoaded) {
+    if (this.debouncing) {
       return;
     }
 
-    this.moreHaveBeenLoaded = true;
+    this.debouncing = true;
 
-    const response = await fetch(this.data.get("url"), {
+    setTimeout(() => {
+      this.debouncing = false;
+      this.checkScrollPosition();
+    }, 1000);
+
+    const url = `${this.data.get("url")}?offset=${this.testSuiteRunCount()}`;
+
+    const response = await fetch(url, {
       headers: { "Accept": "text/vnd.turbo-stream.html" },
     });
 
@@ -33,6 +47,10 @@ export default class extends Controller {
       const html = await response.text();
       Turbo.renderStreamMessage(html);
     }
+  }
+
+  testSuiteRunCount() {
+    return this.linkTargets.length;
   }
 
   makeActive(event) {
