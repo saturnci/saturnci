@@ -1,15 +1,15 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["link"];
+  static targets = ["link", "list"];
 
   connect() {
     this.debouncing = false;
-    this.element.addEventListener("scroll", this.onScroll.bind(this));
+    this.listTarget.addEventListener("scroll", this.onScroll.bind(this));
   }
 
   disconnect() {
-    this.element.removeEventListener("scroll", this.onScroll.bind(this));
+    this.listTarget.removeEventListener("scroll", this.onScroll.bind(this));
   }
 
   onScroll() {
@@ -17,7 +17,7 @@ export default class extends Controller {
   }
 
   checkScrollPosition() {
-    const list = this.element;
+    const list = this.listTarget;
     const buffer = 800;
 
     if (list.scrollTop + list.clientHeight >= list.scrollHeight - buffer) {
