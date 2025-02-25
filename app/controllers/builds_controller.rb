@@ -3,8 +3,6 @@ class BuildsController < ApplicationController
     project = Project.find(params[:project_id])
     authorize project, :show?
 
-    builds = project.builds
-
     test_suite_run_list = TestSuiteRunList.new(
       project,
       branch_name: params[:branch_name],
