@@ -7,10 +7,22 @@ class TestSuiteRunLinkComponent < ViewComponent::Base
   end
 
   def css_class
-    @build == @active_build ? "active" : ""
+    if @build == @active_build
+      "test-suite-run-link active"
+    else
+      "test-suite-run-link"
+    end
   end
 
   def path
     TestSuiteRunLinkPath.new(@build).value
+  end
+
+  def data
+    {
+      turbo_frame: "build",
+      action: "click->test-suite-run-list#makeActive",
+      test_suite_run_list_target: "link"
+    }
   end
 end
