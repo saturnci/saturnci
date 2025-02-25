@@ -35,19 +35,7 @@ module GitHubEvents
         build.save!
       end
 
-      broadcast_build(build)
-    end
-
-    def broadcast_build(build)
-      NUMBER_IF_TIMES_TO_REPEAT_BROADCAST.times do
-        sleep(BROADCAST_INTERVAL_IN_SECONDS)
-
-        if build.status == "Running"
-          sleep(1)
-          build.broadcast
-          break
-        end
-      end
+      build.broadcast
     end
   end
 end
