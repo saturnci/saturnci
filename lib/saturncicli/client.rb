@@ -57,7 +57,7 @@ module SaturnCICLI
 
       puts Display::Table.new(
         resource_name: :run,
-        items: runs,
+        items: runs[0..19],
         options: options
       )
     end
