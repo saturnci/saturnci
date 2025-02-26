@@ -45,7 +45,7 @@ class Script
     system("export $(cat #{PROJECT_DIR}/.saturnci/.saturnci.env | xargs)")
 
     puts "Environment variables set in this shell:"
-    system("env | awk -F= '{print $1}'")
+    system("env | awk -F= '{print $1}' | sort")
 
     puts "Authenticating to Docker registry (#{SaturnCIRunnerAPI::DockerRegistryCache::URL})"
     docker_registry_cache.authenticate
