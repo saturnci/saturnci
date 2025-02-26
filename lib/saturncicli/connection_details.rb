@@ -26,6 +26,7 @@ module SaturnCICLI
     end
 
     def rsa_key_path
+      return if @run["rsa_key"].nil?
       tempfile = Tempfile.new("rsa_key")
       tempfile.write(rsa_key)
       tempfile.close
