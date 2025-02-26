@@ -40,6 +40,7 @@ class Script
     puts "Docker registry cache checksum: #{docker_registry_cache.checksum}"
     puts "Registry cache image URL: #{docker_registry_cache.image_url}"
     system("echo 'export SATURN_TEST_APP_IMAGE_URL=#{docker_registry_cache.image_url}' >> #{ENV["SATURNCI_ENV_FILE_PATH"]}")
+    system("echo 'export DOCKER_BUILDKIT=1' >> #{ENV["SATURNCI_ENV_FILE_PATH"]}")
     system("source #{ENV["SATURNCI_ENV_FILE_PATH"]}")
     system("cp #{ENV["SATURNCI_ENV_FILE_PATH"]} #{PROJECT_DIR}/.saturnci/.saturnci.env")
     system("export $(cat #{PROJECT_DIR}/.saturnci/.saturnci.env | xargs)")
