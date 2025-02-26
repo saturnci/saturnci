@@ -12,6 +12,8 @@ class Quote
     "\"The hen is the wisest of all the animal creation, because she never cackles until the egg is laid.\" - Abraham Lincoln",
     "\"The recipe for great work is: very exacting taste, plus the ability to gratify it.\" - Paul Graham",
     "\"The used key is always bright.\" - Benjamin Franklin",
+    "\"The short successes that can be gained in a brief time and without difficulty, are not worth much.\" - Henry Ford",
+    "\"Be ready to revise any system, scrap any method, abandon any theory, if the success of the job requires it.\" - Henry Ford",
   ]
 
   def self.random
