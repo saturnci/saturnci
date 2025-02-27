@@ -1,4 +1,4 @@
-.build-filter-form, .build-count {
+.build-filter-form, .test-suite-run-list-header {
   padding-left: 12px;
   padding-right: 12px;
 }
@@ -36,21 +36,26 @@
   top: 1px;
 }
 
-.build-count {
+.test-suite-run-list-header {
   margin: 0;
-  padding-top: 6px;
-  padding-bottom: 6px;
+  padding-top: 0;
+  padding-bottom: 0;
   font-size: 14px;
   display: flex;
-  justify-content: space-between;
 }
 
 .filter-toggle-link {
-  color: #666;
   text-decoration: none;
   display: none;
+  flex-grow: 1;
+  text-align: right;
 }
 
-.build-count, .filter-toggle-link {
+.test-suite-run-list-header, .filter-toggle-link {
   color: #666;
+}
+
+.filter-toggle-link, .test-suite-run-count {
+  padding-top: 6px;
+  padding-bottom: 6px;
 }

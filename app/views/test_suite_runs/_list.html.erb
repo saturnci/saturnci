@@ -3,8 +3,10 @@
      data-test-suite-run-list-url="<%= project_builds_path(@build.project) %>">
 
   <% if test_suite_run_list.builds.any? %>
-    <div class="build-count">
-      <%= pluralize(test_suite_run_list.builds.count, "test suite run") %>
+    <div class="test-suite-run-list-header">
+      <div class="test-suite-run-count">
+        <%= pluralize(test_suite_run_list.builds.count, "test suite run") %>
+      </div>
 
       <%= link_to "Hide filters", "#", class: "filter-toggle-link",
         data: { action: "left-pane#hideFilters", left_pane_target: "hideFiltersLink" } %>
