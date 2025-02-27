@@ -14,7 +14,7 @@ module SaturnCIRunnerAPI
     end
 
     def checksum
-      content = File.read("Gemfile.lock") + File.read(".saturnci/Dockerfile") + File.read(@env_file_path)
+      content = File.read("Gemfile.lock") + File.read(".saturnci/Dockerfile")# + File.read(@env_file_path)
       @checksum ||= Digest::SHA256.hexdigest(content)
     end
 
