@@ -8,6 +8,33 @@ describe "Show new build", type: :system do
     visit project_path(build.project)
   end
 
+  context "two builds, two projects" do
+    let!(:other_project) do
+      create(:project, user: build.project.user)
+    end
+
+    let!(:new_build) { create(:build, project: build.project) }
+    let!(:other_project_new_build) { create(:build, project: other_project) }
+
+    before do
+      new_build.broadcast
+      other_project_new_build.broadcast
+    end
+
+    it "shows the new build" do
+      within ".build-list" do
+        expect(page).to have_content(new_build.commit_hash, count: 1)
+      end
+    end
+
+    it "does not show the other project's new build" do
+      within ".build-list" do
+        expect(page).to have_content(new_build.commit_hash) # to prevent race condition
+        expect(page).not_to have_content(other_project_new_build.commit_hash)
+      end
+    end
+  end
+
   context "a new build gets created" do
     let!(:new_build) { create(:build, project: build.project) }
 
@@ -30,14 +57,20 @@ describe "Show new build", type: :system do
       end
     end
 
-    context "two broadcasts" do
+    context "broadcast occurs twice" do
       it "only shows the new build once" do
-        new_build.broadcast
+        visit project_path(build.project)
+
         new_build.broadcast
 
         within ".build-list" do
           expect(page).to have_content(new_build.commit_hash, count: 1)
         end
+      end
+    end
+
+    context "broadcast applies to two projects" do
+      it "only shows the build once" do
       end
     end
   end
