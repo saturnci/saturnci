@@ -37,7 +37,6 @@ module SaturnCIRunnerAPI
     end
 
     def push_image
-      system("sudo docker tag #{URL}/saturn_test_app #{image_url}")
       system("sudo docker push #{image_url}")
     end
   end
