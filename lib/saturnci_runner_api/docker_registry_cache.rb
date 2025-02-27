@@ -23,6 +23,8 @@ module SaturnCIRunnerAPI
     end
 
     def authenticate
+      puts "username: #{@username}"
+      puts "password: #{@password}"
       `echo '#{@password}' | docker login #{URL} -u #{@username} --password-stdin`
       $?.success?
     end
