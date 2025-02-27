@@ -31,4 +31,4 @@
   <% end %>
 </div>
 
-<%= turbo_stream_from [current_user, "builds"] %>
+<%= turbo_stream_from [@build.project, current_user, "builds"] %>
