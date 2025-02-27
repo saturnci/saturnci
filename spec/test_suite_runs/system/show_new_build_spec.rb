@@ -29,6 +29,17 @@ describe "Show new build", type: :system do
         end
       end
     end
+
+    context "two broadcasts" do
+      it "only shows the new build once" do
+        new_build.broadcast
+        new_build.broadcast
+
+        within ".build-list" do
+          expect(page).to have_content(new_build.commit_hash, count: 1)
+        end
+      end
+    end
   end
 
   context "a different user's build" do
