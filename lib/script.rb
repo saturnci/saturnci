@@ -48,8 +48,13 @@ class Script
     puts "Environment variables set in this shell:"
     system("env | awk -F= '{print $1}' | sort")
 
-    puts "Authenticating to Docker registry (#{SaturnCIRunnerAPI::DockerRegistryCache::URL})"
-    docker_registry_cache.authenticate
+    puts "Attempting to authenticate to Docker registry (#{SaturnCIRunnerAPI::DockerRegistryCache::URL})"
+
+    if docker_registry_cache.authenticate
+      puts "Authentication successful"
+    else
+      raise "Docker registry cache authentication failed"
+    end
 
     puts "Pulling the existing image to avoid rebuilding if possible"
     puts docker_registry_cache.pull_image
