@@ -19,6 +19,11 @@ class RunnerScript
 
     <<~SCRIPT
       #!/usr/bin/bash
+
+      export SATURNCI_ENV_FILE_PATH=/tmp/.saturnci.env
+      #{@run.build.project.project_secrets.map { |secret| "export #{secret.key}=#{secret.value}" }.join("\n")}
+      env > $SATURNCI_ENV_FILE_PATH
+
       export HOST=#{ENV["SATURNCI_HOST"]}
       export DOCKER_REGISTRY_CACHE_USERNAME=#{ENV["DOCKER_REGISTRY_CACHE_USERNAME"]}
       export DOCKER_REGISTRY_CACHE_PASSWORD=#{ENV["DOCKER_REGISTRY_CACHE_PASSWORD"]}
@@ -31,11 +36,6 @@ class RunnerScript
       export RSPEC_SEED=#{@run.build.seed}
       export GITHUB_INSTALLATION_ID=#{@github_installation_id}
       export GITHUB_REPO_FULL_NAME=#{@run.build.project.github_repo_full_name}
-      export SATURNCI_ENV_FILE_PATH=/tmp/.saturnci.env
-
-      #{@run.build.project.project_secrets.map { |secret| "export #{secret.key}=#{secret.value}" }.join("\n")}
-
-      env > $SATURNCI_ENV_FILE_PATH
 
       RUBY_SCRIPT_PATH=/tmp/runner_script.rb
       echo #{encoded_script} | base64 --decode > $RUBY_SCRIPT_PATH
