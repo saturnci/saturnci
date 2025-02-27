@@ -24,6 +24,7 @@ module SaturnCIRunnerAPI
 
     def authenticate
       system("echo '#{@password}' | sudo docker login #{URL} -u #{@username} --password-stdin")
+      raise "Docker registry cache authentication failed" unless $?.success?
     end
 
     def pull_image
