@@ -42,11 +42,13 @@ class TestSuiteRun < ApplicationRecord
   end
 
   def calculated_status
-    return "Not Started" if runs.empty?
-    return "Running" if runs.any? { |run| run.status == "Running" } || runs.empty?
-    return "Failed" if runs.any? { |run| run.status == "Failed" }
-    return "Cancelled" if runs.any? { |run| run.status == "Cancelled" }
-    return "Passed" if runs.all? { |run| run.status == "Passed" }
+    run_statuses = runs.map(&:status)
+
+    return "Not Started" if run_statuses.empty?
+    return "Running" if run_statuses.any?("Running")
+    return "Failed" if run_statuses.any?("Failed")
+    return "Cancelled" if run_statuses.any?("Cancelled")
+    return "Passed" if run_statuses.all?("Passed")
     "Failed"
   end
 
