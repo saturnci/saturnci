@@ -17,12 +17,17 @@ class RunnerScript
   def content
     encoded_script = Base64.strict_encode64(library_content + script_content)
 
+    secrets = @run.build.project.project_secrets.map do |secret| 
+      "#{secret.key}=#{secret.value}"
+    end
+
     <<~SCRIPT
       #!/usr/bin/bash
 
+      #{secrets.map { |secret| "export #{secret}" }.join("\n")}
+
       export SATURNCI_ENV_FILE_PATH=/tmp/.saturnci.env
-      #{@run.build.project.project_secrets.map { |secret| "export #{secret.key}=#{secret.value}" }.join("\n")}
-      env > $SATURNCI_ENV_FILE_PATH
+      #{secrets.map { |secret| "echo '#{secret}' >> $SATURNCI_ENV_FILE_PATH" }.join("\n")}
 
       export HOST=#{ENV["SATURNCI_HOST"]}
       export DOCKER_REGISTRY_CACHE_USERNAME=#{ENV["DOCKER_REGISTRY_CACHE_USERNAME"]}
