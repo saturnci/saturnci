@@ -23,7 +23,7 @@ module SaturnCIRunnerAPI
     end
 
     def authenticate
-      system("echo '#{@password}' | sudo docker login #{URL} -u #{@username} --password-stdin")
+      system("echo '#{@password}' | sudo -S sh -c 'docker login #{URL} -u #{@username} --password-stdin'")
       $?.success?
     end
 
