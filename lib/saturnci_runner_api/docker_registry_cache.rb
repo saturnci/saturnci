@@ -31,9 +31,9 @@ module SaturnCIRunnerAPI
       output = `sudo docker pull #{image_url} 2>&1`
 
       if output.include?("not found") || output.include?("manifest unknown")
-        "Docker registry cache MISS: No matching image found in the registry."
+        "Docker registry cache miss. Image not found in registry: #{image_url}"
       else
-        "Docker registry cache HIT: Image found and pulled successfully."
+        "Docker registry cache hit"
       end
     end
 
