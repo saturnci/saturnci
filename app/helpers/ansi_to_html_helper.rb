@@ -42,7 +42,6 @@ module ANSIToHTMLHelper
     /#033\[2K/ => '',
 
     # Carriage return
-    /\r/ => '',
     /#015/ => '',
 
     # Null characters
