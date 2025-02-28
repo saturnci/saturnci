@@ -20,8 +20,8 @@ production: &production
   username: <%= ENV.fetch("DATABASE_USERNAME") %>
   password: <%= ENV.fetch("DATABASE_PASSWORD") %>
 
-  cable:
-    <<: *production
+cable:
+  <<: *production
 
-  cache:
-    <<: *production
+cache:
+  <<: *production
