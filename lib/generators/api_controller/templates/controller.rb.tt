@@ -1,9 +1,11 @@
-<% module_namespacing do -%>
-class <%= class_name %>Controller < APIController
+module API
+  module <%= version %>
+    class <%= controller_class_name %>Controller < APIController
 <% actions.each do |action| -%>
-  def <%= action %>
-  end
+      def <%= action %>
+      end
 
 <% end -%>
+    end
+  end
 end
-<% end -%>
