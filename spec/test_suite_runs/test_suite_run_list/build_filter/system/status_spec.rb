@@ -25,13 +25,13 @@ describe "Status filtering", type: :system do
     end
 
     it "includes the passed build" do
-      within ".build-list" do
+      within ".test-suite-run-list" do
         expect(page).to have_content(passed_run.build.commit_hash)
       end
     end
 
     it "does not include the failed build" do
-      within ".build-list" do
+      within ".test-suite-run-list" do
         expect(page).not_to have_content(failed_run.build.commit_hash)
       end
     end
@@ -45,13 +45,13 @@ describe "Status filtering", type: :system do
     end
 
     it "includes the failed build" do
-      within ".build-list" do
+      within ".test-suite-run-list" do
         expect(page).to have_content(failed_run.build.commit_hash)
       end
     end
 
     it "does not include the passed build" do
-      within ".build-list" do
+      within ".test-suite-run-list" do
         expect(page).not_to have_content(passed_run.build.commit_hash)
       end
     end
@@ -66,13 +66,13 @@ describe "Status filtering", type: :system do
     end
 
     it "includes the failed build" do
-      within ".build-list" do
+      within ".test-suite-run-list" do
         expect(page).to have_content(failed_run.build.commit_hash)
       end
     end
 
     it "includes the passed build" do
-      within ".build-list" do
+      within ".test-suite-run-list" do
         expect(page).to have_content(passed_run.build.commit_hash)
       end
     end
@@ -85,7 +85,7 @@ describe "Status filtering", type: :system do
       click_on "Filters"
 
       # to prevent race condition
-      within ".build-list" do
+      within ".test-suite-run-list" do
         expect(page).not_to have_content(failed_run.build.commit_hash)
       end
 
@@ -98,7 +98,7 @@ describe "Status filtering", type: :system do
       click_on "Filters"
 
       # to prevent race condition
-      within ".build-list" do
+      within ".test-suite-run-list" do
         expect(page).not_to have_content(passed_run.build.commit_hash)
       end
 
@@ -120,13 +120,13 @@ describe "Status filtering", type: :system do
     end
 
     it "includes the passed build" do
-      within ".build-list" do
+      within ".test-suite-run-list" do
         expect(page).to have_content(passed_run.build.commit_hash)
       end
     end
 
     it "does not include the failed build" do
-      within ".build-list" do
+      within ".test-suite-run-list" do
         expect(page).not_to have_content(failed_run.build.commit_hash)
       end
     end

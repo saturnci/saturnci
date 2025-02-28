@@ -33,13 +33,13 @@ describe "Clearing filter selections", type: :system do
       click_on "Filters"
 
       # To prevent race condition
-      within ".build-list" do
+      within ".test-suite-run-list" do
         expect(page).not_to have_content("Commit from 'filter' branch")
       end
 
       click_button "Clear"
 
-      within ".build-list" do
+      within ".test-suite-run-list" do
         expect(page).to have_content("Commit from 'filter' branch")
       end
     end

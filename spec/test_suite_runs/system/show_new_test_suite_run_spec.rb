@@ -22,13 +22,13 @@ describe "Show new test suite run", type: :system do
     end
 
     it "shows the new test suite run" do
-      within ".build-list" do
+      within ".test-suite-run-list" do
         expect(page).to have_content(new_build.commit_hash, count: 1)
       end
     end
 
     it "does not show the other project's new test suite run" do
-      within ".build-list" do
+      within ".test-suite-run-list" do
         expect(page).to have_content(new_build.commit_hash) # to prevent race condition
         expect(page).not_to have_content(other_project_new_build.commit_hash)
       end
@@ -41,7 +41,7 @@ describe "Show new test suite run", type: :system do
     it "shows the new build" do
       new_build.broadcast
 
-      within ".build-list" do
+      within ".test-suite-run-list" do
         expect(page).to have_content(new_build.commit_hash, count: 1)
       end
     end
@@ -51,7 +51,7 @@ describe "Show new test suite run", type: :system do
         visit project_path(build.project)
         new_build.broadcast
 
-        within ".build-list" do
+        within ".test-suite-run-list" do
           expect(page).to have_content(new_build.commit_hash, count: 1)
         end
       end
@@ -63,14 +63,9 @@ describe "Show new test suite run", type: :system do
 
         new_build.broadcast
 
-        within ".build-list" do
+        within ".test-suite-run-list" do
           expect(page).to have_content(new_build.commit_hash, count: 1)
         end
-      end
-    end
-
-    context "broadcast applies to two projects" do
-      it "only shows the build once" do
       end
     end
   end
