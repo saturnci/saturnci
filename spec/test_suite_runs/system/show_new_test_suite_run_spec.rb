@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Show new build", type: :system do
+describe "Show new test suite run", type: :system do
   let!(:build) { create(:build) }
 
   before do
@@ -8,7 +8,7 @@ describe "Show new build", type: :system do
     visit project_path(build.project)
   end
 
-  context "two builds, two projects" do
+  context "two test suite runs, two projects" do
     let!(:other_project) do
       create(:project, user: build.project.user)
     end
@@ -21,13 +21,13 @@ describe "Show new build", type: :system do
       other_project_new_build.broadcast
     end
 
-    it "shows the new build" do
+    it "shows the new test suite run" do
       within ".build-list" do
         expect(page).to have_content(new_build.commit_hash, count: 1)
       end
     end
 
-    it "does not show the other project's new build" do
+    it "does not show the other project's new test suite run" do
       within ".build-list" do
         expect(page).to have_content(new_build.commit_hash) # to prevent race condition
         expect(page).not_to have_content(other_project_new_build.commit_hash)
@@ -75,22 +75,22 @@ describe "Show new build", type: :system do
     end
   end
 
-  context "a different user's build" do
-    it "does not show the new build" do
+  context "a different user's test suite run" do
+    it "does not show the new test suite run" do
       new_build = create(:build, project: create(:project))
       new_build.broadcast
       expect(page).not_to have_content(new_build.commit_hash)
     end
   end
 
-  context "build gets not just created but started" do
+  context "test suite run gets not just created but started" do
     let!(:new_build) { create(:build, project: build.project) }
     let!(:run) { create(:run, build: new_build) }
 
     # This simulates the runner request taking a while
     let!(:runner_request_delay) { sleep(5) }
 
-    it "shows the new build" do
+    it "shows the new test suite run" do
       runner_request = double("RunnerRequest")
       allow(runner_request).to receive(:execute!).and_return(runner_request_delay)
 
