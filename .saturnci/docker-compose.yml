@@ -12,8 +12,12 @@ services:
     depends_on:
       - postgres
       - chrome
+
+    # Optionally, you can add a local .saturnci.env file to provide environment
+    # variables when you run your SaturnCI setup locally.
     env_file:
       - .saturnci.env
+
     environment:
       DOCKER_ENV: "true"
       DATABASE_USERNAME: saturn
