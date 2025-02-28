@@ -34,13 +34,13 @@ describe "Branch filtering", type: :system do
     end
 
     it "only shows builds from the main branch" do
-      within ".build-list" do
+      within ".test-suite-run-list" do
         expect(page).not_to have_content("Commit from 'filter' branch")
       end
     end
 
     it "includes all branches as an option even after selection" do
-      within ".build-list" do
+      within ".test-suite-run-list" do
         expect(page).not_to have_content("Commit from 'filter' branch")
       end
 
@@ -49,7 +49,7 @@ describe "Branch filtering", type: :system do
 
     it "keeps 'main' selected" do
       # To prevent race condition
-      within ".build-list" do
+      within ".test-suite-run-list" do
         expect(page).not_to have_content("Commit from 'filter' branch")
       end
 
@@ -66,7 +66,7 @@ describe "Branch filtering", type: :system do
       click_button "Apply"
       click_on "Filters"
 
-      within ".build-list" do
+      within ".test-suite-run-list" do
         expect(page).not_to have_content("Commit from 'main' branch")
       end
     end

@@ -53,7 +53,7 @@ describe "Build status", type: :system do
       it "maintains the currently active build" do
         visit project_build_path(id: run.build.id, project_id: run.build.project.id)
 
-        within ".build-list" do
+        within ".test-suite-run-list" do
           expect(page).to have_content("Running", count: 2)
         end
 
