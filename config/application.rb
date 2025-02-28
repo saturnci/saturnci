@@ -30,7 +30,9 @@ module Saturn
     #
     # config.time_zone = "Central Time (US & Canada)"
 
-    config.eager_load_paths << Rails.root.join("lib")
+    if Rails.env.development?
+      config.eager_load_paths << Rails.root.join("lib")
+    end
 
     config.active_support.to_time_preserves_timezone = :zone
     config.admin_time_zone = "Eastern Time (US & Canada)"
