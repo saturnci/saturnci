@@ -1,6 +1,6 @@
 module API
   module <%= version %>
-    class <%= controller_class_name %>Controller < APIController
+    class <%= name %>Controller < APIController
 <% actions.each do |action| -%>
       def <%= action %>
       end

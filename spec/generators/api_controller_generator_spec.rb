@@ -13,7 +13,7 @@ describe ApiControllerGenerator do
   end
 
   it "creates the correct controller file" do
-    ApiControllerGenerator.start(%w[blah v1 orphaned_runner_collection destroy index show])
+    ApiControllerGenerator.start(%w[orphaned_runner_collection v1 destroy index show])
 
     file_path = "#{destination_root}/v1/orphaned_runner_collection_controller.rb"
 
