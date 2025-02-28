@@ -1,3 +1,5 @@
+require Rails.root.join("lib/application_decorator")
+
 module Billing
   class RunDecorator < ApplicationDecorator
     def charge
