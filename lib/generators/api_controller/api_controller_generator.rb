@@ -1,6 +1,6 @@
 require "rails/generators/named_base"
 
-class APIControllerGenerator < Rails::Generators::NamedBase
+class ApiControllerGenerator < Rails::Generators::NamedBase
   source_root File.expand_path("templates", __dir__)
 
   argument :actions, type: :array, default: [], banner: "action action"
