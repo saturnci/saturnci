@@ -12,6 +12,7 @@ namespace :api do
     end
 
     resources :runs, only: %w[index show update]
+    resource :orphaned_runner_collection, only: :destroy
     resources :builds, only: :index
 
     resources :github_events

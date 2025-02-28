@@ -8,4 +8,7 @@ class Runner
       client.droplets.delete(id: droplet.id)
     end
   end
+
+  def self.destroy_orphaned
+  end
 end

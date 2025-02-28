@@ -18,9 +18,25 @@ class ApiControllerGenerator < Rails::Generators::NamedBase
     @actions = actions
 
     template "controller.rb.tt", path
+    add_route
   end
 
   def target_dir
     "app/controllers/api/"
+  end
+
+  private
+
+  def add_route
+    route_path = "config/routes/api.rb"
+    route_entry = generate_route_entry
+
+    inject_into_file route_path, route_entry, after: "namespace :#{version.underscore} do\n"
+  end
+
+  def generate_route_entry
+    route_lines = []
+    route_lines << "    resources :#{name.underscore.pluralize}, only: #{actions.map(&:to_sym).inspect}" if actions.any?
+    route_lines.join("\n") + "\n"
   end
 end
