@@ -5,7 +5,7 @@
     <%= button_to "Delete", project_build_path(id: @build.id, project_id: @build.project_id), method: :delete, data: { turbo: false } %>
   <% end %>
 
-  <%= turbo_frame_tag "build_body", class: "test-suite-run-body", data: { turbo_action: "advance" } do %>
+  <%= turbo_frame_tag "test_suite_run_body", class: "test-suite-run-body", data: { turbo_action: "advance" } do %>
     <%= render "builds/menu",
       build: @build,
       run: @run,

@@ -11,7 +11,7 @@ class BuildNavigation
         text,
         @view_context.run_path(@run, current_tab_name),
         class: @current_tab_name == current_tab_name ? "active" : "",
-        data: { turbo_frame: "build_body" }
+        data: { turbo_frame: "test_suite_run_body" }
       )
     end
   end
