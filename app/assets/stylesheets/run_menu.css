@@ -1,14 +1,14 @@
-.build-menu {
+.run-menu {
   padding: 20px 0 0 20px;
   background-color: #EEE;
   border-top: 2px solid #CCC;
 }
 
-.build-menu a {
+.run-menu a {
   background-color: #CCC;
 }
 
-.build-menu a.active {
+.run-menu a.active {
   color: #FFF;
   background-color: #000;
 }
