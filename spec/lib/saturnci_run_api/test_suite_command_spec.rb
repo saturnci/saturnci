@@ -1,6 +1,7 @@
 require "rails_helper"
+require Rails.root.join("lib/saturnci_runner_api/test_suite_command")
 
-RSpec.describe SaturnCIRunnerAPI::TestSuiteCommand do
+describe SaturnCIRunnerAPI::TestSuiteCommand do
   let!(:command) do
     SaturnCIRunnerAPI::TestSuiteCommand.new(
       docker_registry_cache_image_url: "registrycache.saturnci.com:5000/saturn_test_app:123456",
