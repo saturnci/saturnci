@@ -1,4 +1,5 @@
 require "rails_helper"
+require Rails.root.join("lib/saturnci_runner_api/stream")
 
 describe SaturnCIRunnerAPI::Stream do
   let!(:stream) do
