@@ -16,7 +16,7 @@ resource "digitalocean_database_cluster" "postgres" {
   engine     = "pg"
   version    = "15"
   size       = "db-s-1vcpu-1gb"
-  region     = "nyc3"
+  region     = "nyc1"
   node_count = 1
 }
 
