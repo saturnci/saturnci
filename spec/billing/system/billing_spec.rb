@@ -7,7 +7,7 @@ describe "Billing", type: :system do
 
   before do
     run.finish!
-    login_as(run.build.project.user, scope: :user)
+    login_as(run.test_suite_run.project.user, scope: :user)
     allow_any_instance_of(Charge).to receive(:run_duration).and_return(420)
   end
 
@@ -15,7 +15,7 @@ describe "Billing", type: :system do
     context "when no date is specified" do
       it "shows runs from January" do
         travel_to "2020-01-01" do
-          visit project_billing_path(project_id: run.build.project.id)
+          visit project_billing_path(project_id: run.test_suite_run.project.id)
           expect(page).to have_content("420")
         end
       end
@@ -26,7 +26,7 @@ describe "Billing", type: :system do
     context "when no date is specified" do
       it "does not show runs from January" do
         travel_to "2020-02-01" do
-          visit project_billing_path(project_id: run.build.project.id)
+          visit project_billing_path(project_id: run.test_suite_run.project.id)
           expect(page).not_to have_content("420")
         end
       end
@@ -36,7 +36,7 @@ describe "Billing", type: :system do
       it "shows runs from January" do
         travel_to "2020-02-01" do
           visit project_billing_path(
-            project_id: run.build.project.id,
+            project_id: run.test_suite_run.project.id,
             year: 2020,
             month: 1
           )

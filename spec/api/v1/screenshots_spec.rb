@@ -18,7 +18,7 @@ describe "Screenshots", type: :request do
     post(
       api_v1_run_screenshots_path(run_id: run.id),
       params: { screenshot: screenshot_file },
-      headers: api_authorization_headers(run.build.project.user).merge(
+      headers: api_authorization_headers(run.test_suite_run.project.user).merge(
         "Content-Type" => "application/tar",
         "X-Filename" => "screenshot.tar.gz"
       )
@@ -32,7 +32,7 @@ describe "Screenshots", type: :request do
       post(
         api_v1_run_screenshots_path(run_id: run.id),
         params: { screenshot: screenshot_file },
-        headers: api_authorization_headers(run.build.project.user).merge(
+        headers: api_authorization_headers(run.test_suite_run.project.user).merge(
           "Content-Type" => "application/tar",
           "X-Filename" => "screenshot.tar.gz"
         )
@@ -44,7 +44,7 @@ describe "Screenshots", type: :request do
     before do
       post(
         api_v1_run_screenshots_path(run_id: run.id),
-        headers: api_authorization_headers(run.build.project.user)
+        headers: api_authorization_headers(run.test_suite_run.project.user)
       )
     end
 

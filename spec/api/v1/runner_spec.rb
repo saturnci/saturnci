@@ -16,7 +16,7 @@ describe "delete runner", type: :request do
     it "deletes the runner" do
       delete(
         api_v1_run_runner_path(run.id),
-        headers: api_authorization_headers(run.build.project.user)
+        headers: api_authorization_headers(run.test_suite_run.project.user)
       )
 
       expect(response).to have_http_status(200)
@@ -36,7 +36,7 @@ describe "delete runner", type: :request do
     it "does not delete the runner" do
       delete(
         api_v1_run_runner_path(run.id),
-        headers: api_authorization_headers(run.build.project.user)
+        headers: api_authorization_headers(run.test_suite_run.project.user)
       )
 
       expect(response).to have_http_status(200)
