@@ -1,4 +1,5 @@
 require "rails_helper"
+require Rails.root.join("lib/saturncicli/connection_details")
 
 describe SaturnCICLI::ConnectionDetails do
   describe "#rsa_key_path" do
