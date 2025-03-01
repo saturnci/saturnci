@@ -6,12 +6,12 @@
           <%= build.commit_message.truncate(60) %>
         </div>
 
-        <div class="build-author">
+        <div class="test-suite-run-author">
           <%= build.author_name %>
           <%= build.created_at.in_time_zone.strftime("%-m/%-d/%Y %H:%M %Z") %>
         </div>
 
-        <span class="build-commit">
+        <span class="test-suite-run-commit">
           <code><%= build.branch_name.truncate(20) %></code>
           <code><%= abbreviated_hash(build.commit_hash) %></code>
         </span>
@@ -19,15 +19,15 @@
     </div>
 
     <div style="width: 90px; text-align: center">
-      <div class="build-status build-status-<%= build.status.parameterize %>">
+      <div class="test-suite-run-status test-suite-run-status-<%= build.status.parameterize %>">
         <%= build.status %>
       </div>
 
-      <span style="color: #999" data-controller="elapsed-build-time" data-elapsed-build-time-build-created-at-datetime-value="<%= build.created_at %>">
+      <span style="color: #999" data-controller="elapsed-test-suite-run-time" data-elapsed-test-suite-run-time-test-suite-run-created-at-datetime-value="<%= build.created_at %>">
         <% if build.status == "Running" %>
-          <div data-elapsed-build-time-target="value"></div>
+          <div data-elapsed-test-suite-run-time-target="value"></div>
         <% else %>
-          <span class="build-duration">
+          <span class="test-suite-run-duration">
             <%= build.duration_formatted %>
           </span>
         <% end %>

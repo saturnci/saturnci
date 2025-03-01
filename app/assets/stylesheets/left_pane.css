@@ -8,7 +8,7 @@
   flex-direction: column;
 }
 
-.build-list-wrapper {
+.test-suite-run-list-wrapper {
   overflow-y: hidden;
   display: flex;
   flex-direction: column;
@@ -53,54 +53,54 @@
   color: #FFF;
 }
 
-.test-suite-run-list a.active .build-author {
+.test-suite-run-list a.active .test-suite-run-author {
   color: #FFF;
 }
 
-.test-suite-run-list a.active .build-duration {
+.test-suite-run-list a.active .test-suite-run-duration {
   color: #DDD;
 }
 
-.build-commit {
+.test-suite-run-commit {
   background-color: #DDD;
   padding: 2px 6px;
 }
 
-.build-status {
+.test-suite-run-status {
   padding: 4px;
   margin-bottom: 4px
 }
 
-.build-commit, .build-status {
+.test-suite-run-commit, .test-suite-run-status {
   border-radius: 6px;
   color: #444;
 }
 
-.build-status-not-started {
+.test-suite-run-status-not-started {
   background-color: #DDD;
   color: #000;
 }
 
-.build-status-passed {
+.test-suite-run-status-passed {
   background-color: #0F0;
   color: #000;
 }
 
-.build-status-cancelled {
+.test-suite-run-status-cancelled {
   background-color: #DDD;
   color: #000;
 }
 
-.build-status-failed {
+.test-suite-run-status-failed {
   background-color: #F00;
   color: #000;
 }
 
-.build-status-running {
+.test-suite-run-status-running {
   background-color: #8DF;
 }
 
-.build-author {
+.test-suite-run-author {
   color: #999;
   margin: 4px 0 10px 0;
 }

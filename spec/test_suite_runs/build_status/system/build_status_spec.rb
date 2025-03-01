@@ -72,7 +72,7 @@ describe "Build status", type: :system do
     context "running build" do
       it "does not show the elapsed build time" do
         visit project_build_path(run.build.project, run.build)
-        expect(page).to have_selector("[data-elapsed-build-time-target='value']")
+        expect(page).to have_selector("[data-elapsed-test-suite-run-time-target='value']")
       end
     end
 
@@ -80,7 +80,7 @@ describe "Build status", type: :system do
       it "shows the elapsed build time" do
         run.update!(test_report: "passed")
         visit project_build_path(run.build.project, run.build)
-        expect(page).not_to have_selector("[data-elapsed-build-time-target='value']")
+        expect(page).not_to have_selector("[data-elapsed-test-suite-run-time-target='value']")
       end
     end
 
