@@ -12,18 +12,18 @@
   display: flex;
 }
 
-.build {
+.test-suite-run {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
 }
 
-.run-menu, .test-suite-run-header {
-  background-color: #FFF;
+.test-suite-run a {
+  color: #000;
 }
 
-.build a {
-  color: #000;
+.run-menu, .test-suite-run-header {
+  background-color: #FFF;
 }
 
 .test-suite-run-body {
