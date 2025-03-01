@@ -1,5 +1,5 @@
 <%= turbo_frame_tag "build", class: "build", data: { turbo_action: "advance" } do %>
-  <%= render "builds/header", build: build do %>
+  <%= render "test_suite_runs/header", build: build do %>
     <%= button_to "Run", rebuilds_path(build_id: build.id), method: :post, data: { turbo: false } %>
     <%= button_to "Delete", project_build_path(id: build.id, project_id: build.project_id), method: :delete, data: { turbo: false } %>
   <% end %>
