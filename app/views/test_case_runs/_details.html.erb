@@ -1,4 +1,4 @@
-<%= turbo_frame_tag "test_case_run_details", class: "test-case-run-details build-overview-details", data: { turbo_action: "advance" } do %>
+<%= turbo_frame_tag "test_case_run_details", class: "test-case-run-details test-suite-run-overview-details", data: { turbo_action: "advance" } do %>
   <% if test_case_run.present? %>
     <% cache do %>
       <div class="test-case-run">

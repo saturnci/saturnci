@@ -1,4 +1,4 @@
-.build-overview {
+.test-suite-run-overview {
   background-color: #EEE;
   border-top: 2px solid #CCC;
 
@@ -10,7 +10,7 @@
   flex-direction: row;
 }
 
-.build-overview-details {
+.test-suite-run-overview-details {
   overflow-y: auto;
   max-height: 100%;
   flex: 1;

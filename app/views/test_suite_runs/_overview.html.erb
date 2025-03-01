@@ -13,7 +13,7 @@
         target_tab_name: "test_output" %>
     <% end %>
 
-    <div class="build-overview">
+    <div class="test-suite-run-overview">
       <% if build.finished? %>
         <%= render "test_case_runs/details", test_case_run: test_case_run %>
         <%= render "test_case_runs/list", build:, active_test_case_run: test_case_run %>
