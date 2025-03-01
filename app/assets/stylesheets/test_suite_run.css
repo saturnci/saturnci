@@ -65,7 +65,7 @@
   padding: 12px;
 }
 
-.build-action-buttons {
+.test-suite-run-action-buttons {
   display: flex;
   gap: 4px;
   margin-top: 5px;
