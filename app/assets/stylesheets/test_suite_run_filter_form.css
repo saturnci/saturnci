@@ -1,35 +1,32 @@
-.build-filter-form, .test-suite-run-list-header {
+.test-suite-run-filter-form, .test-suite-run-list-header {
   padding-left: 12px;
   padding-right: 12px;
 }
 
-.build-filter-form {
+.test-suite-run-filter-form {
   display: none;
   padding-top: 0;
   padding-bottom: 15px;
 }
 
-.build-filter-form select {
+.test-suite-run-filter-form select {
   width: 100%;
 }
 
-.build-filter-form-status {
-}
-
-.build-filter-form-checkboxes {
+.test-suite-run-filter-form-checkboxes {
   flex-wrap: wrap;
   display: flex;
   gap: 5px;
 }
 
-.build-filter-form-checkbox-label {
+.test-suite-run-filter-form-checkbox-label {
   display: flex;
   white-space: nowrap;
   width: 120px;
   gap: 5px;
 }
 
-.build-filter-form-checkbox-label input {
+.test-suite-run-filter-form-checkbox-label input {
   margin-left: 0;
   margin-right: 0;
   position: relative;

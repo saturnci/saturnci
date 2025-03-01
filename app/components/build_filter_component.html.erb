@@ -1,6 +1,6 @@
 <%= form_tag(build_path(@build, @current_tab_name),
              method: :get,
-             class: "build-filter-form",
+             class: "test-suite-run-filter-form",
              data: { "left-pane-target" => "filterForm", "test-suite-run-list-target" => "filterForm" }) do %>
 
   <div class="form-group">
@@ -16,10 +16,10 @@
   <div class="form-group">
     <label class="form-group-label">Status</label>
 
-    <div class="build-filter-form-status">
-      <div class="build-filter-form-checkboxes">
+    <div class="test-suite-run-filter-form-status">
+      <div class="test-suite-run-filter-form-checkboxes">
         <% statuses.each do |status| %>
-          <%= label_tag "status_#{status.parameterize}", status, class: "build-filter-form-checkbox-label" do %>
+          <%= label_tag "status_#{status.parameterize}", status, class: "test-suite-run-filter-form-checkbox-label" do %>
             <%= check_box_tag "statuses[]", status, checked?(status), id: "status_#{status.parameterize}" %>
             <%= status %>
           <% end %>
