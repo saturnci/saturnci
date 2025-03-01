@@ -18,7 +18,7 @@
   flex-direction: column;
 }
 
-.run-menu, .build-header {
+.run-menu, .test-suite-run-header {
   background-color: #FFF;
 }
 
@@ -40,7 +40,7 @@
   color: #FFF;
 }
 
-.build-header {
+.test-suite-run-header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -49,19 +49,19 @@
   margin-left: 10px;
 }
 
-.build-header h2 {
+.test-suite-run-header h2 {
   font-size: 24px;
   color: #000;
   margin: 0 0 2px 0;
   padding: 0;
 }
 
-.build-header h3 {
+.test-suite-run-header h3 {
   color: #444;
   font-weight: normal;
 }
 
-.build-header {
+.test-suite-run-header {
   padding: 12px;
 }
 
