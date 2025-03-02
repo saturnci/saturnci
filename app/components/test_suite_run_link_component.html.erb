@@ -1,5 +1,5 @@
 <%= link_to path, data:, class: css_class, id: "test_suite_run_link_#{build.id}" do %>
-  <div id="build_status_<%= build.id %>">
+  <div id="test_suite_run_status_<%= build.id %>">
     <%= render "test_suite_runs/test_suite_run_link_content", test_suite_run: build %>
   </div>
 <% end %>
