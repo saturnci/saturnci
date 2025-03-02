@@ -1,36 +1,36 @@
 require "rails_helper"
 
-describe "Build navigation", type: :system do
-  let!(:first_build) { create(:build, :with_run) }
-  let!(:second_build) { create(:build, :with_run, project: first_build.project) }
+describe "Test suite run navigation", type: :system do
+  let!(:first_test_suite_run) { create(:build, :with_run) }
+  let!(:second_test_suite_run) { create(:build, :with_run, project: first_test_suite_run.project) }
 
   before do
-    login_as(first_build.project.user, scope: :user)
+    login_as(first_test_suite_run.project.user, scope: :user)
   end
 
-  describe "clicking on second build after having visited first build" do
+  describe "clicking on second test suite run after having visited first test suite run" do
     before do
-      visit project_build_path(first_build.project, first_build)
-      click_on "test_suite_run_link_#{second_build.id}"
-      expect(page).to have_content(pane_heading(second_build)) # to prevent race condition
+      visit project_build_path(first_test_suite_run.project, first_test_suite_run)
+      click_on "test_suite_run_link_#{second_test_suite_run.id}"
+      expect(page).to have_content(pane_heading(second_test_suite_run)) # to prevent race condition
     end
 
-    it "retains the first build in the build list" do
-      expect(page).to have_content(first_build.project.name)
+    it "retains the first test suite run in the test suite run list" do
+      expect(page).to have_content(first_test_suite_run.project.name)
     end
 
-    it "after refresh, keeps second build in detail pane" do
+    it "after refresh, keeps second test suite run in detail pane" do
       visit current_url
-      expect(page).to have_content(pane_heading(second_build))
+      expect(page).to have_content(pane_heading(second_test_suite_run))
     end
 
-    it "after refresh, keeps left pane (build list)" do
+    it "after refresh, keeps left pane (test suite run list)" do
       visit current_url
-      expect(page).to have_content(first_build.project.name)
+      expect(page).to have_content(first_test_suite_run.project.name)
     end
   end
 
-  def pane_heading(build)
-    "Commit: #{build.commit_hash[0..7]}"
+  def pane_heading(test_suite_run)
+    "Commit: #{test_suite_run.commit_hash[0..7]}"
   end
 end
