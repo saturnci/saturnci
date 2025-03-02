@@ -6,14 +6,6 @@ class TestSuiteRunLinkComponent < ViewComponent::Base
     @active_build = active_build
   end
 
-  def css_class
-    if @build == @active_build
-      "test-suite-run-link active"
-    else
-      "test-suite-run-link"
-    end
-  end
-
   def path
     TestSuiteRunLinkPath.new(@build).value
   end

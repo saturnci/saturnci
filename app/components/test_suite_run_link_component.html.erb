@@ -1,4 +1,4 @@
-<%= link_to path, data:, class: css_class, id: "test_suite_run_link_#{build.id}" do %>
+<%= link_to path, data:, class: "test-suite-run-link", id: "test_suite_run_link_#{build.id}" do %>
   <% cache [test_suite_run, test_suite_run.updated_at] do %>
     <div style="display: flex; justify-content: space-between">
       <div>
