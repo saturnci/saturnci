@@ -18,6 +18,7 @@ describe "Test suite run navigation", type: :system do
 
         create(:test_case_run, run:)
 
+        expect(page).to have_content("Failed") # to prevent race condition
         click_on "test_suite_run_link_#{run.test_suite_run.id}"
         expect(page).to have_content("1 test case, 0 failed")
       end
