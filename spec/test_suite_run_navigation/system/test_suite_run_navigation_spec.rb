@@ -1,14 +1,14 @@
 require "rails_helper"
 
 describe "Test suite run navigation", type: :system do
-  let!(:first_test_suite_run) { create(:build, :with_run) }
-  let!(:second_test_suite_run) { create(:build, :with_run, project: first_test_suite_run.project) }
-
-  before do
-    login_as(first_test_suite_run.project.user, scope: :user)
-  end
-
   describe "clicking on second test suite run after having visited first test suite run" do
+    let!(:first_test_suite_run) { create(:build, :with_run) }
+    let!(:second_test_suite_run) { create(:build, :with_run, project: first_test_suite_run.project) }
+
+    before do
+      login_as(first_test_suite_run.project.user, scope: :user)
+    end
+
     before do
       visit project_build_path(first_test_suite_run.project, first_test_suite_run)
       click_on "test_suite_run_link_#{second_test_suite_run.id}"
