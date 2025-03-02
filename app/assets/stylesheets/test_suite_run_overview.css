@@ -82,3 +82,11 @@
 .screenshot-link {
   color: #00F !important;
 }
+
+.test-case-run-status-passed a {
+  color: green;
+}
+
+.test-case-run-status-failed a {
+  color: red;
+}
