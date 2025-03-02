@@ -28,9 +28,9 @@ describe "Test suite run navigation", type: :system do
       visit current_url
       expect(page).to have_content(first_test_suite_run.project.name)
     end
-  end
 
-  def pane_heading(test_suite_run)
-    "Commit: #{test_suite_run.commit_hash[0..7]}"
+    def pane_heading(test_suite_run)
+      "Commit: #{test_suite_run.commit_hash[0..7]}"
+    end
   end
 end
