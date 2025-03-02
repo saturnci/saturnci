@@ -9,12 +9,12 @@ module API
           ActiveRecord::Base.transaction do
             run.finish!
 
-            if run.test_suite_run.runs.all?(&:finished?)
+            if run.build.runs.all?(&:finished?)
               Turbo::StreamsChannel.broadcast_update_to(
-                "test_suite_run_link_status_#{run.test_suite_run.id}",
-                target: "test_suite_run_link_status_#{run.test_suite_run.id}",
+                "build_status_#{run.build.id}",
+                target: "build_status_#{run.build.id}",
                 partial: "test_suite_runs/test_suite_run_link_content",
-                locals: { test_suite_run: run.test_suite_run }
+                locals: { build: run.build }
               )
 
               GitHubCheckRun.find_by(build: run.build)&.finish!
