@@ -15,13 +15,14 @@ test:
   database: saturn_test
 
 production: &production
-  <<: *default
-  database: <%= ENV.fetch("DATABASE_NAME") { nil } %>
-  username: <%= ENV.fetch("DATABASE_USERNAME") %>
-  password: <%= ENV.fetch("DATABASE_PASSWORD") %>
-
-cable:
-  <<: *production
-
-cache:
-  <<: *production
+  primary:
+    <<: *default
+    database: <%= ENV.fetch("DATABASE_NAME") { nil } %>
+    username: <%= ENV.fetch("DATABASE_USERNAME") %>
+    password: <%= ENV.fetch("DATABASE_PASSWORD") %>
+  cache:
+    <<: *production
+    database: saturnci-production-db-cache
+    migrations_paths: db/cache_migrate
+  cable:
+    <<: *production
