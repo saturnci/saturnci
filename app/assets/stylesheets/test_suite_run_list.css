@@ -1,0 +1,96 @@
+.test-suite-run-list-wrapper {
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+}
+
+.test-suite-run-list {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 100%;
+  background-color: #FFF;
+  border-top: 2px solid #CCC;
+  border-left: 2px solid #CCC;
+  border-right: 2px solid #CCC;
+}
+
+.test-suite-run-list ul {
+  border-bottom: 1px solid #DDD;
+  margin: 0;
+  padding: 0;
+}
+
+.test-suite-run-list li {
+  border-bottom: 2px solid #DDD;
+  margin: 0;
+  padding: 0;
+}
+
+.test-suite-run-list a {
+  display: block;
+  padding: 10px 12px 16px 12px;
+  text-decoration: none;
+  color: black;
+}
+
+.test-suite-run-list a:hover {
+  background-color: #EEE;
+}
+
+.test-suite-run-list li.active a {
+  background-color: #00F;
+  color: #FFF;
+}
+
+.test-suite-run-list li.active a .test-suite-run-author {
+  color: #FFF;
+}
+
+.test-suite-run-list li.active a .test-suite-run-duration {
+  color: #DDD;
+}
+
+.test-suite-run-commit {
+  background-color: #DDD;
+  padding: 2px 6px;
+}
+
+.test-suite-run-status {
+  padding: 4px;
+  margin-bottom: 4px
+}
+
+.test-suite-run-commit, .test-suite-run-status {
+  border-radius: 6px;
+  color: #444;
+}
+
+.test-suite-run-status-not-started {
+  background-color: #DDD;
+  color: #000;
+}
+
+.test-suite-run-status-passed {
+  background-color: #0F0;
+  color: #000;
+}
+
+.test-suite-run-status-cancelled {
+  background-color: #DDD;
+  color: #000;
+}
+
+.test-suite-run-status-failed {
+  background-color: #F00;
+  color: #000;
+}
+
+.test-suite-run-status-running {
+  background-color: #8DF;
+}
+
+.test-suite-run-author {
+  color: #999;
+  margin: 4px 0 10px 0;
+}

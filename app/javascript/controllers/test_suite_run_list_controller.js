@@ -59,9 +59,9 @@ export default class extends Controller {
 
   makeActive(event) {
     this.linkTargets.forEach(link => {
-      link.classList.remove("active");
+      link.closest("li").classList.remove("active");
     });
 
-    event.currentTarget.classList.add("active");
+    event.currentTarget.closest("li").classList.add("active");
   }
 }
