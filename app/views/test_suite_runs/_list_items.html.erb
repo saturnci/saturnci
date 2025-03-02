@@ -1,5 +1,3 @@
 <% builds.each do |build| %>
-  <li id="test_suite_run_<%= build.id %>">
-    <%= render TestSuiteRunLinkComponent.new(build, active_build:) %>
-  </li>
+  <%= render "test_suite_runs/test_suite_run_link", build:, active_build: %>
 <% end %>
