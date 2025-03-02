@@ -92,6 +92,13 @@ class Run < ApplicationRecord
 
       if Set.new(build.runs) == Set.new(build.runs.finished)
         build.update!(cached_status: build.calculated_status)
+
+        Turbo::StreamsChannel.broadcast_update_to(
+          "test_suite_run_#{build.id}",
+          target: "test_suite_run_#{build.id}",
+          partial: "test_suite_runs/test_suite_run_link",
+          locals: { build:, active_build: nil }
+        )
       end
 
       create_charge!(
