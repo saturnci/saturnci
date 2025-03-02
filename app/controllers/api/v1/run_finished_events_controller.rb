@@ -11,10 +11,10 @@ module API
 
             if run.build.runs.all?(&:finished?)
               Turbo::StreamsChannel.broadcast_update_to(
-                "build_status_#{run.build.id}",
-                target: "build_status_#{run.build.id}",
+                "test_suite_run_status_#{run.build.id}",
+                target: "test_suite_run_status_#{run.build.id}",
                 partial: "test_suite_runs/test_suite_run_link_content",
-                locals: { build: run.build }
+                locals: { test_suite_run: run.build }
               )
 
               GitHubCheckRun.find_by(build: run.build)&.finish!
