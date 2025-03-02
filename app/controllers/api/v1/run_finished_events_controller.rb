@@ -10,6 +10,12 @@ module API
             run.finish!
 
             if run.build.runs.all?(&:finished?)
+              Turbo::StreamsChannel.broadcast_replace_to(
+                "test_suite_run_link_#{run.build.id}",
+                target: "test_suite_run_link_#{run.build.id}",
+                html: render(TestSuiteRunLinkComponent.new(run.build, active_build: nil))
+              )
+
               GitHubCheckRun.find_by(build: run.build)&.finish!
             end
           end

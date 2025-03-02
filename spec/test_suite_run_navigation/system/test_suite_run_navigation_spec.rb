@@ -14,7 +14,11 @@ describe "Test suite run navigation", type: :system do
       end
 
       it "links to the overview page" do
-        run.finish!
+        http_request(
+          api_authorization_headers: api_authorization_headers(run.project.user),
+          path: api_v1_run_run_finished_events_path(run_id: run.id, format: :json)
+        )
+
         create(:test_case_run, run:)
 
         expect(page).to have_content("Failed") # to prevent race condition
