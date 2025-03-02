@@ -12,9 +12,15 @@ describe "test suite run status", type: :model do
       allow(test_suite_run).to receive(:runs).and_return([run_1, run_2])
     end
 
-    it "does not incur the expense of calculated_status" do
-      expect(test_suite_run).not_to receive(:calculated_status)
-      test_suite_run.status
+    context "cached_status is set" do
+      before do
+        test_suite_run.update!(cached_status: "Passed")
+      end
+
+      it "does not incur the expense of calculated_status" do
+        expect(test_suite_run).not_to receive(:calculated_status)
+        test_suite_run.status
+      end
     end
   end
 
