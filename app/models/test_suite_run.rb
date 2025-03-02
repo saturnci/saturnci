@@ -34,7 +34,9 @@ class TestSuiteRun < ApplicationRecord
   end
 
   def status
-    return cached_status if runs.all?(&:finished?)
+    if runs.any? && runs.all?(&:finished?)
+      return cached_status
+    end
 
     if cached_status != calculated_status
       update!(cached_status: calculated_status)
