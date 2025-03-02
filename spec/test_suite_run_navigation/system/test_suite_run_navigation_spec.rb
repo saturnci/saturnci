@@ -1,12 +1,35 @@
 require "rails_helper"
 
 describe "Test suite run navigation", type: :system do
+  describe "test suite run link destination" do
+    include SaturnAPIHelper
+
+    context "test suite run went from running to finished" do
+      let!(:run) { create(:run) }
+
+      it "links to the overview page" do
+        login_as(run.project.user)
+        visit project_build_path(run.project, run.test_suite_run)
+
+        http_request(
+          api_authorization_headers: api_authorization_headers(run.project.user),
+          path: api_v1_run_run_finished_events_path(run_id: run.id, format: :json)
+        )
+
+        create(:test_case_run, run:)
+
+        click_on "test_suite_run_link_#{run.test_suite_run.id}"
+        expect(page).to have_content("1 test case, 0 failed")
+      end
+    end
+  end
+
   describe "clicking on second test suite run after having visited first test suite run" do
     let!(:first_test_suite_run) { create(:build, :with_run) }
     let!(:second_test_suite_run) { create(:build, :with_run, project: first_test_suite_run.project) }
 
     before do
-      login_as(first_test_suite_run.project.user, scope: :user)
+      login_as(first_test_suite_run.project.user)
     end
 
     before do

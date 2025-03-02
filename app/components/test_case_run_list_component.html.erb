@@ -1,6 +1,7 @@
 <div class="test-case-run-list">
   <div class="test-case-run-list-header">
-    <%= test_case_run_count %> test cases, <%= failed_test_case_run_count %> failed
+    <%= pluralize(test_case_runs.count, "test case") %>,
+    <%= failed_test_case_run_count %> failed
   </div>
 
   <div class="test-case-run-list-body"
