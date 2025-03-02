@@ -90,7 +90,7 @@ describe "test suite run status", type: :model do
 
       context "cached_status does not match calculated_status" do
         before do
-          test_suite_run.update!(cached_status: "Passed")
+          test_suite_run.update!(cached_status: "Running")
           allow(run_1).to receive(:status).and_return("Failed")
           allow(run_2).to receive(:status).and_return("Failed")
           allow(test_suite_run).to receive(:runs).and_return([run_1, run_2])
@@ -98,7 +98,7 @@ describe "test suite run status", type: :model do
 
         it "sets the cached status" do
           expect { test_suite_run.status }.to change { test_suite_run.reload.cached_status }
-            .from("Passed").to("Failed")
+            .from("Running").to("Failed")
         end
       end
 

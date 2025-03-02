@@ -34,7 +34,7 @@ class TestSuiteRun < ApplicationRecord
   end
 
   def status
-    if runs.any? && runs.all?(&:finished?) && cached_status.present?
+    if cached_status.in?(%w[Passed Failed])
       return cached_status
     end
 
