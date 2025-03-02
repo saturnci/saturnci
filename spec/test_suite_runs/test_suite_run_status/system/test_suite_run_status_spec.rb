@@ -1,17 +1,17 @@
 require "rails_helper"
 
-describe "Build status", type: :system do
+describe "Test suite run status", type: :system do
   include SaturnAPIHelper
 
   let!(:run) { create(:run) }
-  let!(:user) { run.build.project.user }
+  let!(:user) { run.test_suite_run.project.user }
 
   before { login_as(user) }
 
-  context "build goes from running to passed" do
+  context "test suite run goes from running to passed" do
     context "no page refresh" do
       it "changes the status from running to passed" do
-        visit project_build_path(id: run.build.id, project_id: run.build.project.id)
+        visit project_build_path(id: run.test_suite_run.id, project_id: run.test_suite_run.project.id)
         expect(page).to have_content("Running")
 
         run.update!(test_output: "COMMAND_EXIT_CODE=\"0\"")
@@ -25,9 +25,9 @@ describe "Build status", type: :system do
       end
     end
 
-    context "full page refresh after build finishes" do
+    context "full page refresh after test suite run finishes" do
       it "maintains the 'passed' status" do
-        visit project_build_path(id: run.build.id, project_id: run.build.project.id)
+        visit project_build_path(id: run.test_suite_run.id, project_id: run.test_suite_run.project.id)
         expect(page).to have_content("Running")
 
         run.update!(test_output: "COMMAND_EXIT_CODE=\"0\"")
@@ -39,19 +39,19 @@ describe "Build status", type: :system do
 
         expect(page).to have_content("Passed") # to prevent race condition
 
-        visit project_build_path(id: run.build.id, project_id: run.build.project.id)
+        visit project_build_path(id: run.test_suite_run.id, project_id: run.test_suite_run.project.id)
         expect(page).to have_content("Passed")
       end
     end
   end
 
-  describe "build list links" do
-    context "build goes from running to finished" do
-      let!(:other_build) { create(:build, project: run.build.project) }
-      let!(:other_run) { create(:run, build: other_build) }
+  describe "test suite run list links" do
+    context "test suite run goes from running to finished" do
+      let!(:other_test_suite_run) { create(:build, project: run.test_suite_run.project) }
+      let!(:other_run) { create(:run, build: other_test_suite_run) }
 
       it "maintains the currently active build" do
-        visit project_build_path(id: run.build.id, project_id: run.build.project.id)
+        visit project_build_path(id: run.test_suite_run.id, project_id: run.test_suite_run.project.id)
 
         within ".test-suite-run-list" do
           expect(page).to have_content("Running", count: 2)
@@ -62,37 +62,37 @@ describe "Build status", type: :system do
           path: api_v1_run_run_finished_events_path(other_run)
         )
 
-        other_run_test_suite_run_link = PageObjects::TestSuiteRunLink.new(page, other_build)
+        other_run_test_suite_run_link = PageObjects::TestSuiteRunLink.new(page, other_test_suite_run)
         expect(other_run_test_suite_run_link).not_to be_active
       end
     end
   end
 
   describe "elapsed time" do
-    context "running build" do
-      it "does not show the elapsed build time" do
-        visit project_build_path(run.build.project, run.build)
+    context "running test suite run" do
+      it "does not show the elapsed test suite run time" do
+        visit project_build_path(run.test_suite_run.project, run.test_suite_run)
         expect(page).to have_selector("[data-elapsed-test-suite-run-time-target='value']")
       end
     end
 
-    context "finished build" do
-      it "shows the elapsed build time" do
+    context "finished test suite run" do
+      it "shows the elapsed test suite run time" do
         run.update!(test_report: "passed")
-        visit project_build_path(run.build.project, run.build)
+        visit project_build_path(run.test_suite_run.project, run.test_suite_run)
         expect(page).not_to have_selector("[data-elapsed-test-suite-run-time-target='value']")
       end
     end
 
-    context "when the build goes from running to finished" do
+    context "when the test suite run goes from running to finished" do
       before do
-        allow_any_instance_of(Build).to receive(:duration_formatted).and_return("3m 40s")
-        visit project_build_path(run.build.project, run.build)
+        allow_any_instance_of(TestSuiteRun).to receive(:duration_formatted).and_return("3m 40s")
+        visit project_build_path(run.test_suite_run.project, run.test_suite_run)
       end
 
       it "changes the elapsed time from counting to not counting" do
         # We expect the page not to have "3m 40s" because,
-        # before the build finishes, the counter will be counting
+        # before the test suite run finishes, the counter will be counting
         expect(page).not_to have_content("3m 40s")
 
         http_request(
@@ -100,7 +100,7 @@ describe "Build status", type: :system do
           path: api_v1_run_run_finished_events_path(run)
         )
 
-        # After the build finishes, the counter will have
+        # After the test suite run finishes, the counter will have
         # stopped counting and we just see the static duration
         expect(page).to have_content("3m 40s")
       end
