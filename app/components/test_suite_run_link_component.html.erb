@@ -14,7 +14,7 @@
 
           <span class="test-suite-run-commit">
             <code><%= test_suite_run.branch_name.truncate(20) %></code>
-            <code><%= abbreviated_hash(test_suite_run.commit_hash) %></code>
+            <code><%= helpers.abbreviated_hash(test_suite_run.commit_hash) %></code>
           </span>
         </div>
       </div>

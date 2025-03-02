@@ -18,6 +18,10 @@ class TestSuiteRunLinkComponent < ViewComponent::Base
     TestSuiteRunLinkPath.new(@build).value
   end
 
+  def test_suite_run
+    build
+  end
+
   def data
     {
       turbo_frame: "build",
