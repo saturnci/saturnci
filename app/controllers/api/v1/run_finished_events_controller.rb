@@ -13,7 +13,10 @@ module API
               Turbo::StreamsChannel.broadcast_replace_to(
                 "test_suite_run_link_#{run.build.id}",
                 target: "test_suite_run_link_#{run.build.id}",
-                html: render(TestSuiteRunLinkComponent.new(run.build, active_build: nil))
+                html: ApplicationController.render(
+                  TestSuiteRunLinkComponent.new(run.build, active_build: nil),
+                  layout: false
+                )
               )
 
               GitHubCheckRun.find_by(build: run.build)&.finish!

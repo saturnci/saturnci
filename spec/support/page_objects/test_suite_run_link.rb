@@ -16,7 +16,8 @@ module PageObjects
     private
 
     def css_classes
-      @page.find("#test_suite_run_link_#{@build.id}")[:class].split
+      link = @page.find("#test_suite_run_link_#{@build.id}")
+      link.ancestor("li")[:class].split
     end
   end
 end
