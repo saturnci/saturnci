@@ -34,15 +34,9 @@ class TestSuiteRun < ApplicationRecord
   end
 
   def status
-    if cached_status.in?(%w[Passed Failed])
-      return cached_status
+    Rails.cache.fetch("test_case_run/#{id}/status") do
+      calculated_status
     end
-
-    if cached_status != calculated_status
-      update!(cached_status: calculated_status)
-    end
-
-    cached_status
   end
 
   def calculated_status
