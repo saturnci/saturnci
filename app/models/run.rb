@@ -91,7 +91,7 @@ class Run < ApplicationRecord
       update!(exit_code: parsed_exit_code || 1)
 
       if Set.new(build.runs) == Set.new(build.runs.finished)
-        build.update!(cached_status: build.calculated_status)
+        #build.cache_status
       end
 
       create_charge!(
