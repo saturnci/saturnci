@@ -10,6 +10,7 @@ class TestSuiteRun < ApplicationRecord
 
   def cache_status
     Rails.cache.write(status_cache_key, calculated_status)
+    update!(cached_status: calculated_status)
   end
 
   def start!
