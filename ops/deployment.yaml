@@ -68,6 +68,31 @@ spec:
             secretKeyRef:
               name: saturn-secrets
               key: CACHE_DATABASE_PORT
+        - name: QUEUE_DATABASE_NAME
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: QUEUE_DATABASE_NAME
+        - name: QUEUE_DATABASE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: QUEUE_DATABASE_USERNAME
+        - name: QUEUE_DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: QUEUE_DATABASE_PASSWORD
+        - name: QUEUE_DATABASE_HOST
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: QUEUE_DATABASE_HOST
+        - name: QUEUE_DATABASE_PORT
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: QUEUE_DATABASE_PORT
         - name: RAILS_ENV
           valueFrom:
             secretKeyRef:
@@ -210,6 +235,31 @@ spec:
             secretKeyRef:
               name: saturn-secrets
               key: CACHE_DATABASE_PORT
+        - name: QUEUE_DATABASE_NAME
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: QUEUE_DATABASE_NAME
+        - name: QUEUE_DATABASE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: QUEUE_DATABASE_USERNAME
+        - name: QUEUE_DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: QUEUE_DATABASE_PASSWORD
+        - name: QUEUE_DATABASE_HOST
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: QUEUE_DATABASE_HOST
+        - name: QUEUE_DATABASE_PORT
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: QUEUE_DATABASE_PORT
         - name: RAILS_ENV
           valueFrom:
             secretKeyRef:

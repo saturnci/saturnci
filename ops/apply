@@ -1,9 +1,21 @@
 #!/bin/bash
-
 ENVIRONMENT=$1
 TAG=$2
+
+DEPLOYMENT_TEMPLATE_FILENAME="deployment.yaml"
 DEPLOYMENT_FILENAME="deployment-$TAG.yaml"
 
-cat deployment.yaml | sed "s/\$TAG/$TAG/g" > $DEPLOYMENT_FILENAME
+WORKER_DEPLOYMENT_TEMPLATE_FILENAME="worker-deployment.yaml"
+WORKER_DEPLOYMENT_FILENAME="worker-deployment-$TAG.yaml"
+
+# Create deployment files from templates with TAG substitution
+cat $DEPLOYMENT_TEMPLATE_FILENAME | sed "s/\$TAG/$TAG/g" > $DEPLOYMENT_FILENAME
+cat $WORKER_DEPLOYMENT_TEMPLATE_FILENAME | sed "s/\$TAG/$TAG/g" > $WORKER_DEPLOYMENT_FILENAME
+
+# Apply both deployments
 kubectl -n $ENVIRONMENT apply -f $DEPLOYMENT_FILENAME
+kubectl -n $ENVIRONMENT apply -f $WORKER_DEPLOYMENT_FILENAME
+
+# Clean up temporary files
 rm $DEPLOYMENT_FILENAME
+rm $WORKER_DEPLOYMENT_FILENAME

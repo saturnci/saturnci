@@ -1,0 +1,181 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: saturnci-worker
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: saturnci-worker
+  template:
+    metadata:
+      labels:
+        app: saturnci-worker
+    spec:
+      containers:
+      - name: saturnci-worker
+        image: registry.digitalocean.com/saturnci/saturnci:$TAG
+        command: ["bin/jobs"]
+        env:
+        - name: DATABASE_NAME
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: DATABASE_NAME
+        - name: DATABASE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: DATABASE_USERNAME
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: DATABASE_PASSWORD
+        - name: DATABASE_HOST
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: DATABASE_HOST
+        - name: DATABASE_PORT
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: DATABASE_PORT
+        - name: CACHE_DATABASE_NAME
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: CACHE_DATABASE_NAME
+        - name: CACHE_DATABASE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: CACHE_DATABASE_USERNAME
+        - name: CACHE_DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: CACHE_DATABASE_PASSWORD
+        - name: CACHE_DATABASE_HOST
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: CACHE_DATABASE_HOST
+        - name: CACHE_DATABASE_PORT
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: CACHE_DATABASE_PORT
+        - name: QUEUE_DATABASE_NAME
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: QUEUE_DATABASE_NAME
+        - name: QUEUE_DATABASE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: QUEUE_DATABASE_USERNAME
+        - name: QUEUE_DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: QUEUE_DATABASE_PASSWORD
+        - name: QUEUE_DATABASE_HOST
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: QUEUE_DATABASE_HOST
+        - name: QUEUE_DATABASE_PORT
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: QUEUE_DATABASE_PORT
+        - name: RAILS_ENV
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: RAILS_ENV
+        - name: SATURNCI_INSTALLATION_URL
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: SATURNCI_INSTALLATION_URL
+        - name: SATURNCI_HOST
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: SATURNCI_HOST
+        - name: GITHUB_APP_ID
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: GITHUB_APP_ID
+        - name: GITHUB_APP_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: GITHUB_APP_CLIENT_SECRET
+        - name: GITHUB_APP_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: GITHUB_APP_CLIENT_ID
+        - name: GITHUB_PRIVATE_PEM
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: GITHUB_PRIVATE_PEM
+        - name: RAILS_SERVE_STATIC_FILES
+          value: "true"
+        - name: DIGITALOCEAN_ACCESS_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: DIGITALOCEAN_ACCESS_TOKEN
+        - name: ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY
+        - name: OLD_ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: OLD_ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY
+        - name: ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY
+        - name: ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT
+        - name: DIGITALOCEAN_SPACES_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: DIGITALOCEAN_SPACES_ACCESS_KEY_ID
+        - name: DIGITALOCEAN_SPACES_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: DIGITALOCEAN_SPACES_SECRET_ACCESS_KEY
+        - name: DIGITALOCEAN_SPACES_BUCKET_NAME
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: DIGITALOCEAN_SPACES_BUCKET_NAME
+        - name: DOCKER_REGISTRY_CACHE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: DOCKER_REGISTRY_CACHE_USERNAME
+        - name: DOCKER_REGISTRY_CACHE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: DOCKER_REGISTRY_CACHE_PASSWORD
