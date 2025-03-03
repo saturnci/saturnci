@@ -29,5 +29,14 @@ production: &production
     port: <%= ENV.fetch("CACHE_DATABASE_PORT", nil) %>
     username: <%= ENV.fetch("CACHE_DATABASE_USERNAME", nil) %>
     password: <%= ENV.fetch("CACHE_DATABASE_PASSWORD", nil) %>
+  queue:
+    <<: *default
+    adapter: postgresql
+    migrations_paths: db/queue_migrate
+    database: <%= ENV.fetch("QUEUE_DATABASE_NAME", nil) %>
+    host: <%= ENV.fetch("QUEUE_DATABASE_HOST", nil) %>
+    port: <%= ENV.fetch("QUEUE_DATABASE_PORT", nil) %>
+    username: <%= ENV.fetch("QUEUE_DATABASE_USERNAME", nil) %>
+    password: <%= ENV.fetch("QUEUE_DATABASE_PASSWORD", nil) %>
   cable:
     <<: *production
