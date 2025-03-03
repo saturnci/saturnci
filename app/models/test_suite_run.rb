@@ -8,6 +8,11 @@ class TestSuiteRun < ApplicationRecord
     self.seed ||= rand(10000)
   end
 
+  def cache_status
+    Rails.cache.write(status_cache_key, calculated_status)
+    update!(cached_status: calculated_status)
+  end
+
   def start!
     return unless project.active
 
@@ -34,15 +39,9 @@ class TestSuiteRun < ApplicationRecord
   end
 
   def status
-    if cached_status.in?(%w[Passed Failed])
-      return cached_status
+    Rails.cache.fetch(status_cache_key) do
+      calculated_status
     end
-
-    if cached_status != calculated_status
-      update!(cached_status: calculated_status)
-    end
-
-    cached_status
   end
 
   def calculated_status
@@ -97,5 +96,9 @@ class TestSuiteRun < ApplicationRecord
       partial: "test_suite_runs/test_suite_run_link",
       locals: { build: self, active_build: nil }
     )
+  end
+
+  def status_cache_key
+    "test_case_run/#{id}/status"
   end
 end

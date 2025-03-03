@@ -69,21 +69,13 @@ describe Run, type: :model do
       create(:run, build: run.build, order_index: 2)
     end
 
-    context "it is not the last run to finish" do
-      it "does not update its build's cached status" do
-        expect { run.finish! }.not_to change {
-          run.build.reload.cached_status
-        }
-      end
-    end
-
     context "it is the last run to finish" do
       before { other_run.finish! }
 
       it "updates its build's cached status" do
         expect { run.finish! }.to change {
           run.build.reload.cached_status
-        }.from(nil).to("Failed")
+        }.from("Running").to("Failed")
       end
     end
   end
