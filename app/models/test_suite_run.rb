@@ -45,7 +45,7 @@ class TestSuiteRun < ApplicationRecord
   end
 
   def calculated_status
-    run_statuses = runs.map(&:status)
+    run_statuses = runs.reload.map(&:status)
 
     return "Not Started" if run_statuses.empty?
     return "Running" if run_statuses.any?("Running")

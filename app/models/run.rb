@@ -90,10 +90,6 @@ class Run < ApplicationRecord
       run_events.create!(type: "run_finished")
       update!(exit_code: parsed_exit_code || 1)
 
-      if Set.new(build.runs) == Set.new(build.runs.finished)
-        build.update!(cached_status: build.calculated_status)
-      end
-
       create_charge!(
         run_duration: duration,
         rate: Rails.configuration.charge_rate
