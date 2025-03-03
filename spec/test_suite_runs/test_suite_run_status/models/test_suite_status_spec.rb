@@ -1,10 +1,12 @@
 require "rails_helper"
 
 describe "test suite run status", type: :model do
+  before { Rails.cache.clear }
+
   context "test suite run is finished" do
-    let!(:test_suite_run) { create(:build) }
-    let!(:run_1) { create(:run, build: test_suite_run, order_index: 1) }
-    let!(:run_2) { create(:run, build: test_suite_run, order_index: 2) }
+    let!(:test_suite_run) { build(:build) }
+    let!(:run_1) { build(:run, build: test_suite_run, order_index: 1) }
+    let!(:run_2) { build(:run, build: test_suite_run, order_index: 2) }
 
     before do
       allow(run_1).to receive(:finished?).and_return(true)
@@ -12,12 +14,9 @@ describe "test suite run status", type: :model do
       allow(test_suite_run).to receive(:runs).and_return([run_1, run_2])
     end
 
-    context "cached_status is set" do
-      before do
-        test_suite_run.update!(cached_status: "Passed")
-      end
-
+    context "status is set" do
       it "does not incur the expense of calculated_status" do
+        test_suite_run.status
         expect(test_suite_run).not_to receive(:calculated_status)
         test_suite_run.status
       end
@@ -26,15 +25,15 @@ describe "test suite run status", type: :model do
 
   context "no runs" do
     it "is 'Not Started'" do
-      test_suite_run = create(:build)
+      test_suite_run = build(:build)
       expect(test_suite_run.status).to eq("Not Started")
     end
   end
 
   context "some runs" do
-    let!(:test_suite_run) { create(:build) }
-    let!(:run_1) { create(:run, build: test_suite_run, order_index: 1) }
-    let!(:run_2) { create(:run, build: test_suite_run, order_index: 2) }
+    let!(:test_suite_run) { build(:build) }
+    let!(:run_1) { build(:run, build: test_suite_run, order_index: 1) }
+    let!(:run_2) { build(:run, build: test_suite_run, order_index: 2) }
 
     context "all runs have passed" do
       it "is passed" do
@@ -75,33 +74,6 @@ describe "test suite run status", type: :model do
     end
 
     describe "caching" do
-      context "cache is empty" do
-        before do
-          allow(run_1).to receive(:status).and_return("Passed")
-          allow(run_2).to receive(:status).and_return("Passed")
-          allow(test_suite_run).to receive(:runs).and_return([run_1, run_2])
-        end
-
-        it "sets the cached status" do
-          expect { test_suite_run.status }.to change { test_suite_run.reload.cached_status }
-            .from(nil).to("Passed")
-        end
-      end
-
-      context "cached_status does not match calculated_status" do
-        before do
-          test_suite_run.update!(cached_status: "Running")
-          allow(run_1).to receive(:status).and_return("Failed")
-          allow(run_2).to receive(:status).and_return("Failed")
-          allow(test_suite_run).to receive(:runs).and_return([run_1, run_2])
-        end
-
-        it "sets the cached status" do
-          expect { test_suite_run.status }.to change { test_suite_run.reload.cached_status }
-            .from("Running").to("Failed")
-        end
-      end
-
       context "cached_status matches calculated_status" do
         before do
           test_suite_run.update!(cached_status: "Passed")
