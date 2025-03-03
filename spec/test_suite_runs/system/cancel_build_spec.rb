@@ -5,7 +5,7 @@ describe "Cancel build", type: :system do
 
   before do
     stub_request(:delete, "https://api.digitalocean.com/v2/droplets/#{run.runner_id}").to_return(status: 200)
-    login_as(run.build.project.user, scope: :user)
+    login_as(run.build.project.user)
   end
 
   it "sets the status to 'Cancelled'" do

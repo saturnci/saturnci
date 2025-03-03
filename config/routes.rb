@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   get "runs/:id/:partial", to: "runs#show", as: "run"
   get "builds/:id(/:partial)", to: "builds#show", as: "build"
 
+  resources :test_suite_runs, only: :create
+
   resources :projects do
     resource :settings do
       resource :general_settings, only: %i(show update)

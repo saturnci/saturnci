@@ -76,6 +76,7 @@ RSpec.configure do |config|
 
   config.include Warden::Test::Helpers, type: :system
   config.include Warden::Test::Helpers, type: :request
+  config.include ActiveJob::TestHelper
   config.include ActiveSupport::Testing::TimeHelpers
   config.include ViewComponent::TestHelpers, type: :component
 
