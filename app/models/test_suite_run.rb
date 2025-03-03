@@ -8,9 +8,9 @@ class TestSuiteRun < ApplicationRecord
     self.seed ||= rand(10000)
   end
 
-  def cache_status
-    Rails.cache.write(status_cache_key, calculated_status)
-    update!(cached_status: calculated_status)
+  def cache_status(status = calculated_status)
+    Rails.cache.write(status_cache_key, status)
+    update!(cached_status: status)
     touch
   end
 
