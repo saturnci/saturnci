@@ -4,7 +4,7 @@ describe "Show new test suite run", type: :system do
   let!(:test_suite_run) { create(:build) }
 
   before do
-    login_as(test_suite_run.project.user, scope: :user)
+    login_as(test_suite_run.project.user)
     visit project_path(test_suite_run.project)
   end
 

@@ -29,7 +29,7 @@ class TestSuiteRun < ApplicationRecord
 
   def runs_to_use
     project.concurrency.times.map do |i|
-      Run.new(build: self, order_index: i + 1)
+      Run.new(test_suite_run: self, order_index: i + 1)
     end
   end
 
