@@ -39,9 +39,11 @@ describe "Show new test suite run", type: :system do
     let!(:new_test_suite_run) { create(:build, project: test_suite_run.project) }
 
     it "shows the new test suite run" do
-      new_test_suite_run.broadcast
-
       within ".test-suite-run-list" do
+        # To prevent race condition
+        expect(page).to have_content(test_suite_run.commit_hash, count: 1)
+
+        new_test_suite_run.broadcast
         expect(page).to have_content(new_test_suite_run.commit_hash, count: 1)
       end
     end
