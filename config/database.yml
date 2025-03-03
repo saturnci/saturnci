@@ -15,10 +15,19 @@ test:
   database: saturn_test
 
 production: &production
-  <<: *default
-  database: <%= ENV.fetch("DATABASE_NAME") { nil } %>
-  username: <%= ENV.fetch("DATABASE_USERNAME") %>
-  password: <%= ENV.fetch("DATABASE_PASSWORD") %>
-
-cable:
-  <<: *production
+  primary:
+    <<: *default
+    database: <%= ENV.fetch("DATABASE_NAME") %>
+    username: <%= ENV.fetch("DATABASE_USERNAME") %>
+    password: <%= ENV.fetch("DATABASE_PASSWORD") %>
+  cache:
+    <<: *default
+    adapter: postgresql
+    migrations_paths: db/cache_migrate
+    database: <%= ENV.fetch("CACHE_DATABASE_NAME") %>
+    host: <%= ENV.fetch("CACHE_DATABASE_HOST") %>
+    port: <%= ENV.fetch("CACHE_DATABASE_PORT") %>
+    username: <%= ENV.fetch("CACHE_DATABASE_USERNAME") %>
+    password: <%= ENV.fetch("CACHE_DATABASE_PASSWORD") %>
+  cable:
+    <<: *production

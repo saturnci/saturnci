@@ -43,6 +43,31 @@ spec:
             secretKeyRef:
               name: saturn-secrets
               key: DATABASE_PORT
+        - name: CACHE_DATABASE_NAME
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: CACHE_DATABASE_NAME
+        - name: CACHE_DATABASE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: CACHE_DATABASE_USERNAME
+        - name: CACHE_DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: CACHE_DATABASE_PASSWORD
+        - name: CACHE_DATABASE_HOST
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: CACHE_DATABASE_HOST
+        - name: CACHE_DATABASE_PORT
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: CACHE_DATABASE_PORT
         - name: RAILS_ENV
           valueFrom:
             secretKeyRef:
@@ -160,6 +185,31 @@ spec:
             secretKeyRef:
               name: saturn-secrets
               key: DATABASE_PORT
+        - name: CACHE_DATABASE_NAME
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: CACHE_DATABASE_NAME
+        - name: CACHE_DATABASE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: CACHE_DATABASE_USERNAME
+        - name: CACHE_DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: CACHE_DATABASE_PASSWORD
+        - name: CACHE_DATABASE_HOST
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: CACHE_DATABASE_HOST
+        - name: CACHE_DATABASE_PORT
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: CACHE_DATABASE_PORT
         - name: RAILS_ENV
           valueFrom:
             secretKeyRef:

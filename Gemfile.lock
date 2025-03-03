@@ -384,6 +384,10 @@ GEM
       activejob (>= 7.2)
       activerecord (>= 7.2)
       railties (>= 7.2)
+    solid_cache (1.0.7)
+      activejob (>= 7.2)
+      activerecord (>= 7.2)
+      railties (>= 7.2)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -478,6 +482,7 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   solid_cable
+  solid_cache
   sprockets-rails
   stimulus-rails
   turbo-rails (~> 1.5)
