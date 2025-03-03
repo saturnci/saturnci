@@ -80,6 +80,10 @@ class TestSuiteRun < ApplicationRecord
     run_durations.max
   end
 
+  def started_at
+    runs.map(&:started_at).min
+  end
+
   def delete_runners
     runs.each(&:delete_runner)
   end

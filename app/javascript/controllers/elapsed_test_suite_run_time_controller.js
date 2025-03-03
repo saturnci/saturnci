@@ -2,14 +2,14 @@ import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
   static targets = ["value"];
-  static values = { testSuiteRunCreatedAtDatetime: String };
+  static values = { testSuiteRunStartedAtDatetime: String };
 
   connect() {
     if (!this.hasValueTarget) {
       return;
     }
 
-    this.startTime = new Date(this.testSuiteRunCreatedAtDatetimeValue);
+    this.startTime = new Date(this.testSuiteRunStartedAtDatetimeValue);
 
     setInterval(() => {
       this.valueTarget.textContent = this.elapsedTime();

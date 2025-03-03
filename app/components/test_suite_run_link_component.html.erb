@@ -24,7 +24,7 @@
           <%= test_suite_run.status %>
         </div>
 
-        <span style="color: #999" data-controller="elapsed-test-suite-run-time" data-elapsed-test-suite-run-time-test-suite-run-created-at-datetime-value="<%= test_suite_run.created_at %>">
+        <span style="color: #999" data-controller="elapsed-test-suite-run-time" data-elapsed-test-suite-run-time-test-suite-run-started-at-datetime-value="<%= test_suite_run.started_at %>">
           <% if test_suite_run.status == "Running" %>
             <div data-elapsed-test-suite-run-time-target="value"></div>
           <% else %>
