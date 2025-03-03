@@ -56,9 +56,6 @@ Rails.application.configure do
   config.active_record.encryption.deterministic_key = ENV["ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY"]
   config.active_record.encryption.key_derivation_salt = ENV["ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT"]
 
-  config.logger = ActiveSupport::Logger.new(STDOUT)
-  config.log_level = :error
-
   # Allow connection from any host
   config.hosts.clear
 end
