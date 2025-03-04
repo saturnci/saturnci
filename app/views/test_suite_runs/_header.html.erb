@@ -9,6 +9,13 @@
   </div>
 
   <div class="test-suite-run-action-buttons">
-    <%= yield %>
+    <% if build.status == "Not Started" %>
+      <%= button_to "Start", test_suite_runs_path(test_suite_run_id: build.id), method: :post, data: { turbo: false } %>
+    <% else %>
+      <%= button_to "Restart", rebuilds_path(build_id: @build.id), method: :post, data: { turbo: false } %>
+    <% end %>
+
+    <%= button_to "Cancel", build_cancellations_path(build_id: @build.id), method: :post, data: { turbo: false } %>
+    <%= button_to "Delete", project_build_path(id: @build.id, project_id: @build.project_id), method: :delete, data: { turbo: false } %>
   </div>
 </div>
