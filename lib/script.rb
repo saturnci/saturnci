@@ -51,7 +51,7 @@ class Script
     puts "Attempting to authenticate to Docker registry (#{SaturnCIRunnerAPI::DockerRegistryCache::URL})"
 
     if docker_registry_cache.authenticate
-      puts "Authentication successful"
+      puts "Docker registry cache authentication successful"
     else
       raise "Docker registry cache authentication failed"
     end
