@@ -2,7 +2,9 @@ version: "3.8"
 
 services:
   saturn_test_app:
+    # This is what will go in the Capybara host config.
     hostname: saturn_test_app
+
     build:
       context: ../
       dockerfile: .saturnci/Dockerfile
