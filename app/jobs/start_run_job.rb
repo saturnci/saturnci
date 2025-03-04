@@ -4,7 +4,7 @@ class StartRunJob < ApplicationJob
   def perform(run_id)
     run = Run.find(run_id)
 
-    transaction do
+    ActiveRecord::Base.transaction do
       run.run_events.create!(type: :runner_requested)
       run.runner_request.execute!
     end
