@@ -8,7 +8,8 @@ class TestSuiteRun < ApplicationRecord
     self.seed ||= rand(10000)
   end
 
-  def cache_status(status = calculated_status)
+  def cache_status
+    status = calculated_status
     Rails.cache.write(status_cache_key, status)
     update!(cached_status: status)
   end
@@ -20,7 +21,6 @@ class TestSuiteRun < ApplicationRecord
       save!
 
       runs_to_use.each do |run|
-        run.save!
         run.start!
       end
     end
@@ -28,7 +28,7 @@ class TestSuiteRun < ApplicationRecord
 
   def runs_to_use
     project.concurrency.times.map do |i|
-      Run.new(test_suite_run: self, order_index: i + 1)
+      Run.create!(test_suite_run: self, order_index: i + 1)
     end
   end
 

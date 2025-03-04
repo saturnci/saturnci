@@ -49,14 +49,16 @@ describe Build, type: :model do
 
     before do
       fake_runner_request = double("RunnerRequest")
-      allow(run).to receive(:runner_request).and_return(fake_runner_request)
+      allow_any_instance_of(Run).to receive(:runner_request).and_return(fake_runner_request)
       allow(fake_runner_request).to receive(:execute!)
       allow(build).to receive(:runs_to_use).and_return([run])
     end
 
     it "creates a new run_event with type runner_requested" do
-      expect { build.start! }
-        .to change { RunEvent.where(type: "runner_requested").count }.by(1)
+      perform_enqueued_jobs do
+        expect { build.start! }
+          .to change { RunEvent.where(type: "runner_requested").count }.by(1)
+      end
     end
   end
 

@@ -29,10 +29,7 @@ class Run < ApplicationRecord
   end
 
   def start!
-    transaction do
-      run_events.create!(type: :runner_requested)
-      runner_request.execute!
-    end
+    StartRunJob.perform_later(id)
   end
 
   def cancel!
