@@ -4,7 +4,6 @@ class TestSuiteRunsController < ApplicationController
     authorize test_suite_run
 
     test_suite_run.start!
-
-    redirect_to project_build_path(id: test_suite_run.id, project_id: test_suite_run.project.id)
+    redirect_to run_path(test_suite_run.runs.first, "test_output")
   end
 end
