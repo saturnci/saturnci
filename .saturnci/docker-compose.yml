@@ -16,7 +16,7 @@ services:
     # Optionally, you can add a local .saturnci.env file to provide environment
     # variables when you run your SaturnCI setup locally.
     env_file:
-      - .saturnci.env
+      - .env
 
     environment:
       DOCKER_ENV: "true"
