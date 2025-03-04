@@ -73,12 +73,12 @@ module SaturnCICLI
 
     def ssh(run_id, connection_details)
       until connection_details.refresh.ip_address
-        print "."
+        puts "Waiting for IP address..."
         sleep(ConnectionDetails::WAIT_INTERVAL_IN_SECONDS)
       end
 
       until connection_details.refresh.rsa_key_path
-        print "."
+        puts "Waiting for RSA key..."
         sleep(ConnectionDetails::WAIT_INTERVAL_IN_SECONDS)
       end
 
