@@ -1,5 +1,5 @@
 .button {
-  background: linear-gradient(to bottom, #f5f5f5, #c0c0c0);
+  background: linear-gradient(to bottom, #F8F8F8, #D8D8D8);
   border: 1px solid #999;
   margin: 0;
   padding: 4px 10px;
@@ -17,7 +17,7 @@
 }
 
 .button:hover {
-  background: linear-gradient(to bottom, #ffffff, #d5d5d5);
+  background: linear-gradient(to bottom, #FFF, #DDD);
 }
 
 .button:active {
