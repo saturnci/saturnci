@@ -6,7 +6,7 @@ services:
     build:
       context: ../
       dockerfile: .saturnci/Dockerfile
-    image: ${SATURN_TEST_APP_IMAGE_URL:-saturn_test_app}
+    image: ${SATURN_TEST_APP_IMAGE_URL}
     volumes:
       - ../:/code
     depends_on:
