@@ -3,7 +3,7 @@ require "tempfile"
 
 module SaturnCICLI
   class ConnectionDetails
-    WAIT_INTERVAL_IN_SECONDS = 5
+    WAIT_INTERVAL_IN_SECONDS = 1
 
     def initialize(request:)
       @request = request
