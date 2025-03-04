@@ -32,6 +32,7 @@ class RunnerScript
       export HOST=#{ENV["SATURNCI_HOST"]}
       export DOCKER_REGISTRY_CACHE_USERNAME=#{ENV["DOCKER_REGISTRY_CACHE_USERNAME"]}
       export DOCKER_REGISTRY_CACHE_PASSWORD=#{ENV["DOCKER_REGISTRY_CACHE_PASSWORD"]}
+      export PROJECT_NAME=#{@run.build.project.name}
       export RUN_ID=#{@run.id}
       export RUN_ORDER_INDEX=#{@run.order_index}
       export USER_ID=#{@run.build.project.user.id}
