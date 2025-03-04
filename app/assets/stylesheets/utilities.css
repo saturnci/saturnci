@@ -27,3 +27,8 @@
     0 1px 2px rgba(0, 0, 0, 0.05);
   top: 1px;
 }
+
+.button-small {
+  padding: 3px 8px;
+  font-size: 14px;
+}
