@@ -10,7 +10,7 @@ module API
             run.finish!
 
             if run.build.runs.all?(&:finished?)
-              TestSuiteRunLinkComponent.refresh
+              TestSuiteRunLinkComponent.refresh(run.build)
               GitHubCheckRun.find_by(build: run.build)&.finish!
             end
           end

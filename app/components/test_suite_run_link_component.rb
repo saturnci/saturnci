@@ -6,12 +6,12 @@ class TestSuiteRunLinkComponent < ViewComponent::Base
     @active_build = active_build
   end
 
-  def self.refresh
+  def self.refresh(build)
     Turbo::StreamsChannel.broadcast_replace_to(
-      "test_suite_run_link_#{run.build.id}",
-      target: "test_suite_run_link_#{run.build.id}",
+      "test_suite_run_link_#{build.id}",
+      target: "test_suite_run_link_#{build.id}",
       html: ApplicationController.render(
-        TestSuiteRunLinkComponent.new(run.build, active_build: nil),
+        TestSuiteRunLinkComponent.new(build),
         layout: false
       )
     )
