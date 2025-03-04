@@ -21,7 +21,6 @@ class TestSuiteRun < ApplicationRecord
       save!
 
       runs_to_use.each do |run|
-        run.save!
         run.start!
       end
     end
@@ -29,7 +28,7 @@ class TestSuiteRun < ApplicationRecord
 
   def runs_to_use
     project.concurrency.times.map do |i|
-      Run.new(test_suite_run: self, order_index: i + 1)
+      Run.create!(test_suite_run: self, order_index: i + 1)
     end
   end
 
