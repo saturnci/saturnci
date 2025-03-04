@@ -67,6 +67,6 @@
 
 .test-suite-run-action-buttons {
   display: flex;
-  gap: 4px;
+  gap: 5px;
   margin-top: 5px;
 }
