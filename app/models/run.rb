@@ -75,6 +75,8 @@ class Run < ApplicationRecord
   def delete_runner
     client = DropletKit::Client.new(access_token: ENV['DIGITALOCEAN_ACCESS_TOKEN'])
     client.droplets.delete(id: runner_id)
+  rescue DropletKit::Error => e
+    Rails.logger.error "Error deleting runner: #{e.message}"
   end
 
   def duration
