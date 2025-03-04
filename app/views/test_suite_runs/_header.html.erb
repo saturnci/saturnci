@@ -23,11 +23,13 @@
         class: "button" %>
     <% end %>
 
-    <%= button_to "Cancel",
-      build_cancellations_path(build_id: @build.id),
-      method: :post,
-      data: { turbo: false },
-      class: "button" %>
+    <% if build.status == "Running" %>
+      <%= button_to "Cancel",
+        build_cancellations_path(build_id: @build.id),
+        method: :post,
+        data: { turbo: false },
+        class: "button" %>
+    <% end %>
 
     <%= button_to "Delete",
       project_build_path(id: @build.id, project_id: @build.project_id),
