@@ -138,17 +138,16 @@ class Script
 
     send_screenshot_tar_file(source_dir: "tmp/capybara")
 
-    puts "$(sudo docker image ls)"
-    puts `$(sudo docker image ls)`
-
-    puts "Performing docker tag and push"
-    docker_registry_cache.push_image
-    puts "Docker push finished"
-
   rescue StandardError => e
     puts "Error: #{e.message}"
     puts e.backtrace
   ensure
+    puts "$(sudo docker image ls)"
+    puts `$(sudo docker image ls)`
+    puts "Performing docker tag and push"
+    docker_registry_cache.push_image
+    puts "Docker push finished"
+
     puts "Run finished"
     response = client.post("runs/#{ENV["RUN_ID"]}/run_finished_events")
     puts "Run finished response code: #{response.code}"
