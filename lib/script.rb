@@ -35,7 +35,7 @@ class Script
       username: ENV["DOCKER_REGISTRY_CACHE_USERNAME"],
       password: ENV["DOCKER_REGISTRY_CACHE_PASSWORD"],
       project_name: ENV["PROJECT_NAME"].downcase,
-      env_file_path: ENV["SATURNCI_ENV_FILE_PATH"]
+      branch_name: ENV["BRANCH_NAME"].downcase
     )
 
     puts "Docker registry cache checksum: #{docker_registry_cache.checksum}"

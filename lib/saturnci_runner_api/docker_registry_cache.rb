@@ -4,23 +4,18 @@ module SaturnCIRunnerAPI
   class DockerRegistryCache
     URL = "registrycache.saturnci.com:5000"
 
-    def initialize(username:, password:, env_file_path:, project_name:)
+    def initialize(username:, password:, project_name:, branch_name:)
       @username = username
       @password = password
-      @env_file_path = env_file_path
       @project_name = project_name
+      @branch_name = branch_name
 
       # Registry cache IP is sometimes wrong without this.
       system("sudo systemd-resolve --flush-caches")
     end
 
-    def checksum
-      content = File.read("Gemfile.lock") + File.read(".saturnci/Dockerfile") + File.read(@env_file_path)
-      @checksum ||= Digest::SHA256.hexdigest(content)
-    end
-
     def image_url
-      "#{URL}/#{@project_name}:#{checksum}"
+      "#{URL}/#{@project_name}:#{@branch_name}"
     end
 
     def authenticate
