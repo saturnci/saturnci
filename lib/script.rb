@@ -97,7 +97,7 @@ class Script
       system("echo 'test4'")
 
       puts "Running services:"
-      #puts IO.popen("docker ps").read
+      puts `docker-compose config --services`
       puts "#{wait_length - i} seconds to go..."
     end
 
