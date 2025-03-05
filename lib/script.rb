@@ -85,6 +85,11 @@ class Script
     up_command = "docker-compose -f .saturnci/docker-compose.yml up"
     Process.spawn(up_command)
 
+    30.times do |i|
+      sleep(1)
+      puts "{30 - i} seconds to go..."
+    end
+
     puts "Running services:"
     puts `docker ps`
 
