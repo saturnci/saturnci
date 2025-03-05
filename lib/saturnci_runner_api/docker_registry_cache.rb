@@ -4,11 +4,12 @@ module SaturnCIRunnerAPI
   class DockerRegistryCache
     URL = "registrycache.saturnci.com:5000"
 
-    def initialize(username:, password:, project_name:, branch_name:)
+    def initialize(username:, password:, project_name:, branch_name:, env_file_path:)
       @username = username
       @password = password
       @project_name = project_name
       @branch_name = branch_name
+      @env_file_path = env_file_path
 
       # Registry cache IP is sometimes wrong without this.
       system("sudo systemd-resolve --flush-caches")
