@@ -73,7 +73,7 @@ class Script
     system(build_command)
 
     docker_compose_up_command = "docker-compose -f .saturnci/docker-compose.yml up -d"
-    puts "Running #{docker_compose_up_command}"
+    puts "Running \"#{docker_compose_up_command}\""
     system(docker_compose_up_command)
 
     puts "Running pre.sh"
