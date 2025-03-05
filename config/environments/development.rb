@@ -78,5 +78,7 @@ Rails.application.configure do
 
   config.hosts << ENV["NGROK_URL"]
 
-  config.github_private_pem = File.read(".github_private_key.pem")
+  if File.exist?(".github_private_key.pem")
+    config.github_private_pem = File.read(".github_private_key.pem")
+  end
 end
