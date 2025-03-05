@@ -180,6 +180,11 @@ spec:
             secretKeyRef:
               name: saturn-secrets
               key: DOCKER_REGISTRY_CACHE_PASSWORD
+        - name: BUGSNAG_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: BUGSNAG_API_KEY
       initContainers:
       - name: saturn-migrations
         image: registry.digitalocean.com/saturnci/saturnci:$TAG
@@ -347,3 +352,8 @@ spec:
             secretKeyRef:
               name: saturn-secrets
               key: DOCKER_REGISTRY_CACHE_PASSWORD
+        - name: BUGSNAG_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: BUGSNAG_API_KEY
