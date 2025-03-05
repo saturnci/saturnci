@@ -71,10 +71,10 @@ class Script
     puts "Build command: #{build_command}"
     system(build_command)
 
-    puts "Building Docker services"
-    build_command = "docker-compose -f .saturnci/docker-compose.yml build"
-    system(build_command)
-    puts "docker-compose build completed with exit code: #{$?.exitstatus}"
+    puts "Running docker-compose pull"
+    pull_command = "docker-compose -f .saturnci/docker-compose.yml pull"
+    system(pull_command)
+    puts "docker-compose pull completed with exit code: #{$?.exitstatus}"
 
     system("echo 'test5'")
     puts "Running pre.sh"
