@@ -76,6 +76,18 @@ class Script
     puts "Running \"#{docker_compose_up_command}\""
     system(docker_compose_up_command)
 
+    puts "Waiting for services to start..."
+    ready = false
+
+    while true
+      exit if system("docker-compose -f .saturnci/docker-compose.yml ps | grep -q 'Up'")
+      sleep(1)
+      puts "Still waiting..."
+    end
+
+    puts "Running services:"
+    puts `docker ps`
+
     puts "Running pre.sh"
     client.post("runs/#{ENV["RUN_ID"]}/run_events", type: "pre_script_started")
     system("sudo chmod 755 .saturnci/pre.sh")
