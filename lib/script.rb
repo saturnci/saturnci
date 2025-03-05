@@ -9,8 +9,6 @@ TEST_RESULTS_FILENAME = "tmp/test_results.txt"
 
 class Script
   def self.execute
-    $stdout.sync = true
-
     client = SaturnCIRunnerAPI::Client.new(ENV["HOST"])
 
     puts "Starting to stream system logs"
@@ -78,15 +76,7 @@ class Script
     puts "Running \"#{docker_compose_up_command}\""
     system(docker_compose_up_command)
 
-    puts "Waiting for services to start..."
-    ready = false
-
-    while true
-      break if system("docker-compose -f .saturnci/docker-compose.yml ps | grep -q 'Up'")
-      sleep(1)
-      puts "Still waiting..."
-    end
-    $stdout.flush
+    sleep(10) # to wait for services to start
 
     puts "Running services:"
     puts `docker ps`
