@@ -9,6 +9,8 @@ TEST_RESULTS_FILENAME = "tmp/test_results.txt"
 
 class Script
   def self.execute
+    $stdout.sync = true
+
     client = SaturnCIRunnerAPI::Client.new(ENV["HOST"])
 
     puts "Starting to stream system logs"
