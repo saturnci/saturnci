@@ -65,7 +65,7 @@ class Script
     system("docker buildx create --name saturnci-builder --driver docker-container --use")
 
     build_command = "docker buildx build --push \
-      -t #{ENV["PROJECT_NAME"]} \
+      -t #{docker_registry_cache.image_url} \
       --cache-to type=registry,ref=#{docker_registry_cache.image_url} \
       --cache-from type=registry,ref=#{docker_registry_cache.image_url} \
       -f .saturnci/Dockerfile ."
