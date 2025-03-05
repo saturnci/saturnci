@@ -9,6 +9,8 @@ TEST_RESULTS_FILENAME = "tmp/test_results.txt"
 
 class Script
   def self.execute
+    $stdout.sync = true
+
     client = SaturnCIRunnerAPI::Client.new(ENV["HOST"])
 
     puts "Starting to stream system logs"
@@ -76,7 +78,9 @@ class Script
     puts "Running \"#{docker_compose_up_command}\""
     system(docker_compose_up_command)
 
+    puts "Before sleep"
     sleep(10) # to wait for services to start
+    puts "After sleep"
 
     puts "Running services:"
     puts `docker ps`
