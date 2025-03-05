@@ -20,6 +20,7 @@ gem "sprockets-rails"
 gem "stimulus-rails"
 gem "turbo-rails", "~> 1.5"
 gem "bugsnag"
+gem "friendly_id" # just a test
 
 # For soft deletion
 gem "paranoia"
