@@ -82,7 +82,7 @@ class Script
 
     # Then start the services
     puts "Starting Docker services"
-    up_command = "docker-compose -f .saturnci/docker-compose.yml up"
+    up_command = "docker-compose -f .saturnci/docker-compose.yml up -d"
     Process.spawn(up_command)
 
     30.times do |i|
