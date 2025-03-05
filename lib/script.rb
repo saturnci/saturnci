@@ -66,7 +66,7 @@ class Script
     client.post("runs/#{ENV["RUN_ID"]}/run_events", type: "pre_script_started")
     system("sudo chmod 755 .saturnci/pre.sh")
 
-    pre_script_command = "SATURN_TEST_APP_IMAGE_URL=#{docker_registry_cache.image_url} docker-compose -f .saturnci/docker-compose.yml run saturn_test_app ./.saturnci/pre.sh"
+    pre_script_command = "docker-compose -f .saturnci/docker-compose.yml run saturn_test_app ./.saturnci/pre.sh"
     puts "pre.sh command: \"#{pre_script_command}\""
     system(pre_script_command)
     puts "pre.sh exit code: #{$?.exitstatus}"
