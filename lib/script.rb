@@ -92,11 +92,9 @@ class Script
     puts "Docker Compose process completed with exit code: #{$?.exitstatus}"
     system("echo 'test3'")
 
-    wait_length = 45
+    wait_length = 10
     wait_length.times do |i|
       sleep(1)
-      system("echo 'test4'")
-
       puts "Running services:"
       puts `docker-compose -f .saturnci/docker-compose.yml ps`
       puts "#{wait_length - i} seconds to go..."
