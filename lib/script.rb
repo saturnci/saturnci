@@ -87,7 +87,7 @@ class Script
 
     30.times do |i|
       sleep(1)
-      puts "{30 - i} seconds to go..."
+      puts "#{30 - i} seconds to go..."
     end
 
     puts "Running services:"
