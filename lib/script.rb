@@ -61,9 +61,15 @@ class Script
     puts "Copying database.yml"
     system("sudo cp .saturnci/database.yml config/database.yml")
 
+    build_args = []
+    build_args << "--build-arg ARCH=#{ENV["ARCH"]}" if ENV["ARCH"]
+    build_args << "--build-arg NODE_ARCH=#{ENV["NODE_ARCH"]}" if ENV["NODE_ARCH"]
+    build_args << "--build-arg BUNDLE_GEMFILE=#{ENV["BUNDLE_GEMFILE"]}" if ENV["BUNDLE_GEMFILE"]
+
     system("docker buildx create --name saturnci-builder --driver docker-container --use")
     build_command = "docker buildx build --push \
       -t #{docker_registry_cache.image_url} \
+      #{build_args.join(" ")} \
       --cache-to type=registry,ref=#{docker_registry_cache.image_url}:cache,mode=max \
       --cache-from type=registry,ref=#{docker_registry_cache.image_url}:cache \
       --progress=plain \
