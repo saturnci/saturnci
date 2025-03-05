@@ -98,7 +98,7 @@ class Script
       system("echo 'test4'")
 
       puts "Running services:"
-      puts `docker-compose config --services`
+      puts `docker-compose -f .saturnci/docker-compose.yml ps`
       puts "#{wait_length - i} seconds to go..."
     end
 
