@@ -82,9 +82,8 @@ class Script
 
     # Then start the services
     puts "Starting Docker services"
-    up_command = "docker-compose -f .saturnci/docker-compose.yml up -d > /dev/null 2>&1"
-    system(up_command)
-    puts "docker-compose up completed with exit code: #{$?.exitstatus}"
+    up_command = "docker-compose -f .saturnci/docker-compose.yml up"
+    Process.spawn(up_command)
 
     puts "Running services:"
     puts `docker ps`
