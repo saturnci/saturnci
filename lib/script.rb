@@ -100,7 +100,7 @@ class Script
       system("echo 'test4'")
 
       puts "Running services:"
-      #puts `docker ps`
+      puts `docker ps`
       puts "#{wait_length - i} seconds to go..."
     end
 
