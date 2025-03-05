@@ -83,30 +83,33 @@ class Script
     # Then start the services
     puts "Starting Docker services"
     up_command = "docker-compose -f .saturnci/docker-compose.yml up -d"
+    system("echo 'test1'")
 
     compose_pid = Process.spawn(up_command)
     puts "Docker Compose process started with PID: #{compose_pid}"
+    system("echo 'test2'")
 
     # Wait for it to finish
     Process.wait(compose_pid)
     puts "Docker Compose process completed with exit code: #{$?.exitstatus}"
-
-    $stdout.reopen(IO.new(1, "w"))
-    $stdout.sync = true
+    system("echo 'test3'")
 
     wait_length = 45
     wait_length.times do |i|
       sleep(1)
+      system("echo 'test4'")
 
       puts "Running services:"
-      puts `docker ps`
+      #puts `docker ps`
       puts "#{wait_length - i} seconds to go..."
     end
 
+    system("echo 'test5'")
     puts "Running pre.sh"
     client.post("runs/#{ENV["RUN_ID"]}/run_events", type: "pre_script_started")
     system("sudo chmod 755 .saturnci/pre.sh")
 
+    system("echo 'test6'")
     pre_script_command = "docker-compose -f .saturnci/docker-compose.yml run saturn_test_app ./.saturnci/pre.sh"
     puts "pre.sh command: \"#{pre_script_command}\""
     system(pre_script_command)
