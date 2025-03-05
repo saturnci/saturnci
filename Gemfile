@@ -30,7 +30,7 @@ gem "view_component"
 
 # For Digital Ocean
 gem "droplet_kit"
-gem "aws-sdk-s3"
+gem "aws-sdk-s3" # Digital Ocean Spaces uses this
 
 # For GitHub authentication
 gem "aws-sdk-secretsmanager", require: false
