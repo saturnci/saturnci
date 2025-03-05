@@ -153,11 +153,11 @@ class Script
     puts "Error: #{e.message}"
     puts e.backtrace
   ensure
-    puts "$(sudo docker image ls)"
-    puts `$(sudo docker image ls)`
-    puts "Performing docker tag and push"
-    docker_registry_cache.push_image
-    puts "Docker push finished"
+    #puts "$(sudo docker image ls)"
+    #puts `$(sudo docker image ls)`
+    #puts "Performing docker tag and push"
+    #docker_registry_cache.push_image
+    #puts "Docker push finished"
 
     puts "Run finished"
     response = client.post("runs/#{ENV["RUN_ID"]}/run_finished_events")
