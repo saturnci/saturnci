@@ -91,11 +91,6 @@ class Script
     Process.wait(compose_pid)
     puts "Docker Compose process completed with exit code: #{$?.exitstatus}"
 
-    30.times do |i|
-      sleep(1)
-      puts "#{30 - i} seconds to go..."
-    end
-
     puts "Running services:"
     puts `docker ps`
 
