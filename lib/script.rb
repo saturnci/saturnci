@@ -62,6 +62,11 @@ class Script
     puts "Copying database.yml"
     system("sudo cp .saturnci/database.yml config/database.yml")
 
+    puts "Building image"
+    build_command = "docker-compose -f .saturnci/docker-compose.yml build"
+    puts "Build command: #{build_command}"
+    system(build_command)
+
     puts "Running pre.sh"
     client.post("runs/#{ENV["RUN_ID"]}/run_events", type: "pre_script_started")
     system("sudo chmod 755 .saturnci/pre.sh")
