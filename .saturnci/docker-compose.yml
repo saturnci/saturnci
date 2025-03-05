@@ -8,6 +8,9 @@ services:
     build:
       context: ../
       dockerfile: .saturnci/Dockerfile
+      args:
+        - DOCKER_BUILD_CHECKSUM=${DOCKER_BUILD_CHECKSUM}
+
     image: ${SATURN_TEST_APP_IMAGE_URL}
     volumes:
       - ../:/code

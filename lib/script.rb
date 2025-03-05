@@ -35,11 +35,13 @@ class Script
       username: ENV["DOCKER_REGISTRY_CACHE_USERNAME"],
       password: ENV["DOCKER_REGISTRY_CACHE_PASSWORD"],
       project_name: ENV["PROJECT_NAME"].downcase,
-      branch_name: ENV["BRANCH_NAME"].downcase
+      branch_name: ENV["BRANCH_NAME"].downcase,
+      env_file_path: ENV["SATURNCI_ENV_FILE_PATH"]
     )
 
     puts "Registry cache image URL: #{docker_registry_cache.image_url}"
     system("echo 'export SATURN_TEST_APP_IMAGE_URL=#{docker_registry_cache.image_url}' >> #{ENV["SATURNCI_ENV_FILE_PATH"]}")
+    system("echo 'export DOCKER_BUILD_CHECKSUM=#{docker_registry_cache.checksum}' >> #{ENV["SATURNCI_ENV_FILE_PATH"]}")
     system("echo 'export DOCKER_BUILDKIT=1' >> #{ENV["SATURNCI_ENV_FILE_PATH"]}")
     system("source #{ENV["SATURNCI_ENV_FILE_PATH"]}")
     system("cp #{ENV["SATURNCI_ENV_FILE_PATH"]} #{PROJECT_DIR}/.saturnci/.env")

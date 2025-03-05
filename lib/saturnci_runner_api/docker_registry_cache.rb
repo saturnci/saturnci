@@ -14,8 +14,13 @@ module SaturnCIRunnerAPI
       system("sudo systemd-resolve --flush-caches")
     end
 
+    def checksum
+      content = File.read("Gemfile.lock") + File.read(".saturnci/Dockerfile") + File.read(@env_file_path)
+      @checksum ||= Digest::SHA256.hexdigest(content)
+    end
+
     def image_url
-      "#{URL}/#{@project_name}:#{@branch_name}"
+      "#{URL}/#{@project_name}:#{@branch_name}-#{checksum}"
     end
 
     def authenticate
