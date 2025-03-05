@@ -86,10 +86,6 @@ class Script
     system(up_command)
     puts "docker-compose up completed with exit code: #{$?.exitstatus}"
 
-    puts "Before sleep"
-    sleep(10) # to wait for services to start
-    puts "After sleep"
-
     puts "Running services:"
     puts `docker ps`
 
