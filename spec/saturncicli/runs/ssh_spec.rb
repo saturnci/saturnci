@@ -58,11 +58,11 @@ describe "ssh" do
       allow(connection_details).to receive(:rsa_key_path).and_return("/tmp/saturnci/run-abc123")
     end
 
-    it "outputs a dot" do
+    it "outputs a message" do
       expect do
         command = "--run abc123 ssh"
         client.ssh("abc123", connection_details)
-      end.to output(".ssh -o StrictHostKeyChecking=no -i /tmp/saturnci/run-abc123 root@111.11.11.1\n").to_stdout
+      end.to output("Waiting for IP address...\nssh -o StrictHostKeyChecking=no -i /tmp/saturnci/run-abc123 root@111.11.11.1\n").to_stdout
     end
   end
 
