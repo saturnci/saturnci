@@ -78,7 +78,7 @@ describe "Test suite run status", type: :system do
 
     context "finished test suite run" do
       it "shows the elapsed test suite run time" do
-        run.update!(test_report: "passed")
+        run.update!(exit_code: 0)
         visit project_build_path(run.test_suite_run.project, run.test_suite_run)
         expect(page).not_to have_selector("[data-elapsed-test-suite-run-time-target='value']")
       end

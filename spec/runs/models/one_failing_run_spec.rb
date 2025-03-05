@@ -8,7 +8,7 @@ RSpec.describe "one failing run" do
   end
 
   let!(:failing_run) do
-    create(:run, build:, order_index: 1, test_report: "failed")
+    create(:run, :failed, build:, order_index: 1)
   end
 
   describe "build status" do

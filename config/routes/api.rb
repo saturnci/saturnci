@@ -2,7 +2,6 @@ namespace :api do
   namespace :v1 do
     resources :runs, only: %w[index show] do
       resources :run_finished_events, only: :create
-      resources :test_reports, only: :create
       resources :system_logs, only: :create
       resource :test_output, only: :create
       resource :json_output, only: :create
