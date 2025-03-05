@@ -9,6 +9,8 @@ TEST_RESULTS_FILENAME = "tmp/test_results.txt"
 
 class Script
   def self.execute
+    $stdout.sync = true
+
     client = SaturnCIRunnerAPI::Client.new(ENV["HOST"])
 
     puts "Starting to stream system logs"
@@ -56,16 +58,25 @@ class Script
       raise "Docker registry cache authentication failed"
     end
 
-    puts "Pulling the existing image to avoid rebuilding if possible"
-    puts docker_registry_cache.pull_image
-
     puts "Copying database.yml"
     system("sudo cp .saturnci/database.yml config/database.yml")
 
+    system("docker buildx create --name saturnci-builder --driver docker-container --use")
+    build_command = "docker buildx build --push \
+      -t #{docker_registry_cache.image_url} \
+      --cache-to type=registry,ref=#{docker_registry_cache.image_url}:cache,mode=max \
+      --cache-from type=registry,ref=#{docker_registry_cache.image_url}:cache \
+      --progress=plain \
+      -f .saturnci/Dockerfile ."
+    puts "Build command: #{build_command}"
+    system(build_command)
+
+    system("echo 'test5'")
     puts "Running pre.sh"
     client.post("runs/#{ENV["RUN_ID"]}/run_events", type: "pre_script_started")
     system("sudo chmod 755 .saturnci/pre.sh")
 
+    system("echo 'test6'")
     pre_script_command = "docker-compose -f .saturnci/docker-compose.yml run saturn_test_app ./.saturnci/pre.sh"
     puts "pre.sh command: \"#{pre_script_command}\""
     system(pre_script_command)
@@ -141,12 +152,6 @@ class Script
     puts "Error: #{e.message}"
     puts e.backtrace
   ensure
-    puts "$(sudo docker image ls)"
-    puts `$(sudo docker image ls)`
-    puts "Performing docker tag and push"
-    docker_registry_cache.push_image
-    puts "Docker push finished"
-
     puts "Run finished"
     response = client.post("runs/#{ENV["RUN_ID"]}/run_finished_events")
     puts "Run finished response code: #{response.code}"

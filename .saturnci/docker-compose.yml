@@ -4,10 +4,6 @@ services:
   saturn_test_app:
     # This is what will go in the Capybara host config.
     hostname: saturn_test_app
-
-    build:
-      context: ../
-      dockerfile: .saturnci/Dockerfile
     image: ${SATURN_TEST_APP_IMAGE_URL}
     volumes:
       - ../:/code
@@ -27,6 +23,12 @@ services:
       DATABASE_HOST: postgres
       DATABASE_PORT: 5432
       RAILS_ENV: test
+
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:3000"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
   postgres:
     image: postgres:17.2-alpine
@@ -54,6 +56,11 @@ services:
     shm_size: 2g
     ports:
       - "4444:4444"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:4444/wd/hub/status"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   postgresql:
