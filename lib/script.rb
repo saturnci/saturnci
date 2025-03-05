@@ -61,46 +61,15 @@ class Script
     puts "Copying database.yml"
     system("sudo cp .saturnci/database.yml config/database.yml")
 
-    if false
-      system("docker buildx create --name saturnci-builder --driver docker-container --use")
-
-      build_command = "docker buildx build --push \
-        -t #{docker_registry_cache.image_url} \
-        --cache-to type=registry,ref=#{docker_registry_cache.image_url}:cache,mode=max \
-        --cache-from type=registry,ref=#{docker_registry_cache.image_url}:cache \
-        --progress=plain \
-        -f .saturnci/Dockerfile ."
-      puts "Build command: #{build_command}"
-      system(build_command)
-
-      # First, build the services explicitly (blocking operation)
-      puts "Building Docker services"
-      build_command = "docker-compose -f .saturnci/docker-compose.yml build"
-      system(build_command)
-      puts "docker-compose build completed with exit code: #{$?.exitstatus}"
-
-      # Then start the services
-      puts "Starting Docker services"
-      up_command = "docker-compose -f .saturnci/docker-compose.yml up -d"
-      system("echo 'test1'")
-
-      compose_pid = Process.spawn(up_command)
-      puts "Docker Compose process started with PID: #{compose_pid}"
-      system("echo 'test2'")
-
-      # Wait for it to finish
-      Process.wait(compose_pid)
-      puts "Docker Compose process completed with exit code: #{$?.exitstatus}"
-      system("echo 'test3'")
-
-      wait_length = 10
-      wait_length.times do |i|
-        sleep(1)
-        puts "Running services:"
-        puts `docker-compose -f .saturnci/docker-compose.yml ps`
-        puts "#{wait_length - i} seconds to go..."
-      end
-    end
+    system("docker buildx create --name saturnci-builder --driver docker-container --use")
+    build_command = "docker buildx build --push \
+      -t #{docker_registry_cache.image_url} \
+      --cache-to type=registry,ref=#{docker_registry_cache.image_url}:cache,mode=max \
+      --cache-from type=registry,ref=#{docker_registry_cache.image_url}:cache \
+      --progress=plain \
+      -f .saturnci/Dockerfile ."
+    puts "Build command: #{build_command}"
+    system(build_command)
 
     puts "Building Docker services"
     build_command = "docker-compose -f .saturnci/docker-compose.yml build"
