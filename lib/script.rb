@@ -74,9 +74,17 @@ class Script
     puts "Build command: #{build_command}"
     system(build_command)
 
-    docker_compose_up_command = "docker-compose -f .saturnci/docker-compose.yml up -d"
-    puts "Running \"#{docker_compose_up_command}\""
-    system(docker_compose_up_command)
+    # First, build the services explicitly (blocking operation)
+    puts "Building Docker services"
+    build_command = "docker-compose -f .saturnci/docker-compose.yml build"
+    system(build_command)
+    puts "docker-compose build completed with exit code: #{$?.exitstatus}"
+
+    # Then start the services
+    puts "Starting Docker services"
+    up_command = "docker-compose -f .saturnci/docker-compose.yml up -d"
+    system(up_command)
+    puts "docker-compose up completed with exit code: #{$?.exitstatus}"
 
     puts "Before sleep"
     sleep(10) # to wait for services to start
