@@ -43,9 +43,9 @@ class Script
     system("echo 'export SATURN_TEST_APP_IMAGE_URL=#{docker_registry_cache.image_url}' >> #{ENV["SATURNCI_ENV_FILE_PATH"]}")
     system("echo 'export DOCKER_BUILD_CHECKSUM=#{docker_registry_cache.checksum}' >> #{ENV["SATURNCI_ENV_FILE_PATH"]}")
     system("echo 'export DOCKER_BUILDKIT=1' >> #{ENV["SATURNCI_ENV_FILE_PATH"]}")
-    system("source #{ENV["SATURNCI_ENV_FILE_PATH"]}")
     system("cp #{ENV["SATURNCI_ENV_FILE_PATH"]} #{PROJECT_DIR}/.saturnci/.env")
     system("export $(cat #{PROJECT_DIR}/.saturnci/.env | xargs)")
+    system("source #{PROJECT_DIR}/.saturnci/.env")
 
     puts "Environment variables set in this shell:"
     system("env | awk -F= '{print $1}' | sort")
