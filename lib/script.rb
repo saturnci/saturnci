@@ -83,7 +83,13 @@ class Script
     # Then start the services
     puts "Starting Docker services"
     up_command = "docker-compose -f .saturnci/docker-compose.yml up -d"
-    Process.spawn(up_command)
+
+    compose_pid = Process.spawn(up_command)
+    puts "Docker Compose process started with PID: #{compose_pid}"
+
+    # Wait for it to finish
+    Process.wait(compose_pid)
+    puts "Docker Compose process completed with exit code: #{$?.exitstatus}"
 
     30.times do |i|
       sleep(1)
