@@ -28,6 +28,12 @@ services:
       DATABASE_PORT: 5432
       RAILS_ENV: test
 
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:3000"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
   postgres:
     image: postgres:17.2-alpine
     volumes:
