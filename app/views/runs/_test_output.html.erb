@@ -1,4 +1,4 @@
-<%= terminal_output("terminal-masked") do %>
+<%= terminal_output do %>
   <%= run_container current_tab_name, run do %>
     <%= ansi_to_html(run.test_output) %>
   <% end %>
