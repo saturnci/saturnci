@@ -100,7 +100,7 @@ class Script
       system("echo 'test4'")
 
       puts "Running services:"
-      IO.popen("docker ps").read
+      puts IO.popen("docker ps").read
       puts "#{wait_length - i} seconds to go..."
     end
 
