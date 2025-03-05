@@ -62,6 +62,8 @@ class Script
     puts "Copying database.yml"
     system("sudo cp .saturnci/database.yml config/database.yml")
 
+    system("docker buildx create --name saturnci-builder --driver docker-container --use")
+
     build_command = "docker buildx build --push \
       -t #{ENV["PROJECT_NAME"]} \
       --cache-to type=registry,ref=#{docker_registry_cache.image_url} \
