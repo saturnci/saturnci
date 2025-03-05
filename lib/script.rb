@@ -58,9 +58,6 @@ class Script
       raise "Docker registry cache authentication failed"
     end
 
-    #puts "Pulling the existing image to avoid rebuilding if possible"
-    #puts docker_registry_cache.pull_image
-
     puts "Copying database.yml"
     system("sudo cp .saturnci/database.yml config/database.yml")
 
@@ -68,8 +65,8 @@ class Script
 
     build_command = "docker buildx build --push \
       -t #{docker_registry_cache.image_url} \
-      --cache-to type=registry,ref=#{docker_registry_cache.image_url} \
-      --cache-from type=registry,ref=#{docker_registry_cache.image_url} \
+      --cache-to type=registry,ref=#{docker_registry_cache.image_url}:cache,mode=max \
+      --cache-from type=registry,ref=#{docker_registry_cache.image_url}:cache \
       -f .saturnci/Dockerfile ."
     puts "Build command: #{build_command}"
     system(build_command)
@@ -185,12 +182,6 @@ class Script
     puts "Error: #{e.message}"
     puts e.backtrace
   ensure
-    #puts "$(sudo docker image ls)"
-    #puts `$(sudo docker image ls)`
-    #puts "Performing docker tag and push"
-    #docker_registry_cache.push_image
-    #puts "Docker push finished"
-
     puts "Run finished"
     response = client.post("runs/#{ENV["RUN_ID"]}/run_finished_events")
     puts "Run finished response code: #{response.code}"
