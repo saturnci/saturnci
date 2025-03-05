@@ -86,6 +86,7 @@ class Script
       sleep(1)
       puts "Still waiting..."
     end
+    $stdout.flush
 
     puts "Running services:"
     puts `docker ps`
