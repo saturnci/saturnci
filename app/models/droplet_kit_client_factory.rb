@@ -1,3 +1,5 @@
+require "droplet_kit"
+
 class DropletKitClientFactory
   def self.client
     DropletKit::Client.new(access_token: ENV['DIGITALOCEAN_ACCESS_TOKEN'])
