@@ -80,7 +80,7 @@ class Script
     ready = false
 
     while true
-      exit if system("docker-compose -f .saturnci/docker-compose.yml ps | grep -q 'Up'")
+      next if system("docker-compose -f .saturnci/docker-compose.yml ps | grep -q 'Up'")
       sleep(1)
       puts "Still waiting..."
     end
