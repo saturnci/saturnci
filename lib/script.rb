@@ -62,10 +62,17 @@ class Script
     puts "Copying database.yml"
     system("sudo cp .saturnci/database.yml config/database.yml")
 
-    puts "Building image"
-    build_command = "docker-compose -f .saturnci/docker-compose.yml build"
+    build_command = "docker buildx build --push \
+      -t #{ENV["PROJECT_NAME"]} \
+      --cache-to type=registry,ref=#{docker_registry_cache.image_url} \
+      --cache-from type=registry,ref=#{docker_registry_cache.image_url} \
+      -f .saturnci/Dockerfile ."
     puts "Build command: #{build_command}"
     system(build_command)
+
+    docker_compose_up_command = "docker-compose -f .saturnci/docker-compose.yml up -d"
+    puts "Running #{docker_compose_up_command}"
+    system(docker_compose_up_command)
 
     puts "Running pre.sh"
     client.post("runs/#{ENV["RUN_ID"]}/run_events", type: "pre_script_started")
