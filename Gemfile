@@ -19,6 +19,7 @@ gem "solid_queue"
 gem "sprockets-rails"
 gem "stimulus-rails"
 gem "turbo-rails", "~> 1.5"
+gem "bugsnag"
 
 # For soft deletion
 gem "paranoia"
