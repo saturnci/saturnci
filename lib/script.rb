@@ -140,18 +140,6 @@ class Script
     puts response.body
     puts
 
-    puts "Sending report"
-    test_reports_request = SaturnCIRunnerAPI::FileContentRequest.new(
-      host: ENV["HOST"],
-      api_path: "runs/#{ENV["RUN_ID"]}/test_reports",
-      content_type: "text/plain",
-      file_path: TEST_RESULTS_FILENAME
-    )
-    response = test_reports_request.execute
-    puts "Report response code: #{response.code}"
-    puts response.body
-    puts
-
     send_screenshot_tar_file(source_dir: "tmp/capybara")
 
   rescue StandardError => e
