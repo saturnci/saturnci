@@ -54,6 +54,11 @@ services:
     shm_size: 2g
     ports:
       - "4444:4444"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:4444/wd/hub/status"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   postgresql:
