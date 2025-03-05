@@ -67,6 +67,7 @@ class Script
       -t #{docker_registry_cache.image_url} \
       --cache-to type=registry,ref=#{docker_registry_cache.image_url}:cache,mode=max \
       --cache-from type=registry,ref=#{docker_registry_cache.image_url}:cache \
+      --progress=plain \
       -f .saturnci/Dockerfile ."
     puts "Build command: #{build_command}"
     system(build_command)
