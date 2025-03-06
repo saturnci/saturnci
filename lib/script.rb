@@ -68,10 +68,10 @@ class Script
 
     system("docker buildx create --name saturnci-builder --driver docker-container --use")
 
-    build_command = "docker buildx build --push \
+    build_command = "docker buildx build \
+      --load \
       -t #{docker_registry_cache.image_url}:latest \
       #{build_args.join(" ")} \
-      --cache-to type=registry,ref=#{docker_registry_cache.image_url}:cache,mode=max \
       --cache-from type=registry,ref=#{docker_registry_cache.image_url}:cache \
       --progress=plain \
       -f .saturnci/Dockerfile ."
@@ -79,6 +79,11 @@ class Script
     puts "Build command: #{build_command}"
     system(build_command)
     puts "Build command exit code: #{$?.exitstatus}"
+
+    push_command = "docker push #{docker_registry_cache.image_url}:latest"
+    puts "Push command: #{push_command}"
+    system(push_command)
+    puts "Push command exit code: #{$?.exitstatus}"
 
     puts "Running pre.sh"
     client.post("runs/#{ENV["RUN_ID"]}/run_events", type: "pre_script_started")
