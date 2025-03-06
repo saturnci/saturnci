@@ -77,13 +77,22 @@ class Script
       -f .saturnci/Dockerfile ."
 
     puts "Build command: #{build_command}"
-    system(build_command)
-    puts "Build command exit code: #{$?.exitstatus}"
+    system_command_result = system(build_command)
+    if system_command_result
+      puts "Build command completed successfully"
+    else
+      raise "Build command failed"
+    end
 
     push_command = "docker push #{docker_registry_cache.image_url}:latest"
     puts "Push command: #{push_command}"
-    system(push_command)
-    puts "Push command exit code: #{$?.exitstatus}"
+    push_command_result = system(push_command)
+    
+    if push_command_result
+      puts "Push command completed successfully"
+    else
+      raise "Push command failed"
+    end
 
     puts "Running pre.sh"
     client.post("runs/#{ENV["RUN_ID"]}/run_events", type: "pre_script_started")
