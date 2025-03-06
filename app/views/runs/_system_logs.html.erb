@@ -1,11 +1,4 @@
-<% if run.runner_system_log.present? %>
-  <%= render TerminalOutputComponent.new(run:, current_tab_name:, body: SystemLogBody.new(run.runner_system_log&.content).scrub) %>
-<% else %>
-  <div class="non-terminal-run-info">
-    <p><%= Quote.random %></p>
-    <p>Waiting for system logs to start...</p>
-  </div>
-<% end %>
+<%= render TerminalOutputComponent.new(run:, current_tab_name:, body: SystemLogBody.new(run.runner_system_log&.content).scrub) %>
 
 <script>
 var element = document.querySelector('.run-details');

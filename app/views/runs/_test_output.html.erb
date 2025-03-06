@@ -1,11 +1,4 @@
-<% if run.test_output.present? %>
-  <%= render TerminalOutputComponent.new(run:, current_tab_name:, body: run.test_output) %>
-<% else %>
-  <div class="non-terminal-run-info">
-    <p><%= Quote.random %></p>
-    <p>Waiting for system logs to start...</p>
-  </div>
-<% end %>
+<%= render TerminalOutputComponent.new(run:, current_tab_name:, body: run.test_output) %>
 
 <script>
 var element = document.querySelector('.run-details');

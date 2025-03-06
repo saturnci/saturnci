@@ -1,5 +1,12 @@
-<div class="run-info-container">
-  <div id="<%= dom_id(run, current_tab_name) %>">
-    <pre class="terminal terminal-masked"><%= helpers.ansi_to_html(body) %></pre>
+<% if body.present? %>
+  <div class="run-info-container">
+    <div id="<%= dom_id(run, current_tab_name) %>">
+      <pre class="terminal terminal-masked"><%= helpers.ansi_to_html(body) %></pre>
+    </div>
   </div>
-</div>
+<% else %>
+  <div class="non-terminal-run-info">
+    <p><%= Quote.random %></p>
+    <p>Waiting for system logs to start...</p>
+  </div>
+<% end %>
