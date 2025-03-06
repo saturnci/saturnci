@@ -1,11 +1,8 @@
-<%= terminal_output do %>
-  <%= run_container current_tab_name, run do %>
-    <%= ansi_to_html(SystemLogBody.new(run.runner_system_log&.content).scrub) %>
-  <% end %>
-<% end %>
+<%= render TerminalOutputComponent.new(run:, current_tab_name:, body: SystemLogBody.new(run.runner_system_log&.content).scrub) %>
 
 <script>
 var element = document.querySelector('.run-details');
 element.scrollTop = element.scrollHeight;
+
 document.querySelector('.terminal').classList.remove('terminal-masked');
 </script>
