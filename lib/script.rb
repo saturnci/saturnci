@@ -78,12 +78,10 @@ class Script
     system(build_command)
     puts "Build command exit code: #{$?.exitstatus}"
 
-    system("echo 'test5'")
     puts "Running pre.sh"
     client.post("runs/#{ENV["RUN_ID"]}/run_events", type: "pre_script_started")
     system("sudo chmod 755 .saturnci/pre.sh")
 
-    system("echo 'test6'")
     pre_script_command = "docker-compose -f .saturnci/docker-compose.yml run saturn_test_app ./.saturnci/pre.sh"
     puts "pre.sh command: \"#{pre_script_command}\""
     system(pre_script_command)

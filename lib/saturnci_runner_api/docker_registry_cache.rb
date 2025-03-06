@@ -8,14 +8,14 @@ module SaturnCIRunnerAPI
       @username = username
       @password = password
       @project_name = project_name
-      @branch_name = branch_name
+      @branch_name = branch_name.gsub(/[^a-zA-Z0-9_.-]/, '-')[0...63]
 
       # Registry cache IP is sometimes wrong without this.
       system("sudo systemd-resolve --flush-caches")
     end
 
     def image_url
-      "#{URL}/#{@project_name}"
+      "#{URL}/#{@project_name}/#{@branch_name}"
     end
 
     def authenticate
