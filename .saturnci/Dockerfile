@@ -2,6 +2,8 @@ FROM ruby:3.3.5
 
 WORKDIR /code
 
+ENV RAILS_ENV=test
+
 COPY Gemfile Gemfile.lock ./
 RUN bundle install
 

@@ -67,6 +67,7 @@ class Script
     build_args << "--build-arg BUNDLE_GEMFILE=#{ENV["BUNDLE_GEMFILE"]}" if ENV["BUNDLE_GEMFILE"]
 
     system("docker buildx create --name saturnci-builder --driver docker-container --use")
+
     build_command = "docker buildx build --push \
       -t #{docker_registry_cache.image_url} \
       #{build_args.join(" ")} \
@@ -74,6 +75,7 @@ class Script
       --cache-from type=registry,ref=#{docker_registry_cache.image_url}:cache \
       --progress=plain \
       -f .saturnci/Dockerfile ."
+
     puts "Build command: #{build_command}"
     system(build_command)
     puts "Build command exit code: #{$?.exitstatus}"
