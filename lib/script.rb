@@ -69,7 +69,7 @@ class Script
     system("docker buildx create --name saturnci-builder --driver docker-container --use")
 
     build_command = "docker buildx build --push \
-      -t #{docker_registry_cache.image_url} \
+      -t #{docker_registry_cache.image_url}:latest \
       #{build_args.join(" ")} \
       --cache-to type=registry,ref=#{docker_registry_cache.image_url}:cache,mode=max \
       --cache-from type=registry,ref=#{docker_registry_cache.image_url}:cache \
