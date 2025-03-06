@@ -16,6 +16,10 @@ class Quote
     "\"Be ready to revise any system, scrap any method, abandon any theory, if the success of the job requires it.\" - Henry Ford",
     "\"The purpose of abstracting is not to be vague, but to create a new semantic level in which one can be absolutely precise.\" - Edsger W. Dijkstra",
     "\"The computing scientist’s main challenge is not to get confused by the complexities of his own making.\" - Edsger W. Dijkstra",
+    "\"Models are imaginary representations of the world that we build in order to better understand it.\" - Daniel Z. Lieberman",
+    "\"Study hard what interests you the most in the most undisciplined, irreverent and original manner possible.\" - Richard Feynman",
+    "\"The first principle is that you must not fool yourself and you are the easiest person to fool.\" - Richard Feynman",
+    "\"I learned very early the difference between knowing the name of something and knowing something.\" - Richard Feynman",
   ]
 
   def self.random
