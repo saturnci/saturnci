@@ -70,8 +70,8 @@ class Script
     build_command = "docker buildx build --push \
       -t #{docker_registry_cache.image_url} \
       #{build_args.join(" ")} \
-      --cache-to type=registry,ref=#{docker_registry_cache.image_url}-cache,mode=max \
-      --cache-from type=registry,ref=#{docker_registry_cache.image_url}-cache \
+      --cache-to type=registry,ref=#{docker_registry_cache.image_url}:cache,mode=max \
+      --cache-from type=registry,ref=#{docker_registry_cache.image_url}:cache \
       --progress=plain \
       -f .saturnci/Dockerfile ."
     puts "Build command: #{build_command}"
