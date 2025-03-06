@@ -26,7 +26,7 @@ class Script
     clone_repo(client: client, source: ENV["GITHUB_REPO_FULL_NAME"], destination: PROJECT_DIR)
 
     Dir.chdir(PROJECT_DIR)
-    FileUtils.mkdir_p('tmp')
+    FileUtils.mkdir_p("tmp")
 
     client.post("runs/#{ENV["RUN_ID"]}/run_events", type: "repository_cloned")
 
@@ -111,10 +111,10 @@ class Script
       file.puts "end"
     end
 
-    test_files = Dir.glob('./spec/**/*_spec.rb')
-    chunks = test_files.each_slice((test_files.size / ENV['NUMBER_OF_CONCURRENT_RUNS'].to_i.to_f).ceil).to_a
-    selected_tests = chunks[ENV['RUN_ORDER_INDEX'].to_i - 1]
-    test_files_string = selected_tests.join(' ')
+    test_files = Dir.glob("./spec/**/*_spec.rb").shuffle(random: Random.new(ENV["RSPEC_SEED"].to_i))
+    chunks = test_files.each_slice((test_files.size / ENV["NUMBER_OF_CONCURRENT_RUNS"].to_i.to_f).ceil).to_a
+    selected_tests = chunks[ENV["RUN_ORDER_INDEX"].to_i - 1]
+    test_files_string = selected_tests.join(" ")
 
     test_suite_command = SaturnCIRunnerAPI::TestSuiteCommand.new(
       docker_registry_cache_image_url: docker_registry_cache.image_url,
