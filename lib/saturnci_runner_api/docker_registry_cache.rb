@@ -15,7 +15,7 @@ module SaturnCIRunnerAPI
     end
 
     def image_url
-      "#{URL}/#{@project_name}/#{@branch_name}"
+      "#{URL}/#{@project_name}:#{@branch_name}"
     end
 
     def authenticate
