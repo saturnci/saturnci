@@ -94,6 +94,7 @@ class Script
       raise "Push command failed"
     end
 
+    system("docker tag #{docker_registry_cache.image_url}:latest #{docker_registry_cache.image_url}:cache")
     push_cache_command = "docker push #{docker_registry_cache.image_url}:cache"
     puts "Push cache command: #{push_cache_command}"
     push_cache_command_result = system(push_cache_command)
