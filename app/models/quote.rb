@@ -14,6 +14,8 @@ class Quote
     "\"The used key is always bright.\" - Benjamin Franklin",
     "\"The short successes that can be gained in a brief time and without difficulty, are not worth much.\" - Henry Ford",
     "\"Be ready to revise any system, scrap any method, abandon any theory, if the success of the job requires it.\" - Henry Ford",
+    "\"The purpose of abstracting is not to be vague, but to create a new semantic level in which one can be absolutely precise.\" - Edsger W. Dijkstra",
+    "\"The computing scientist’s main challenge is not to get confused by the complexities of his own making.\" - Edsger W. Dijkstra",
   ]
 
   def self.random
