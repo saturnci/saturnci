@@ -89,9 +89,9 @@ class Script
     push_latest_command_result = system(push_latest_command)
     
     if push_latest_command_result
-      puts "Push command completed successfully"
+      puts "Push latest command completed successfully"
     else
-      raise "Push command failed"
+      raise "Push latest command failed"
     end
 
     system("docker tag #{docker_registry_cache.image_url}:latest #{docker_registry_cache.image_url}:cache")
