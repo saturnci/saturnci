@@ -76,6 +76,7 @@ class Script
       -f .saturnci/Dockerfile ."
     puts "Build command: #{build_command}"
     system(build_command)
+    puts "Build command exit code: #{$?.exitstatus}"
 
     system("echo 'test5'")
     puts "Running pre.sh"
