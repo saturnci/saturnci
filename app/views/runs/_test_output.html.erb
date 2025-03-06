@@ -1,11 +1,15 @@
-<%= terminal_output do %>
-  <%= run_container current_tab_name, run do %>
-    <%= ansi_to_html(run.test_output) %>
-  <% end %>
+<% if run.test_output.present? %>
+  <%= render TerminalOutputComponent.new(run:, current_tab_name:, body: run.test_output) %>
+<% else %>
+  <div class="non-terminal-run-info">
+    <p><%= Quote.random %></p>
+    <p>Waiting for system logs to start...</p>
+  </div>
 <% end %>
 
 <script>
 var element = document.querySelector('.run-details');
 element.scrollTop = element.scrollHeight;
+
 document.querySelector('.terminal').classList.remove('terminal-masked');
 </script>
