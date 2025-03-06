@@ -1,11 +1,12 @@
 require "base64"
 
 module SaturnCIRunnerAPI
+  WAIT_INTERVAL_IN_SECONDS = 5
+
   class Stream
-    def initialize(log_file_path, api_path, wait_interval: 1)
+    def initialize(log_file_path, api_path)
       @log_file_path = log_file_path
       @api_path = api_path
-      @wait_interval = wait_interval
       @keep_alive = true
     end
 
@@ -25,7 +26,7 @@ module SaturnCIRunnerAPI
 
           most_recent_total_line_count = all_lines.count
 
-          sleep(@wait_interval)
+          sleep(WAIT_INTERVAL_IN_SECONDS)
           break unless @keep_alive
         end
 
