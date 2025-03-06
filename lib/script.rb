@@ -73,36 +73,16 @@ class Script
       -t #{docker_registry_cache.image_url}:latest \
       #{build_args.join(" ")} \
       --cache-from type=registry,ref=#{docker_registry_cache.image_url}:cache \
+      --cache-to type=registry,ref=#{docker_registry_cache.image_url}:cache,mode=max \
       --progress=plain \
       -f .saturnci/Dockerfile ."
 
     puts "Build command: #{build_command}"
-    system_command_result = system(build_command)
-    if system_command_result
+    build_command_result = system(build_command)
+    if build_command_result
       puts "Build command completed successfully"
     else
       raise "Build command failed"
-    end
-
-    push_latest_command = "docker push #{docker_registry_cache.image_url}:latest"
-    puts "Push latest command: #{push_latest_command}"
-    push_latest_command_result = system(push_latest_command)
-    
-    if push_latest_command_result
-      puts "Push latest command completed successfully"
-    else
-      raise "Push latest command failed"
-    end
-
-    system("docker tag #{docker_registry_cache.image_url}:latest #{docker_registry_cache.image_url}:cache")
-    push_cache_command = "docker push #{docker_registry_cache.image_url}:cache"
-    puts "Push cache command: #{push_cache_command}"
-    push_cache_command_result = system(push_cache_command)
-
-    if push_cache_command_result
-      puts "Push cache command completed successfully"
-    else
-      raise "Push cache command failed"
     end
 
     puts "Running pre.sh"
