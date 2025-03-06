@@ -19,7 +19,7 @@ ENV DATABASE_PASSWORD=dummy_database_password
 ENV DATABASE_HOST=localhost
 ENV DATABASE_PORT=5432
 
-RUN bundle exec rake assets:precompile
+RUN bundle exec rails assets:precompile
 
 COPY . ./
 
