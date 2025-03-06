@@ -84,14 +84,24 @@ class Script
       raise "Build command failed"
     end
 
-    push_command = "docker push #{docker_registry_cache.image_url}:latest"
-    puts "Push command: #{push_command}"
-    push_command_result = system(push_command)
+    push_latest_command = "docker push #{docker_registry_cache.image_url}:latest"
+    puts "Push latest command: #{push_latest_command}"
+    push_latest_command_result = system(push_latest_command)
     
-    if push_command_result
+    if push_latest_command_result
       puts "Push command completed successfully"
     else
       raise "Push command failed"
+    end
+
+    push_cache_command = "docker push #{docker_registry_cache.image_url}:cache"
+    puts "Push cache command: #{push_cache_command}"
+    push_cache_command_result = system(push_cache_command)
+
+    if push_cache_command_result
+      puts "Push cache command completed successfully"
+    else
+      raise "Push cache command failed"
     end
 
     puts "Running pre.sh"
