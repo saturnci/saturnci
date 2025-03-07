@@ -6,8 +6,7 @@
   </div>
 <% else %>
   <div class="non-terminal-run-info">
-    <p><i><%= Quote.random %></i></p>
-    <hr>
-    <p>Waiting for system logs to start...</p>
+    <p class="waiting-for-output">Waiting for output to start...</p>
+    <p class="quote"><%= Quote.random %></p>
   </div>
 <% end %>

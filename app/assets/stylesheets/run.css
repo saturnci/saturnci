@@ -22,4 +22,19 @@
 
 .non-terminal-run-info {
   color: #FFF;
+  padding-top: 50px;
+}
+
+.waiting-for-output {
+  text-align: center;
+  font-size: 22px;
+}
+
+.quote {
+  text-align: center;
+  font-style: italic;
+  color: #999;
+  font-size: 18px;
+  max-width: 600px;
+  margin: 0 auto;
 }
