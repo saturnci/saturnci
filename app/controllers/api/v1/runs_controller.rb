@@ -35,7 +35,6 @@ module API
       private
 
       def rsa_key(run)
-        return unless File.exist?(run.runner_rsa_key_path.to_s)
         Base64.encode64(File.read(run.runner_rsa_key_path.to_s)).strip
       end
     end
