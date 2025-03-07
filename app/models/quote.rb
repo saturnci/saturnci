@@ -20,6 +20,7 @@ class Quote
     "\"Study hard what interests you the most in the most undisciplined, irreverent and original manner possible.\"<br>- Richard Feynman",
     "\"The first principle is that you must not fool yourself and you are the easiest person to fool.\"<br>- Richard Feynman",
     "\"I learned very early the difference between knowing the name of something and knowing something.\"<br>- Richard Feynman",
+    "\"For each desired change, make the change easy (warning: this may be hard), then make the easy change.\"<br>- Kent Beck",
   ]
 
   def self.random
