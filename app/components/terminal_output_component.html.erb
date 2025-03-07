@@ -7,6 +7,6 @@
 <% else %>
   <div class="non-terminal-run-info">
     <p class="waiting-for-output">Waiting for output to start...</p>
-    <p class="quote"><%= Quote.random %></p>
+    <p class="quote"><%= Quote.random.html_safe %></p>
   </div>
 <% end %>
