@@ -2,7 +2,7 @@ resource "digitalocean_database_cluster" "postgres" {
   name       = "saturnci-production-db-2025-02-28a"
   engine     = "pg"
   version    = "15"
-  size       = "db-s-1vcpu-1gb"
+  size       = "db-s-4vcpu-8gb"
   region     = "nyc1"
   node_count = 1
 }
