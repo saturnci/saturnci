@@ -1,0 +1,16 @@
+#!/bin/bash
+
+source .env
+
+PGPASSWORD=$PRODUCTION_DATABASE_PASSWORD pg_dump \
+  -h $PRODUCTION_DATABASE_HOST \
+  -p $PRODUCTION_DATABASE_PORT \
+  -U $PRODUCTION_DATABASE_USERNAME \
+  -Fc \
+  --exclude-table=github_check_runs \
+  --exclude-table=github_events \
+  --exclude-table=run_events \
+  --exclude-table=runner_system_logs \
+  --exclude-table=screenshots \
+  --exclude-table=solid_cable_messages \
+  $PRODUCTION_DATABASE_NAME > tmp/production_db_dump.dump
