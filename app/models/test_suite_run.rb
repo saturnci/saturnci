@@ -38,6 +38,10 @@ class TestSuiteRun < ApplicationRecord
     end
   end
 
+  def passed?
+    status == "Passed"
+  end
+
   def status
     Rails.cache.fetch(status_cache_key) do
       calculated_status

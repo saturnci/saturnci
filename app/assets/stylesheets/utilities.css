@@ -32,3 +32,20 @@
   padding: 3px 8px;
   font-size: 14px;
 }
+
+.number {
+  font-family: monospace;
+  text-align: right;
+}
+
+.font-fixed {
+  font-family: monospace;
+}
+
+.text-red {
+  color: red;
+}
+
+.text-white {
+  color: #FFF;
+}

@@ -38,6 +38,18 @@ class BuildsController < ApplicationController
 
     authorize @build
 
+    if @build.passed?
+      @test_suite_run_component = TestSuiteRunComponent.new(
+        build: @build,
+        current_tab_name: params[:partial],
+        branch_name: params[:branch_name],
+        statuses: params[:statuses],
+        clear: params[:clear]
+      )
+
+      return
+    end
+
     if @build.test_case_runs.any?
       test_case_run = TestCaseRun.failed_first(@build.test_case_runs).first
     end
@@ -61,14 +73,6 @@ class BuildsController < ApplicationController
         request.query_parameters
       ) and return
     end
-
-    @test_suite_run_component = TestSuiteRunComponent.new(
-      build: @build,
-      current_tab_name: params[:partial],
-      branch_name: params[:branch_name],
-      statuses: params[:statuses],
-      clear: params[:clear]
-    )
   end
 
   def destroy

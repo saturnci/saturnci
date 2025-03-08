@@ -46,5 +46,38 @@
         <% end %>
       <% end %>
     <% end %>
+  <% else %>
+    <table border>
+      <tr>
+        <th>Runner</th>
+        <th>Duration</th>
+      </tr>
+      <% test_suite_run.runs.sorted.each do |run| %>
+        <tr>
+          <td><%= run.name %></td>
+          <td class="number"><%= run.duration %>s</td>
+        </tr>
+      <% end %>
+      <tr>
+        <td>Total</td>
+        <td class="number">
+          <%= test_suite_run.runs.sum(&:duration) %>s
+        </td>
+      </tr>
+    </table>
+
+    <div>
+      Average runtime:
+      <span class="number">
+        <%= test_suite_run.runs.map(&:duration).sum / test_suite_run.runs.size %>s
+      </span>
+    </div>
+
+    <div>
+      Greatest deviation from average:
+      <span class="number">
+        <%= test_suite_run.runs.map(&:duration).max - (test_suite_run.runs.map(&:duration).sum / test_suite_run.runs.size) %>s
+      </span>
+    </div>
   <% end %>
 <% end %>
