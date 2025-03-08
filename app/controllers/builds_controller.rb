@@ -34,20 +34,19 @@ class BuildsController < ApplicationController
   end
 
   def show
-    @test_suite_run = TestSuiteRun.find(params[:id])
-    @build = @test_suite_run # for backwards compatibility
+    @build = Build.find(params[:id])
 
-    authorize @test_suite_run
+    authorize @build
 
-    if @test_suite_run.test_case_runs.any?
-      test_case_run = TestCaseRun.failed_first(@test_suite_run.test_case_runs).first
+    if @build.test_case_runs.any?
+      test_case_run = TestCaseRun.failed_first(@build.test_case_runs).first
     end
 
     if turbo_frame_request?
       render(
         partial: "test_suite_runs/overview",
         locals: {
-          build: @test_suite_run,
+          build: @build,
           test_case_run: test_case_run
         }
       )
@@ -57,14 +56,14 @@ class BuildsController < ApplicationController
 
     if test_case_run.present?
       redirect_to project_test_case_run_path(
-        @test_suite_run.project,
+        @build.project,
         test_case_run,
         request.query_parameters
       ) and return
     end
 
     @test_suite_run_component = TestSuiteRunComponent.new(
-      build: @test_suite_run,
+      build: @build,
       current_tab_name: params[:partial],
       branch_name: params[:branch_name],
       statuses: params[:statuses],
