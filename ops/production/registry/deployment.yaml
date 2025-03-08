@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: registry-deployment
 spec:
-  replicas: 8
+  replicas: 1
   selector:
     matchLabels:
       app: registry
@@ -20,9 +20,24 @@ spec:
         env:
         - name: REGISTRY_STORAGE_DELETE_ENABLED
           value: "true"
-        volumeMounts:
-        - name: registry-data
-          mountPath: /var/lib/registry
+        - name: REGISTRY_STORAGE
+          value: "s3"
+        - name: REGISTRY_STORAGE_S3_BUCKET
+          value: "saturnci-production-storage"
+        - name: REGISTRY_STORAGE_S3_ACCESSKEY
+          valueFrom:
+            secretKeyRef:
+              name: registry-storage-secret
+              key: access-key
+        - name: REGISTRY_STORAGE_S3_SECRETKEY
+          valueFrom:
+            secretKeyRef:
+              name: registry-storage-secret
+              key: secret-key
+        - name: REGISTRY_STORAGE_S3_REGION
+          value: "nyc3"
+        - name: REGISTRY_STORAGE_S3_REGIONENDPOINT
+          value: "nyc3.digitaloceanspaces.com"
         resources:
           requests:
             memory: "512Mi"
@@ -30,7 +45,3 @@ spec:
           limits:
             memory: "1Gi"
             cpu: "500m"
-      volumes:
-      - name: registry-data
-        persistentVolumeClaim:
-          claimName: registry-pvc
