@@ -1,0 +1,16 @@
+#!/bin/bash
+
+source .env
+
+PGPASSWORD=$PGPASSWORD psql \
+  -U doadmin \
+  -h saturnci-production-db-2025-02-28a-do-user-15442634-0.m.db.ondigitalocean.com \
+  -p 25060 \
+  -d defaultdb \
+  -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public;"
+
+PGPASSWORD=$PGPASSWORD psql \
+  -U doadmin \
+  -h saturnci-production-db-2025-02-28a-do-user-15442634-0.m.db.ondigitalocean.com \
+  -p 25060 \
+  -d defaultdb < tmp/production_db_dump.sql
