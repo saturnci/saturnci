@@ -33,4 +33,7 @@ RUN bundle exec rails assets:precompile
 
 COPY . ./
 
+RUN mkdir -p /code/tmp/saturnci && \
+    chmod -R 777 /code/tmp
+
 CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
