@@ -26,6 +26,8 @@ spec:
           value: "600s"  # 10 minutes
         - name: REGISTRY_HTTP_RESPONSEHEADER_TIMEOUT
           value: "600s"  # 10 minutes
+        - name: REGISTRY_PROXY_REMOTEURL
+          value: "https://registry-1.docker.io"
         volumeMounts:
         - name: registry-data
           mountPath: /var/lib/registry

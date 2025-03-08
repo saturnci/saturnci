@@ -31,7 +31,7 @@ services:
       retries: 10
 
   postgres:
-    image: postgres:17.2-alpine
+    image: "registrycache.saturnci.com:5000/library/postgres:17.2-alpine"
     volumes:
       - postgresql:/var/lib/postgresql/data:delegated
       - ./init.sql:/data/application/init.sql
@@ -51,7 +51,7 @@ services:
       driver: none
 
   chrome:
-    image: seleniarm/standalone-chromium
+    image: "registrycache.saturnci.com:5000/seleniarm/standalone-chromium:latest"
     hostname: chrome
     shm_size: 2g
     ports:
