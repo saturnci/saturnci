@@ -15,7 +15,7 @@ describe SaturnCICLI::APIRequest do
       api_request = SaturnCICLI::APIRequest.new(
         credential:,
         method: "GET",
-        endpoint: "builds"
+        endpoint: "test_suite_runs"
       )
 
       expect(api_request.use_ssl?).to be true
@@ -35,7 +35,7 @@ describe SaturnCICLI::APIRequest do
       api_request = SaturnCICLI::APIRequest.new(
         credential:,
         method: "GET",
-        endpoint: "builds"
+        endpoint: "test_suite_runs"
       )
 
       expect(api_request.use_ssl?).to be false

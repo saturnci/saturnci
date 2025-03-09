@@ -11,7 +11,7 @@ describe "authentication" do
     end
 
     it "does not raise an error" do
-      stub_request(:get, "#{SaturnCICLI::Credential::DEFAULT_HOST}/api/v1/builds")
+      stub_request(:get, "#{SaturnCICLI::Credential::DEFAULT_HOST}/api/v1/test_suite_runs")
         .to_return(body: "[]", status: 200)
 
       expect {
