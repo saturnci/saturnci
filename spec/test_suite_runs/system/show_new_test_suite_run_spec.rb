@@ -88,7 +88,7 @@ describe "Show new test suite run", type: :system do
     let!(:runner_request_delay) { sleep(5) }
 
     it "shows the new test suite run" do
-      runner_request = double("RunnerRequest")
+      runner_request = double("RunSpecificRunnerRequest")
       allow(runner_request).to receive(:execute!).and_return(runner_request_delay)
 
       allow(run).to receive(:runner_request).and_return(runner_request)
