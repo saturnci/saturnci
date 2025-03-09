@@ -16,7 +16,7 @@
         data: { turbo: false },
         class: "button" %>
     <% else %>
-      <%= button_to "Restart",
+      <%= button_to "Rerun",
         rebuilds_path(build_id: @build.id),
         method: :post,
         data: { turbo: false },
