@@ -12,18 +12,18 @@ class ProjectsController < ApplicationController
   def show
     authorize @project
 
-    if @project.builds.any?
-      build = @project.builds.order("created_at desc").first
-      redirect_to TestSuiteRunLinkPath.new(build).value
-    elsif @project.builds.with_deleted.empty?
-      build = BuildFromCommitFactory.new(
-        BuildFromCommitFactory.most_recent_commit(@project)
-      ).build
+    if @project.test_suite_runs.any?
+      test_suite_run = @project.test_suite_runs.order("created_at desc").first
+      redirect_to TestSuiteRunLinkPath.new(test_suite_run).value
+    elsif @project.test_suite_runs.with_deleted.empty?
+      test_suite_run = TestSuiteRunFromCommitFactory.new(
+        TestSuiteRunFromCommitFactory.most_recent_commit(@project)
+      ).test_suite_run
 
-      build.project = @project
-      build.save!
+      test_suite_run.project = @project
+      test_suite_run.save!
 
-      redirect_to TestSuiteRunLinkPath.new(build).value
+      redirect_to TestSuiteRunLinkPath.new(test_suite_run).value
     end
   end
 

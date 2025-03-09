@@ -22,7 +22,7 @@ describe "Projects", type: :request do
       before do
         login_as(project.user, scope: :user)
 
-        allow(BuildFromCommitFactory).to receive(:most_recent_commit).and_return(
+        allow(TestSuiteRunFromCommitFactory).to receive(:most_recent_commit).and_return(
           {
             "sha" => "d9e65e719b3fffae853d6264485d3f0467b3d8a3",
             "commit" => {

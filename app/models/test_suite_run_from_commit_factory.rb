@@ -1,10 +1,10 @@
-class BuildFromCommitFactory
+class TestSuiteRunFromCommitFactory
   def initialize(commit)
     @commit = commit
   end
 
-  def build
-    Build.new(
+  def test_suite_run
+    TestSuiteRun.new(
       branch_name: "main",
       author_name: @commit["commit"]["author"]["name"],
       commit_hash: @commit["sha"],

@@ -1,24 +1,24 @@
 require "rails_helper"
 
-describe BuildFromCommitFactory do
-  let!(:build) do
-    BuildFromCommitFactory.new(commit).build
+describe TestSuiteRunFromCommitFactory do
+  let!(:test_suite_run) do
+    TestSuiteRunFromCommitFactory.new(commit).test_suite_run
   end
 
   it "has a branch name" do
-    expect(build.branch_name).to eq("main")
+    expect(test_suite_run.branch_name).to eq("main")
   end
 
   it "has an author name" do
-    expect(build.author_name).to eq("Jason Swett")
+    expect(test_suite_run.author_name).to eq("Jason Swett")
   end
 
   it "has a commit hash" do
-    expect(build.commit_hash).to eq("d9e65e719b3fffae853d6264485d3f0467b3d8a3")
+    expect(test_suite_run.commit_hash).to eq("d9e65e719b3fffae853d6264485d3f0467b3d8a3")
   end
 
   it "has a commit message" do
-    expect(build.commit_message).to eq("Change stuff.")
+    expect(test_suite_run.commit_message).to eq("Change stuff.")
   end
 
   def commit
