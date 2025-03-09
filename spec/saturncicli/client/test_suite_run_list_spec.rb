@@ -1,7 +1,7 @@
 require_relative "../../../lib/saturncicli/credential"
 require_relative "../../../lib/saturncicli/client"
 
-describe "build list" do
+describe "test suite run list" do
   before do
     body = [
       {
@@ -21,7 +21,7 @@ describe "build list" do
       }
     ].to_json
 
-    stub_request(:get, "#{SaturnCICLI::Credential::DEFAULT_HOST}/api/v1/builds")
+    stub_request(:get, "#{SaturnCICLI::Credential::DEFAULT_HOST}/api/v1/test_suite_runs")
       .to_return(body: body, status: 200)
   end
 
@@ -37,13 +37,13 @@ describe "build list" do
   it "formats the output to a table" do
     expected_output = <<~OUTPUT
     Branch           Commit    Commit message
-    saturnci-client  2bfcb64c  Fix response.body issue in SaturnCI clien...
-    saturnci-client  ede26ec5  Fix credentials issue.
-    saturnci-client  f8244ef3  Make output more elegant.
+    saturnci-client  2bfcb64c  Fix response.body iss...
+    saturnci-client  ede26ec5  Fix credentials issue...
+    saturnci-client  f8244ef3  Make output more eleg...
     OUTPUT
 
     expect {
-      client.builds(columns: %w[branch_name commit_hash commit_message])
+      client.test_suite_runs(columns: %w[branch_name commit_hash commit_message])
     }.to output(expected_output).to_stdout
   end
 end
