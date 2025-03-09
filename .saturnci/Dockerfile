@@ -1,8 +1,15 @@
-FROM ruby:3.3.5
+FROM ruby:3.3.5-slim
 
 WORKDIR /code
 
 ENV RAILS_ENV=test
+
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpq-dev \
+    nodejs \
+    git \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY Gemfile Gemfile.lock ./
 RUN bundle install
@@ -22,7 +29,6 @@ ENV DATABASE_HOST=localhost
 ENV DATABASE_PORT=5432
 
 RUN bundle exec rails assets:precompile
-
 COPY . ./
 
 CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
