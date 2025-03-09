@@ -21,9 +21,9 @@ class TestSuiteRunComponent < ViewComponent::Base
     )
   end
 
-  def build_filter_component
-    @build_filter_component ||= BuildFilterComponent.new(
-      build: @build,
+  def test_suite_run_filter_component
+    @test_suite_run_filter_component ||= TestSuiteRunFilterComponent.new(
+      test_suite_run: @build,
       branch_name: @branch_name,
       checked_statuses: @statuses,
       current_tab_name: @current_tab_name

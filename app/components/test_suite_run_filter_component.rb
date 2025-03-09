@@ -1,4 +1,4 @@
-class BuildFilterComponent < ViewComponent::Base
+class TestSuiteRunFilterComponent < ViewComponent::Base
   STATUSES = [
     "Passed",
     "Failed",
@@ -7,8 +7,8 @@ class BuildFilterComponent < ViewComponent::Base
     "Not Started"
   ]
 
-  def initialize(build:, branch_name:, checked_statuses:, current_tab_name:)
-    @build = build
+  def initialize(test_suite_run:, branch_name:, checked_statuses:, current_tab_name:)
+    @test_suite_run = test_suite_run
     @branch_name = branch_name
     @checked_statuses = checked_statuses
     @current_tab_name = current_tab_name
@@ -19,7 +19,7 @@ class BuildFilterComponent < ViewComponent::Base
   end
 
   def branch_names
-    @build.project.builds.map(&:branch_name).uniq
+    @test_suite_run.project.test_suite_runs.map(&:branch_name).uniq
   end
 
   def statuses
