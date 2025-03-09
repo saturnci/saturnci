@@ -44,7 +44,7 @@ Rails.application.routes.draw do
   end
 
   resources :test_suite_reruns, only: :create
-  resources :build_cancellations, only: :create
+  resources :test_suite_run_cancellations, only: :create
   resources :user_emails, only: %i(new create)
 
   draw :admin
