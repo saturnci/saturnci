@@ -23,7 +23,7 @@ class TestSuiteRunComponent < ViewComponent::Base
 
   def build_filter_component
     @build_filter_component ||= BuildFilterComponent.new(
-      build: @build,
+      test_suite_run: @build,
       branch_name: @branch_name,
       checked_statuses: @statuses,
       current_tab_name: @current_tab_name
