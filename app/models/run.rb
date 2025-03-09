@@ -66,10 +66,13 @@ class Run < ApplicationRecord
   end
 
   def runner_request
+    rsa_key = Cloud::RSAKey.new(self)
+    ssh_key = Cloud::SSHKey.new(rsa_key)
+
     RunSpecificRunnerRequest.new(
       run: self,
       github_installation_id: build.project.github_account.github_installation_id,
-      ssh_key: Cloud::SSHKey.new(self)
+      ssh_key:
     )
   end
 
