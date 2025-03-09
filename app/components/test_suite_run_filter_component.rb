@@ -1,4 +1,4 @@
-class BuildFilterComponent < ViewComponent::Base
+class TestSuiteRunFilterComponent < ViewComponent::Base
   STATUSES = [
     "Passed",
     "Failed",
