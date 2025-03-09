@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_25_175319) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_09_170230) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -78,6 +78,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_25_175319) do
     t.integer "concurrency", default: 2, null: false
     t.index ["github_account_id"], name: "index_projects_on_github_account_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
+  end
+
+  create_table "rsa_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "run_id", null: false
+    t.text "public_key_value", null: false
+    t.text "private_key_value", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["run_id"], name: "index_rsa_keys_on_run_id"
   end
 
   create_table "run_events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -198,6 +207,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_25_175319) do
   add_foreign_key "project_secrets", "projects"
   add_foreign_key "projects", "github_accounts"
   add_foreign_key "projects", "users"
+  add_foreign_key "rsa_keys", "runs"
   add_foreign_key "run_events", "runs"
   add_foreign_key "runner_system_logs", "runs"
   add_foreign_key "runs", "test_suite_runs", column: "build_id"
