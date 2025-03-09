@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_09_170230) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_09_233935) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -157,6 +157,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_09_170230) do
     t.text "exception_message"
     t.text "exception_backtrace"
     t.index ["run_id"], name: "index_test_case_runs_on_run_id"
+  end
+
+  create_table "test_runners", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.string "cloud_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cloud_id"], name: "index_test_runners_on_cloud_id", unique: true
+    t.index ["name"], name: "index_test_runners_on_name", unique: true
   end
 
   create_table "test_suite_runs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
