@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 COPY Gemfile Gemfile.lock ./
-RUN bundle install
+RUN bundle install && rm -rf /usr/local/bundle/cache/*
 
 COPY app/assets ./app/assets
 COPY app/javascript ./app/javascript
@@ -28,7 +28,9 @@ ENV DATABASE_PASSWORD=dummy_database_password
 ENV DATABASE_HOST=localhost
 ENV DATABASE_PORT=5432
 
-RUN bundle exec rails assets:precompile
+RUN bundle exec rails assets:precompile && \
+    rm -rf tmp/cache node_modules/.cache
+
 COPY . ./
 
 CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
