@@ -23,8 +23,7 @@ class RunnerRequest
 
     @run.update!(
       snapshot_image_id: DropletConfig::SNAPSHOT_IMAGE_ID,
-      runner_id: droplet_request.id,
-      runner_rsa_key_path: @ssh_key.rsa_key.file_path
+      runner_id: droplet_request.id
     )
   end
 

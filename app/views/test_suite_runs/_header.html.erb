@@ -17,7 +17,7 @@
         class: "button" %>
     <% else %>
       <%= button_to "Rerun",
-        test_suite_reruns_path(build_id: @build.id),
+        test_suite_reruns_path(test_suite_run_id: @build.id),
         method: :post,
         data: { turbo: false },
         class: "button" %>

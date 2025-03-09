@@ -77,11 +77,6 @@ module SaturnCICLI
         sleep(ConnectionDetails::WAIT_INTERVAL_IN_SECONDS)
       end
 
-      until connection_details.refresh.rsa_key_path
-        puts "Waiting for RSA key..."
-        sleep(ConnectionDetails::WAIT_INTERVAL_IN_SECONDS)
-      end
-
       ssh_session = SSHSession.new(
         ip_address: connection_details.ip_address,
         rsa_key_path: connection_details.rsa_key_path

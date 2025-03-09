@@ -4,6 +4,10 @@ class RunnerNetwork
   end
 
   def ip_address
+    if droplet.nil?
+      raise "No droplet found with id '#{@runner_id}'"
+    end
+
     public_network(droplet)&.ip_address
   end
 

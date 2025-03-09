@@ -36,7 +36,7 @@ module API
 
       def rsa_key(run)
         return unless run.rsa_key.present?
-        Base64.strict_encode64(run.rsa_key.public_key_value)
+        Base64.strict_encode64(run.rsa_key.private_key_value)
       end
     end
   end
