@@ -54,8 +54,8 @@ describe "run", type: :request do
       before do
         Cloud::RSAKey.create!(
           run:,
-          public_key_value: "abc123",
-          private_key_value: "def456"
+          private_key_value: "abc123",
+          public_key_value: "def456"
         )
       end
 
