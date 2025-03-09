@@ -1,23 +1,20 @@
 require "fileutils"
-require "securerandom"
 
 module Cloud
-  class RSAKey
+  class RSAKey < ApplicationRecord
+    belongs_to :run
     TMP_DIR_NAME = "/tmp/saturnci"
-    attr_reader :filename
 
-    # tmp_dir_name is configurable so that a different directory
-    # can be used in the test environment as to not conflict with
-    # the development environment
-    def initialize(filename)
-      @filename = filename
-
+    def self.generate(run)
       FileUtils.mkdir_p(TMP_DIR_NAME)
+      file_path = File.join(TMP_DIR_NAME, "rsa-key-run-#{run.id}")
       system("ssh-keygen -t rsa -b 4096 -N '' -f #{file_path} > /dev/null")
-    end
 
-    def file_path
-      "#{TMP_DIR_NAME}/#{@filename}"
+      create!(
+        run:,
+        private_key_value: File.read(file_path),
+        public_key_value: File.read("#{file_path}.pub")
+      )
     end
   end
 end

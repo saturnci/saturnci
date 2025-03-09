@@ -2,16 +2,17 @@ module Cloud
   class SSHKey
     attr_reader :rsa_key
 
-    def initialize(name)
-      @rsa_key = Cloud::RSAKey.new(name)
+    def initialize(run)
+      @run = run
+      @rsa_key = Cloud::RSAKey.generate(run)
     end
 
     def id
       client = DropletKitClientFactory.client
 
       droplet_kit_ssh_key = DropletKit::SSHKey.new(
-        name: @rsa_key.filename,
-        public_key: File.read("#{@rsa_key.file_path}.pub")
+        name: "ssh-key-run-#{@run.id}",
+        public_key: @rsa_key.public_key_value
       )
 
       ssh_key = client.ssh_keys.create(droplet_kit_ssh_key)
