@@ -1,13 +1,5 @@
 FROM ruby:3.3.5-slim
 
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y \
-    build-essential \
-    libpq-dev \
-    nodejs \
-    git && \
-    rm -rf /var/lib/apt/lists/*
-
 WORKDIR /code
 
 ENV RAILS_ENV=test
