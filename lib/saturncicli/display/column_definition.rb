@@ -21,7 +21,7 @@ module SaturnCICLI
       end
 
       def class_name
-        "SaturnCICLI::Display::#{@resource_name.to_s.capitalize}TableColumnDefinitions"
+        "SaturnCICLI::Display::#{@resource_name.to_s.split('_').map(&:capitalize).join}TableColumnDefinitions"
       end
     end
   end

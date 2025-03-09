@@ -1,27 +1,27 @@
 require "rails_helper"
 include APIAuthenticationHelper
 
-RSpec.describe "builds", type: :request do
-  let!(:build) do
+describe "test suite runs", type: :request do
+  let!(:test_suite_run) do
     create(:build, created_at: "2020-01-01T01:00:00")
   end
 
-  let!(:user) { build.project.user }
+  let!(:user) { test_suite_run.project.user }
 
   before { user.update!(super_admin: true) }
 
-  describe "GET /api/v1/builds" do
+  describe "GET /api/v1/test_suite_runs" do
     it "returns a 200 response" do
       get(
-        api_v1_builds_path,
+        api_v1_test_suite_runs_path,
         headers: api_authorization_headers(user)
       )
       expect(response).to have_http_status(200)
     end
 
-    it "returns a list of builds" do
+    it "returns a list of test suite runs" do
       get(
-        api_v1_builds_path,
+        api_v1_test_suite_runs_path,
         headers: api_authorization_headers(user)
       )
 
@@ -31,7 +31,7 @@ RSpec.describe "builds", type: :request do
 
     it "includes status" do
       get(
-        api_v1_builds_path,
+        api_v1_test_suite_runs_path,
         headers: api_authorization_headers(user)
       )
 
