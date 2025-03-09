@@ -8,7 +8,6 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     libpq-dev \
     nodejs \
-    git \
     && rm -rf /var/lib/apt/lists/*
 
 COPY Gemfile Gemfile.lock ./
