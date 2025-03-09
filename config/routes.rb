@@ -43,7 +43,7 @@ Rails.application.routes.draw do
     resources :project_integrations, only: %i(new create)
   end
 
-  resources :rebuilds, only: :create
+  resources :test_suite_reruns, only: :create
   resources :build_cancellations, only: :create
   resources :user_emails, only: %i(new create)
 
