@@ -15,7 +15,7 @@ describe "Push", type: :request do
       allow(stub).to receive(:execute!)
     end
 
-    allow(RunnerRequest).to receive(:new).and_return(runner_request_stub)
+    allow(RunSpecificRunnerRequest).to receive(:new).and_return(runner_request_stub)
   end
 
   describe "git push event" do

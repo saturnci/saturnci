@@ -43,7 +43,7 @@ describe "Pull Request", type: :request do
     runner_request_stub = instance_double("RunnerRequest").tap do |stub|
       allow(stub).to receive(:execute!)
     end
-    allow(RunnerRequest).to receive(:new).and_return(runner_request_stub)
+    allow(RunSpecificRunnerRequest).to receive(:new).and_return(runner_request_stub)
 
     allow(GitHubCheckRun).to receive(:new).and_return(double(start!: true))
   end
