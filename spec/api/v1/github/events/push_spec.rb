@@ -11,7 +11,7 @@ describe "Push", type: :request do
   end
 
   before do
-    runner_request_stub = instance_double("RunnerRequest").tap do |stub|
+    runner_request_stub = instance_double("RunSpecificRunnerRequest").tap do |stub|
       allow(stub).to receive(:execute!)
     end
 
