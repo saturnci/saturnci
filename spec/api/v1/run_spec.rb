@@ -51,15 +51,12 @@ describe "run", type: :request do
     end
 
     context "RSA key file exists" do
-      around do |example|
-        tempfile = Tempfile.new("rsa_key")
-        tempfile.write("abc123")
-        tempfile.close
-        run.update!(runner_rsa_key_path: tempfile.path)
-
-        example.run
-
-        tempfile.unlink
+      before do
+        Cloud::RSAKey.create!(
+          run:,
+          public_key_value: "abc123",
+          private_key_value: "def456"
+        )
       end
 
       it "returns the base64 encoded RSA key" do
