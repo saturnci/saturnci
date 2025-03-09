@@ -13,13 +13,13 @@ module SaturnCICLI
             label: "Created",
             format: -> (value) { Helpers.formatted_datetime(value) }
           },
-          "status" => { label: "Build status" },
-          "build_id" => {
-            label: "Build ID",
+          "status" => { label: "Test suite run status" },
+          "test_suite_run_id" => {
+            label: "Test suite run ID",
             format: -> (hash) { Helpers.truncated_hash(hash) }
           },
-          "build_commit_message" => {
-            label: "Build commit message",
+          "test_suite_run_commit_message" => {
+            label: "Test suite run commit message",
             format: -> (value) { Helpers.truncate(Helpers.squish(value)) }
           },
         }

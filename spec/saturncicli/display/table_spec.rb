@@ -11,7 +11,7 @@ describe "table" do
       ]
 
       SaturnCICLI::Display::Table.new(
-        resource_name: :build,
+        resource_name: :test_suite_run,
         items: items,
         options: {
           columns: %w[commit_hash status]
@@ -35,12 +35,12 @@ describe "table" do
         {
           "branch_name" => "saturnci-client",
           "commit_hash" => "7f8c8132",
-          "commit_message" => "This commit message is pretty short."
+          "commit_message" => "Short commit message"
         },
       ]
 
       SaturnCICLI::Display::Table.new(
-        resource_name: :build,
+        resource_name: :test_suite_run,
         items: items,
         options: {
           columns: %w[branch_name commit_hash commit_message]
@@ -51,7 +51,7 @@ describe "table" do
     it "does not get truncated" do
       expected_output = <<~OUTPUT
       Branch           Commit    Commit message
-      saturnci-client  7f8c8132  This commit message is pretty short.
+      saturnci-client  7f8c8132  Short commit message
       OUTPUT
 
       expect(table.to_s).to eq(expected_output.strip)
@@ -75,7 +75,7 @@ describe "table" do
       ]
 
       SaturnCICLI::Display::Table.new(
-        resource_name: :build,
+        resource_name: :test_suite_run,
         items: items,
         options: {
           columns: %w[branch_name commit_hash commit_message]
@@ -86,7 +86,7 @@ describe "table" do
     it "gets truncated" do
       expected_output = <<~OUTPUT
       Branch           Commit    Commit message
-      saturnci-client  7f8c8132  This is an extremely long commit message...
+      saturnci-client  7f8c8132  This is an extremely...
       OUTPUT
 
       expect(table.to_s).to eq(expected_output.strip)
@@ -96,7 +96,7 @@ describe "table" do
   context "commit message with newlines" do
     let!(:table) do
       commit_message = <<~TEXT
-Squashed commit of the following:                                                      
+Squashed commit of th...
                                                                    
 commit...
       TEXT
@@ -110,7 +110,7 @@ commit...
       ]
 
       SaturnCICLI::Display::Table.new(
-        resource_name: :build,
+        resource_name: :test_suite_run,
         items: items,
         options: {
           columns: %w[branch_name commit_hash commit_message]
@@ -121,7 +121,7 @@ commit...
     it "gets the newlines compressed" do
       expected_output = <<~OUTPUT
       Branch  Commit    Commit message
-      main    2126d876  Squashed commit of the following: commit....
+      main    2126d876  Squashed commit of th...
       OUTPUT
 
       expect(table.to_s).to eq(expected_output.strip)

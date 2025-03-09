@@ -1,15 +1,15 @@
 require "rails_helper"
 
-RSpec.describe "API::V1::YourEndpoint", type: :request do
+describe "Authentication", type: :request do
   let!(:user) { create(:user, super_admin: true) }
 
-  describe "GET /api/v1/builds" do
+  describe "GET /api/v1/test_suite_runs" do
     context "with valid credentials" do
       it "returns success" do
         credentials = ActionController::HttpAuthentication::Basic.encode_credentials(user.id.to_s, user.api_token)
 
         get(
-          api_v1_builds_path,
+          api_v1_test_suite_runs_path,
           headers: { "Authorization" => credentials }
         )
 
@@ -22,7 +22,7 @@ RSpec.describe "API::V1::YourEndpoint", type: :request do
         credentials = ActionController::HttpAuthentication::Basic.encode_credentials(user.id.to_s, "wrongtoken")
 
         get(
-          api_v1_builds_path,
+          api_v1_test_suite_runs_path,
           headers: { "Authorization" => credentials }
         )
 
@@ -35,7 +35,7 @@ RSpec.describe "API::V1::YourEndpoint", type: :request do
         credentials = ActionController::HttpAuthentication::Basic.encode_credentials("wrongid", user.api_token)
 
         get(
-          api_v1_builds_path,
+          api_v1_test_suite_runs_path,
           headers: { "Authorization" => credentials }
         )
 
@@ -45,7 +45,7 @@ RSpec.describe "API::V1::YourEndpoint", type: :request do
 
     context "with missing credentials" do
       it "returns unauthorized" do
-        get api_v1_builds_path
+        get api_v1_test_suite_runs_path
 
         expect(response).to have_http_status(:unauthorized)
       end

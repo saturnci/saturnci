@@ -2,11 +2,11 @@ require_relative "column_definitions"
 
 module SaturnCICLI
   module Display
-    class BuildTableColumnDefinitions < ColumnDefinitions
+    class TestSuiteRunTableColumnDefinitions < ColumnDefinitions
       define_columns do
         {
           "id" => {
-            label: "Build ID",
+            label: "Test suite run ID",
             format: -> (hash) { Helpers.truncated_hash(hash) }
           },
 

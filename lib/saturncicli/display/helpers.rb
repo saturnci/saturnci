@@ -3,7 +3,7 @@ require "date"
 module SaturnCICLI
   module Display
     module Helpers
-      DEFAULT_TRUNCATION_THRESHOLD = 40
+      DEFAULT_TRUNCATION_THRESHOLD = 20
 
       def self.truncate(text)
         return text if text.length <= DEFAULT_TRUNCATION_THRESHOLD
