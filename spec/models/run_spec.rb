@@ -4,7 +4,7 @@ describe Run, type: :model do
   let!(:run) { create(:run) }
 
   before do
-    fake_runner_request = double("RunSpecificRunnerRequest")
+    fake_runner_request = double("RunnerRequest")
     allow_any_instance_of(Run).to receive(:runner_request).and_return(fake_runner_request)
     allow(fake_runner_request).to receive(:execute!)
   end

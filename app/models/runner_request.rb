@@ -1,6 +1,6 @@
 require "droplet_kit"
 
-class RunSpecificRunnerRequest
+class RunnerRequest
   def initialize(run:, github_installation_id:, ssh_key:, client: DropletKitClientFactory.client)
     @run = run
     @github_installation_id = github_installation_id

@@ -11,11 +11,11 @@ describe "Push", type: :request do
   end
 
   before do
-    runner_request_stub = instance_double("RunSpecificRunnerRequest").tap do |stub|
+    runner_request_stub = instance_double("RunnerRequest").tap do |stub|
       allow(stub).to receive(:execute!)
     end
 
-    allow(RunSpecificRunnerRequest).to receive(:new).and_return(runner_request_stub)
+    allow(RunnerRequest).to receive(:new).and_return(runner_request_stub)
   end
 
   describe "git push event" do

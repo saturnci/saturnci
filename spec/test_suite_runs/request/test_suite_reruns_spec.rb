@@ -13,8 +13,8 @@ describe "test suite reruns", type: :request do
     before do
       login_as(test_suite_run.project.user, scope: :user)
 
-      runner_request_double = instance_double(RunSpecificRunnerRequest)
-      allow(RunSpecificRunnerRequest).to receive(:new).and_return(runner_request_double)
+      runner_request_double = instance_double(RunnerRequest)
+      allow(RunnerRequest).to receive(:new).and_return(runner_request_double)
       allow(runner_request_double).to receive(:execute!)
     end
 
