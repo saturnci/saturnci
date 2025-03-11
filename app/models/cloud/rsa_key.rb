@@ -1,5 +1,5 @@
-require "openssl"
 require "net/ssh"
+require "openssl"
 
 module Cloud
   class RSAKey < ApplicationRecord
