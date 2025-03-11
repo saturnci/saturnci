@@ -9,31 +9,14 @@ class RunSpecificRunnerRequest
   end
 
   def execute!
-    droplet = DropletKit::Droplet.new(
-      name: droplet_name(@run.build.project.name, @run.id),
-      region: DropletConfig::REGION,
-      image: DropletConfig::SNAPSHOT_IMAGE_ID,
-      size: DropletConfig::SIZE,
-      user_data: user_data,
-      tags: ["saturnci"],
-      ssh_keys: [@ssh_key.id]
+    test_runner = TestRunner.provision(
+      client: @client,
+      ssh_key: @ssh_key,
+      name: droplet_name(@run.project.name, @run.id),
+      user_data:
     )
 
-    droplet_request = @client.droplets.create(droplet)
-
-    ActiveRecord::Base.transaction do
-      test_runner = TestRunner.create!(
-        name: "test-runner-#{SecureRandom.uuid}",
-        cloud_id: droplet_request.id,
-      )
-
-      RunTestRunner.create!(test_runner:, run: @run)
-    end
-
-    @run.update!(
-      snapshot_image_id: DropletConfig::SNAPSHOT_IMAGE_ID,
-      runner_id: droplet_request.id
-    )
+    RunTestRunner.create!(test_runner:, run: @run)
   end
 
   def droplet_name(project_name, run_id)

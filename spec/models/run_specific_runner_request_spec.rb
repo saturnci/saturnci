@@ -25,12 +25,6 @@ describe RunSpecificRunnerRequest do
       allow(client).to receive_message_chain(:droplets, :create).and_return(droplet_request)
     end
 
-    it "populates snapshot image id" do
-      expect { run_specific_runner_request.execute! }
-        .to change { run.reload.snapshot_image_id.present? }
-        .from(false).to(true)
-    end
-
     it "creates a test runner" do
       expect { run_specific_runner_request.execute! }
         .to change { TestRunner.count }.by(1)
