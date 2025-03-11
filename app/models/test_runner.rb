@@ -6,7 +6,7 @@ class TestRunner < ApplicationRecord
     ssh_key = Cloud::SSHKey.new(rsa_key, client:)
 
     specification = DropletKit::Droplet.new(
-      name: "test-runner-#{SecureRandom.uuid}",
+      name: "tr-#{SecureRandom.uuid[0..7]}-#{SillyName.random.gsub(/ /, "-")}",
       region: DropletConfig::REGION,
       image: DropletConfig::SNAPSHOT_IMAGE_ID,
       size: DropletConfig::SIZE,
