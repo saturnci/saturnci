@@ -25,7 +25,7 @@ module SaturnCICLI
       when /run\s+/
         run_id = argument.split(" ")[1]
         run(run_id)
-      when "test_suite_runs"
+      when "test-suite-runs"
         test_suite_runs
       when nil
         test_suite_runs
