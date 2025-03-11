@@ -39,6 +39,14 @@ class SillyName
     shiny
     purple
     burnt
+    silver
+    golden
+    sparkly
+    glittering
+    glistening
+    flattened
+    flaming
+    burning
   )
 
   NOUNS = %w(
@@ -84,5 +92,7 @@ class SillyName
     hospital
     knife
     lamp
+    carrot
+    manager
   )
 end
