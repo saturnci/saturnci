@@ -3,7 +3,6 @@ module Cloud
     attr_reader :rsa_key
 
     def initialize(rsa_key)
-      @run = run
       @rsa_key = rsa_key
     end
 
