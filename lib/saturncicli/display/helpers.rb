@@ -20,6 +20,8 @@ module SaturnCICLI
 
       def self.formatted_datetime(value)
         DateTime.parse(value).strftime("%Y-%m-%d %H:%M:%S")
+      rescue Date::Error
+        raise "Invalid date format: \"#{value}\""
       end
     end
   end

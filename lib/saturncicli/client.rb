@@ -25,6 +25,8 @@ module SaturnCICLI
       when /run\s+/
         run_id = argument.split(" ")[1]
         run(run_id)
+      when "test-runners"
+        test_runners
       when "test-suite-runs"
         test_suite_runs
       when nil
@@ -32,6 +34,22 @@ module SaturnCICLI
       else
         fail "Unknown argument \"#{argument}\""
       end
+    end
+
+    def test_runners
+      response = get("test_runners")
+
+      if response.code == "500"
+        puts "500 Internal Server Error"
+        return
+      end
+
+      test_runners = JSON.parse(response.body)
+
+      puts Display::Table.new(
+        resource_name: :test_runner,
+        items: test_runners
+      )
     end
 
     def test_suite_runs(options = {})
