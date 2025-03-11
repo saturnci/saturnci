@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "Delete build", type: :system do
-  let!(:run) { create(:run) }
+  let!(:run) { create(:run, :with_test_runner) }
 
   before do
     login_as(run.build.project.user)
@@ -9,7 +9,7 @@ describe "Delete build", type: :system do
 
   context "runner still exists on Digital Ocean" do
     before do
-      stub_request(:delete, "https://api.digitalocean.com/v2/droplets/#{run.runner_id}").to_return(status: 200)
+      stub_request(:delete, "https://api.digitalocean.com/v2/droplets/#{run.test_runner.cloud_id}").to_return(status: 200)
     end
 
     context "branch is only branch" do
@@ -55,7 +55,7 @@ describe "Delete build", type: :system do
 
   context "runner does not still exist on Digital Ocean" do
     before do
-      stub_request(:delete, "https://api.digitalocean.com/v2/droplets/#{run.runner_id}").to_return(status: 404)
+      stub_request(:delete, "https://api.digitalocean.com/v2/droplets/#{run.test_runner.cloud_id}").to_return(status: 404)
     end
 
     it "removes the build" do
