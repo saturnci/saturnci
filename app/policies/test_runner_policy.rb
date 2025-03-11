@@ -6,4 +6,8 @@ class TestRunnerPolicy < ApplicationPolicy
   def show?
     user.super_admin?
   end
+
+  def update?
+    user.super_admin?
+  end
 end
