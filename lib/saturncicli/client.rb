@@ -108,8 +108,8 @@ module SaturnCICLI
         rsa_key_path: connection_details.rsa_key_path
       )
 
-      #response = patch("test_runners/#{test_runner_id}", { "terminate_on_completion" => false })
-      #raise "Problem: #{response.inspect}" unless response.code == "200"
+      response = patch("test_runners/#{test_runner_id}", { "terminate_on_completion" => false })
+      raise "Problem: #{response.inspect}" unless response.code == "200"
       puts ssh_session.command
       ssh_session.connect
     end

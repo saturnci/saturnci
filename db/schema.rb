@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_11_125040) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_11_212721) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -174,6 +174,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_11_125040) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "rsa_key_id", null: false
+    t.boolean "terminate_on_completion", default: true, null: false
     t.index ["cloud_id"], name: "index_test_runners_on_cloud_id", unique: true
     t.index ["name"], name: "index_test_runners_on_name", unique: true
     t.index ["rsa_key_id"], name: "index_test_runners_on_rsa_key_id"

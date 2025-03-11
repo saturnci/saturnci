@@ -8,7 +8,7 @@ describe "ssh" do
     AuthenticationHelper.stub_authentication_request
     allow_any_instance_of(SaturnCICLI::SSHSession).to receive(:connect)
 
-    stub_request(:patch, "https://app.saturnci.com/api/v1/runs/abc123").
+    stub_request(:patch, "https://app.saturnci.com/api/v1/test_runners/abc123").
       to_return(status: 200, body: "", headers: {})
   end
 
@@ -38,44 +38,44 @@ describe "ssh" do
     end
 
     before do
-      APIHelper.stub_body("api/v1/runs/abc123", body)
+      APIHelper.stub_body("api/v1/test_runners/abc123", body)
       allow(connection_details).to receive(:ip_address).and_return("111.11.11.1")
-      allow(connection_details).to receive(:rsa_key_path).and_return("/tmp/saturnci/run-abc123")
+      allow(connection_details).to receive(:rsa_key_path).and_return("/tmp/saturnci/test-runner-abc123")
     end
 
-    it "outputs the run id" do
+    it "outputs the test runner id" do
       expect do
-        command = "--run abc123 ssh"
+        command = "--test-runner abc123 ssh"
         client.ssh("abc123", connection_details)
-      end.to output("ssh -o StrictHostKeyChecking=no -i /tmp/saturnci/run-abc123 root@111.11.11.1\n").to_stdout
+      end.to output("ssh -o StrictHostKeyChecking=no -i /tmp/saturnci/test-runner-abc123 root@111.11.11.1\n").to_stdout
     end
   end
 
   context "remote machine does not yet have an IP address" do
     before do
-      APIHelper.stub_body("api/v1/runs/abc123", {})
+      APIHelper.stub_body("api/v1/test_runners/abc123", {})
       allow(connection_details).to receive(:ip_address).and_return(nil, "111.11.11.1")
-      allow(connection_details).to receive(:rsa_key_path).and_return("/tmp/saturnci/run-abc123")
+      allow(connection_details).to receive(:rsa_key_path).and_return("/tmp/saturnci/test-runner-abc123")
     end
 
     it "outputs a message" do
       expect do
-        command = "--run abc123 ssh"
+        command = "--test-runner abc123 ssh"
         client.ssh("abc123", connection_details)
-      end.to output("Waiting for IP address...\nssh -o StrictHostKeyChecking=no -i /tmp/saturnci/run-abc123 root@111.11.11.1\n").to_stdout
+      end.to output("Waiting for IP address...\nssh -o StrictHostKeyChecking=no -i /tmp/saturnci/test-runner-abc123 root@111.11.11.1\n").to_stdout
     end
   end
 
   describe "terminate on completion" do
     before do
       allow(connection_details).to receive(:ip_address).and_return("111.11.11.1")
-      allow(connection_details).to receive(:rsa_key_path).and_return("/tmp/saturnci/run-abc123")
+      allow(connection_details).to receive(:rsa_key_path).and_return("/tmp/saturnci/test-runner-abc123")
     end
 
     it "sends a request to set terminate_on_completion to false" do
       client.ssh("abc123", connection_details)
 
-      expect(a_request(:patch, "https://app.saturnci.com/api/v1/runs/abc123"))
+      expect(a_request(:patch, "https://app.saturnci.com/api/v1/test_runners/abc123"))
         .to have_been_made.once
     end
   end

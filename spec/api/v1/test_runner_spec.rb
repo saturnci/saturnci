@@ -25,4 +25,19 @@ describe "Test runners", type: :request do
       expect(response).to have_http_status(200)
     end
   end
+
+  describe "PATCH /api/v1/test_runners/:id" do
+    it "changes terminate_on_completion from true to false" do
+      extend ApplicationHelper
+
+      patch(
+        api_v1_test_runner_path(test_runner.id),
+        params: { "terminate_on_completion" => "false" },
+        headers: api_authorization_headers(user)
+      )
+
+      expect(response).to have_http_status(200)
+      expect(JSON.parse(response.body)["terminate_on_completion"]).to eq(false)
+    end
+  end
 end

@@ -21,6 +21,16 @@ module API
         render(json: { error: e.message }, status: :bad_request)
       end
 
+      def update
+        test_runner = TestRunner.find_by_abbreviated_hash(params[:id])
+        authorize test_runner
+
+        test_runner.terminate_on_completion = params[:terminate_on_completion]
+        test_runner.save!
+
+        render json: test_runner.as_json
+      end
+
       private
 
       def rsa_key(test_runner)
