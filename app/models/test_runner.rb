@@ -1,7 +1,9 @@
 class TestRunner < ApplicationRecord
-  def self.provision(client:, user_data:)
+  belongs_to :rsa_key, class_name: "Cloud::RSAKey"
+
+  def self.provision(client:, user_data: nil)
     rsa_key = Cloud::RSAKey.generate
-    ssh_key = Cloud::SSHKey.new(rsa_key)
+    ssh_key = Cloud::SSHKey.new(rsa_key, client:)
 
     specification = DropletKit::Droplet.new(
       name:,
