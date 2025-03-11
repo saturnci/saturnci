@@ -80,6 +80,20 @@ class SillyName
     poisonous
     deadly
     awful
+    hidden
+    secret
+    mystical
+    sacred
+    holy
+    divine
+    wrinkled
+    decayed
+    unwanted
+    priceless
+    precious
+    microscopic
+    mighty
+    powerful
   )
 
   NOUNS = %w(
@@ -149,5 +163,10 @@ class SillyName
     meatball
     toilet
     pants
+    mechanic
+    carpenter
+    lawyer
+    dentist
+    caveman
   )
 end
