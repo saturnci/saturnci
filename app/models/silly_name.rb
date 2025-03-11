@@ -60,8 +60,9 @@ class SillyName
     enchanted
     magical
     lost
-    genial
     dead
+    airborne
+    buried
     friendly
     yellow
     squashed
@@ -75,6 +76,10 @@ class SillyName
     fat
     greasy
     boiled
+    dangerous
+    poisonous
+    deadly
+    awful
   )
 
   NOUNS = %w(
@@ -139,5 +144,10 @@ class SillyName
     pineapple
     elf
     walrus
+    bacterium
+    kitchen
+    meatball
+    toilet
+    pants
   )
 end
