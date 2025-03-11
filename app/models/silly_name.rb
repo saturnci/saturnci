@@ -22,6 +22,7 @@ class SillyName
     gentle
     sweaty
     smelly
+    sloppy
     sleepy
     slippery
     slimy
@@ -47,6 +48,13 @@ class SillyName
     flattened
     flaming
     burning
+    intoxicated
+    diseased
+    nasty
+    nauseous
+    extraordinary
+    extreme
+    unnecessary
   )
 
   NOUNS = %w(
@@ -94,5 +102,8 @@ class SillyName
     lamp
     carrot
     manager
+    pinecone
+    hog
+    penguin
   )
 end
