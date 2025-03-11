@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_09_233935) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_11_113017) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -81,12 +81,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_09_233935) do
   end
 
   create_table "rsa_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "run_id", null: false
     t.text "public_key_value", null: false
     t.text "private_key_value", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["run_id"], name: "index_rsa_keys_on_run_id"
+    t.uuid "run_id"
   end
 
   create_table "run_events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -96,6 +95,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_09_233935) do
     t.datetime "updated_at", null: false
     t.index ["run_id", "type"], name: "index_run_events_on_run_id_and_type", unique: true
     t.index ["run_id"], name: "index_run_events_on_run_id"
+  end
+
+  create_table "run_test_runners", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "run_id", null: false
+    t.uuid "test_runner_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["run_id"], name: "index_run_test_runners_on_run_id"
+    t.index ["run_id"], name: "run_test_runners_run_id", unique: true
+    t.index ["test_runner_id"], name: "index_run_test_runners_on_test_runner_id"
+    t.index ["test_runner_id"], name: "run_test_runners_test_runner_id", unique: true
   end
 
   create_table "runner_system_logs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -216,8 +226,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_09_233935) do
   add_foreign_key "project_secrets", "projects"
   add_foreign_key "projects", "github_accounts"
   add_foreign_key "projects", "users"
-  add_foreign_key "rsa_keys", "runs"
   add_foreign_key "run_events", "runs"
+  add_foreign_key "run_test_runners", "runs"
+  add_foreign_key "run_test_runners", "test_runners"
   add_foreign_key "runner_system_logs", "runs"
   add_foreign_key "runs", "test_suite_runs", column: "build_id"
   add_foreign_key "screenshots", "runs"
