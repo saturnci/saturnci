@@ -3,8 +3,6 @@ require "openssl"
 
 module Cloud
   class RSAKey < ApplicationRecord
-    belongs_to :run
-
     def self.generate
       rsa_key = OpenSSL::PKey::RSA.new(4096)
       private_key = rsa_key.to_pem
