@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_11_121636) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_11_125040) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -85,9 +85,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_11_121636) do
     t.text "private_key_value", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "run_id"
-    t.uuid "test_runner_id"
-    t.index ["test_runner_id"], name: "index_rsa_keys_on_test_runner_id"
   end
 
   create_table "run_events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -176,8 +173,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_11_121636) do
     t.string "cloud_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "rsa_key_id", null: false
     t.index ["cloud_id"], name: "index_test_runners_on_cloud_id", unique: true
     t.index ["name"], name: "index_test_runners_on_name", unique: true
+    t.index ["rsa_key_id"], name: "index_test_runners_on_rsa_key_id"
   end
 
   create_table "test_suite_runs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -228,7 +227,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_11_121636) do
   add_foreign_key "project_secrets", "projects"
   add_foreign_key "projects", "github_accounts"
   add_foreign_key "projects", "users"
-  add_foreign_key "rsa_keys", "test_runners"
   add_foreign_key "run_events", "runs"
   add_foreign_key "run_test_runners", "runs"
   add_foreign_key "run_test_runners", "test_runners"
@@ -236,5 +234,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_11_121636) do
   add_foreign_key "runs", "test_suite_runs", column: "build_id"
   add_foreign_key "screenshots", "runs"
   add_foreign_key "test_case_runs", "runs"
+  add_foreign_key "test_runners", "rsa_keys"
   add_foreign_key "test_suite_runs", "projects"
 end

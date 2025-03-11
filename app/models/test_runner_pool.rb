@@ -1,13 +1,10 @@
 class TestRunnerPool
-  def self.scale(count)
+  def self.scale(count, client: DropletKitClientFactory.client)
     ActiveRecord::Base.transaction do
       TestRunner.destroy_all
 
       count.times do
-        TestRunner.create!(
-          name: SecureRandom.hex(8),
-          cloud_id: SecureRandom.hex(8)
-        )
+        TestRunner.provision(client:)
       end
     end
   end

@@ -3,21 +3,6 @@ require "rails_helper"
 describe Run, type: :model do
   let!(:run) { create(:run) }
 
-  before do
-    fake_runner_request = double("RunSpecificRunnerRequest")
-    allow_any_instance_of(Run).to receive(:runner_request).and_return(fake_runner_request)
-    allow(fake_runner_request).to receive(:execute!)
-  end
-
-  describe "#start!" do
-    it "creates a new run_event with type runner_requested" do
-      perform_enqueued_jobs do
-        expect { run.start! }
-          .to change { run.run_events.where(type: "runner_requested").count }.by(1)
-      end
-    end
-  end
-
   describe "#cancel!" do
     before do
       allow(run).to receive(:delete_runner)

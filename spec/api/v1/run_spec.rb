@@ -3,6 +3,9 @@ include APIAuthenticationHelper
 
 describe "run", type: :request do
   let!(:run) { create(:run) }
+  let!(:test_runner) { create(:test_runner) }
+  let!(:run_test_runner) { create(:run_test_runner, run:, test_runner:) }
+
   let!(:user) { run.build.project.user }
 
   before do
@@ -39,21 +42,9 @@ describe "run", type: :request do
       expect(response_body["id"]).to eq(run.id)
     end
 
-    context "RSA key file does not exist" do
-      it "returns an empty RSA key" do
-        get(
-          api_v1_run_path(run.id),
-          headers: api_authorization_headers(user)
-        )
-        response_body = JSON.parse(response.body)
-        expect(response_body["rsa_key"]).to be_blank
-      end
-    end
-
-    context "RSA key file exists" do
+    describe "RSA key" do
       before do
-        Cloud::RSAKey.create!(
-          run:,
+        run.test_runner.rsa_key.update!(
           private_key_value: "abc123",
           public_key_value: "def456"
         )

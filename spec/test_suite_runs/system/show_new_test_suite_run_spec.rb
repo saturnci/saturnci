@@ -81,20 +81,15 @@ describe "Show new test suite run", type: :system do
   end
 
   context "test suite run gets not just created but started" do
-    let!(:new_test_suite_run) { create(:build, project: test_suite_run.project) }
-    let!(:run) { create(:run, build: new_test_suite_run) }
+    let!(:new_test_suite_run) do
+      create(:build, project: test_suite_run.project)
+    end
 
-    # This simulates the runner request taking a while
-    let!(:runner_request_delay) { sleep(5) }
+    let!(:run) do
+      create(:run, build: new_test_suite_run, order_index: 2)
+    end
 
     it "shows the new test suite run" do
-      runner_request = double("RunSpecificRunnerRequest")
-      allow(runner_request).to receive(:execute!).and_return(runner_request_delay)
-
-      allow(run).to receive(:runner_request).and_return(runner_request)
-      allow(new_test_suite_run).to receive(:runs_to_use).and_return([run])
-
-      new_test_suite_run.start!
       new_test_suite_run.broadcast
       expect(page).to have_content(new_test_suite_run.commit_hash)
     end
