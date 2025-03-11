@@ -69,6 +69,12 @@ class SillyName
     splendid
     magnificent
     cursed
+    hairy
+    feathery
+    bloated
+    fat
+    greasy
+    boiled
   )
 
   NOUNS = %w(
