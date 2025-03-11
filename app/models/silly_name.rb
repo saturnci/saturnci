@@ -55,6 +55,8 @@ class SillyName
     extraordinary
     extreme
     unnecessary
+    impossible
+    illegal
   )
 
   NOUNS = %w(
@@ -105,5 +107,9 @@ class SillyName
     pinecone
     hog
     penguin
+    mustache
+    beard
+    moose
+    goat
   )
 end

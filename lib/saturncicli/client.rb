@@ -20,6 +20,14 @@ module SaturnCICLI
         )
 
         ssh(run_id, connection_details)
+      when /--test-runner\s+(\S+)/
+        test_runner_id = argument.split(" ")[1]
+
+        connection_details = ConnectionDetails.new(
+          request: -> { get("test_runners/#{test_runner_id}") }
+        )
+
+        ssh(test_runner_id, connection_details)
       when "runs"
         runs
       when /run\s+/
@@ -89,7 +97,7 @@ module SaturnCICLI
       end
     end
 
-    def ssh(run_id, connection_details)
+    def ssh(test_runner_id, connection_details)
       until connection_details.refresh.ip_address
         puts "Waiting for IP address..."
         sleep(ConnectionDetails::WAIT_INTERVAL_IN_SECONDS)
@@ -100,8 +108,8 @@ module SaturnCICLI
         rsa_key_path: connection_details.rsa_key_path
       )
 
-      response = patch("runs/#{run_id}", { "terminate_on_completion" => false })
-      raise "Problem: #{response.inspect}" unless response.code == "200"
+      #response = patch("test_runners/#{test_runner_id}", { "terminate_on_completion" => false })
+      #raise "Problem: #{response.inspect}" unless response.code == "200"
       puts ssh_session.command
       ssh_session.connect
     end

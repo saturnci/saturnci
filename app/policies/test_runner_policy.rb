@@ -2,4 +2,8 @@ class TestRunnerPolicy < ApplicationPolicy
   def index?
     user.super_admin?
   end
+
+  def show?
+    user.super_admin?
+  end
 end
