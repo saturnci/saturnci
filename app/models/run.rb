@@ -9,6 +9,8 @@ class Run < ApplicationRecord
   has_one :screenshot
   has_one :runner_system_log
   has_one :rsa_key, class_name: "Cloud::RSAKey"
+  has_one :run_test_runner
+  has_one :test_runner, through: :run_test_runner
   alias_attribute :started_at, :created_at
   delegate :project, to: :build
   after_save { test_suite_run.cache_status }

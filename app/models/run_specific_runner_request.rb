@@ -21,10 +21,14 @@ class RunSpecificRunnerRequest
 
     droplet_request = @client.droplets.create(droplet)
 
-    TestRunner.create!(
-      name: "test-runner-#{SecureRandom.uuid}",
-      cloud_id: droplet_request.id,
-    )
+    ActiveRecord::Base.transaction do
+      test_runner = TestRunner.create!(
+        name: "test-runner-#{SecureRandom.uuid}",
+        cloud_id: droplet_request.id,
+      )
+
+      RunTestRunner.create!(test_runner:, run: @run)
+    end
 
     @run.update!(
       snapshot_image_id: DropletConfig::SNAPSHOT_IMAGE_ID,

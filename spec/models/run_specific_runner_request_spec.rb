@@ -35,6 +35,13 @@ describe RunSpecificRunnerRequest do
       expect { run_specific_runner_request.execute! }
         .to change { TestRunner.count }.by(1)
     end
+
+    it "creates an association with a test runner" do
+      expect { run_specific_runner_request.execute! }
+        .to change { RunTestRunner.count }.by(1)
+
+      expect(run.test_runner).to be_present
+    end
   end
 
   describe "#droplet_name" do
