@@ -57,6 +57,14 @@ class SillyName
     unnecessary
     impossible
     illegal
+    enchanted
+    magical
+    lost
+    genial
+    dead
+    friendly
+    yellow
+    squashed
   )
 
   NOUNS = %w(
@@ -73,7 +81,6 @@ class SillyName
     horse
     rabbit
     buffalo
-    frog
     bird
     tree
     pancake
