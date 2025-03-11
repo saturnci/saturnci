@@ -1,7 +1,7 @@
 require "rails_helper"
 include APIAuthenticationHelper
 
-describe "delete runner", type: :request do
+describe "Delete runner", type: :request do
   let!(:run) { create(:run, :with_test_runner) }
 
   context "terminate_on_completion is true" do
