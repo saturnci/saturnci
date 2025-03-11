@@ -2,9 +2,9 @@ module Cloud
   class SSHKey
     attr_reader :rsa_key
 
-    def initialize(run)
+    def initialize(rsa_key)
       @run = run
-      @rsa_key = Cloud::RSAKey.generate(run)
+      @rsa_key = rsa_key
     end
 
     def id

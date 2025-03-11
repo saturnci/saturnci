@@ -67,12 +67,15 @@ class Run < ApplicationRecord
     run_events.run_cancelled.any?
   end
 
-  def runner_request
-    RunSpecificRunnerRequest.new(
-      run: self,
-      github_installation_id: build.project.github_account.github_installation_id,
-      ssh_key: Cloud::SSHKey.new(self)
+  def provision_test_runner
+    runner_script = RunnerScript.new(self, test_suite_run.project.github_account.github_installation_id)
+
+    test_runner = TestRunner.provision(
+      client: DropletKitClientFactory.client,
+      user_data: runner_script.content,
     )
+
+    RunTestRunner.create!(test_runner:, run: self)
   end
 
   def delete_runner

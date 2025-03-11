@@ -1,5 +1,8 @@
 class TestRunner < ApplicationRecord
-  def self.provision(client:, ssh_key:, name:, user_data:)
+  def self.provision(client:, user_data:)
+    rsa_key = Cloud::RSAKey.generate
+    ssh_key = Cloud::SSHKey.new(rsa_key)
+
     specification = DropletKit::Droplet.new(
       name:,
       region: DropletConfig::REGION,
@@ -14,7 +17,8 @@ class TestRunner < ApplicationRecord
 
     create!(
       name: "test-runner-#{SecureRandom.uuid}",
-      cloud_id: droplet.id
+      cloud_id: droplet.id,
+      rsa_key:,
     )
   end
 end
