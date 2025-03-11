@@ -21,6 +21,11 @@ class RunSpecificRunnerRequest
 
     droplet_request = @client.droplets.create(droplet)
 
+    TestRunner.create!(
+      name: "test-runner-#{SecureRandom.uuid}",
+      cloud_id: droplet_request.id,
+    )
+
     @run.update!(
       snapshot_image_id: DropletConfig::SNAPSHOT_IMAGE_ID,
       runner_id: droplet_request.id

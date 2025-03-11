@@ -30,6 +30,11 @@ describe RunSpecificRunnerRequest do
         .to change { run.reload.snapshot_image_id.present? }
         .from(false).to(true)
     end
+
+    it "creates a test runner" do
+      expect { run_specific_runner_request.execute! }
+        .to change { TestRunner.count }.by(1)
+    end
   end
 
   describe "#droplet_name" do
