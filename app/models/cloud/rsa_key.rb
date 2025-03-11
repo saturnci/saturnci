@@ -1,19 +1,19 @@
-require "fileutils"
+require "openssl"
+require "net/ssh"
 
 module Cloud
   class RSAKey < ApplicationRecord
     belongs_to :run
-    TMP_DIR_NAME = "/tmp/saturnci"
 
     def self.generate(run)
-      FileUtils.mkdir_p(TMP_DIR_NAME)
-      file_path = File.join(TMP_DIR_NAME, "rsa-key-run-#{run.id}")
-      system("ssh-keygen -t rsa -b 4096 -N '' -f #{file_path} > /dev/null")
+      rsa_key = OpenSSL::PKey::RSA.new(4096)
+      private_key = rsa_key.to_pem
+      public_key = Net::SSH::Buffer.from(:key, rsa_key).to_s
 
       create!(
-        run:,
-        private_key_value: File.read(file_path),
-        public_key_value: File.read("#{file_path}.pub")
+        run: run,
+        private_key_value: private_key,
+        public_key_value: "ssh-rsa #{[public_key].pack('m0')}"
       )
     end
   end
