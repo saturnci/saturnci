@@ -3,12 +3,12 @@ include APIAuthenticationHelper
 
 RSpec.describe "runners", type: :request do
   describe "DELETE /api/v1/runs/:id/runner" do
-    let!(:run) { create(:run, runner_id: "123") }
+    let!(:run) { create(:run, :with_test_runner) }
 
     before do
       stub_request(
         :delete,
-        "https://api.digitalocean.com/v2/droplets/123"
+        "https://api.digitalocean.com/v2/droplets/#{run.test_runner.cloud_id}"
       ).to_return(status: 200, body: "", headers: {})           
     end
 

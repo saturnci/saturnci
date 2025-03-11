@@ -11,5 +11,9 @@ FactoryBot.define do
     trait :failed do
       exit_code { 1 }
     end
+
+    trait :with_test_runner do
+      test_runner
+    end
   end
 end
