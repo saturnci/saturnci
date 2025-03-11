@@ -65,6 +65,10 @@ class SillyName
     friendly
     yellow
     squashed
+    crystal
+    splendid
+    magnificent
+    cursed
   )
 
   NOUNS = %w(
@@ -118,5 +122,16 @@ class SillyName
     beard
     moose
     goat
+    castle
+    kingdom
+    dinner
+    breakfast
+    spectacle
+    witch
+    wizard
+    goblin
+    pineapple
+    elf
+    walrus
   )
 end
