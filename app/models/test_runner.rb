@@ -1,5 +1,10 @@
 class TestRunner < ApplicationRecord
   belongs_to :rsa_key, class_name: "Cloud::RSAKey"
+  has_one :run_test_runner
+
+  scope :unassigned, -> {
+    left_joins(:run_test_runner).where(run_test_runners: { run_id: nil })
+  }
 
   def self.provision(client:, user_data: nil)
     rsa_key = Cloud::RSAKey.generate

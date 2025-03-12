@@ -1,7 +1,7 @@
 class TestRunnerPool
   def self.scale(count, client: DropletKitClientFactory.client)
     ActiveRecord::Base.transaction do
-      TestRunner.destroy_all
+      TestRunner.unassigned.destroy_all
 
       count.times do
         TestRunner.provision(client:, user_data: script)
