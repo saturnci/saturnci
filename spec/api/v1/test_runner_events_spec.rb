@@ -17,5 +17,17 @@ describe "Test runner events", type: :request do
         )
       }.to change { TestRunnerEvent.count }.by(1)
     end
+
+    it "returns 201" do
+      post(
+        api_v1_test_runner_test_runner_events_path(test_runner_id: test_runner.id),
+        params: {
+          type: "ready_signal_received",
+        },
+        headers: api_authorization_headers(user)
+      )
+
+      expect(response).to have_http_status(:created)
+    end
   end
 end
