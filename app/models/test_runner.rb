@@ -68,6 +68,9 @@ class TestRunner < ApplicationRecord
       export SATURNCI_API_USER_ID=#{admin_user.id}
       export SATURNCI_API_TOKEN=#{admin_user.api_token}
 
+      export DOCKER_REGISTRY_CACHE_USERNAME=#{ENV["DOCKER_REGISTRY_CACHE_USERNAME"]}
+      export DOCKER_REGISTRY_CACHE_PASSWORD=#{ENV["DOCKER_REGISTRY_CACHE_PASSWORD"]}
+
       cd ~
       git clone https://github.com/saturnci/test_runner_agent.git
       cd test_runner_agent
