@@ -7,13 +7,18 @@ class TestRunner < ApplicationRecord
     left_joins(:run_test_runner).where(run_test_runners: { run_id: nil })
   }
 
-  def self.provision(client:)
+  def self.provision(client:, user_data: nil)
     rsa_key = Cloud::RSAKey.generate
-    ssh_key = Cloud::SSHKey.new(rsa_key, client:)
     name = "tr-#{SecureRandom.uuid[0..7]}-#{SillyName.random.gsub(/ /, "-")}"
 
     create!(name:).tap do |test_runner|
-      droplet = client.droplets.create(test_runner.droplet_specification(ssh_key))
+      droplet_specification = test_runner.droplet_specification(
+        ssh_key: Cloud::SSHKey.new(rsa_key, client:),
+        user_data: user_data || test_runner.script
+      )
+
+      droplet = client.droplets.create(droplet_specification)
+
       test_runner.update!(rsa_key:, cloud_id: droplet.id)
       test_runner.test_runner_events.create!(type: :provision_request_sent)
     end
@@ -40,7 +45,7 @@ class TestRunner < ApplicationRecord
     super(options).merge(status:)
   end
 
-  def droplet_specification(ssh_key)
+  def droplet_specification(ssh_key:, user_data:)
     DropletKit::Droplet.new(
       name:,
       region: DropletConfig::REGION,
@@ -52,9 +57,7 @@ class TestRunner < ApplicationRecord
     )
   end
 
-  private
-
-  def user_data
+  def script
     <<~SCRIPT
       #!/bin/bash
 
