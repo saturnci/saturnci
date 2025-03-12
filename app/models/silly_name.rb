@@ -99,9 +99,20 @@ class SillyName
     deranged
     psychotic
     indecent
-    sordid
     soggy
     majestic
+    tortured
+    tormented
+    vile
+    repulsive
+    unbearable
+    humongous
+    toxic
+    unwelcome
+    unworthy
+    laughing
+    wild
+    savage
   )
 
   NOUNS = %w(
@@ -123,7 +134,6 @@ class SillyName
     pancake
     muffin
     sausage
-    hole
     loaf
     plant
     noodle
@@ -137,7 +147,6 @@ class SillyName
     airplane
     printer
     chair
-    cube
     gardener
     prince
     weasel
@@ -188,5 +197,8 @@ class SillyName
     fairy
     farmer
     meadow
+    eyeball
+    bandit
+    thief
   )
 end
