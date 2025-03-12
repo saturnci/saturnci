@@ -58,11 +58,15 @@ class TestRunner < ApplicationRecord
   end
 
   def script
+    admin_user = User.find_by(super_admin: true)
+
     <<~SCRIPT
       #!/bin/bash
 
-      export HOST=#{ENV["SATURNCI_HOST"]}
       export TEST_RUNNER_ID=#{id}
+      export SATURNCI_API_HOST=#{ENV["SATURNCI_HOST"]}
+      export SATURNCI_API_USER_ID=#{admin_user.id}
+      export SATURNCI_API_USER_API_TOKEN=#{admin_user.api_token}
 
       cd ~
       git clone https://github.com/saturnci/test_runner_agent.git

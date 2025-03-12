@@ -5,6 +5,8 @@ describe TestRunnerPool do
     let!(:client) { double }
 
     before do
+      create(:user, super_admin: true)
+
       droplet_request = double
       allow(droplet_request).to receive(:id) { rand(10000000) }
       allow(client).to receive_message_chain(:droplets, :create).and_return(droplet_request)
