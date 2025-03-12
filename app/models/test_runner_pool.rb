@@ -12,7 +12,7 @@ class TestRunnerPool
   def self.script
     <<~SCRIPT
       #!/bin/bash
-      cd /
+      cd ~
       git clone https://github.com/saturnci/test_runner_agent.git
     SCRIPT
   end
