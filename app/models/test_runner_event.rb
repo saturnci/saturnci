@@ -5,5 +5,6 @@ class TestRunnerEvent < ApplicationRecord
   enum :type, [
     :provision_request_sent,
     :ready_signal_received,
+    :assignment_acknowledged,
   ]
 end
