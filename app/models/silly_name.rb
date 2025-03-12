@@ -180,6 +180,8 @@ class SillyName
     wrinkled
     wretched
     shriveled
+    twisted
+    shredded
   )
 
   NOUNS = %w(
@@ -315,5 +317,6 @@ class SillyName
     loser
     moron
     canoe
+    soul
   )
 end
