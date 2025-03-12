@@ -126,6 +126,9 @@ class SillyName
     shrieking
     levitating
     swollen
+    unstable
+    screaming
+    singing
   )
 
   NOUNS = %w(
@@ -224,5 +227,6 @@ class SillyName
     sword
     trout
     bassoon
+    sheep
   )
 end
