@@ -63,6 +63,9 @@ class TestRunner < ApplicationRecord
 
       cd ~
       git clone https://github.com/saturnci/test_runner_agent.git
+      cd test_runner_agent
+
+      bin/test_runner_agent send_ready_signal
     SCRIPT
   end
 end
