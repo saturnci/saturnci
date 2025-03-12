@@ -8,6 +8,15 @@ class TestRunner < ApplicationRecord
     left_joins(:run_test_runner).where(run_test_runners: { run_id: nil })
   }
 
+  scope :available, -> {
+    joins(:test_runner_events)
+      .where(test_runner_events: { type: :ready_signal_received })
+      .where("test_runner_events.created_at = (
+        SELECT MAX(created_at) FROM test_runner_events
+        WHERE test_runner_events.test_runner_id = test_runners.id
+      )")
+  }
+
   def self.provision(client:, user_data: nil)
     rsa_key = Cloud::RSAKey.generate
     name = "tr-#{SecureRandom.uuid[0..7]}-#{SillyName.random.gsub(/ /, "-")}"

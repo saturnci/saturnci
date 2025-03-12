@@ -8,6 +8,23 @@ describe TestRunner do
     allow(User).to receive(:find_by).and_return(admin_user)
   end
 
+  describe "scope available" do
+    context "when the test runner is available" do
+      it "includes the test runner" do
+        test_runner = create(:test_runner)
+        create(:test_runner_event, test_runner:, type: :ready_signal_received)
+        expect(TestRunner.available).to include(test_runner)
+      end
+    end
+
+    context "when the test runner is not available" do
+      it "does not include the test runner" do
+        test_runner = create(:test_runner)
+        expect(TestRunner.available).not_to include(test_runner)
+      end
+    end
+  end
+
   describe ".provision" do
     let!(:client) { double }
 
