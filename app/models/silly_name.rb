@@ -7,7 +7,7 @@ class SillyName
     beautiful
     wicked
     crazy
-    giant
+    colossal
     tiny
     evil
     sweet
@@ -99,6 +99,9 @@ class SillyName
     deranged
     psychotic
     indecent
+    sordid
+    soggy
+    majestic
   )
 
   NOUNS = %w(
@@ -130,7 +133,6 @@ class SillyName
     squid
     shark
     device
-    apparatus
     machine
     airplane
     printer
@@ -176,5 +178,15 @@ class SillyName
     salad
     sandwich
     plumber
+    rainbow
+    blanket
+    pillow
+    volcano
+    potato
+    singer
+    lobster
+    fairy
+    farmer
+    meadow
   )
 end
