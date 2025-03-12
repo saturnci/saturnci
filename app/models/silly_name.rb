@@ -113,6 +113,7 @@ class SillyName
     laughing
     wild
     savage
+    impaled
   )
 
   NOUNS = %w(
@@ -200,5 +201,8 @@ class SillyName
     eyeball
     bandit
     thief
+    grandmother
+    grave
+    ghost
   )
 end
