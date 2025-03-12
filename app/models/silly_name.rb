@@ -310,5 +310,6 @@ class SillyName
     marshmallow
     reject
     loser
+    moron
   )
 end
