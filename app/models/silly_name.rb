@@ -166,6 +166,12 @@ class SillyName
     plastic
     swimming
     dancing
+    violent
+    untouchable
+    submerged
+    inappropriate
+    green
+    bleeding
   )
 
   NOUNS = %w(
@@ -292,5 +298,10 @@ class SillyName
     whiteboard
     witch
     wizard
+    snail
+    slug
+    caterpillar
+    brick
+    marshmallow
   )
 end
