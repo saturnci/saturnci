@@ -172,6 +172,8 @@ class SillyName
     inappropriate
     green
     bleeding
+    rejected
+    lovable
   )
 
   NOUNS = %w(
@@ -303,5 +305,7 @@ class SillyName
     caterpillar
     brick
     marshmallow
+    reject
+    loser
   )
 end
