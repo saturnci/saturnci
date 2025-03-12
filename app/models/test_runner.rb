@@ -89,4 +89,8 @@ class TestRunner < ApplicationRecord
       bin/test_runner_agent send_ready_signal
     SCRIPT
   end
+
+  def assign(run)
+    test_runner_assignments.create!(run:)
+  end
 end

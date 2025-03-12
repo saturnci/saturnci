@@ -8,6 +8,17 @@ describe TestRunner do
     allow(User).to receive(:find_by).and_return(admin_user)
   end
 
+  describe "#assign" do
+    it "assigns a run to the test runner" do
+      test_runner = create(:test_runner)
+      run = create(:run)
+
+      expect { test_runner.assign(run) }
+        .to change { test_runner.test_runner_assignments.count }
+        .from(0).to(1)
+    end
+  end
+
   describe "scope available" do
     context "when the test runner is available" do
       it "includes the test runner" do
