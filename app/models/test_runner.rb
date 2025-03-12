@@ -66,7 +66,7 @@ class TestRunner < ApplicationRecord
       export TEST_RUNNER_ID=#{id}
       export SATURNCI_API_HOST=#{ENV["SATURNCI_HOST"]}
       export SATURNCI_API_USER_ID=#{admin_user.id}
-      export SATURNCI_API_USER_API_TOKEN=#{admin_user.api_token}
+      export SATURNCI_API_TOKEN=#{admin_user.api_token}
 
       cd ~
       git clone https://github.com/saturnci/test_runner_agent.git
