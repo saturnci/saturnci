@@ -133,6 +133,12 @@ class SillyName
     soiled
     escaped
     delirious
+    heavy
+    emaciated
+    bony
+    hungry
+    thirsty
+    impatient
   )
 
   NOUNS = %w(
@@ -249,5 +255,7 @@ class SillyName
     feather
     rock
     clock
+    skeleton
+    salesman
   )
 end
