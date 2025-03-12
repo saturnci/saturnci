@@ -94,6 +94,11 @@ class SillyName
     microscopic
     mighty
     powerful
+    untamed
+    demented
+    deranged
+    psychotic
+    indecent
   )
 
   NOUNS = %w(
@@ -168,5 +173,8 @@ class SillyName
     lawyer
     dentist
     caveman
+    salad
+    sandwich
+    plumber
   )
 end
