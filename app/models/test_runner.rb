@@ -37,11 +37,16 @@ class TestRunner < ApplicationRecord
   end
 
   def status
-    most_recent_event = test_runner_events.order("created_at desc").first.type
+    most_recent_event = test_runner_events.order("created_at desc").first
+    return "" if most_recent_event.blank?
 
     {
-      "provision_request_sent" => "provisioning",
-      "ready_signal_received" => "ready",
-    }[most_recent_event]
+      "provision_request_sent" => "Provisioning",
+      "ready_signal_received" => "Ready",
+    }[most_recent_event.type]
+  end
+
+  def as_json(options = {})
+    super(options).merge(status:)
   end
 end

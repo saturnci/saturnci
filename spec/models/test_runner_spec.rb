@@ -20,9 +20,9 @@ describe TestRunner do
         .from(0).to(1)
     end
 
-    it "sets the test runner's status to provisioning" do
+    it "sets the test runner's status to Provisioning" do
       test_runner = TestRunner.provision(client:)
-      expect(test_runner.status).to eq("provisioning")
+      expect(test_runner.status).to eq("Provisioning")
     end
   end
 
@@ -31,7 +31,7 @@ describe TestRunner do
       it "returns ready" do
         test_runner = create(:test_runner)
         test_runner.test_runner_events.create!(type: :ready_signal_received)
-        expect(test_runner.status).to eq("ready")
+        expect(test_runner.status).to eq("Ready")
       end
     end
   end

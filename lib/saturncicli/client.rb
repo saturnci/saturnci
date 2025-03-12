@@ -49,8 +49,9 @@ module SaturnCICLI
     def test_runners
       response = get("test_runners")
 
-      if response.code == "500"
-        puts "500 Internal Server Error"
+      if response.code != "200"
+        puts "Request failed"
+        puts response.inspect
         return
       end
 
@@ -122,7 +123,8 @@ module SaturnCICLI
       APIRequest.new(
         credential: @credential,
         method: "GET",
-        endpoint:
+        endpoint:,
+        debug: ENV["DEBUG"]
       ).response
     end
 
@@ -131,7 +133,8 @@ module SaturnCICLI
         credential: @credential,
         method: "PATCH",
         endpoint:,
-        body:
+        body:,
+        debug: ENV["DEBUG"]
       ).response
     end
   end
