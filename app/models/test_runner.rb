@@ -1,7 +1,7 @@
 class TestRunner < ApplicationRecord
   belongs_to :rsa_key, class_name: "Cloud::RSAKey"
   has_one :run_test_runner
-  has_many :test_runner_events
+  has_many :test_runner_events, dependent: :destroy
 
   scope :unassigned, -> {
     left_joins(:run_test_runner).where(run_test_runners: { run_id: nil })
