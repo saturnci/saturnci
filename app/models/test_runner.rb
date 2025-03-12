@@ -1,5 +1,5 @@
 class TestRunner < ApplicationRecord
-  belongs_to :rsa_key, class_name: "Cloud::RSAKey"
+  belongs_to :rsa_key, class_name: "Cloud::RSAKey", optional: true
   has_one :run_test_runner
   has_many :test_runner_events, dependent: :destroy
 
@@ -7,24 +7,14 @@ class TestRunner < ApplicationRecord
     left_joins(:run_test_runner).where(run_test_runners: { run_id: nil })
   }
 
-  def self.provision(client:, user_data: nil)
+  def self.provision(client:)
     rsa_key = Cloud::RSAKey.generate
     ssh_key = Cloud::SSHKey.new(rsa_key, client:)
     name = "tr-#{SecureRandom.uuid[0..7]}-#{SillyName.random.gsub(/ /, "-")}"
 
-    specification = DropletKit::Droplet.new(
-      name:,
-      region: DropletConfig::REGION,
-      image: DropletConfig::SNAPSHOT_IMAGE_ID,
-      size: DropletConfig::SIZE,
-      user_data:,
-      tags: ["saturnci"],
-      ssh_keys: [ssh_key.id]
-    )
-
-    droplet = client.droplets.create(specification)
-
-    create!(name:, rsa_key:, cloud_id: droplet.id).tap do |test_runner|
+    create!(name:).tap do |test_runner|
+      droplet = client.droplets.create(test_runner.droplet_specification(ssh_key))
+      test_runner.update!(rsa_key:, cloud_id: droplet.id)
       test_runner.test_runner_events.create!(type: :provision_request_sent)
     end
   end
@@ -48,5 +38,31 @@ class TestRunner < ApplicationRecord
 
   def as_json(options = {})
     super(options).merge(status:)
+  end
+
+  def droplet_specification(ssh_key)
+    DropletKit::Droplet.new(
+      name:,
+      region: DropletConfig::REGION,
+      image: DropletConfig::SNAPSHOT_IMAGE_ID,
+      size: DropletConfig::SIZE,
+      user_data:,
+      tags: ["saturnci"],
+      ssh_keys: [ssh_key.id]
+    )
+  end
+
+  private
+
+  def user_data
+    <<~SCRIPT
+      #!/bin/bash
+
+      export HOST=#{ENV["SATURNCI_HOST"]}
+      export TEST_RUNNER_ID=#{id}
+
+      cd ~
+      git clone https://github.com/saturnci/test_runner_agent.git
+    SCRIPT
   end
 end
