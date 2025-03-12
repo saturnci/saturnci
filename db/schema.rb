@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_11_212721) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_12_135614) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -168,6 +168,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_11_212721) do
     t.index ["run_id"], name: "index_test_case_runs_on_run_id"
   end
 
+  create_table "test_runner_events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "test_runner_id", null: false
+    t.integer "type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["test_runner_id", "type"], name: "index_test_runner_events_on_test_runner_id_and_type", unique: true
+    t.index ["test_runner_id"], name: "index_test_runner_events_on_test_runner_id"
+  end
+
   create_table "test_runners", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.string "cloud_id", null: false
@@ -235,6 +244,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_11_212721) do
   add_foreign_key "runs", "test_suite_runs", column: "build_id"
   add_foreign_key "screenshots", "runs"
   add_foreign_key "test_case_runs", "runs"
+  add_foreign_key "test_runner_events", "test_runners"
   add_foreign_key "test_runners", "rsa_keys"
   add_foreign_key "test_suite_runs", "projects"
 end
