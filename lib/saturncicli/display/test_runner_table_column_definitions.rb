@@ -9,10 +9,7 @@ module SaturnCICLI
             label: "ID",
             format: -> (hash) { Helpers.truncated_hash(hash) }
           },
-          "name" => {
-            label: "Name",
-            format: -> (value) { Helpers.truncate(value) }
-          },
+          "name" => { label: "Name" },
           "cloud_id" => { label: "Cloud ID" }
         }
       end

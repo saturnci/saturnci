@@ -5,22 +5,21 @@ describe "test runner list" do
   before do
     body = [
       {
-        "id" => "da9b6c0f-e5d9-4d2f-b4a1-d7e0a2b9c1d0",
-        "name" => "test-runner-f60ca0ad-89c8-440e-9373-ed639d2dd662",
-        "cloud_id" => "8923489234"
+        "id" => "a68c4aef-de05-4a14-a274-207d7e81bee9",
+        "name" => "tr-5ab042f8-toxic-manager",
+        "cloud_id" => "482333509"
       },
       {
-        "id" => "669b6c0f-e5d9-4d2f-b4a1-d7e0a2b9c1d0",
-        "name" => "test-runner-9f60ca0ad-89c8-440e-9373-ed639d2dd662",
-        "cloud_id" => "2889234892"
+        "id" => "bb4d0342-d32f-462a-b21c-3cddefb7b74d",
+        "name" => "tr-a4c47d49-magical-lobster",
+        "cloud_id" => "482333508"
       },
       {
-        "id" => "a69b6c0f-e5d9-4d2f-b4a1-d7e0a2b9c1d0",
-        "name" => "test-runner-ac60ca0ad-89c8-440e-9373-ed639d2dd662",
-        "cloud_id" => "3892348923"
+        "id" => "7abd6b84-2da2-4273-994b-d3496f6684db",
+        "name" => "tr-f66f0860-secret-grape",
+        "cloud_id" => "482222371"
       }
     ].to_json
-
     stub_request(:get, "#{SaturnCICLI::Credential::DEFAULT_HOST}/api/v1/test_runners")
       .to_return(body: body, status: 200)
   end
@@ -30,18 +29,16 @@ describe "test runner list" do
       user_id: "valid_user_id",
       api_token: "valid_api_token"
     )
-
     SaturnCICLI::Client.new(credential)
   end
 
   it "formats the output to a table" do
     expected_output = <<~OUTPUT
-    ID        Name                      Cloud ID
-    da9b6c0f  test-runner-f60ca0ad-...  8923489234
-    669b6c0f  test-runner-9f60ca0ad...  2889234892
-    a69b6c0f  test-runner-ac60ca0ad...  3892348923
+    ID        Name                         Cloud ID
+    a68c4aef  tr-5ab042f8-toxic-manager    482333509
+    bb4d0342  tr-a4c47d49-magical-lobster  482333508
+    7abd6b84  tr-f66f0860-secret-grape     482222371
     OUTPUT
-
     expect {
       client.test_runners
     }.to output(expected_output).to_stdout
