@@ -146,6 +146,19 @@ class SillyName
     lost
     confused
     frozen
+    useless
+    reeking
+    triumphant
+    jubilant
+    joyful
+    disappointed
+    missing
+    miserable
+    dying
+    puffy
+    fluffy
+    fuzzy
+    smoking
   )
 
   NOUNS = %w(
@@ -266,5 +279,11 @@ class SillyName
     salesman
     rifle
     onion
+    log
+    gazebo
+    tractor
+    pigeon
+    walnut
+    captain
   )
 end

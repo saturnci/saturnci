@@ -16,6 +16,7 @@ namespace :api do
 
     resources :test_runners, only: %i[index show update] do
       resources :test_runner_events, only: :create
+      resources :test_runner_assignments, only: :index
     end
 
     resources :github_events
