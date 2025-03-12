@@ -5,7 +5,8 @@ module API
         test_runner = TestRunner.find(params[:test_runner_id])
         authorize test_runner, :show?
 
-        render json: test_runner.test_runner_assignments
+        @test_runner_assignments = test_runner.test_runner_assignments
+        render :index
       rescue StandardError => e
         render(json: { error: e.message }, status: :bad_request)
       end

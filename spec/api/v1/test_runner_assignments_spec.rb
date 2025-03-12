@@ -9,7 +9,7 @@ describe "Test runner assignments", type: :request do
         user = create(:user, super_admin: true)
 
         get(
-          api_v1_test_runner_test_runner_assignments_path(test_runner_id: test_runner_assignment.test_runner_id),
+          api_v1_test_runner_test_runner_assignments_path(test_runner_id: test_runner_assignment.test_runner_id, format: :json),
           headers: api_authorization_headers(user)
         )
 
