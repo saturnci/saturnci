@@ -139,6 +139,13 @@ class SillyName
     hungry
     thirsty
     impatient
+    unhealthy
+    flying
+    winged
+    glowing
+    lost
+    confused
+    frozen
   )
 
   NOUNS = %w(
@@ -257,5 +264,7 @@ class SillyName
     clock
     skeleton
     salesman
+    rifle
+    onion
   )
 end
