@@ -1,0 +1,5 @@
+require "rails_helper"
+include APIAuthenticationHelper
+
+describe "<%= name %>", type: :request do
+end

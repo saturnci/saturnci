@@ -2,7 +2,6 @@ require "rails/generators/named_base"
 
 class ApiControllerGenerator < Rails::Generators::NamedBase
   source_root File.expand_path("templates", __dir__)
-
   argument :version, type: :string
   argument :actions, type: :array
 
@@ -12,13 +11,22 @@ class ApiControllerGenerator < Rails::Generators::NamedBase
       version.underscore,
       "#{name.underscore}_controller.rb"
     )
-
     @version = version.camelize
     @name = name.camelize
     @actions = actions
-
     template "controller.rb.tt", path
     add_route
+  end
+
+  def create_request_spec_file
+    path = File.join(
+      "spec/api",
+      version.underscore,
+      "#{name.underscore}_spec.rb"
+    )
+
+    @name = name.underscore.humanize
+    template "request_spec.rb.tt", path
   end
 
   def target_dir
@@ -30,7 +38,6 @@ class ApiControllerGenerator < Rails::Generators::NamedBase
   def add_route
     route_path = "config/routes/api.rb"
     route_entry = generate_route_entry
-
     inject_into_file route_path, route_entry, after: "namespace :#{version.underscore} do\n"
   end
 
