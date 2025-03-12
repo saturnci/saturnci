@@ -1,6 +1,7 @@
 class TestRunner < ApplicationRecord
   belongs_to :rsa_key, class_name: "Cloud::RSAKey"
   has_one :run_test_runner
+  has_many :test_runner_events
 
   scope :unassigned, -> {
     left_joins(:run_test_runner).where(run_test_runners: { run_id: nil })
@@ -22,7 +23,10 @@ class TestRunner < ApplicationRecord
     )
 
     droplet = client.droplets.create(specification)
-    create!(name:, rsa_key:, cloud_id: droplet.id)
+
+    create!(name:, rsa_key:, cloud_id: droplet.id).tap do |test_runner|
+      test_runner.test_runner_events.create!(type: :provisioning)
+    end
   end
 
   def deprovision(client)
@@ -30,5 +34,9 @@ class TestRunner < ApplicationRecord
     destroy!
   rescue DropletKit::Error => e
     Rails.logger.error "Error deleting test runner: #{e.message}"
+  end
+
+  def status
+    test_runner_events.order("created_at desc").first.type
   end
 end
