@@ -117,6 +117,15 @@ class SillyName
     bloody
     injured
     corrupt
+    shattered
+    devastated
+    fried
+    lonesome
+    speeding
+    shrinking
+    shrieking
+    levitating
+    swollen
   )
 
   NOUNS = %w(
@@ -212,5 +221,8 @@ class SillyName
     stapler
     spatula
     policeman
+    sword
+    trout
+    bassoon
   )
 end
