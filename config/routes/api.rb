@@ -14,6 +14,7 @@ namespace :api do
     resource :orphaned_runner_collection, only: :destroy
     resources :test_suite_runs, only: :index
     resources :test_runners, only: %i[index show update]
+    resources :test_runner_events, only: :create
 
     resources :github_events
     resources :github_tokens, only: :create
