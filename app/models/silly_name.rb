@@ -116,6 +116,7 @@ class SillyName
     impaled
     bloody
     injured
+    corrupt
   )
 
   NOUNS = %w(
@@ -210,5 +211,6 @@ class SillyName
     croissant
     stapler
     spatula
+    policeman
   )
 end
