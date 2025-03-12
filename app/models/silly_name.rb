@@ -174,6 +174,9 @@ class SillyName
     bleeding
     rejected
     lovable
+    doomed
+    nervous
+    liquid
   )
 
   NOUNS = %w(
