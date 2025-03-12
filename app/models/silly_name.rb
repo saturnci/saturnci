@@ -183,6 +183,9 @@ class SillyName
     twisted
     shredded
     suicidal
+    moldy
+    discounted
+    forgotten
   )
 
   NOUNS = %w(
