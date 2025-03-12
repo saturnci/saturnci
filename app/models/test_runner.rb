@@ -25,8 +25,7 @@ class TestRunner < ApplicationRecord
     create!(name:, rsa_key:, cloud_id: droplet.id)
   end
 
-  def deprovision
-    client = DropletKitClientFactory.client
+  def deprovision(client)
     client.droplets.delete(id: cloud_id)
     destroy!
   rescue DropletKit::Error => e

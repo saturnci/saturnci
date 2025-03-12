@@ -1,7 +1,7 @@
 class TestRunnerPool
   def self.scale(count, client: DropletKitClientFactory.client)
     ActiveRecord::Base.transaction do
-      TestRunner.unassigned.each(&:deprovision)
+      TestRunner.unassigned.each { |tr| tr.deprovision(client) }
 
       count.times do
         TestRunner.provision(client:, user_data: script)

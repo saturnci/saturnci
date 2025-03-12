@@ -31,6 +31,10 @@ describe TestRunnerPool do
     end
 
     context "scaling up and then back down" do
+      before do
+        allow(client).to receive_message_chain(:droplets, :delete)
+      end
+
       it "works" do
         TestRunnerPool.scale(10, client:)
         expect { TestRunnerPool.scale(2, client:) }
