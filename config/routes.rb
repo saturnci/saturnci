@@ -3,6 +3,8 @@ def draw(routes_name)
 end
 
 Rails.application.routes.draw do
+  get "silliness", to: "silliness#index"
+
   get "user_emails/new"
   get "user_emails/create"
   get "saturnci_github_app_authorizations/new"
