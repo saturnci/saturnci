@@ -177,6 +177,9 @@ class SillyName
     doomed
     nervous
     liquid
+    wrinkled
+    wretched
+    shriveled
   )
 
   NOUNS = %w(
@@ -311,5 +314,6 @@ class SillyName
     reject
     loser
     moron
+    canoe
   )
 end
