@@ -3,6 +3,7 @@ class TestRunnerEvent < ApplicationRecord
   belongs_to :test_runner
 
   enum :type, [
-    :provisioning,
+    :provision_request_sent,
+    :ready_signal_received,
   ]
 end

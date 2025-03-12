@@ -26,6 +26,16 @@ describe TestRunner do
     end
   end
 
+  describe "status" do
+    context "ready" do
+      it "returns ready" do
+        test_runner = create(:test_runner)
+        test_runner.test_runner_events.create!(type: :ready_signal_received)
+        expect(test_runner.status).to eq("ready")
+      end
+    end
+  end
+
   describe "#unassigned" do
     context "a test runner is not associated with a run" do
       it "is included" do

@@ -25,7 +25,7 @@ class TestRunner < ApplicationRecord
     droplet = client.droplets.create(specification)
 
     create!(name:, rsa_key:, cloud_id: droplet.id).tap do |test_runner|
-      test_runner.test_runner_events.create!(type: :provisioning)
+      test_runner.test_runner_events.create!(type: :provision_request_sent)
     end
   end
 
@@ -37,6 +37,11 @@ class TestRunner < ApplicationRecord
   end
 
   def status
-    test_runner_events.order("created_at desc").first.type
+    most_recent_event = test_runner_events.order("created_at desc").first.type
+
+    {
+      "provision_request_sent" => "provisioning",
+      "ready_signal_received" => "ready",
+    }[most_recent_event]
   end
 end
