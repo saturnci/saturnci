@@ -5,7 +5,10 @@ describe TestRunnerPool do
     let!(:client) { double }
 
     before do
-      create(:user, super_admin: true)
+      admin_user = double
+      allow(admin_user).to receive(:id).and_return(1)
+      allow(admin_user).to receive(:api_token).and_return("token")
+      allow(User).to receive(:find_by).and_return(admin_user)
 
       droplet_request = double
       allow(droplet_request).to receive(:id) { rand(10000000) }
