@@ -129,6 +129,8 @@ class SillyName
     unstable
     screaming
     singing
+    filthy
+    soiled
   )
 
   NOUNS = %w(
