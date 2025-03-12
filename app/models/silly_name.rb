@@ -114,6 +114,8 @@ class SillyName
     wild
     savage
     impaled
+    bloody
+    injured
   )
 
   NOUNS = %w(
@@ -204,5 +206,9 @@ class SillyName
     grandmother
     grave
     ghost
+    dessert
+    croissant
+    stapler
+    spatula
   )
 end

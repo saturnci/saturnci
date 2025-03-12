@@ -6,6 +6,8 @@ require_relative "connection_details"
 
 module SaturnCICLI
   class Client
+    DEFAULT_LIMIT = 20
+
     def initialize(credential)
       @credential = credential
     end
@@ -56,7 +58,7 @@ module SaturnCICLI
 
       puts Display::Table.new(
         resource_name: :test_runner,
-        items: test_runners
+        items: test_runners[0..DEFAULT_LIMIT-1],
       )
     end
 
@@ -72,7 +74,7 @@ module SaturnCICLI
 
       puts Display::Table.new(
         resource_name: :test_suite_run,
-        items: test_suite_runs,
+        items: test_suite_runs[0..DEFAULT_LIMIT-1],
         options: options
       )
     end
@@ -83,7 +85,7 @@ module SaturnCICLI
 
       puts Display::Table.new(
         resource_name: :run,
-        items: runs[0..19],
+        items: runs[0..DEFAULT_LIMIT-1],
         options: options
       )
     end
