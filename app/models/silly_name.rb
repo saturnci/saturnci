@@ -131,6 +131,8 @@ class SillyName
     singing
     filthy
     soiled
+    escaped
+    delirious
   )
 
   NOUNS = %w(
@@ -167,6 +169,7 @@ class SillyName
     chair
     gardener
     prince
+    princess
     weasel
     prison
     hospital
@@ -230,5 +233,21 @@ class SillyName
     trout
     bassoon
     sheep
+    baseball
+    whiteboard
+    pencil
+    cubicle
+    sofa
+    mind
+    villain
+    president
+    waiter
+    roofer
+    snowplow
+    forklift
+    shovel
+    feather
+    rock
+    clock
   )
 end
