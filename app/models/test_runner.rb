@@ -44,7 +44,6 @@ class TestRunner < ApplicationRecord
   end
 
   def status
-    most_recent_event = test_runner_events.order("created_at desc").first
     return "" if most_recent_event.blank?
 
     {
@@ -52,6 +51,10 @@ class TestRunner < ApplicationRecord
       "ready_signal_received" => "Ready",
       "assignment_acknowledged" => "Assigned",
     }[most_recent_event.type]
+  end
+
+  def most_recent_event
+    test_runner_events.order("created_at desc").first
   end
 
   def as_json(options = {})
