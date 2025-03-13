@@ -16,15 +16,16 @@ class TestSuiteRun < ApplicationRecord
 
   def start!
     return unless project.active
+    save!
+    StartTestSuiteRunJob.perform_later(id)
+  end
 
-    transaction do
-      save!
-      available_test_runners = TestRunner.available.to_a
+  def assign_test_runners
+    available_test_runners = TestRunner.available.to_a
 
-      runs_to_use.each do |run|
-        test_runner = available_test_runners.shift
-        test_runner.assign(run)
-      end
+    runs_to_use.each do |run|
+      test_runner = available_test_runners.shift
+      test_runner.assign(run)
     end
   end
 
