@@ -188,6 +188,7 @@ class SillyName
     forgotten
     decimated
     nonexistent
+    sandy
   )
 
   NOUNS = %w(
@@ -326,5 +327,6 @@ class SillyName
     canoe
     soul
     soldier
+    bag
   )
 end
