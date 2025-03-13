@@ -205,6 +205,7 @@ class SillyName
     falling
     descending
     intruding
+    ghastly
   )
 
   NOUNS = %w(
