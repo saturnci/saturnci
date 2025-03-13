@@ -22,8 +22,10 @@ class TestSuiteRun < ApplicationRecord
       available_test_runners = TestRunner.available.to_a
 
       runs_to_use.each do |run|
-        test_runner = available_test_runners.shift
-        test_runner.assign(run)
+        if available_test_runners.any?
+          test_runner = available_test_runners.shift
+          test_runner.assign(run)
+        end
       end
     end
   end
