@@ -58,7 +58,10 @@ class TestRunner < ApplicationRecord
   end
 
   def as_json(options = {})
-    super(options).merge(status:)
+    super(options).merge(
+      status:,
+      run_id: run&.id,
+    )
   end
 
   def droplet_specification(ssh_key:, user_data:)
