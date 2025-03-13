@@ -12,6 +12,7 @@ module SaturnCICLI
           "name" => { label: "Name" },
           "cloud_id" => { label: "Cloud ID" },
           "status" => { label: "Status" },
+          "run_id" => { label: "Run ID" },
         }
       end
     end
