@@ -189,6 +189,17 @@ class SillyName
     decimated
     nonexistent
     sandy
+    rubber
+    cackling
+    dusty
+    fancy
+    gelatinous
+    haunted
+    hideous
+    mangled
+    radioactive
+    roasted
+    warped
   )
 
   NOUNS = %w(
@@ -328,5 +339,11 @@ class SillyName
     soul
     soldier
     bag
+    balloon
+    barnacle
+    demon
+    devil
+    glove
+    rat
   )
 end
