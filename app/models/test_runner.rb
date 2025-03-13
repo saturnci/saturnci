@@ -3,6 +3,7 @@ class TestRunner < ApplicationRecord
   has_many :test_runner_events, dependent: :destroy
   has_one :run_test_runner
   has_one :test_runner_assignment, dependent: :destroy
+  has_one :run, through: :test_runner_assignment
 
   scope :unassigned, -> {
     left_joins(:test_runner_assignment).where(test_runner_assignments: { run_id: nil })

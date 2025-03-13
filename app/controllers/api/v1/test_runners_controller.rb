@@ -14,6 +14,7 @@ module API
         authorize test_runner
 
         render json: test_runner.as_json.merge(
+          run_id: test_runner.run&.id,
           ip_address: RunnerNetwork.new(test_runner.cloud_id).ip_address,
           rsa_key: rsa_key(test_runner)
         )

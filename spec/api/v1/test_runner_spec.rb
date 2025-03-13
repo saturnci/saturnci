@@ -24,6 +24,24 @@ describe "Test runners", type: :request do
       )
       expect(response).to have_http_status(200)
     end
+
+    context "a run assignment exists" do
+      let!(:run) { create(:run) }
+
+      before do
+        test_runner.assign(run)
+      end
+
+      it "includes the run id" do
+        get(
+          api_v1_test_runner_path(test_runner.id),
+          headers: api_authorization_headers(user)
+        )
+
+        expect(response).to have_http_status(200)
+        expect(JSON.parse(response.body)["run_id"]).to eq(run.id)
+      end
+    end
   end
 
   describe "PATCH /api/v1/test_runners/:id" do
