@@ -186,6 +186,8 @@ class SillyName
     moldy
     discounted
     forgotten
+    decimated
+    nonexistent
   )
 
   NOUNS = %w(
@@ -227,6 +229,7 @@ class SillyName
     fish
     forklift
     gardener
+    garden
     gazebo
     ghost
     goat
