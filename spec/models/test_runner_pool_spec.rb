@@ -42,6 +42,7 @@ describe TestRunnerPool do
 
       it "works" do
         TestRunnerPool.scale(10, client:)
+
         expect { TestRunnerPool.scale(2, client:) }
           .to change { TestRunner.count }
           .from(10).to(2)

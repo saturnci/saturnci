@@ -10,7 +10,8 @@ class Run < ApplicationRecord
   has_one :runner_system_log
   has_one :rsa_key, class_name: "Cloud::RSAKey"
   has_one :run_test_runner
-  has_one :test_runner, through: :run_test_runner
+  has_one :test_runner_assignment
+  has_one :test_runner, through: :test_runner_assignment
   alias_attribute :started_at, :created_at
   delegate :project, to: :build
   after_save { test_suite_run.cache_status }
@@ -83,6 +84,7 @@ class Run < ApplicationRecord
   end
 
   def delete_runner
+    return unless test_runner.present?
     client = DropletKit::Client.new(access_token: ENV['DIGITALOCEAN_ACCESS_TOKEN'])
     client.droplets.delete(id: test_runner.cloud_id)
   rescue DropletKit::Error => e
