@@ -21,21 +21,17 @@ class TestSuiteRun < ApplicationRecord
   end
 
   def assign_test_runners
-    runs = project.concurrency.times.map do |i|
-      Run.create!(test_suite_run: self, order_index: i + 1)
-    end
+    available_test_runners = TestRunner.available.to_a
 
-    TestRunnerPool.add(runs.count)
-
-    loop do
-      available_test_runners = TestRunner.available.to_a
+    runs_to_use.each do |run|
       test_runner = available_test_runners.shift
-      test_runner.assign(runs.shift)
-      break if runs.empty?
+      test_runner.assign(run)
+    end
+  end
 
-      if available_test_runners.empty?
-        sleep(10)
-      end
+  def runs_to_use
+    project.concurrency.times.map do |i|
+      Run.create!(test_suite_run: self, order_index: i + 1)
     end
   end
 

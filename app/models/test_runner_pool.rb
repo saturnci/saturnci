@@ -5,16 +5,12 @@ class TestRunnerPool
       puts "Change: #{change}"
 
       if change > 0
-        add(change, client:)
+        change.times { TestRunner.provision(client:) }
       else
         TestRunner.unassigned.limit(change.abs).each do |tr|
           tr.deprovision(client)
         end
       end
     end
-  end
-
-  def self.add(count, client: DropletKitClientFactory.client)
-    count.times { TestRunner.provision(client:) }
   end
 end
