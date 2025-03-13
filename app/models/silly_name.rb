@@ -200,6 +200,11 @@ class SillyName
     radioactive
     roasted
     warped
+    glamorous
+    sinking
+    falling
+    descending
+    intruding
   )
 
   NOUNS = %w(
@@ -348,5 +353,6 @@ class SillyName
     ogre
     pretzel
     trumpet
+    foot
   )
 end
