@@ -1,15 +1,15 @@
 class TestRunner < ApplicationRecord
   belongs_to :rsa_key, class_name: "Cloud::RSAKey", optional: true
-  has_one :run_test_runner
   has_many :test_runner_events, dependent: :destroy
-  has_many :test_runner_assignments, dependent: :destroy
+  has_one :run_test_runner
+  has_one :test_runner_assignment, dependent: :destroy
 
   scope :unassigned, -> {
-    left_joins(:run_test_runner).where(run_test_runners: { run_id: nil })
+    left_joins(:test_runner_assignment).where(test_runner_assignments: { run_id: nil })
   }
 
   scope :available, -> {
-    joins(:test_runner_events)
+    unassigned.joins(:test_runner_events)
       .where(test_runner_events: { type: :ready_signal_received })
       .where("test_runner_events.created_at = (
         SELECT MAX(created_at) FROM test_runner_events
@@ -91,6 +91,6 @@ class TestRunner < ApplicationRecord
   end
 
   def assign(run)
-    test_runner_assignments.create!(run:)
+    TestRunnerAssignment.create!(test_runner: self, run:)
   end
 end

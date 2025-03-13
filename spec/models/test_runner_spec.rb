@@ -14,8 +14,8 @@ describe TestRunner do
       run = create(:run)
 
       expect { test_runner.assign(run) }
-        .to change { test_runner.test_runner_assignments.count }
-        .from(0).to(1)
+        .to change { test_runner.test_runner_assignment.present? }
+        .from(false).to(true)
     end
   end
 
@@ -25,6 +25,15 @@ describe TestRunner do
         test_runner = create(:test_runner)
         create(:test_runner_event, test_runner:, type: :ready_signal_received)
         expect(TestRunner.available).to include(test_runner)
+      end
+    end
+
+    context "when the test runner has an assignment" do
+      it "does not include the test runner" do
+        test_runner = create(:test_runner)
+        create(:test_runner_event, test_runner:, type: :ready_signal_received)
+        create(:test_runner_assignment, test_runner:)
+        expect(TestRunner.available).not_to include(test_runner)
       end
     end
 
@@ -83,7 +92,7 @@ describe TestRunner do
       it "is not included" do
         test_runner = create(:test_runner)
         run = create(:run)
-        RunTestRunner.create!(run:, test_runner:)
+        test_runner.assign(run)
 
         expect(TestRunner.unassigned).not_to include(test_runner)
       end
