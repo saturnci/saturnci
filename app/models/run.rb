@@ -67,6 +67,10 @@ class Run < ApplicationRecord
     run_events.run_cancelled.any?
   end
 
+  def assign_test_runner
+    TestRunner.available.first.assign(self)
+  end
+
   def provision_test_runner
     runner_script = RunnerScript.new(self, test_suite_run.project.github_account.github_installation_id)
 
