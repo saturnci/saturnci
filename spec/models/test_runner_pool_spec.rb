@@ -47,5 +47,13 @@ describe TestRunnerPool do
           .from(10).to(2)
       end
     end
+
+    context "scaling and then scaling again to the same number" do
+      it "does not delete test runners" do
+        TestRunnerPool.scale(2, client:)
+        expect { TestRunnerPool.scale(2, client:) }
+          .not_to change { TestRunner.all.map(&:id) }
+      end
+    end
   end
 end
