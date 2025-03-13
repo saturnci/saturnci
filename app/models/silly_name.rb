@@ -186,6 +186,10 @@ class SillyName
     moldy
     discounted
     forgotten
+    weary
+    strange
+    foreign
+    infected
   )
 
   NOUNS = %w(
