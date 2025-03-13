@@ -35,7 +35,7 @@ class TestRunner < ApplicationRecord
     end
   end
 
-  def deprovision(client)
+  def deprovision(client = DropletKitClientFactory.client)
     client.droplets.delete(id: cloud_id)
   rescue DropletKit::Error => e
     Rails.logger.error "Error deleting test runner: #{e.message}"
