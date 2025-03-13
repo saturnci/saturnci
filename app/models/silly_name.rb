@@ -345,5 +345,8 @@ class SillyName
     devil
     glove
     rat
+    ogre
+    pretzel
+    trumpet
   )
 end

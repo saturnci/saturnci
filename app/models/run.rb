@@ -32,10 +32,6 @@ class Run < ApplicationRecord
     "Runner #{order_index}"
   end
 
-  def start!
-    StartRunJob.perform_later(id)
-  end
-
   def cancel!
     transaction do
       delete_runner
@@ -66,10 +62,6 @@ class Run < ApplicationRecord
 
   def cancelled?
     run_events.run_cancelled.any?
-  end
-
-  def assign_test_runner
-    TestRunner.available.first.assign(self)
   end
 
   def provision_test_runner
