@@ -19,12 +19,11 @@ class TestSuiteRun < ApplicationRecord
 
     transaction do
       save!
-      available_test_runners = TestRunner.available
+      available_test_runners = TestRunner.available.to_a
 
       runs_to_use.each do |run|
-        test_runner = available_test_runners.sample
+        test_runner = available_test_runners.shift
         test_runner.assign(run)
-        available_test_runners.delete(test_runner)
       end
     end
   end
