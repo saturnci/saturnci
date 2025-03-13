@@ -77,6 +77,7 @@ class Run < ApplicationRecord
 
   def delete_runner
     return unless test_runner.present?
+    raise "cloud_id missing" unless test_runner.cloud_id.present?
     client = DropletKit::Client.new(access_token: ENV['DIGITALOCEAN_ACCESS_TOKEN'])
     client.droplets.delete(id: test_runner.cloud_id)
   rescue DropletKit::Error => e
