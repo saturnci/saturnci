@@ -210,6 +210,7 @@ class SillyName
     unstoppable
     uncontrollable
     underwater
+    lovely
   )
 
   NOUNS = %w(
