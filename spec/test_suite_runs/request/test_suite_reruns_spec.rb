@@ -11,11 +11,8 @@ describe "test suite reruns", type: :request do
     end
 
     before do
+      allow(TestRunner).to receive(:create_vm)
       login_as(test_suite_run.project.user, scope: :user)
-
-      runner_request_double = instance_double(RunSpecificRunnerRequest)
-      allow(RunSpecificRunnerRequest).to receive(:new).and_return(runner_request_double)
-      allow(runner_request_double).to receive(:execute!)
     end
 
     it "increases the count of test suite runs by 1" do
