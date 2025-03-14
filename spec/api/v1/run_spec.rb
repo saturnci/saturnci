@@ -4,11 +4,10 @@ include APIAuthenticationHelper
 describe "run", type: :request do
   let!(:run) { create(:run) }
   let!(:test_runner) { create(:test_runner) }
-  let!(:run_test_runner) { create(:run_test_runner, run:, test_runner:) }
-
   let!(:user) { run.build.project.user }
 
   before do
+    test_runner.assign(run)
     allow_any_instance_of(RunnerNetwork).to receive(:ip_address).and_return("")
   end
 

@@ -190,6 +190,33 @@ class SillyName
     strange
     foreign
     infected
+    decimated
+    nonexistent
+    sandy
+    rubber
+    cackling
+    dusty
+    fancy
+    gelatinous
+    haunted
+    hideous
+    mangled
+    radioactive
+    roasted
+    warped
+    glamorous
+    sinking
+    falling
+    descending
+    intruding
+    ghastly
+    wiley
+    unstoppable
+    uncontrollable
+    underwater
+    lovely
+    deformed
+    mutant
   )
 
   NOUNS = %w(
@@ -231,6 +258,7 @@ class SillyName
     fish
     forklift
     gardener
+    garden
     gazebo
     ghost
     goat
@@ -327,5 +355,17 @@ class SillyName
     canoe
     soul
     soldier
+    bag
+    balloon
+    barnacle
+    demon
+    devil
+    glove
+    rat
+    ogre
+    pretzel
+    trumpet
+    foot
+    monstrosity
   )
 end

@@ -16,19 +16,20 @@ class TestSuiteRun < ApplicationRecord
 
   def start!
     return unless project.active
+    client = DropletKitClientFactory.client
 
     transaction do
       save!
 
-      runs_to_use.each do |run|
-        run.start!
+      runs = project.concurrency.times.map do |i|
+        Run.create!(test_suite_run: self, order_index: i + 1)
       end
-    end
-  end
 
-  def runs_to_use
-    project.concurrency.times.map do |i|
-      Run.create!(test_suite_run: self, order_index: i + 1)
+      if TestRunner.available.count < project.concurrency
+        ProvisionRunnersJob.perform_later(project.concurrency - TestRunner.available.count)
+      end
+
+      AssignTestRunnersJob.perform_later(runs.map(&:id))
     end
   end
 

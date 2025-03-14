@@ -12,6 +12,10 @@ module SaturnCICLI
           "name" => { label: "Name" },
           "cloud_id" => { label: "Cloud ID" },
           "status" => { label: "Status" },
+          "run_id" => {
+            label: "Run ID",
+            format: -> (hash) { Helpers.truncated_hash(hash) }
+          },
         }
       end
     end

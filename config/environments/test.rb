@@ -65,4 +65,6 @@ Rails.application.configure do
 
   # Allow connection from any host
   config.hosts.clear
+
+  config.test_runner_availability_check_interval_in_seconds = 0
 end

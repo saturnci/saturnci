@@ -37,7 +37,7 @@ describe "test runner list" do
 
   it "formats the output to a table" do
     expected_output = <<~OUTPUT
-    ID        Name                         Cloud ID   Status
+    ID        Name                         Cloud ID   Status        Run ID
     a68c4aef  tr-5ab042f8-toxic-manager    482333509  Provisioning
     bb4d0342  tr-a4c47d49-magical-lobster  482333508  Provisioning
     7abd6b84  tr-f66f0860-secret-grape     482222371  Provisioning

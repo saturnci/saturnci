@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Build, type: :model do
+describe TestSuiteRun, type: :model do
   describe "#duration" do
     let!(:build) { create(:build) }
 

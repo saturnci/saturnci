@@ -3,11 +3,9 @@ json.array! @test_runner_assignments do |test_runner_assignment|
   test_suite_run = run.test_suite_run
   project = test_suite_run.project
   user = project.user
-  
-  # Include test_runner_assignment attributes
+
   json.extract! test_runner_assignment, :id, :created_at, :updated_at
-  
-  # Add all the custom fields
+
   json.run_id run.id
   json.run_order_index run.order_index
   json.project_name project.name
@@ -19,4 +17,10 @@ json.array! @test_runner_assignments do |test_runner_assignment|
   json.rspec_seed test_suite_run.seed
   json.github_installation_id project.github_account.github_installation_id
   json.github_repo_full_name project.github_repo_full_name
+
+  json.env_vars do
+    project.project_secrets.each do |secret|
+      json.set! secret.key, secret.value
+    end
+  end
 end

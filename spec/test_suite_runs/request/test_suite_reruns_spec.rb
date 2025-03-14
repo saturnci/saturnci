@@ -10,12 +10,14 @@ describe "test suite reruns", type: :request do
       end
     end
 
-    before do
-      login_as(test_suite_run.project.user, scope: :user)
+    around do |example|
+      perform_enqueued_jobs { example.run }
+    end
 
-      runner_request_double = instance_double(RunSpecificRunnerRequest)
-      allow(RunSpecificRunnerRequest).to receive(:new).and_return(runner_request_double)
-      allow(runner_request_double).to receive(:execute!)
+    before do
+      allow(TestRunner).to receive(:create_vm)
+      allow(TestRunner).to receive(:available).and_return([create(:test_runner)])
+      login_as(test_suite_run.project.user, scope: :user)
     end
 
     it "increases the count of test suite runs by 1" do
