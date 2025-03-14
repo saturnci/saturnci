@@ -18,11 +18,11 @@ class TestRunner < ApplicationRecord
       )")
   }
 
-  def self.provision(client:)
+  def self.provision(client:, test_runner_droplet_specification: nil)
     name = "tr-#{SecureRandom.uuid[0..7]}-#{SillyName.random.gsub(/ /, "-")}"
 
     create!(name:).tap do |test_runner|
-      test_runner_droplet_specification = TestRunnerDropletSpecification.new(
+      test_runner_droplet_specification ||= TestRunnerDropletSpecification.new(
         test_runner_id: test_runner.id,
         client:,
         name:,
