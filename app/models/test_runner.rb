@@ -23,12 +23,14 @@ class TestRunner < ApplicationRecord
     name = "tr-#{SecureRandom.uuid[0..7]}-#{SillyName.random.gsub(/ /, "-")}"
 
     create!(name:).tap do |test_runner|
-      droplet_specification = test_runner.droplet_specification(
+      test_runner_droplet_specification = TestRunnerDropletSpecification.new(
+        client:,
+        name:,
         ssh_key: Cloud::SSHKey.new(rsa_key, client:),
         user_data: user_data || test_runner.script
       )
 
-      droplet = client.droplets.create(droplet_specification)
+      droplet = test_runner_droplet_specification.execute
 
       test_runner.update!(rsa_key:, cloud_id: droplet.id)
       test_runner.test_runner_events.create!(type: :provision_request_sent)
@@ -61,18 +63,6 @@ class TestRunner < ApplicationRecord
     super(options).merge(
       status:,
       run_id: run&.id,
-    )
-  end
-
-  def droplet_specification(ssh_key:, user_data:)
-    DropletKit::Droplet.new(
-      name:,
-      region: DropletConfig::REGION,
-      image: DropletConfig::SNAPSHOT_IMAGE_ID,
-      size: DropletConfig::SIZE,
-      user_data:,
-      tags: ["saturnci"],
-      ssh_keys: [ssh_key.id]
     )
   end
 
