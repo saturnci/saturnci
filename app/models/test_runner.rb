@@ -25,7 +25,6 @@ class TestRunner < ApplicationRecord
       test_runner_droplet_specification = TestRunnerDropletSpecification.new(
         client:,
         name:,
-        rsa_key: Cloud::RSAKey.generate,
         user_data: user_data || test_runner.script
       )
 

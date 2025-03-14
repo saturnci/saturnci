@@ -1,10 +1,10 @@
 class TestRunnerDropletSpecification
   attr_reader :rsa_key
 
-  def initialize(client:, name:, rsa_key:, user_data:)
+  def initialize(client:, name:, user_data:)
     @client = client
     @name = name
-    @rsa_key = rsa_key
+    @rsa_key = Cloud::RSAKey.generate
     @ssh_key = Cloud::SSHKey.new(@rsa_key, client:)
     @user_data = user_data
   end
