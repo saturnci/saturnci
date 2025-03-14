@@ -2,6 +2,10 @@ require "rails_helper"
 include APIAuthenticationHelper
 
 describe "Pull Request", type: :request do
+  before do
+    allow(TestRunner).to receive(:create_vm)
+  end
+
   let!(:project) do
     create(:project, github_repo_full_name: "user/test") do |project|
       project.user.github_accounts.create!(
