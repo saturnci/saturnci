@@ -19,20 +19,23 @@ class TestRunner < ApplicationRecord
   }
 
   def self.provision(client:, user_data: nil)
-    rsa_key = Cloud::RSAKey.generate
     name = "tr-#{SecureRandom.uuid[0..7]}-#{SillyName.random.gsub(/ /, "-")}"
 
     create!(name:).tap do |test_runner|
       test_runner_droplet_specification = TestRunnerDropletSpecification.new(
         client:,
         name:,
-        ssh_key: Cloud::SSHKey.new(rsa_key, client:),
+        rsa_key: Cloud::RSAKey.generate,
         user_data: user_data || test_runner.script
       )
 
       droplet = test_runner_droplet_specification.execute
 
-      test_runner.update!(rsa_key:, cloud_id: droplet.id)
+      test_runner.update!(
+        rsa_key: test_runner_droplet_specification.rsa_key,
+        cloud_id: droplet.id
+      )
+
       test_runner.test_runner_events.create!(type: :provision_request_sent)
     end
   end
