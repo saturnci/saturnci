@@ -26,7 +26,7 @@ class TestSuiteRun < ApplicationRecord
       end
 
       if TestRunner.available.count < project.concurrency
-        project.concurrency.times { TestRunner.provision }
+        ProvisionRunnersJob.perform_later(project.concurrency - TestRunner.available.count)
       end
 
       AssignTestRunnersJob.perform_later(runs.map(&:id))
