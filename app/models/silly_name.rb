@@ -377,5 +377,11 @@ class SillyName
     lemon
     sweater
     strawberry
+    librarian
+    meteorologist
+    stenographer
+    upholsterer
+    astronomer
+    geologist
   )
 end
