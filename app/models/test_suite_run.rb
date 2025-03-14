@@ -21,24 +21,26 @@ class TestSuiteRun < ApplicationRecord
     transaction do
       save!
 
-      if TestRunner.available.count < project.concurrency
-        project.concurrency.times { TestRunner.provision }
+      runs = project.concurrency.times.map do |i|
+        Run.create!(test_suite_run: self, order_index: i + 1)
       end
 
-      available_test_runners = TestRunner.available.to_a
-
-      runs_to_use.each do |run|
-        if available_test_runners.any?
-          test_runner = available_test_runners.shift
-          test_runner.assign(run)
-        end
-      end
+      assign_test_runners(runs)
     end
   end
 
-  def runs_to_use
-    project.concurrency.times.map do |i|
-      Run.create!(test_suite_run: self, order_index: i + 1)
+  def assign_test_runners(runs)
+    if TestRunner.available.count < project.concurrency
+      project.concurrency.times { TestRunner.provision }
+    end
+
+    available_test_runners = TestRunner.available.to_a
+
+    runs.each do |run|
+      if available_test_runners.any?
+        test_runner = available_test_runners.shift
+        test_runner.assign(run)
+      end
     end
   end
 
