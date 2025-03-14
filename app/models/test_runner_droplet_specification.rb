@@ -1,12 +1,12 @@
 class TestRunnerDropletSpecification
   attr_reader :rsa_key
 
-  def initialize(test_runner_id:, client:, name:)
+  def initialize(test_runner_id:, name:)
     @test_runner_id = test_runner_id
-    @client = client
+    @client = DropletKitClientFactory.client
     @name = name
     @rsa_key = Cloud::RSAKey.generate
-    @ssh_key = Cloud::SSHKey.new(@rsa_key, client:)
+    @ssh_key = Cloud::SSHKey.new(@rsa_key, client: @client)
   end
 
   def execute

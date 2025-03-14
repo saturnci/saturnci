@@ -18,25 +18,27 @@ class TestRunner < ApplicationRecord
       )")
   }
 
-  def self.provision(client:, test_runner_droplet_specification: nil)
+  def self.provision
     name = "tr-#{SecureRandom.uuid[0..7]}-#{SillyName.random.gsub(/ /, "-")}"
 
     create!(name:).tap do |test_runner|
-      test_runner_droplet_specification ||= TestRunnerDropletSpecification.new(
-        test_runner_id: test_runner.id,
-        client:,
-        name:,
-      )
-
-      droplet = test_runner_droplet_specification.execute
-
-      test_runner.update!(
-        rsa_key: test_runner_droplet_specification.rsa_key,
-        cloud_id: droplet.id
-      )
-
+      create_vm(test_runner)
       test_runner.test_runner_events.create!(type: :provision_request_sent)
     end
+  end
+
+  def self.create_vm(test_runner)
+    test_runner_droplet_specification = TestRunnerDropletSpecification.new(
+      test_runner_id: test_runner.id,
+      name:,
+    )
+
+    droplet = test_runner_droplet_specification.execute
+
+    test_runner.update!(
+      rsa_key: test_runner_droplet_specification.rsa_key,
+      cloud_id: droplet.id
+    )
   end
 
   def deprovision(client = DropletKitClientFactory.client)

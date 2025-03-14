@@ -16,9 +16,12 @@ class TestSuiteRun < ApplicationRecord
 
   def start!
     return unless project.active
+    client = DropletKitClientFactory.client
 
     transaction do
       save!
+      #2.times { TestRunner.provision(client:) }
+
       available_test_runners = TestRunner.available.to_a
 
       runs_to_use.each do |run|
