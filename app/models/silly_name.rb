@@ -374,5 +374,8 @@ class SillyName
     insect
     leg
     puppet
+    lemon
+    sweater
+    strawberry
   )
 end
