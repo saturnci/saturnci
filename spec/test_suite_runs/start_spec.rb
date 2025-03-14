@@ -4,6 +4,9 @@ describe "Starting test suite run" do
   let!(:project) { create(:project, concurrency: 2) }
   let!(:test_suite_run) { create(:build, project:) }
 
+  context "there were initially no test runners, then some became available" do
+  end
+
   context "there are no available test runners" do
     before do
       allow(TestRunner).to receive(:provision) do

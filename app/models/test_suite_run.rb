@@ -25,15 +25,15 @@ class TestSuiteRun < ApplicationRecord
         Run.create!(test_suite_run: self, order_index: i + 1)
       end
 
+      if TestRunner.available.count < project.concurrency
+        project.concurrency.times { TestRunner.provision }
+      end
+
       assign_test_runners(runs)
     end
   end
 
   def assign_test_runners(runs)
-    if TestRunner.available.count < project.concurrency
-      project.concurrency.times { TestRunner.provision }
-    end
-
     available_test_runners = TestRunner.available.to_a
 
     runs.each do |run|
