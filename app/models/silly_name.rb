@@ -217,6 +217,10 @@ class SillyName
     lovely
     deformed
     mutant
+    crumbled
+    crumpled
+    crushed
+    rolling
   )
 
   NOUNS = %w(
@@ -224,7 +228,6 @@ class SillyName
     bacterium
     bandit
     baseball
-    bassoon
     beard
     bird
     blanket
@@ -367,5 +370,9 @@ class SillyName
     trumpet
     foot
     monstrosity
+    phone
+    insect
+    leg
+    puppet
   )
 end
