@@ -18,14 +18,14 @@ class TestRunner < ApplicationRecord
       )")
   }
 
-  def self.provision(client:, user_data: nil)
+  def self.provision(client:)
     name = "tr-#{SecureRandom.uuid[0..7]}-#{SillyName.random.gsub(/ /, "-")}"
 
     create!(name:).tap do |test_runner|
       test_runner_droplet_specification = TestRunnerDropletSpecification.new(
+        test_runner_id: test_runner.id,
         client:,
         name:,
-        user_data: user_data || test_runner.script
       )
 
       droplet = test_runner_droplet_specification.execute
@@ -66,28 +66,6 @@ class TestRunner < ApplicationRecord
       status:,
       run_id: run&.id,
     )
-  end
-
-  def script
-    admin_user = User.find_by(super_admin: true)
-
-    <<~SCRIPT
-      #!/bin/bash
-
-      export TEST_RUNNER_ID=#{id}
-      export SATURNCI_API_HOST=#{ENV["SATURNCI_HOST"]}
-      export SATURNCI_API_USER_ID=#{admin_user.id}
-      export SATURNCI_API_TOKEN=#{admin_user.api_token}
-
-      export DOCKER_REGISTRY_CACHE_USERNAME=#{ENV["DOCKER_REGISTRY_CACHE_USERNAME"]}
-      export DOCKER_REGISTRY_CACHE_PASSWORD=#{ENV["DOCKER_REGISTRY_CACHE_PASSWORD"]}
-
-      cd ~
-      git clone https://github.com/saturnci/test_runner_agent.git
-      cd test_runner_agent
-
-      bin/test_runner_agent send_ready_signal
-    SCRIPT
   end
 
   def assign(run)
