@@ -4,12 +4,18 @@ describe "Starting test suite run" do
   let!(:project) { create(:project, concurrency: 2) }
   let!(:test_suite_run) { create(:build, project:) }
 
+  around do |example|
+    perform_enqueued_jobs do
+      example.run
+    end
+  end
+
   context "there were initially no test runners, then some became available" do
     let!(:test_runners) do
       create_list(:test_runner, 2)
     end
 
-    it "makes the assignments" do
+    before do
       allow(TestRunner).to receive(:provision)
 
       allow(TestRunner).to receive_message_chain(:available, :count)
@@ -17,7 +23,9 @@ describe "Starting test suite run" do
 
       allow(TestRunner).to receive_message_chain(:available, :to_a)
         .and_return([], test_runners)
+    end
 
+    it "makes the assignments" do
       expect { test_suite_run.start! }
         .to change(TestRunnerAssignment, :count).by(2)
     end

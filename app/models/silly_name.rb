@@ -211,6 +211,8 @@ class SillyName
     uncontrollable
     underwater
     lovely
+    deformed
+    mutant
   )
 
   NOUNS = %w(
@@ -360,5 +362,6 @@ class SillyName
     pretzel
     trumpet
     foot
+    monstrosity
   )
 end

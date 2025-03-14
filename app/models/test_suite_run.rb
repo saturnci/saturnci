@@ -29,22 +29,7 @@ class TestSuiteRun < ApplicationRecord
         project.concurrency.times { TestRunner.provision }
       end
 
-      assign_test_runners(runs)
-    end
-  end
-
-  def assign_test_runners(runs)
-    while runs.any?
-      available_test_runners = nil
-
-      loop do
-        available_test_runners = TestRunner.available.to_a
-        break if available_test_runners.any?
-      end
-
-      run = runs.shift
-      test_runner = available_test_runners.shift
-      test_runner.assign(run)
+      AssignTestRunnersJob.perform_later(runs.map(&:id))
     end
   end
 
