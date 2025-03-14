@@ -4,8 +4,12 @@ describe "Start test suite run", type: :system do
   let!(:test_suite_run) { create(:build) }
 
   before do
+    create(:user, super_admin: true)
+
     test_runner = create(:test_runner)
     allow(TestRunner).to receive(:available).and_return([test_runner])
+    allow(TestRunner).to receive(:create_vm)
+
     login_as(test_suite_run.project.user)
   end
 
