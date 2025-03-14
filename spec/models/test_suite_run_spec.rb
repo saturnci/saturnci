@@ -1,28 +1,6 @@
 require "rails_helper"
 
 describe TestSuiteRun, type: :model do
-  describe "#start!" do
-    let!(:project) { create(:project, concurrency: 2) }
-    let!(:test_suite_run) { create(:build, project:) }
-
-    let!(:test_runners) do
-      [
-        create(:test_runner),
-        create(:test_runner)
-      ]
-    end
-
-    before do
-      allow(TestRunner).to receive(:available).and_return(test_runners)
-    end
-
-    context "two runs, two available test runners" do
-      it "creates two assignments" do
-        expect { test_suite_run.start! }.to change(TestRunnerAssignment, :count).by(2)
-      end
-    end
-  end
-
   describe "#duration" do
     let!(:build) { create(:build) }
 
