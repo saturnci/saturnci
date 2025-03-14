@@ -20,7 +20,10 @@ class TestSuiteRun < ApplicationRecord
 
     transaction do
       save!
-      #2.times { TestRunner.provision(client:) }
+
+      if TestRunner.available.count < project.concurrency
+        project.concurrency.times { TestRunner.provision }
+      end
 
       available_test_runners = TestRunner.available.to_a
 

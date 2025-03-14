@@ -22,12 +22,12 @@ class TestRunner < ApplicationRecord
     name = "tr-#{SecureRandom.uuid[0..7]}-#{SillyName.random.gsub(/ /, "-")}"
 
     create!(name:).tap do |test_runner|
-      create_vm(test_runner)
+      create_vm(test_runner, name)
       test_runner.test_runner_events.create!(type: :provision_request_sent)
     end
   end
 
-  def self.create_vm(test_runner)
+  def self.create_vm(test_runner, name)
     test_runner_droplet_specification = TestRunnerDropletSpecification.new(
       test_runner_id: test_runner.id,
       name:,

@@ -46,26 +46,18 @@ describe TestRunner do
   end
 
   describe ".provision" do
-    let!(:client) { double }
-
     before do
-      droplet_request = double
-      allow(droplet_request).to receive(:id) { rand(10000000) }
-      allow(client).to receive_message_chain(:droplets, :create).and_return(droplet_request)
-
-      ssh_key = double
-      allow(ssh_key).to receive(:id).and_return("333")
-      allow(client).to receive_message_chain(:ssh_keys, :create).and_return(ssh_key)
+      allow(TestRunner).to receive(:create_vm)
     end
 
     it "creates a test runner" do
-      expect { TestRunner.provision(client:) }
+      expect { TestRunner.provision }
         .to change { TestRunner.count }
         .from(0).to(1)
     end
 
     it "sets the test runner's status to Provisioning" do
-      test_runner = TestRunner.provision(client:)
+      test_runner = TestRunner.provision
       expect(test_runner.status).to eq("Provisioning")
     end
   end

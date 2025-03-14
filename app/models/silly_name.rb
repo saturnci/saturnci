@@ -206,6 +206,10 @@ class SillyName
     descending
     intruding
     ghastly
+    wiley
+    unstoppable
+    uncontrollable
+    underwater
   )
 
   NOUNS = %w(
