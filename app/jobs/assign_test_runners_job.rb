@@ -36,6 +36,11 @@ class AssignTestRunnersJob < ApplicationJob
       test_runner.assign(run)
     end
 
+    available_test_runner_count = TestRunner.available.count
+    test_runner_pool_size = ENV.fetch("TEST_RUNNER_POOL_SIZE", 10).to_i
+    logger.info "Scaling test runner pool from #{available_test_runner_count} to #{test_runner_pool_size}"
+    TestRunnerPool.scale(test_runner_pool_size)
+
     logger.info "Completed"
   end
 end
