@@ -56,6 +56,7 @@ class TestRunner < ApplicationRecord
       "provision_request_sent" => "Provisioning",
       "ready_signal_received" => "Ready",
       "assignment_acknowledged" => "Assigned",
+      "error" => "Error",
     }[most_recent_event.type]
   end
 
