@@ -1,7 +1,7 @@
 class TestSuiteRun < ApplicationRecord
   acts_as_paranoid
   belongs_to :project
-  has_many :runs, foreign_key: "build_id"
+  has_many :runs, foreign_key: "build_id", dependent: :destroy
   has_many :test_case_runs, through: :runs
 
   after_initialize do
