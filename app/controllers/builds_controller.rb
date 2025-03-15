@@ -76,7 +76,7 @@ class BuildsController < ApplicationController
     authorize build
 
     begin
-      build.delete_test_runners
+      build.delete_runners
     rescue DropletKit::Error => e
       if e.message.include?("404")
         Rails.logger.error "Failed to delete runner: #{e.message}"
