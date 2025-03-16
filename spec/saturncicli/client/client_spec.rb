@@ -42,7 +42,7 @@ describe "client" do
       OUTPUT
 
       expect {
-        client.execute("run 3efa1a7e")
+        client.execute([:run, "3efa1a7e"])
       }.to output(expected_output).to_stdout
     end
   end
@@ -99,7 +99,7 @@ describe "client" do
       OUTPUT
 
       expect {
-        client.execute("runs")
+        client.execute([:runs])
       }.to output(expected_output).to_stdout
     end
   end

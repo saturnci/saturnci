@@ -12,25 +12,8 @@ module SaturnCICLI
       @credential = credential
     end
 
-    def execute(argument)
-      case argument
-      when /--test-runner\s+(\S+)/
-        test_runner_id = argument.split(" ")[1]
-        send(:ssh_by_test_runner_id, test_runner_id)
-      when "runs"
-        send(:runs)
-      when /run\s+/
-        run_id = argument.split(" ")[1]
-        send(:run, run_id)
-      when "test-runners"
-        send(:test_runners)
-      when "test-suite-runs"
-        send(:test_suite_runs)
-      when nil
-        send(:test_runners)
-      else
-        fail "Unknown argument \"#{argument}\""
-      end
+    def execute(command)
+      send(*command)
     end
 
     def test_runners
