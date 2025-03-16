@@ -21,8 +21,8 @@ class AssignTestRunnersJob < ApplicationJob
         if available_test_runners.any?
           break
         else
-          logger.info "No test runners available, waiting..."
-          sleep(rand(1..5)) # avoid hammering the database
+          sleep_interval = Rails.configuration.test_runner_availability_check_interval_in_seconds + rand(1..5)
+          logger.info "No test runners available, waiting #{sleep_interval} seconds"
           sleep(Rails.configuration.test_runner_availability_check_interval_in_seconds)
         end
       end

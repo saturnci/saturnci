@@ -40,6 +40,6 @@ module Saturn
     config.hosts << "staging.saturnci.com"
 
     config.charge_rate = 0.1
-    config.test_runner_availability_check_interval_in_seconds = 20
+    config.test_runner_availability_check_interval_in_seconds = 10
   end
 end
