@@ -383,5 +383,7 @@ class SillyName
     upholsterer
     astronomer
     geologist
+    fungus
+    guest
   )
 end
