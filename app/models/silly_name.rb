@@ -14,7 +14,6 @@ class SillyName
     bloody
     boiled
     bony
-    brain
     buried
     burning
     burnt
@@ -44,10 +43,8 @@ class SillyName
     delirious
     demented
     deranged
-    descending
     devastated
     disappointed
-    discounted
     diseased
     disintegrated
     divine
@@ -115,13 +112,11 @@ class SillyName
     laughing
     levitating
     liquid
-    liver
     lonesome
     lost
     lost
     lovable
     lovely
-    lung
     magical
     magnificent
     majestic
@@ -234,6 +229,13 @@ class SillyName
     wrinkled
     yellow
     gooey
+    vicious
+    rabid
+    terrified
+    angry
+    furious
+    embarrassed
+    frightened
   )
 
   NOUNS = %w(
@@ -397,5 +399,8 @@ class SillyName
     whiteboard
     witch
     wizard
+    brain
+    liver
+    lung
   )
 end
