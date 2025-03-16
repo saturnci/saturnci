@@ -30,6 +30,7 @@ describe "ssh" do
 
   before do
     allow(test_runner).to receive(:refresh).and_return(test_runner)
+    allow(test_runner).to receive(:id).and_return("abc123")
   end
 
   context "remote machine has an IP address" do
@@ -46,7 +47,7 @@ describe "ssh" do
     it "outputs the test runner id" do
       expect do
         command = "--test-runner abc123 ssh"
-        client.ssh("abc123", test_runner)
+        client.ssh(test_runner)
       end.to output("ssh -o StrictHostKeyChecking=no -i /tmp/saturnci/test-runner-abc123 root@111.11.11.1\n").to_stdout
     end
   end
@@ -61,7 +62,7 @@ describe "ssh" do
     it "outputs a message" do
       expect do
         command = "--test-runner abc123 ssh"
-        client.ssh("abc123", test_runner)
+        client.ssh(test_runner)
       end.to output("Waiting for IP address...\nssh -o StrictHostKeyChecking=no -i /tmp/saturnci/test-runner-abc123 root@111.11.11.1\n").to_stdout
     end
   end
@@ -73,7 +74,7 @@ describe "ssh" do
     end
 
     it "sends a request to set terminate_on_completion to false" do
-      client.ssh("abc123", test_runner)
+      client.ssh(test_runner)
 
       expect(a_request(:patch, "https://app.saturnci.com/api/v1/test_runners/abc123"))
         .to have_been_made.once

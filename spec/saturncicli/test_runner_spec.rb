@@ -11,7 +11,10 @@ describe SaturnCICLI::TestRunner do
 
       allow(response).to receive(:code).and_return("200")
 
-      SaturnCICLI::TestRunner.new(readiness_check_request: -> { response })
+      SaturnCICLI::TestRunner.new(
+        id: "abc123",
+        readiness_check_request: -> { response }
+      )
     end
 
     it "returns a path" do

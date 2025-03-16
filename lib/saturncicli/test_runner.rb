@@ -4,8 +4,10 @@ require "tempfile"
 module SaturnCICLI
   class TestRunner
     WAIT_INTERVAL_IN_SECONDS = 1
+    attr_reader :id
 
-    def initialize(readiness_check_request:)
+    def initialize(id:, readiness_check_request:)
+      @id = id
       @readiness_check_request = readiness_check_request
     end
 
