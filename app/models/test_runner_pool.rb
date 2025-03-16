@@ -8,7 +8,7 @@ class TestRunnerPool
         change.times { TestRunner.provision }
       else
         TestRunner.unassigned.limit(change.abs).each do |tr|
-          tr.deprovision(client)
+          tr.destroy
         end
       end
     end

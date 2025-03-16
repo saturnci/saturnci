@@ -4,6 +4,7 @@ class TestRunner < ApplicationRecord
   has_one :run_test_runner
   has_one :test_runner_assignment, dependent: :destroy
   has_one :run, through: :test_runner_assignment
+  before_destroy :deprovision
 
   scope :unassigned, -> {
     left_joins(:test_runner_assignment).where(test_runner_assignments: { run_id: nil })
@@ -45,8 +46,6 @@ class TestRunner < ApplicationRecord
     client.droplets.delete(id: cloud_id)
   rescue DropletKit::Error => e
     Rails.logger.error "Error deleting test runner: #{e.message}"
-  ensure
-    destroy!
   end
 
   def status
