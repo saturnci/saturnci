@@ -8,6 +8,7 @@ module API
 
           ActiveRecord::Base.transaction do
             run.finish!
+            run.test_runner.test_runner_events.create!(type: :test_run_finished)
 
             if run.build.runs.all?(&:finished?)
               TestSuiteRunLinkComponent.refresh(run.build)

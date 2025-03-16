@@ -7,5 +7,6 @@ class TestRunnerEvent < ApplicationRecord
     :ready_signal_received,
     :assignment_acknowledged,
     :error,
+    :test_run_finished,
   ]
 end

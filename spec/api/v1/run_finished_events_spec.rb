@@ -11,7 +11,7 @@ describe "run finished events", type: :request do
   end
 
   describe "POST /api/v1/runs/:id/run_finished_events" do
-    let!(:run) { create(:run) }
+    let!(:run) { create(:run, :with_test_runner) }
     let!(:user) { run.build.project.user }
 
     it "increases the count of run events by 1" do
