@@ -4,37 +4,55 @@ class SillyName
   end
 
   ADJECTIVES = %w(
+    abandoned
     airborne
     awful
+    battered
     beautiful
+    bleeding
     bloated
     bloody
     boiled
     bony
+    brain
     buried
     burning
     burnt
     buttery
+    cackling
     cheap
+    chocolate
     colossal
     confused
     corrupt
     crazy
     creepy
+    crumbled
+    crumpled
+    crushed
     crystal
     cursed
+    damaged
+    dancing
     dangerous
     dark
     dead
     deadly
     decayed
+    decimated
+    deformed
     delirious
     demented
     deranged
+    descending
     devastated
     disappointed
+    discounted
     diseased
+    disintegrated
     divine
+    doomed
+    dusty
     dying
     emaciated
     enchanted
@@ -44,6 +62,8 @@ class SillyName
     expired
     extraordinary
     extreme
+    falling
+    fancy
     fat
     feathery
     filthy
@@ -51,20 +71,29 @@ class SillyName
     flattened
     fluffy
     flying
+    foreign
+    forgotten
+    fossilized
     fried
     friendly
     frozen
     fuzzy
+    gelatinous
     gentle
+    ghastly
+    glamorous
     glistening
     glittering
     glowing
     golden
     greasy
+    green
     guilty
     hairy
+    haunted
     heavy
     hidden
+    hideous
     holy
     humongous
     hungry
@@ -72,32 +101,49 @@ class SillyName
     impaled
     impatient
     impossible
+    inappropriate
     indecent
+    infected
     injured
     intolerable
     intoxicated
+    intruding
     invisible
     joyful
     jubilant
     juicy
     laughing
     levitating
+    liquid
+    liver
     lonesome
     lost
     lost
+    lovable
+    lovely
+    lung
     magical
     magnificent
     majestic
+    mangled
     melted
     microscopic
     mighty
     miserable
     missing
+    moldy
+    monstrous
+    muddy
+    murdered
+    mutant
     mystical
     nasty
     nauseous
+    nervous
     noisy
+    nonexistent
     pickled
+    plastic
     poisonous
     powerful
     precious
@@ -105,20 +151,29 @@ class SillyName
     psychotic
     puffy
     purple
+    radioactive
     reeking
+    rejected
     repulsive
+    roasted
+    rolling
+    rubber
     sacred
     salty
+    sandy
     savage
     scary
     screaming
     secret
     shattered
     shiny
+    shredded
     shrieking
     shrinking
+    shriveled
     silver
     singing
+    sinking
     sleepy
     slimy
     slippery
@@ -134,8 +189,14 @@ class SillyName
     spicy
     splendid
     squashed
+    steel
+    stone
+    strange
+    submerged
+    suicidal
     sweaty
     sweet
+    swimming
     swollen
     thirsty
     tiny
@@ -143,109 +204,58 @@ class SillyName
     tortured
     toxic
     triumphant
+    twisted
     unbearable
+    uncontrollable
+    underwater
     unhealthy
     unnecessary
     unstable
+    unstoppable
     untamed
+    untouchable
     unwanted
     unwelcome
     unworthy
     useless
+    vaporized
     vile
+    violent
+    warped
+    weary
     wicked
     wild
+    wiley
     wilted
     winged
+    wooden
+    wretched
+    wrinkled
     wrinkled
     yellow
-    chocolate
-    steel
-    stone
-    wooden
-    plastic
-    swimming
-    dancing
-    violent
-    untouchable
-    submerged
-    inappropriate
-    green
-    bleeding
-    rejected
-    lovable
-    doomed
-    nervous
-    liquid
-    wrinkled
-    wretched
-    shriveled
-    twisted
-    shredded
-    suicidal
-    moldy
-    discounted
-    forgotten
-    weary
-    strange
-    foreign
-    infected
-    decimated
-    nonexistent
-    sandy
-    rubber
-    cackling
-    dusty
-    fancy
-    gelatinous
-    haunted
-    hideous
-    mangled
-    radioactive
-    roasted
-    warped
-    glamorous
-    sinking
-    falling
-    descending
-    intruding
-    ghastly
-    wiley
-    unstoppable
-    uncontrollable
-    underwater
-    lovely
-    deformed
-    mutant
-    crumbled
-    crumpled
-    crushed
-    rolling
-    muddy
-    monstrous
-    battered
-    vaporized
-    damaged
-    fossilized
-    disintegrated
-    murdered
-    abandoned
   )
 
   NOUNS = %w(
     airplane
+    astronomer
     bacterium
+    bag
+    balloon
     bandit
+    barnacle
     baseball
     beard
     bird
     blanket
     breakfast
+    brick
     buffalo
+    canoe
     captain
     carpenter
     carrot
     castle
+    caterpillar
     caveman
     chair
     clock
@@ -255,9 +265,11 @@ class SillyName
     cubicle
     cupcake
     deer
+    demon
     dentist
     dessert
     device
+    devil
     dinner
     doctor
     dolphin
@@ -268,42 +280,58 @@ class SillyName
     farmer
     feather
     fish
+    foot
     forklift
-    gardener
+    fungus
     garden
+    gardener
     gazebo
+    geologist
     ghost
+    glove
     goat
     goblin
     grandmother
     grape
     grave
+    guest
     hog
     horse
     hospital
+    insect
     kingdom
     kitchen
     knife
     lamp
     lawyer
+    leg
+    lemon
+    librarian
     loaf
     lobster
     log
+    loser
     machine
     manager
+    marshmallow
     meadow
     meatball
     mechanic
+    meteorologist
     mind
+    monstrosity
     moose
+    moron
     muffin
     mustache
     noodle
+    ogre
     onion
     pancake
     pants
     pencil
     penguin
+    phone
     piano
     pigeon
     pillow
@@ -315,11 +343,15 @@ class SillyName
     policeman
     potato
     president
+    pretzel
     prince
     princess
     printer
+    puppet
     rabbit
     rainbow
+    rat
+    reject
     rifle
     rock
     roofer
@@ -332,19 +364,28 @@ class SillyName
     shovel
     singer
     skeleton
+    slug
+    snail
     snowplow
     sofa
+    soldier
+    soul
     spatula
     spectacle
     squid
     squirrel
     stapler
+    stenographer
+    strawberry
+    sweater
     sword
     thief
     toilet
     tractor
     tree
     trout
+    trumpet
+    upholsterer
     villain
     volcano
     waiter
@@ -355,43 +396,5 @@ class SillyName
     whiteboard
     witch
     wizard
-    snail
-    slug
-    caterpillar
-    brick
-    marshmallow
-    reject
-    loser
-    moron
-    canoe
-    soul
-    soldier
-    bag
-    balloon
-    barnacle
-    demon
-    devil
-    glove
-    rat
-    ogre
-    pretzel
-    trumpet
-    foot
-    monstrosity
-    phone
-    insect
-    leg
-    puppet
-    lemon
-    sweater
-    strawberry
-    librarian
-    meteorologist
-    stenographer
-    upholsterer
-    astronomer
-    geologist
-    fungus
-    guest
   )
 end

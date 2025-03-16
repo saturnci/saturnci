@@ -33,9 +33,11 @@ module SaturnCICLI
       )
     end
 
-    def delete_test_runner(test_runner_id)
-      response = delete("test_runners/#{test_runner_id}")
-      puts response.inspect
+    def delete_test_runner(test_runner_ids)
+      test_runner_ids.each do |test_runner_id|
+        response = delete("test_runners/#{test_runner_id}")
+        puts response.inspect
+      end
     end
 
     def test_suite_runs(options = {})
