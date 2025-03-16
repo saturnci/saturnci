@@ -1,18 +1,25 @@
 module SaturnCICLI
   class Arguments
     def initialize(argv)
+      @argv = argv
       @params = argv.join(" ")
     end
 
     def command
-      case @params
-      when /--test-runner\s+(\S+)/
-        test_runner_id = @params.split(" ")[1]
-        [:ssh_by_test_runner_id, test_runner_id]
+      case @argv[0]
+      when "--test-runner"
+        test_runner_id = @argv[1]
+
+        case @argv[2]
+        when "delete"
+          [:delete_test_runner, test_runner_id]
+        when "ssh"
+          [:ssh_by_test_runner_id, test_runner_id]
+        end
       when "runs"
         [:runs]
-      when /run\s+/
-        run_id = @params.split(" ")[1]
+      when "--run"
+        run_id = @argv[1]
         [:run, run_id]
       when "test-runners"
         [:test_runners]

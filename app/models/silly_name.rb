@@ -228,6 +228,8 @@ class SillyName
     damaged
     fossilized
     disintegrated
+    murdered
+    abandoned
   )
 
   NOUNS = %w(
