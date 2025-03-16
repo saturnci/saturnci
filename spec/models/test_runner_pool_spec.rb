@@ -23,9 +23,8 @@ describe TestRunnerPool do
     end
 
     context "scaling up and then back down" do
-      let!(:client) { double }
-
       before do
+        client = double
         allow(client).to receive_message_chain(:droplets, :delete)
         allow(DropletKitClientFactory).to receive(:client).and_return(client)
       end

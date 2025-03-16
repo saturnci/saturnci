@@ -60,6 +60,12 @@ describe "Test runners", type: :request do
   end
 
   describe "DELETE /api/v1/test_runners/:id" do
+    before do
+      client = double
+      allow(client).to receive_message_chain(:droplets, :delete)
+      allow(DropletKitClientFactory).to receive(:client).and_return(client)
+    end
+
     it "deletes the test runner" do
       delete(
         api_v1_test_runner_path(test_runner.id),
