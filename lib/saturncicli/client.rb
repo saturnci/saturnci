@@ -2,7 +2,7 @@ require "json"
 require_relative "api_request"
 require_relative "display/table"
 require_relative "ssh_session"
-require_relative "connection_details"
+require_relative "test_runner"
 
 module SaturnCICLI
   class Client
@@ -17,11 +17,11 @@ module SaturnCICLI
       when /--test-runner\s+(\S+)/
         test_runner_id = argument.split(" ")[1]
 
-        connection_details = ConnectionDetails.new(
+        test_runner = TestRunner.new(
           request: -> { get("test_runners/#{test_runner_id}") }
         )
 
-        ssh(test_runner_id, connection_details)
+        ssh(test_runner_id, test_runner)
       when "runs"
         runs
       when /run\s+/
@@ -92,15 +92,15 @@ module SaturnCICLI
       end
     end
 
-    def ssh(test_runner_id, connection_details)
-      until connection_details.refresh.ip_address
+    def ssh(test_runner_id, test_runner)
+      until test_runner.refresh.ip_address
         puts "Waiting for IP address..."
-        sleep(ConnectionDetails::WAIT_INTERVAL_IN_SECONDS)
+        sleep(TestRunner::WAIT_INTERVAL_IN_SECONDS)
       end
 
       ssh_session = SSHSession.new(
-        ip_address: connection_details.ip_address,
-        rsa_key_path: connection_details.rsa_key_path
+        ip_address: test_runner.ip_address,
+        rsa_key_path: test_runner.rsa_key_path
       )
 
       response = patch("test_runners/#{test_runner_id}", { "terminate_on_completion" => false })

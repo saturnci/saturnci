@@ -2,7 +2,7 @@ require "base64"
 require "tempfile"
 
 module SaturnCICLI
-  class ConnectionDetails
+  class TestRunner
     WAIT_INTERVAL_IN_SECONDS = 1
 
     def initialize(request:)
