@@ -1,9 +1,9 @@
 class SillyName
   def self.random
-    "#{ADJECTIVES.sample} #{NOUNS.sample}"
+    "#{MODIFIERS.sample} #{NOUNS.sample}"
   end
 
-  ADJECTIVES = %w(
+  MODIFIERS = %w(
     abandoned
     airborne
     awful
