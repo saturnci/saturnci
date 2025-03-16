@@ -52,6 +52,8 @@ module SaturnCICLI
         Net::HTTP::Get
       when "PATCH"
         Net::HTTP::Patch
+      when "DELETE"
+        Net::HTTP::Delete
       end
     end
 

@@ -33,6 +33,11 @@ module SaturnCICLI
       )
     end
 
+    def delete_test_runner(test_runner_id)
+      response = delete("test_runners/#{test_runner_id}")
+      puts response.inspect
+    end
+
     def test_suite_runs(options = {})
       response = get("test_suite_runs")
 
@@ -113,6 +118,15 @@ module SaturnCICLI
         method: "PATCH",
         endpoint:,
         body:,
+        debug: ENV["DEBUG"]
+      ).response
+    end
+
+    def delete(endpoint)
+      APIRequest.new(
+        credential: @credential,
+        method: "DELETE",
+        endpoint:,
         debug: ENV["DEBUG"]
       ).response
     end
