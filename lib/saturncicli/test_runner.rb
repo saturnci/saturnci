@@ -5,12 +5,12 @@ module SaturnCICLI
   class TestRunner
     WAIT_INTERVAL_IN_SECONDS = 1
 
-    def initialize(request:)
-      @request = request
+    def initialize(readiness_check_request:)
+      @readiness_check_request = readiness_check_request
     end
 
     def refresh
-      response = @request.call
+      response = @readiness_check_request.call
 
       if response.code != "200"
         puts JSON.parse(response.body)

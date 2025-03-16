@@ -17,9 +17,9 @@ module SaturnCICLI
       when /--test-runner\s+(\S+)/
         test_runner_id = argument.split(" ")[1]
 
-        test_runner = TestRunner.new(
-          request: -> { get("test_runners/#{test_runner_id}") }
-        )
+        test_runner = TestRunner.new(readiness_check_request: -> {
+          get("test_runners/#{test_runner_id}")
+        })
 
         ssh(test_runner_id, test_runner)
       when "runs"
