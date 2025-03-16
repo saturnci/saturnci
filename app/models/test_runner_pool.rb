@@ -1,5 +1,5 @@
 class TestRunnerPool
-  def self.scale(count, client: DropletKitClientFactory.client)
+  def self.scale(count)
     ActiveRecord::Base.transaction do
       change = count - TestRunner.unassigned.count
       puts "Change: #{change}"
