@@ -3,7 +3,7 @@ require "rails_helper"
 describe "Test suite run status", type: :system do
   include SaturnAPIHelper
 
-  let!(:run) { create(:run) }
+  let!(:run) { create(:run, :with_test_runner) }
   let!(:user) { run.test_suite_run.project.user }
 
   before { login_as(user) }

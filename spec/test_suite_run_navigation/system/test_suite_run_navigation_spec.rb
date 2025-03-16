@@ -5,7 +5,7 @@ describe "Test suite run navigation", type: :system do
     include SaturnAPIHelper
 
     context "test suite run went from running to finished" do
-      let!(:run) { create(:run) }
+      let!(:run) { create(:run, :with_test_runner) }
       let!(:test_suite_run_link) { PageObjects::TestSuiteRunLink.new(page, run.test_suite_run) }
 
       before do
