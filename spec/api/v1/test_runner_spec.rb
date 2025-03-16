@@ -58,4 +58,16 @@ describe "Test runners", type: :request do
       expect(JSON.parse(response.body)["terminate_on_completion"]).to eq(false)
     end
   end
+
+  describe "DELETE /api/v1/test_runners/:id" do
+    it "deletes the test runner" do
+      delete(
+        api_v1_test_runner_path(test_runner.id),
+        headers: api_authorization_headers(user)
+      )
+
+      expect(response).to have_http_status(204)
+      expect(TestRunner.exists?(test_runner.id)).to eq(false)
+    end
+  end
 end

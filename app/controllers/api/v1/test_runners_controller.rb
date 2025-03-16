@@ -32,6 +32,15 @@ module API
         render json: test_runner.as_json
       end
 
+      def destroy
+        test_runner = TestRunner.find_by_abbreviated_hash(params[:id])
+        authorize test_runner
+
+        test_runner.destroy!
+
+        head :no_content
+      end
+
       private
 
       def rsa_key(test_runner)
