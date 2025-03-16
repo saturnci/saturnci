@@ -221,6 +221,13 @@ class SillyName
     crumpled
     crushed
     rolling
+    muddy
+    monstrous
+    battered
+    vaporized
+    damaged
+    fossilized
+    disintegrated
   )
 
   NOUNS = %w(
@@ -309,7 +316,6 @@ class SillyName
     prince
     princess
     printer
-    prison
     rabbit
     rainbow
     rifle
