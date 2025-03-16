@@ -13,7 +13,7 @@ describe SaturnCICLI::Arguments do
     it "works" do
       argv = %w(test-runners delete abc123 def456)
       arguments = SaturnCICLI::Arguments.new(argv)
-      expect(arguments.command).to eq([:delete_test_runner, "abc123", "def456"])
+      expect(arguments.command).to eq([:delete_test_runner, ["abc123", "def456"]])
     end
   end
 

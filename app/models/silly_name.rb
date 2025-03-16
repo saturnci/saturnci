@@ -233,6 +233,7 @@ class SillyName
     wrinkled
     wrinkled
     yellow
+    gooey
   )
 
   NOUNS = %w(
