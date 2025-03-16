@@ -14,14 +14,6 @@ module SaturnCICLI
 
     def execute(argument)
       case argument
-      when /--run\s+(\S+)/
-        run_id = argument.split(" ")[1]
-
-        connection_details = ConnectionDetails.new(
-          request: -> { get("runs/#{run_id}") }
-        )
-
-        ssh(run_id, connection_details)
       when /--test-runner\s+(\S+)/
         test_runner_id = argument.split(" ")[1]
 
