@@ -16,13 +16,7 @@ module SaturnCICLI
       case argument
       when /--test-runner\s+(\S+)/
         test_runner_id = argument.split(" ")[1]
-
-        test_runner = TestRunner.new(
-          id: test_runner_id,
-          readiness_check_request: -> { get("test_runners/#{test_runner_id}") }
-        )
-
-        ssh(test_runner)
+        ssh_by_test_runner_id(test_runner_id)
       when "runs"
         runs
       when /run\s+/
@@ -91,6 +85,15 @@ module SaturnCICLI
       run_attrs.each do |key, value|
         puts "#{key}: #{value}"
       end
+    end
+
+    def ssh_by_test_runner_id(test_runner_id)
+      test_runner = TestRunner.new(
+        id: test_runner_id,
+        readiness_check_request: -> { get("test_runners/#{test_runner_id}") }
+      )
+
+      ssh(test_runner)
     end
 
     def ssh(test_runner)
