@@ -16,18 +16,18 @@ module SaturnCICLI
       case argument
       when /--test-runner\s+(\S+)/
         test_runner_id = argument.split(" ")[1]
-        ssh_by_test_runner_id(test_runner_id)
+        send(:ssh_by_test_runner_id, test_runner_id)
       when "runs"
-        runs
+        send(:runs)
       when /run\s+/
         run_id = argument.split(" ")[1]
-        run(run_id)
+        send(:run, run_id)
       when "test-runners"
-        test_runners
+        send(:test_runners)
       when "test-suite-runs"
-        test_suite_runs
+        send(:test_suite_runs)
       when nil
-        test_suite_runs
+        send(:test_runners)
       else
         fail "Unknown argument \"#{argument}\""
       end
