@@ -53,7 +53,7 @@ class TestRunner < ApplicationRecord
 
     {
       "provision_request_sent" => "Provisioning",
-      "ready_signal_received" => "Ready",
+      "ready_signal_received" => "Available",
       "assignment_acknowledged" => "Running",
       "error" => "Error",
       "test_run_finished" => "Finished",
