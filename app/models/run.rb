@@ -119,9 +119,8 @@ class Run < ApplicationRecord
       available_test_runners = TestRunner.available.to_a.shuffle
     end
 
-    return if available_test_runners.empty?
-
     Run.unassigned.each do |run|
+      return if available_test_runners.empty?
       test_runner = available_test_runners.shift
       test_runner.assign(run)
     end

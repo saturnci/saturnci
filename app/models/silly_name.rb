@@ -23,7 +23,6 @@ class SillyName
     chocolate
     colossal
     confused
-    corrupt
     crazy
     creepy
     crumbled

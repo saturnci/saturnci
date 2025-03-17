@@ -54,6 +54,7 @@ class TestRunner < ApplicationRecord
     {
       "provision_request_sent" => "Provisioning",
       "ready_signal_received" => "Available",
+      "assignment_made" => "Assigned",
       "assignment_acknowledged" => "Running",
       "error" => "Error",
       "test_run_finished" => "Finished",
@@ -73,6 +74,9 @@ class TestRunner < ApplicationRecord
   end
 
   def assign(run)
-    TestRunnerAssignment.create!(test_runner: self, run:)
+    transaction do
+      test_runner_events.create!(type: :assignment_made)
+      TestRunnerAssignment.create!(test_runner: self, run:)
+    end
   end
 end
