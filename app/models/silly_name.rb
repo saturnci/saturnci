@@ -236,6 +236,9 @@ class SillyName
     furious
     embarrassed
     frightened
+    multicolored
+    curious
+    defaced
   )
 
   NOUNS = %w(
@@ -402,5 +405,9 @@ class SillyName
     brain
     liver
     lung
+    refrigerator
+    microwave
+    toaster
+    raisin
   )
 end

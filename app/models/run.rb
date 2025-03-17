@@ -28,6 +28,11 @@ class Run < ApplicationRecord
     where.not(id: Run.running.select(:id))
   end
 
+  scope :unassigned, -> do
+    # left join test_runner_assignments, where test_runner_assignments is missing
+    left_joins(:test_runner_assignment).where(test_runner_assignments: { run_id: nil })
+  end
+
   def name
     "Runner #{order_index}"
   end
@@ -105,6 +110,21 @@ class Run < ApplicationRecord
 
   def system_logs
     runner_system_log&.content
+  end
+
+  def self.assign_unassigned
+    available_test_runners = nil
+
+    ActiveRecord::Base.uncached do
+      available_test_runners = TestRunner.available.to_a.shuffle
+    end
+
+    return if available_test_runners.empty?
+
+    Run.unassigned.each do |run|
+      test_runner = available_test_runners.shift
+      test_runner.assign(run)
+    end
   end
 
   private
