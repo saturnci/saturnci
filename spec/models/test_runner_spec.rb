@@ -67,7 +67,7 @@ describe TestRunner do
       it "returns ready" do
         test_runner = create(:test_runner)
         test_runner.test_runner_events.create!(type: :ready_signal_received)
-        expect(test_runner.status).to eq("Ready")
+        expect(test_runner.status).to eq("Available")
       end
     end
   end
