@@ -9,8 +9,11 @@ module SaturnCICLI
             label: "ID",
             format: -> (hash) { Helpers.truncated_hash(hash) }
           },
+          "created_at" => {
+            label: "Created At",
+            format: -> (hash) { Helpers.formatted_datetime(hash) }
+          },
           "name" => { label: "Name" },
-          "cloud_id" => { label: "Cloud ID" },
           "status" => { label: "Status" },
           "run_id" => {
             label: "Run ID",
