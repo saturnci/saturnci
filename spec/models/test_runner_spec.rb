@@ -90,4 +90,16 @@ describe TestRunner do
       end
     end
   end
+
+  describe "#to_json" do
+    it "includes the test runner assignment's run's commit message" do
+      run = create(:run) do |r|
+        r.test_suite_run.update!(commit_message: "Add stuff.")
+      end
+
+      create(:test_runner_assignment, run:)
+
+      expect(JSON.parse(run.test_runner.to_json)["commit_message"]).to eq("Add stuff.")
+    end
+  end
 end

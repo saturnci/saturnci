@@ -68,6 +68,7 @@ class TestRunner < ApplicationRecord
     super(options).merge(
       status:,
       run_id: run&.id,
+      commit_message: run&.test_suite_run&.commit_message,
     )
   end
 

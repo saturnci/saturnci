@@ -38,7 +38,7 @@ describe "test runner list" do
 
   it "formats the output to a table" do
     expected_output = <<~OUTPUT
-    ID        Created At           Name                         Status        Run ID
+    ID        Created at           Name                         Status        Run ID  Commit message
     a68c4aef  2023-10-01 00:00:00  tr-5ab042f8-toxic-manager    Provisioning
     bb4d0342  2023-10-01 00:00:00  tr-a4c47d49-magical-lobster  Provisioning
     7abd6b84  2023-10-01 00:00:00  tr-f66f0860-secret-grape     Provisioning

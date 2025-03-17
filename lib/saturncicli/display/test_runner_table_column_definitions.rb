@@ -10,7 +10,7 @@ module SaturnCICLI
             format: -> (hash) { Helpers.truncated_hash(hash) }
           },
           "created_at" => {
-            label: "Created At",
+            label: "Created at",
             format: -> (hash) { Helpers.formatted_datetime(hash) }
           },
           "name" => { label: "Name" },
@@ -19,6 +19,10 @@ module SaturnCICLI
             label: "Run ID",
             format: -> (hash) { Helpers.truncated_hash(hash) }
           },
+          "commit_message" => {
+            label: "Commit message",
+            format: -> (value) { Helpers.truncate(Helpers.squish(value)) }
+          }
         }
       end
     end
