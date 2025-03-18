@@ -43,6 +43,7 @@ class TestRunnerSupervisor
   def self.remove_stuck_test_runner_assignments
     stuck_test_runner_assignments = TestRunnerAssignment
       .where("test_runner_assignments.created_at < ?", 5.minutes.ago)
+      .where("test_runner_assignments.created_at > ?", 1.day.ago)
       .left_joins(test_runner: :test_runner_events)
       .where(
         "test_runner_events is null or test_runner_events.type = ?",

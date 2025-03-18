@@ -6,7 +6,7 @@ require_relative "test_runner"
 
 module SaturnCICLI
   class Client
-    DEFAULT_LIMIT = 20
+    DEFAULT_LIMIT = 30
 
     def initialize(credential)
       @credential = credential
