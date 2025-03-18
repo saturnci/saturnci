@@ -417,5 +417,6 @@ class SillyName
     pig
     worm
     pastry
+    heart
   )
 end
