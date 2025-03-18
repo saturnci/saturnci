@@ -2,6 +2,8 @@ class TestRunnerSupervisor
   def self.check
     Rails.logger.info "-" * 80
 
+    remove_stuck_test_runner_assignments
+
     available_test_runners = nil
     unassigned_test_runners = nil
 
@@ -35,6 +37,23 @@ class TestRunnerSupervisor
       number_of_needed_test_runners = test_runner_pool_size - unassigned_test_runners.count
       Rails.logger.info "Provisioning #{number_of_needed_test_runners} test runners"
       number_of_needed_test_runners.times { TestRunner.provision }
+    end
+  end
+
+  def self.remove_stuck_test_runner_assignments
+    stuck_test_runner_assignments = TestRunnerAssignment
+      .where("test_runner_assignments.created_at < ?", 5.minutes.ago)
+      .left_joins(test_runner: :test_runner_events)
+      .where(
+        "test_runner_events is null or test_runner_events.type = ?",
+        TestRunnerEvent.types[:assignment_acknowledged]
+      )
+
+    Rails.logger.info "Killing #{stuck_test_runner_assignments.count} stuck test runners"
+
+    stuck_test_runner_assignments.each do |test_runner_assignment|
+      Rails.logger.info "Killing stuck test runner assignment: #{test_runner_assignment.id}"
+      test_runner_assignment.destroy
     end
   end
 end
