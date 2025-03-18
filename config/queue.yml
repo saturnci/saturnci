@@ -16,6 +16,3 @@ test:
 
 production:
   <<: *default
-  supervise_test_runners_task:
-    command: "TestRunner.supervise"
-    schedule: every ten seconds
