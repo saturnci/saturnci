@@ -2,14 +2,15 @@ default: &default
   dispatchers:
     - polling_interval: 1
       batch_size: 500
+      recurring_tasks:
+        supervise_test_runners:
+          command: "TestRunner.supervise"
+          schedule: every ten seconds
   workers:
     - queues: "*"
       threads: 3
       processes: <%= ENV.fetch("JOB_CONCURRENCY", 1) %>
       polling_interval: 0.1
-  supervise_test_runners:
-    command: "TestRunner.supervise"
-    schedule: every ten seconds
 
 development:
   <<: *default
