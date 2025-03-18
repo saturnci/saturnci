@@ -51,9 +51,12 @@ class TestRunnerSupervisor
 
     Rails.logger.info "Killing #{stuck_test_runner_assignments.count} stuck test runners"
 
-    stuck_test_runner_assignments.each do |test_runner_assignment|
-      Rails.logger.info "Killing stuck test runner assignment: #{test_runner_assignment.id}"
-      test_runner_assignment.destroy
+    ActiveRecord::Base.transaction do
+      stuck_test_runner_assignments.each do |test_runner_assignment|
+        Rails.logger.info "Killing stuck test runner assignment: #{test_runner_assignment.id}"
+        test_runner_assignment.test_runner.destroy
+        test_runner_assignment.destroy
+      end
     end
   end
 end

@@ -3,13 +3,24 @@ require "rails_helper"
 describe TestRunnerSupervisor do
   describe ".check" do
     context "an assigned test runner hasn't started running within 5 minutes" do
-      it "deletes the assignment" do
-        allow(TestRunner).to receive(:create_vm)
-        test_runner_assignment = create(:test_runner_assignment)
+      let!(:test_runner_assignment) { create(:test_runner_assignment) }
 
+      before do
+        allow(TestRunner).to receive(:create_vm)
+        allow_any_instance_of(TestRunner).to receive(:deprovision)
+      end
+
+      it "deletes the assignment" do
         travel_to(10.minutes.from_now) do
           TestRunnerSupervisor.check
           expect(TestRunnerAssignment.exists?(test_runner_assignment.id)).to be false
+        end
+      end
+
+      it "deletes the test runner" do
+        travel_to(10.minutes.from_now) do
+          TestRunnerSupervisor.check
+          expect(TestRunner.exists?(test_runner_assignment.test_runner.id)).to be false
         end
       end
     end
