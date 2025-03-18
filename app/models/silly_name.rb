@@ -242,6 +242,7 @@ class SillyName
     tainted
     floating
     antique
+    stolen
   )
 
   NOUNS = %w(
