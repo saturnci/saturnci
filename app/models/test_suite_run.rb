@@ -25,8 +25,10 @@ class TestSuiteRun < ApplicationRecord
         Run.create!(test_suite_run: self, order_index: i + 1)
       end
 
-      if TestRunner.available.count < project.concurrency
-        ProvisionRunnersJob.perform_later(project.concurrency - TestRunner.available.count)
+      number_of_test_runners_needed = project.concurrency - TestRunner.available.count
+      if number_of_test_runners_needed > 0
+        buffer = 2 # in case not all test runners are successfully provisioned
+        ProvisionRunnersJob.perform_later(number_of_test_runners_needed + buffer)
       end
     end
   end
