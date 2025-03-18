@@ -238,6 +238,9 @@ class SillyName
     multicolored
     curious
     defaced
+    electrocuted
+    tainted
+    floating
   )
 
   NOUNS = %w(
@@ -408,5 +411,8 @@ class SillyName
     microwave
     toaster
     raisin
+    skull
+    pig
+    worm
   )
 end

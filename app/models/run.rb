@@ -112,20 +112,6 @@ class Run < ApplicationRecord
     runner_system_log&.content
   end
 
-  def self.assign_unassigned
-    available_test_runners = nil
-
-    ActiveRecord::Base.uncached do
-      available_test_runners = TestRunner.available.to_a.shuffle
-    end
-
-    Run.unassigned.each do |run|
-      return if available_test_runners.empty?
-      test_runner = available_test_runners.shift
-      test_runner.assign(run)
-    end
-  end
-
   private
 
   def parsed_exit_code
