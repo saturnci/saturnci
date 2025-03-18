@@ -79,4 +79,43 @@ class TestRunner < ApplicationRecord
       TestRunnerAssignment.create!(test_runner: self, run:)
     end
   end
+
+  def self.supervise
+    puts "-" * 80
+
+    available_test_runners = nil
+    unassigned_test_runners = nil
+
+    unassigned_runs = Run.unassigned.where("runs.created_at > ?", 1.day.ago)
+    puts "Unassigned runs: #{unassigned_runs.count}"
+
+    ActiveRecord::Base.uncached do
+      available_test_runners = TestRunner.available.to_a.shuffle
+      unassigned_test_runners = TestRunner.unassigned
+    end
+    puts "Available test runners: #{available_test_runners.count}"
+    puts "Unassigned test runners: #{unassigned_test_runners.count}"
+
+    if unassigned_test_runners.count < unassigned_runs.count
+      number_of_needed_test_runners = unassigned_runs.count - unassigned_test_runners.count
+      puts "Provisioning #{number_of_needed_test_runners} test runners"
+      number_of_needed_test_runners.times { TestRunner.provision }
+    end
+
+    unassigned_runs.each do |run|
+      break if available_test_runners.empty?
+      test_runner = available_test_runners.shift
+      puts "Assigning #{test_runner.name} to #{run.id}"
+      test_runner.assign(run)
+    end
+
+    test_runner_pool_size = ENV.fetch("TEST_RUNNER_POOL_SIZE", 10).to_i
+    puts "Test runner pool size: #{test_runner_pool_size}"
+
+    if unassigned_test_runners.count < test_runner_pool_size
+      number_of_needed_test_runners = test_runner_pool_size - unassigned_test_runners.count
+      puts "Provisioning #{number_of_needed_test_runners} test runners"
+      number_of_needed_test_runners.times { TestRunner.provision }
+    end
+  end
 end

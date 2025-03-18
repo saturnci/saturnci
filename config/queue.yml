@@ -7,6 +7,9 @@ default: &default
       threads: 3
       processes: <%= ENV.fetch("JOB_CONCURRENCY", 1) %>
       polling_interval: 0.1
+  supervise_test_runners:
+    command: "TestRunner.supervise"
+    schedule: every ten seconds
 
 development:
   <<: *default
