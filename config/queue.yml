@@ -2,10 +2,6 @@ default: &default
   dispatchers:
     - polling_interval: 1
       batch_size: 500
-      recurring_tasks:
-        supervise_test_runners:
-          command: "TestRunner.supervise"
-          schedule: every ten seconds
   workers:
     - queues: "*"
       threads: 3
@@ -20,3 +16,6 @@ test:
 
 production:
   <<: *default
+  supervise_test_runners_task:
+    command: "TestRunner.supervise"
+    schedule: every ten seconds
