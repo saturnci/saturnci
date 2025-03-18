@@ -10,7 +10,7 @@ describe "Assigning unassigned runs" do
       allow(TestRunner).to receive(:create_vm)
 
       expect {
-        TestRunner.supervise
+        TestRunnerSupervisor.check
       }.to change { run.reload.test_runner }.from(nil).to(test_runner)
     end
   end
