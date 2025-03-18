@@ -115,13 +115,25 @@ class Run < ApplicationRecord
   def self.assign_unassigned
     available_test_runners = nil
 
+    unassigned_runs = Run.unassigned.where("runs.created_at > ?", 1.day.ago)
+    puts "Unassigned runs: #{unassigned_runs.count}"
+
     ActiveRecord::Base.uncached do
       available_test_runners = TestRunner.available.to_a.shuffle
     end
+    puts "Available test runners: #{available_test_runners.count}"
+    puts "Unassigned test runners: #{TestRunner.unassigned.count}"
 
-    Run.unassigned.each do |run|
+    if TestRunner.unassigned.count < unassigned_runs.count
+      number_of_needed_test_runners = unassigned_runs.count - TestRunner.unassigned
+      puts "Provisioning #{number_of_needed_test_runners} test runners"
+      number_of_needed_test_runners.times { TestRunner.provision }
+    end
+
+    unassigned_runs.each do |run|
       return if available_test_runners.empty?
       test_runner = available_test_runners.shift
+      puts "Assigning #{test_runner.name} to #{run.id}"
       test_runner.assign(run)
     end
   end
