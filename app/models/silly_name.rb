@@ -241,6 +241,7 @@ class SillyName
     electrocuted
     tainted
     floating
+    antique
   )
 
   NOUNS = %w(
@@ -414,5 +415,6 @@ class SillyName
     skull
     pig
     worm
+    pastry
   )
 end
