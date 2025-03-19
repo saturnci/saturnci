@@ -46,8 +46,9 @@ class TestRunnerSupervisor
 
   def self.delete_old_test_runners
     log "-" * 20
-    log "Deleting old test runners"
-    TestRunner.where("created_at < ?", 1.hour.ago).destroy_all
+    old_test_runners = TestRunner.where("created_at < ?", 1.hour.ago)
+    log "Deleting #{old_test_runners.count} old test runners"
+    old_test_runners.destroy_all
   end
 
   def self.delete_errored_test_runners
