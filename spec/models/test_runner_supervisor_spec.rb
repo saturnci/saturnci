@@ -19,29 +19,44 @@ describe TestRunnerSupervisor do
       end
     end
 
-    context "an assigned test runner hasn't started running within 5 minutes" do
+    context "an assigned test runner hasn't started running within 2 minutes" do
       let!(:test_runner_assignment) { create(:test_runner_assignment) }
 
       it "deletes the assignment" do
-        travel_to(10.minutes.from_now) do
+        travel_to(5.minutes.from_now) do
           TestRunnerSupervisor.check
           expect(TestRunnerAssignment.exists?(test_runner_assignment.id)).to be false
         end
       end
 
       it "deletes the test runner" do
-        travel_to(10.minutes.from_now) do
+        travel_to(5.minutes.from_now) do
           TestRunnerSupervisor.check
           expect(TestRunner.exists?(test_runner_assignment.test_runner.id)).to be false
         end
       end
+
+      context "run is more than a day old" do
+        it "does not delete the assignment" do
+          travel_to(25.hours.from_now) do
+            TestRunnerSupervisor.check
+            expect(TestRunnerAssignment.exists?(test_runner_assignment.id)).to be true
+          end
+        end
+      end
     end
 
-    context "an assigned test runner HAS started running within 5 minutes" do
+    context "an assigned test runner HAS started running within 2 minutes" do
       it "does not delete the assignment" do
         test_runner_assignment = create(:test_runner_assignment)
 
-        travel_to(2.minutes.from_now) do
+        create(
+          :test_runner_event,
+          test_runner: test_runner_assignment.test_runner,
+          type: :assignment_acknowledged
+        )
+
+        travel_to(5.minutes.from_now) do
           TestRunnerSupervisor.check
           expect(TestRunnerAssignment.exists?(test_runner_assignment.id)).to be true
         end

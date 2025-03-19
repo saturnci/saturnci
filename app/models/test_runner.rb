@@ -6,18 +6,28 @@ class TestRunner < ApplicationRecord
   has_one :run, through: :test_runner_assignment
   before_destroy :deprovision
 
-  scope :unassigned, -> {
+  scope :unassigned, -> do
     left_joins(:test_runner_assignment).where(test_runner_assignments: { run_id: nil })
-  }
+  end
 
-  scope :available, -> {
+  scope :available, -> do
     unassigned.joins(:test_runner_events)
       .where(test_runner_events: { type: :ready_signal_received })
       .where("test_runner_events.created_at = (
         SELECT MAX(created_at) FROM test_runner_events
         WHERE test_runner_events.test_runner_id = test_runners.id
       )")
-  }
+  end
+
+  scope :running, -> do
+    joins(:test_runner_events)
+      .where(test_runner_events: { type: TestRunnerEvent.types[:assignment_acknowledged] })
+  end
+
+  scope :recently_assigned, -> do
+    joins(:test_runner_assignment)
+      .where("test_runner_assignments.created_at > ?", 2.minutes.ago)
+  end
 
   def self.provision
     name = "tr-#{SecureRandom.uuid[0..7]}-#{SillyName.random.gsub(/ /, "-")}"

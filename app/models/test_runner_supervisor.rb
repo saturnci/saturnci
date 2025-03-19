@@ -2,7 +2,7 @@ class TestRunnerSupervisor
   def self.check
     Rails.logger.info "-" * 80
 
-    remove_stuck_test_runner_assignments
+    remove_orphaned_test_runner_assignments
 
     available_test_runners = nil
     unassigned_test_runners = nil
@@ -43,24 +43,24 @@ class TestRunnerSupervisor
     end
   end
 
-  def self.remove_stuck_test_runner_assignments
-    stuck_test_runner_assignments = TestRunnerAssignment
-      .where("test_runner_assignments.created_at < ?", 5.minutes.ago)
-      .where("test_runner_assignments.created_at > ?", 1.day.ago)
-      .left_joins(test_runner: :test_runner_events)
-      .where(
-        "test_runner_events is null or test_runner_events.type = ?",
-        TestRunnerEvent.types[:assignment_acknowledged]
-      )
-
-    Rails.logger.info "Killing #{stuck_test_runner_assignments.count} stuck test runners"
+  def self.remove_orphaned_test_runner_assignments
+    Rails.logger.info "Deleting #{orphaned_test_runner_assignments.count} orphaned test runners"
 
     ActiveRecord::Base.transaction do
-      stuck_test_runner_assignments.each do |test_runner_assignment|
-        Rails.logger.info "Killing stuck test runner assignment: #{test_runner_assignment.id}"
+      orphaned_test_runner_assignments.each do |test_runner_assignment|
+        Rails.logger.info "Deleting orphaned test runner: #{test_runner_assignment.test_runner.name}"
         test_runner_assignment.test_runner.destroy
+        Rails.logger.info "Deleting orphaned test runner assignment: #{test_runner_assignment.id}"
         test_runner_assignment.destroy
       end
     end
+  end
+
+  def self.orphaned_test_runner_assignments
+    non_orphaned_test_runners = TestRunner.running + TestRunner.recently_assigned
+
+    TestRunnerAssignment
+      .where("test_runner_assignments.created_at > ?", 1.day.ago)
+      .where.not(test_runner_id: non_orphaned_test_runners)
   end
 end
