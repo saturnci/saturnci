@@ -4,6 +4,7 @@ class TestRunnerSupervisor
   def self.check
     log "-" * 80
 
+    delete_errored_test_runners
     remove_orphaned_test_runner_assignments
 
     available_test_runners = nil
@@ -42,11 +43,18 @@ class TestRunnerSupervisor
     ENV.fetch("TEST_RUNNER_POOL_SIZE", 10).to_i
   end
 
+  def self.delete_errored_test_runners
+    log "-" * 20
+    errored_test_runners = TestRunner.error
+    log "Deleting #{errored_test_runners.count} errored test runners"
+    errored_test_runners.destroy_all
+  end
+
   def self.fix_test_runner_pool
     log "-" * 20
     log "Desired test runner pool size: #{test_runner_pool_size}"
 
-    unassigned_test_runners = TestRunner.unassigned - TestRunner.error
+    unassigned_test_runners = TestRunner.unassigned
 
     number_of_test_runners = unassigned_test_runners.count
     log "Number of unassigned test runners: #{number_of_test_runners}"

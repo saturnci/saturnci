@@ -28,12 +28,13 @@ describe TestRunnerSupervisor do
       end
 
       context "there are 4 test runners, but one is in error" do
-        it "creates one test runner" do
+        it "deletes one and creates one" do
           create_list(:test_runner, 3)
           test_runner = create(:test_runner)
           test_runner.test_runner_events.create!(type: :error)
 
-          expect { TestRunnerSupervisor.check }.to change(TestRunner, :count).by(1)
+          TestRunnerSupervisor.check
+          expect(TestRunner.count).to eq(4)
         end
       end
 
@@ -49,6 +50,19 @@ describe TestRunnerSupervisor do
         it "deletes an unassigned test runner" do
           create_list(:test_runner, 5)
           expect { TestRunnerSupervisor.check }.to change(TestRunner, :count).by(-1)
+        end
+      end
+
+      context "there are 4 unassigned test runners and 2 more in error" do
+        it "deletes the 2 errored test runners" do
+          create_list(:test_runner, 4)
+
+          2.times do
+            test_runner = create(:test_runner)
+            test_runner.test_runner_events.create!(type: :error)
+          end
+
+          expect { TestRunnerSupervisor.check }.to change(TestRunner, :count).by(-2)
         end
       end
     end
