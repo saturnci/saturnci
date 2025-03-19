@@ -48,9 +48,9 @@ class TestRunnerSupervisor
 
     ActiveRecord::Base.transaction do
       orphaned_test_runner_assignments.each do |test_runner_assignment|
-        Rails.logger.info "Deleting orphaned test runner: #{test_runner_assignment.test_runner.name}"
-        test_runner_assignment.test_runner.destroy
+        test_runner_assignment.test_runner.test_runner_events.create!(type: :error)
         Rails.logger.info "Deleting orphaned test runner assignment: #{test_runner_assignment.id}"
+        Rails.logger.info "Test runner: #{test_runner_assignment.test_runner.name}"
         test_runner_assignment.destroy
       end
     end

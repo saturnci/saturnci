@@ -26,7 +26,7 @@ class TestRunner < ApplicationRecord
 
   scope :recently_assigned, -> do
     joins(:test_runner_assignment)
-      .where("test_runner_assignments.created_at > ?", 2.minutes.ago)
+      .where("test_runner_assignments.created_at > ?", 10.seconds.ago)
   end
 
   def self.provision
