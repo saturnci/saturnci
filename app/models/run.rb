@@ -25,7 +25,7 @@ class Run < ApplicationRecord
   end
 
   scope :not_finished, -> do
-    where.not(id: Run.finished.select(:id))
+    joins(:build).where(exit_code: nil)
   end
 
   scope :running, -> do

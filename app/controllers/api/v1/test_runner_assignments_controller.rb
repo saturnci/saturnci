@@ -5,6 +5,7 @@ module API
         test_runner = TestRunner.find(params[:test_runner_id])
         authorize test_runner, :show?
 
+        binding.pry
         if test_runner.test_runner_assignment.present? && test_runner.run.test_suite_run.present?
           @test_runner_assignments = [test_runner.test_runner_assignment]
           render :index
