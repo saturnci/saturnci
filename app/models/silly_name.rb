@@ -243,6 +243,8 @@ class SillyName
     floating
     antique
     stolen
+    splattered
+    whining
   )
 
   NOUNS = %w(
