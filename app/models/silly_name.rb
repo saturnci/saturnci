@@ -252,6 +252,7 @@ class SillyName
     wounded
     vomiting
     old
+    shaky
   )
 
   NOUNS = %w(

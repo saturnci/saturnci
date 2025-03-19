@@ -7,6 +7,7 @@ class TestRunnerSupervisor
     delete_old_test_runners
     delete_errored_test_runners
     remove_orphaned_test_runner_assignments
+    fix_test_runner_pool
 
     available_test_runners = nil
     unassigned_test_runners = nil
@@ -24,20 +25,12 @@ class TestRunnerSupervisor
     log "Available test runners: #{available_test_runners.count}"
     log "Unassigned test runners: #{unassigned_test_runners.count}"
 
-    if unassigned_test_runners.count < unassigned_runs.count
-      number_of_needed_test_runners = unassigned_runs.count - unassigned_test_runners.count
-      log "Provisioning #{number_of_needed_test_runners} test runners"
-      number_of_needed_test_runners.times { TestRunner.provision }
-    end
-
     unassigned_runs.each do |run|
       break if available_test_runners.empty?
       test_runner = available_test_runners.shift
       log "Assigning #{test_runner.name} to #{run.id}"
       test_runner.assign(run)
     end
-
-    fix_test_runner_pool
   end
 
   def self.test_runner_pool_size
