@@ -36,8 +36,10 @@ class TestRunnerSupervisor
     test_runner_pool_size = ENV.fetch("TEST_RUNNER_POOL_SIZE", 10).to_i
     log "Test runner pool size: #{test_runner_pool_size}"
 
-    if unassigned_test_runners.count < test_runner_pool_size
-      number_of_needed_test_runners = test_runner_pool_size - unassigned_test_runners.count
+    recently_created_unassigned_test_runners = unassigned_test_runners.where("test_runners.created_at > ?", 10.minutes.ago)
+    puts "Recently created unassigned test runners: #{recently_created_unassigned_test_runners.count}"
+    if recently_created_unassigned_test_runners.count < test_runner_pool_size
+      number_of_needed_test_runners = test_runner_pool_size - recently_created_unassigned_test_runners.count
       log "Provisioning #{number_of_needed_test_runners} test runners"
       number_of_needed_test_runners.times { TestRunner.provision }
     end
