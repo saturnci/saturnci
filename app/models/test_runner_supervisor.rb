@@ -41,7 +41,8 @@ class TestRunnerSupervisor
   end
 
   def self.fix_test_runner_pool
-    log "Test runner pool size: #{test_runner_pool_size}"
+    log "-" * 20
+    log "Desired test runner pool size: #{test_runner_pool_size}"
 
     number_of_test_runners = TestRunner.unassigned.count
     log "Unassigned test runners: #{number_of_test_runners}"
@@ -52,7 +53,7 @@ class TestRunnerSupervisor
     if number_of_needed_test_runners > 0
       log "Provisioning #{number_of_needed_test_runners} test runners"
       number_of_needed_test_runners.times { TestRunner.provision }
-    else
+    elsif number_of_needed_test_runners < 0
       log "Deleting #{number_of_needed_test_runners.abs} unassigned test runners"
       TestRunner.unassigned.limit(number_of_needed_test_runners.abs).destroy_all
     end
