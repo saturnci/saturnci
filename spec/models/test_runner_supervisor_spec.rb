@@ -4,6 +4,7 @@ describe TestRunnerSupervisor do
   before do
     allow(TestRunner).to receive(:create_vm)
     allow_any_instance_of(TestRunner).to receive(:deprovision)
+    allow(TestRunnerSupervisor).to receive(:log)
   end
 
   describe ".check" do
