@@ -4,6 +4,7 @@ class TestRunnerSupervisor
   def self.check
     log "-" * 80
 
+    delete_old_test_runners
     delete_errored_test_runners
     remove_orphaned_test_runner_assignments
 
@@ -41,6 +42,12 @@ class TestRunnerSupervisor
 
   def self.test_runner_pool_size
     ENV.fetch("TEST_RUNNER_POOL_SIZE", 10).to_i
+  end
+
+  def self.delete_old_test_runners
+    log "-" * 20
+    log "Deleting old test runners"
+    TestRunner.where("created_at < ?", 1.hour.ago).destroy_all
   end
 
   def self.delete_errored_test_runners
