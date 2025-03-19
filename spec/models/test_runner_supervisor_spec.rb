@@ -149,11 +149,14 @@ describe TestRunnerSupervisor do
   end
 
   describe ".test_runner_pool_size" do
-    before { create(:run) }
+    before do
+      stub_const("ENV", ENV.to_hash.merge("TEST_RUNNER_POOL_SIZE" => "10"))
+      create(:run)
+    end
 
     context "a run has been created within the last hour" do
       it "returns TEST_RUNNER_POOL_SIZE" do
-        expect(TestRunnerSupervisor.test_runner_pool_size).to eq(ENV["TEST_RUNNER_POOL_SIZE"].to_i)
+        expect(TestRunnerSupervisor.test_runner_pool_size).to eq(10)
       end
     end
 
