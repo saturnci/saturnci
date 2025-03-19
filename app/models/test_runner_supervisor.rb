@@ -33,15 +33,28 @@ class TestRunnerSupervisor
       test_runner.assign(run)
     end
 
-    test_runner_pool_size = ENV.fetch("TEST_RUNNER_POOL_SIZE", 10).to_i
+    fix_test_runner_pool
+  end
+
+  def self.test_runner_pool_size
+    ENV.fetch("TEST_RUNNER_POOL_SIZE", 10).to_i
+  end
+
+  def self.fix_test_runner_pool
     log "Test runner pool size: #{test_runner_pool_size}"
 
-    recently_created_unassigned_test_runners = unassigned_test_runners.where("test_runners.created_at > ?", 10.minutes.ago)
-    log "Recently created unassigned test runners: #{recently_created_unassigned_test_runners.count}"
-    if recently_created_unassigned_test_runners.count < test_runner_pool_size
-      number_of_needed_test_runners = test_runner_pool_size - recently_created_unassigned_test_runners.count
+    number_of_test_runners = TestRunner.unassigned.count
+    log "Unassigned test runners: #{number_of_test_runners}"
+
+    number_of_needed_test_runners = test_runner_pool_size - number_of_test_runners
+    log "Number of needed test runners: #{number_of_needed_test_runners}"
+
+    if number_of_needed_test_runners > 0
       log "Provisioning #{number_of_needed_test_runners} test runners"
       number_of_needed_test_runners.times { TestRunner.provision }
+    else
+      log "Deleting #{number_of_needed_test_runners.abs} unassigned test runners"
+      TestRunner.unassigned.limit(number_of_needed_test_runners.abs).destroy_all
     end
   end
 

@@ -8,6 +8,41 @@ describe TestRunnerSupervisor do
   end
 
   describe ".check" do
+    describe "pool" do
+      before do
+        allow(TestRunnerSupervisor).to receive(:test_runner_pool_size).and_return(4)
+      end
+
+      context "there are 3 test runners" do
+        it "creates 1 test runner" do
+          create_list(:test_runner, 3)
+          expect { TestRunnerSupervisor.check }.to change(TestRunner, :count).by(1)
+        end
+      end
+
+      context "there are 4 test runners" do
+        it "does not create a test runner" do
+          create_list(:test_runner, 4)
+          expect { TestRunnerSupervisor.check }.to_not change(TestRunner, :count)
+        end
+      end
+
+      context "there are 5 test runners but 4 of them are assigned" do
+        it "creates 4 - 1 = 3 test runners" do
+          create_list(:test_runner_assignment, 4)
+          create(:test_runner)
+          expect { TestRunnerSupervisor.check }.to change(TestRunner, :count).by(3)
+        end
+      end
+
+      context "there are 6 unassigned test runners" do
+        it "deletes an unassigned test runner" do
+          create_list(:test_runner, 5)
+          expect { TestRunnerSupervisor.check }.to change(TestRunner, :count).by(-1)
+        end
+      end
+    end
+
     context "run already finished" do
       let!(:run) { create(:run, :passed) }
 
