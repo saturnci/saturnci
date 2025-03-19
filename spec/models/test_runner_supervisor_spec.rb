@@ -27,6 +27,16 @@ describe TestRunnerSupervisor do
         end
       end
 
+      context "there are 4 test runners, but one is in error" do
+        it "creates one test runner" do
+          create_list(:test_runner, 3)
+          test_runner = create(:test_runner)
+          test_runner.test_runner_events.create!(type: :error)
+
+          expect { TestRunnerSupervisor.check }.to change(TestRunner, :count).by(1)
+        end
+      end
+
       context "there are 5 test runners but 4 of them are assigned" do
         it "creates 4 - 1 = 3 test runners" do
           create_list(:test_runner_assignment, 4)

@@ -24,6 +24,11 @@ class TestRunner < ApplicationRecord
       .where(test_runner_events: { type: TestRunnerEvent.types[:assignment_acknowledged] })
   end
 
+  scope :error, -> do
+    joins(:test_runner_events)
+      .where(test_runner_events: { type: TestRunnerEvent.types[:error] })
+  end
+
   scope :recently_assigned, -> do
     joins(:test_runner_assignment)
       .where("test_runner_assignments.created_at > ?", 10.seconds.ago)

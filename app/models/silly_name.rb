@@ -245,6 +245,9 @@ class SillyName
     stolen
     splattered
     whining
+    blazing
+    scorching
+    tropical
   )
 
   NOUNS = %w(
