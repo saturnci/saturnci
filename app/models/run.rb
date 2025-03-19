@@ -20,17 +20,22 @@ class Run < ApplicationRecord
     order("runs.order_index")
   end
 
-  scope :running, -> do
-    joins(:build).where(exit_code: nil).order("test_suite_runs.created_at desc, runs.order_index asc")
+  scope :finished, -> do
+    joins(:build).where.not(exit_code: nil)
   end
 
-  scope :finished, -> do
-    where.not(id: Run.running.select(:id))
+  scope :not_finished, -> do
+    where.not(id: Run.finished.select(:id))
+  end
+
+  scope :running, -> do
+    not_finished.order("test_suite_runs.created_at desc, runs.order_index asc")
   end
 
   scope :unassigned, -> do
-    # left join test_runner_assignments, where test_runner_assignments is missing
-    left_joins(:test_runner_assignment).where(test_runner_assignments: { run_id: nil })
+    not_finished
+      .left_joins(:test_runner_assignment)
+      .where(test_runner_assignments: { run_id: nil })
   end
 
   def name

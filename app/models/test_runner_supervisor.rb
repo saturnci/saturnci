@@ -7,7 +7,10 @@ class TestRunnerSupervisor
     available_test_runners = nil
     unassigned_test_runners = nil
 
+    # bug: this will re-run tests that have already been run
+    # if those tests' test runner assignments have been deleted
     unassigned_runs = Run.unassigned.where("runs.created_at > ?", 1.day.ago)
+
     Rails.logger.info "Unassigned runs: #{unassigned_runs.count}"
 
     ActiveRecord::Base.uncached do
