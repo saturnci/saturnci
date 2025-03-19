@@ -251,6 +251,7 @@ class SillyName
     decapitated
     wounded
     vomiting
+    old
   )
 
   NOUNS = %w(
@@ -426,5 +427,9 @@ class SillyName
     worm
     pastry
     heart
+    father
+    mother
+    grandfather
+    octogenarian
   )
 end
