@@ -45,10 +45,10 @@ class TestRunnerSupervisor
     log "Desired test runner pool size: #{test_runner_pool_size}"
 
     number_of_test_runners = TestRunner.unassigned.count
-    log "Unassigned test runners: #{number_of_test_runners}"
+    log "Number of unassigned test runners: #{number_of_test_runners}"
 
     number_of_needed_test_runners = test_runner_pool_size - number_of_test_runners
-    log "Number of needed test runners: #{number_of_needed_test_runners}"
+    log "Change needed: #{number_of_needed_test_runners}"
 
     if number_of_needed_test_runners > 0
       log "Provisioning #{number_of_needed_test_runners} test runners"
