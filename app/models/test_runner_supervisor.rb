@@ -46,7 +46,7 @@ class TestRunnerSupervisor
 
   def self.delete_old_test_runners
     log "-" * 20
-    old_test_runners = TestRunner.where("created_at < ?", 1.hour.ago)
+    old_test_runners = TestRunner.unassigned.where("test_runners.created_at < ?", 1.hour.ago)
     log "Deleting #{old_test_runners.count} old test runners"
     old_test_runners.destroy_all
   end
