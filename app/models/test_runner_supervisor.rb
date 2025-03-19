@@ -34,7 +34,7 @@ class TestRunnerSupervisor
   end
 
   def self.test_runner_pool_size
-    ENV.fetch("TEST_RUNNER_POOL_SIZE", 10).to_i
+    ENV.fetch("TEST_RUNNER_POOL_SIZE", 12).to_i
   end
 
   def self.delete_old_test_runners
