@@ -253,6 +253,13 @@ class SillyName
     vomiting
     old
     shaky
+    overexcited
+    overgrown
+    overpriced
+    overgrown
+    embarrassing
+    foul
+    befouled
   )
 
   NOUNS = %w(
@@ -319,7 +326,7 @@ class SillyName
     horse
     hospital
     insect
-    kingdom
+    king
     kitchen
     knife
     lamp
@@ -432,5 +439,7 @@ class SillyName
     mother
     grandfather
     octogenarian
+    planet
+    queen
   )
 end
