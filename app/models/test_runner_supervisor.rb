@@ -34,7 +34,11 @@ class TestRunnerSupervisor
   end
 
   def self.test_runner_pool_size
-    ENV.fetch("TEST_RUNNER_POOL_SIZE", 12).to_i
+    if Run.where("runs.created_at > ?", 1.hour.ago).any?
+      ENV.fetch("TEST_RUNNER_POOL_SIZE", 12).to_i
+    else
+      0
+    end
   end
 
   def self.delete_old_test_runners

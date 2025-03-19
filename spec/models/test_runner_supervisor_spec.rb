@@ -147,4 +147,22 @@ describe TestRunnerSupervisor do
       end
     end
   end
+
+  describe ".test_runner_pool_size" do
+    before { create(:run) }
+
+    context "a run has been created within the last hour" do
+      it "returns TEST_RUNNER_POOL_SIZE" do
+        expect(TestRunnerSupervisor.test_runner_pool_size).to eq(ENV["TEST_RUNNER_POOL_SIZE"].to_i)
+      end
+    end
+
+    context "a run has not been created within the last hour" do
+      it "returns 0" do
+        travel_to(2.hours.from_now) do
+          expect(TestRunnerSupervisor.test_runner_pool_size).to eq(0)
+        end
+      end
+    end
+  end
 end
