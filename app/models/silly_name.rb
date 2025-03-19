@@ -248,6 +248,9 @@ class SillyName
     blazing
     scorching
     tropical
+    decapitated
+    wounded
+    vomiting
   )
 
   NOUNS = %w(
