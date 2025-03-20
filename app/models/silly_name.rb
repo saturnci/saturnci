@@ -259,6 +259,12 @@ class SillyName
     droopy
     oozing
     seasick
+    perfect
+    spoiled
+    contaminated
+    muscular
+    weak
+    unruly
   )
 
   NOUNS = %w(
@@ -444,5 +450,7 @@ class SillyName
     owl
     eagle
     sailor
+    uncle
+    weakling
   )
 end
