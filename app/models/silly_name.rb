@@ -260,6 +260,8 @@ class SillyName
     embarrassing
     foul
     befouled
+    droopy
+    oozing
   )
 
   NOUNS = %w(
@@ -441,5 +443,8 @@ class SillyName
     octogenarian
     planet
     queen
+    stork
+    owl
+    eagle
   )
 end
