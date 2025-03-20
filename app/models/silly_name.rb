@@ -97,7 +97,6 @@ class SillyName
     impaled
     impatient
     impossible
-    inappropriate
     indecent
     infected
     injured
@@ -153,7 +152,6 @@ class SillyName
     rolling
     rubber
     sacred
-    salty
     sandy
     savage
     scary
@@ -180,7 +178,6 @@ class SillyName
     sparkly
     special
     speeding
-    spicy
     splendid
     squashed
     steel
@@ -189,7 +186,6 @@ class SillyName
     submerged
     suicidal
     sweaty
-    sweet
     swimming
     swollen
     thirsty
