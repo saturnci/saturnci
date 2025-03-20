@@ -258,6 +258,7 @@ class SillyName
     befouled
     droopy
     oozing
+    seasick
   )
 
   NOUNS = %w(
@@ -442,5 +443,6 @@ class SillyName
     stork
     owl
     eagle
+    sailor
   )
 end
