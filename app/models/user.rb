@@ -3,6 +3,7 @@ class User < ApplicationRecord
   has_many :projects
   has_many :runs, through: :projects
   has_many :github_accounts
+  has_many :github_oauth_tokens
   has_secure_token :api_token
 
   devise(
@@ -14,6 +15,14 @@ class User < ApplicationRecord
     :omniauthable,
     omniauth_providers: [:github]
   )
+
+  def github_client
+    @github_client ||= Octokit::Client.new(access_token: github_oauth_token)
+  end
+
+  def github_oauth_token
+    github_oauth_tokens.order(created_at: :desc).first.value
+  end
 
   def email_required?
     false
