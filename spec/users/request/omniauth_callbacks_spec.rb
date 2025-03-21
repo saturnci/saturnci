@@ -16,7 +16,6 @@ describe "OmniauthCallbacks", type: :request do
         }
       })
 
-      # Set up the request environment for OmniAuth
       Rails.application.env_config["devise.mapping"] = Devise.mappings[:user]
       Rails.application.env_config["omniauth.auth"] = OmniAuth.config.mock_auth[:github]
     end
@@ -27,6 +26,10 @@ describe "OmniauthCallbacks", type: :request do
       get "/users/auth/github/callback"
       expect(response).to be_redirect
       expect(session[:github_oauth_token]).to eq("mock_token")
+    end
+
+    it "saves the token" do
+      expect { get "/users/auth/github/callback" }.to change { GitHubOAuthToken.count }.by(1)
     end
   end
 end

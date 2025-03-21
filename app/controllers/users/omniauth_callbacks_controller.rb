@@ -6,6 +6,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     Rails.logger.info "GitHub auth: #{request.env["omniauth.auth"].inspect}"
 
     session[:github_oauth_token] = request.env["omniauth.auth"].credentials.token
+    GitHubOAuthToken.create!(user: @user, value: session[:github_oauth_token])
+
     sign_in_and_redirect @user, event: :authentication
     set_flash_message(:notice, :success, kind: "Github") if is_navigational_format?
   end
