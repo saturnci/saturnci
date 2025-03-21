@@ -27,5 +27,6 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
     SSH
     SaturnCI
     SaturnCICLI
+    OAuth
   ).each { |a| inflect.acronym a }
 end
