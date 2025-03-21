@@ -407,7 +407,6 @@ class SillyName
     squid
     squirrel
     stapler
-    stenographer
     strawberry
     sweater
     sword
@@ -417,7 +416,6 @@ class SillyName
     tree
     trout
     trumpet
-    upholsterer
     villain
     volcano
     waiter
