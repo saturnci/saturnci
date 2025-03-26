@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_21_133628) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_26_225024) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -74,7 +74,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_21_133628) do
     t.index ["project_id"], name: "index_project_secrets_on_project_id"
   end
 
-  create_table "projects", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "repositories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -85,8 +85,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_21_133628) do
     t.boolean "start_builds_automatically_on_git_push", default: false, null: false
     t.datetime "deleted_at"
     t.integer "concurrency", default: 2, null: false
-    t.index ["github_account_id"], name: "index_projects_on_github_account_id"
-    t.index ["user_id"], name: "index_projects_on_user_id"
+    t.index ["github_account_id"], name: "index_repositories_on_github_account_id"
+    t.index ["user_id"], name: "index_repositories_on_user_id"
   end
 
   create_table "rsa_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -253,11 +253,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_21_133628) do
   add_foreign_key "charges", "runs"
   add_foreign_key "github_accounts", "users"
   add_foreign_key "github_check_runs", "test_suite_runs", column: "build_id"
-  add_foreign_key "github_events", "projects"
+  add_foreign_key "github_events", "repositories", column: "project_id"
   add_foreign_key "github_oauth_tokens", "users"
-  add_foreign_key "project_secrets", "projects"
-  add_foreign_key "projects", "github_accounts"
-  add_foreign_key "projects", "users"
+  add_foreign_key "project_secrets", "repositories", column: "project_id"
+  add_foreign_key "repositories", "github_accounts"
+  add_foreign_key "repositories", "users"
   add_foreign_key "run_events", "runs"
   add_foreign_key "run_test_runners", "runs"
   add_foreign_key "run_test_runners", "test_runners"
@@ -269,5 +269,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_21_133628) do
   add_foreign_key "test_runner_assignments", "test_runners"
   add_foreign_key "test_runner_events", "test_runners"
   add_foreign_key "test_runners", "rsa_keys"
-  add_foreign_key "test_suite_runs", "projects"
+  add_foreign_key "test_suite_runs", "repositories", column: "project_id"
 end
