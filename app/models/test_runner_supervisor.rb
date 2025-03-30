@@ -5,7 +5,6 @@ class TestRunnerSupervisor
     log "-" * 80
 
     delete_old_test_runners
-    delete_errored_test_runners
     remove_orphaned_test_runner_assignments
     fix_test_runner_pool
 
@@ -46,13 +45,6 @@ class TestRunnerSupervisor
     old_test_runners = TestRunner.unassigned.where("test_runners.created_at < ?", 1.hour.ago)
     log "Deleting #{old_test_runners.count} old test runners"
     old_test_runners.destroy_all
-  end
-
-  def self.delete_errored_test_runners
-    log "-" * 20
-    errored_test_runners = TestRunner.error
-    log "Deleting #{errored_test_runners.count} errored test runners"
-    errored_test_runners.destroy_all
   end
 
   def self.fix_test_runner_pool
