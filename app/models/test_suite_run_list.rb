@@ -7,21 +7,21 @@ class TestSuiteRunList
     @statuses = statuses
   end
 
-  def builds
-    builds = @project.builds.order("created_at desc")
+  def test_suite_runs
+    test_suite_runs = @project.test_suite_runs.order("created_at desc")
 
     if @branch_name.present?
-      builds = builds.where(branch_name: @branch_name)
+      test_suite_runs = test_suite_runs.where(branch_name: @branch_name)
     end
 
     if @statuses.present?
-      builds = builds.where("cached_status in (?)", @statuses)
+      test_suite_runs = test_suite_runs.where("cached_status in (?)", @statuses)
     end
 
-    builds
+    test_suite_runs
   end
 
-  def initial_chunk_of_builds
-    builds.limit(CHUNK_SIZE)
+  def initial_chunk_of_test_suite_runs
+    test_suite_runs.limit(CHUNK_SIZE)
   end
 end

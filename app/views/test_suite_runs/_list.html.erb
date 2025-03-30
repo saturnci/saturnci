@@ -2,10 +2,10 @@
      data-controller="left-pane test-suite-run-list"
      data-test-suite-run-list-url="<%= project_builds_path(@build.project) %>">
 
-  <% if test_suite_run_list.builds.any? %>
+  <% if test_suite_run_list.test_suite_runs.any? %>
     <div class="test-suite-run-list-header">
       <div class="test-suite-run-count">
-        <%= pluralize(test_suite_run_list.builds.count, "test suite run") %>
+        <%= pluralize(test_suite_run_list.test_suite_runs.count, "test suite run") %>
       </div>
 
       <%= link_to "Hide filters", "#", class: "filter-toggle-link",
@@ -22,7 +22,7 @@
 
         <ul id="test-suite-run-list">
           <%= render partial: "test_suite_runs/list_items",
-            locals: { builds: test_suite_run_list.initial_chunk_of_builds, active_build: @build } %>
+            locals: { builds: test_suite_run_list.initial_chunk_of_test_suite_runs, active_build: @build } %>
 
           <div id="additional_test_suite_runs"></div>
         </ul>

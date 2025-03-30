@@ -15,7 +15,7 @@ class BuildsController < ApplicationController
           "additional_test_suite_runs",
           partial: "test_suite_runs/list_items",
           locals: {
-            builds: test_suite_run_list.builds.offset(params[:offset]).limit(TestSuiteRunList::CHUNK_SIZE),
+            builds: test_suite_run_list.test_suite_runs.offset(params[:offset]).limit(TestSuiteRunList::CHUNK_SIZE),
             active_build: nil
           }
         )
