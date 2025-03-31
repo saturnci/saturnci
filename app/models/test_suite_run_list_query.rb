@@ -1,7 +1,7 @@
-class TestSuiteRunList
+class TestSuiteRunListQuery
   CHUNK_SIZE = 20
 
-  def initialize(project, branch_name:, statuses:)
+  def initialize(project:, branch_name:, statuses:)
     @project = project
     @branch_name = branch_name
     @statuses = statuses
@@ -19,9 +19,5 @@ class TestSuiteRunList
     end
 
     test_suite_runs
-  end
-
-  def initial_chunk_of_test_suite_runs
-    test_suite_runs.limit(CHUNK_SIZE)
   end
 end
