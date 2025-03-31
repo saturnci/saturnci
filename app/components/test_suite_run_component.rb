@@ -1,5 +1,6 @@
 class TestSuiteRunComponent < ViewComponent::Base
   renders_one :body
+  attr_reader :build
 
   def initialize(build:, current_tab_name: nil, branch_name: nil, statuses: nil, clear: false)
     @build = build
@@ -11,14 +12,6 @@ class TestSuiteRunComponent < ViewComponent::Base
       @branch_name = nil
       @statuses = nil
     end
-  end
-
-  def test_suite_run_list
-    @test_suite_run_list ||= TestSuiteRunList.new(
-      @build.project,
-      branch_name: @branch_name,
-      statuses: @statuses
-    )
   end
 
   def test_suite_run_filter_component
