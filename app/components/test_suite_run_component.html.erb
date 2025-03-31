@@ -3,9 +3,6 @@
     <div class="two-column-master-detail">
       <%= render TestSuiteRunListComponent.new(
         test_suite_run: build,
-        branch_name: @branch_name,
-        statuses: @statuses,
-        current_tab_name: @current_tab_name,
         test_suite_run_filter_component:
       ) %>
 

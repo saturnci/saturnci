@@ -7,6 +7,8 @@ class TestSuiteRunFilterComponent < ViewComponent::Base
     "Not Started"
   ]
 
+  attr_reader :test_suite_run, :branch_name, :checked_statuses
+
   def initialize(test_suite_run:, branch_name:, checked_statuses:, current_tab_name:)
     @test_suite_run = test_suite_run
     @branch_name = branch_name
