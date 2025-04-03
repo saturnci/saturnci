@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Removing a Saturn Installation" do
+describe "Removing a GitHub Account" do
   context "the project has more than zero runs" do
     let!(:run) { create(:run) }
 
