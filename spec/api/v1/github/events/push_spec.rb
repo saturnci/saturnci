@@ -58,25 +58,25 @@ describe "Push", type: :request do
       expect(response).to have_http_status(:ok)
     end
 
-    it "creates a new build for the project" do
+    it "creates a new test suite run for the project" do
       expect {
         post(
           "/api/v1/github_events",
           params: payload,
           headers: headers
         )
-      }.to change { project.builds.count }.by(1)
+      }.to change { project.test_suite_runs.count }.by(1)
     end
 
-    it "sets the branch name for the build" do
+    it "sets the branch name for the test suite run" do
       post(
         "/api/v1/github_events",
         params: payload,
         headers: headers
       )
 
-      build = Build.last
-      expect(build.branch_name).to eq("main")
+      test_suite_run = TestSuiteRun.last
+      expect(test_suite_run.branch_name).to eq("main")
     end
 
     context "multiple matching projects" do
@@ -88,14 +88,14 @@ describe "Push", type: :request do
         end
       end
 
-      it "creates a new build for each project" do
+      it "creates a new test suite run for each project" do
         expect {
           post(
             "/api/v1/github_events",
             params: payload,
             headers: headers
           )
-        }.to change { Build.count }.by(2)
+        }.to change { TestSuiteRun.count }.by(2)
       end
     end
   end

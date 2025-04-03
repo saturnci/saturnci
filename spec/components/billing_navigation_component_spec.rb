@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 require "rails_helper"
 
-RSpec.describe BillingNavigationComponent, type: :component do
+describe BillingNavigationComponent, type: :component do
   context "there was a run in January 2020 with a charge" do
     let!(:run) do
       create(:run, created_at: "01-01-2020").finish!

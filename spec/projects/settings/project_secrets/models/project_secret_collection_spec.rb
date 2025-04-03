@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe ProjectSecretCollection, type: :model do
+describe ProjectSecretCollection, type: :model do
   describe "#project_secrets_attributes=" do
     let!(:project_secret_collection) do
       ProjectSecretCollection.new(project: create(:project))

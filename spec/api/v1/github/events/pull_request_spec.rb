@@ -68,28 +68,28 @@ describe "Pull Request", type: :request do
       expect(response).to have_http_status(:ok)
     end
 
-    it "creates a new build for the project" do
+    it "creates a new test suite run for the project" do
       expect {
         post(
           "/api/v1/github_events",
           params: payload,
           headers: headers
         )
-      }.to change { project.builds.count }.by(1)
+      }.to change { project.test_suite_runs.count }.by(1)
     end
 
-    it "sets the correct branch name, commit hash, commit message, and author name for the build" do
+    it "sets the correct branch name, commit hash, commit message, and author name for the test suite run" do
       post(
         "/api/v1/github_events",
         params: payload,
         headers: headers
       )
 
-      build = Build.last
-      expect(build.branch_name).to eq("feature-branch")
-      expect(build.commit_hash).to eq("abc123")
-      expect(build.commit_message).to eq("Add new feature")
-      expect(build.author_name).to eq("contributor")
+      test_suite_run = TestSuiteRun.last
+      expect(test_suite_run.branch_name).to eq("feature-branch")
+      expect(test_suite_run.commit_hash).to eq("abc123")
+      expect(test_suite_run.commit_message).to eq("Add new feature")
+      expect(test_suite_run.author_name).to eq("contributor")
     end
   end
 end
