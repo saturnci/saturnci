@@ -1,0 +1,26 @@
+<div class="container">
+  <h1>Repositories</h1>
+
+ <% if @repositories.any? %>
+   <table border>
+     <tr>
+       <th>Name</th>
+       <th>GitHub Account</th>
+     </tr>
+
+     <% @repositories.each do |repository| %>
+       <tr>
+         <td>
+           <%= link_to repository.name, repository %>
+         </td>
+         <td>
+           <%= link_to repository.github_account.account_name, repository.github_account %>
+         </td>
+       </tr>
+     <% end %>
+   </table>
+
+ <% else %>
+   (No repositories)
+ <% end %>
+</div>

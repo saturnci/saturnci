@@ -22,6 +22,9 @@ Rails.application.routes.draw do
 
   resources :test_suite_runs, only: :create
 
+  resources :repositories do
+  end
+
   resources :projects do
     resource :settings do
       resource :general_settings, only: %i(show update)
