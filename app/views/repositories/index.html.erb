@@ -11,7 +11,7 @@
      <% @repositories.each do |repository| %>
        <tr>
          <td>
-           <%= link_to repository.name, repository %>
+           <%= link_to repository.name, project_path(repository) %>
          </td>
          <td>
            <%= link_to repository.github_account.account_name, repository.github_account %>
