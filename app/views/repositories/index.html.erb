@@ -4,9 +4,7 @@
  <% if @repositories.any? %>
    <% @repositories.each do |repository| %>
      <div class="bg-eee p-20 mt-20 mb-20" style="width: 600px;">
-       <h2>
-         <%= link_to repository.name, project_path(repository) %>
-       </h2>
+       <h2><%= link_to repository.name, repository %></h2>
 
        <div>
          Account:
