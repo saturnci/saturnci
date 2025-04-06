@@ -1,3 +1,20 @@
+.bg-bbb { background-color: #BBB; }
+.bg-ccc { background-color: #CCC; }
+.bg-ddd { background-color: #DDD; }
+.bg-eee { background-color: #EEE; }
+
+.p-10 { padding: 10px; }
+.p-20 { padding: 20px; }
+
+.m-10 { margin: 10px; }
+.m-20 { margin: 20px; }
+
+.mt-10 { margin-top: 10px; }
+.mt-20 { margin-top: 20px; }
+
+.mb-10 { margin-bottom: 10px; }
+.mb-20 { margin-bottom: 20px; }
+
 .button {
   background: linear-gradient(to bottom, #F8F8F8, #D8D8D8);
   border: 1px solid #999;

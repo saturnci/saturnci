@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   get "user_emails/new"
   get "user_emails/create"
   get "saturnci_github_app_authorizations/new"
-  root to: "github_accounts#index"
+  root to: "repositories#index"
 
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
   mount ActionCable.server => '/cable'
@@ -21,6 +21,9 @@ Rails.application.routes.draw do
   get "builds/:id(/:partial)", to: "builds#show", as: "build"
 
   resources :test_suite_runs, only: :create
+
+  resources :repositories do
+  end
 
   resources :projects do
     resource :settings do
