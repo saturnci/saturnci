@@ -8,16 +8,16 @@ describe TestSuiteRunLinkComponent, type: :component do
 
     it "links to overview page" do
       component = TestSuiteRunLinkComponent.new(build, active_build: nil)
-      expect(render_inline(component).to_html).to include(project_build_path(build.project, build))
+      expect(render_inline(component).to_html).to include(project_test_suite_run_path(build.project, build))
     end
   end
 
   context "there are no runs" do
     let!(:build) { create(:build) }
 
-    it "returns the project build path" do
+    it "returns the project test suite run path" do
       component = TestSuiteRunLinkComponent.new(build, active_build: nil)
-      expect(render_inline(component).to_html).to include(project_build_path(build.project, build))
+      expect(render_inline(component).to_html).to include(project_test_suite_run_path(build.project, build))
     end
   end
 
