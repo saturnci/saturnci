@@ -17,11 +17,11 @@ describe "Sign up with Github", type: :system do
       )
     end
 
-    it "redirects to GitHub accounts page" do
+    it "redirects to Repositories page" do
       visit new_user_registration_path
       click_on "Sign up with GitHub"
       
-      expect(page).to have_content("GitHub Accounts")
+      expect(page).to have_content("Repositories")
     end
   end
 end
