@@ -3,14 +3,11 @@ require "rails_helper"
 describe "Default page", type: :system do
   context "signed in" do
     let!(:user) { create(:user) }
+    before { login_as(user) }
 
-    before do
-      login_as(user, scope: :user)
-    end
-
-    it "shows the GitHub Accounts page" do
+    it "shows the Repositories page" do
       visit root_path
-      expect(page).to have_content("GitHub Accounts")
+      expect(page).to have_content("Repositories")
     end
   end
 
