@@ -4,6 +4,7 @@ class TestSuiteRun < ApplicationRecord
   belongs_to :project
   has_many :runs, foreign_key: "build_id", dependent: :destroy
   has_many :test_case_runs, through: :runs
+  alias_attribute :repository_id, :project_id
 
   after_initialize do
     self.seed ||= rand(10000)
