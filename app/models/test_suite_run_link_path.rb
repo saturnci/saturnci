@@ -9,7 +9,7 @@ class TestSuiteRunLinkPath
   def value
     Rails.cache.fetch(cache_key) do
       if @test_suite_run.finished? || @test_suite_run.runs.empty?
-        project_test_suite_run_path(@test_suite_run.project, @test_suite_run)
+        repository_test_suite_run_path(@test_suite_run.repository, @test_suite_run)
       else
         run_path(first_failed_run || @test_suite_run.runs.sorted.first, DEFAULT_PARTIAL)
       end
