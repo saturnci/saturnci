@@ -1,9 +1,9 @@
 class GeneralSettingsController < ApplicationController
   def show
-    @project = Project.find(params[:project_id])
-    authorize @project, :show?
+    @repository = Repository.find(params[:repository_id])
+    authorize @repository, :show?
 
-    @project_component = ProjectComponent.new(@project)
+    @repository_component = RepositoryComponent.new(@repository)
   end
 
   def update

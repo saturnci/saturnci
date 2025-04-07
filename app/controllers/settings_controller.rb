@@ -1,7 +1,7 @@
 class SettingsController < ApplicationController
   def show
-    @project = Project.find(params[:project_id])
-    @project_component = ProjectComponent.new(@project)
+    @repository = Repository.find(params[:repository_id])
+    @repository_component = RepositoryComponent.new(@repository)
   end
 end
 

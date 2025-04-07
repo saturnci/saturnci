@@ -1,0 +1,8 @@
+<div class="project <%= @extra_css_classes %>">
+  <header class="project-header">
+    <h2><%= link_to @repository.name, repository_path(@repository) %></h2>
+    <%= link_to "Settings", project_settings_general_settings_path(@repository) %>
+  </header>
+
+  <%= body %>
+</div>

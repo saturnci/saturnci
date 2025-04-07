@@ -10,7 +10,7 @@ class ProjectSecretCollectionsController < ApplicationController
       @project_secret_collection.project_secrets << ProjectSecret.new
     end
 
-    @project_component = ProjectComponent.new(@project)
+    @repository_component = RepositoryComponent.new(@project)
     authorize @project_secret_collection
   end
 
