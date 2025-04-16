@@ -13,7 +13,7 @@ class UserEmailsController < ApplicationController
     authorize @user_email
 
     if @user_email.save
-      redirect_to github_accounts_path
+      redirect_to repositories_path
     else
       render :new, status: :unprocessable_entity
     end

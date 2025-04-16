@@ -7,8 +7,8 @@ describe "Collecting email", type: :system do
     before { login_as(user) }
 
     it "allows the GitHubAccounts page to be shown" do
-      visit github_accounts_path
-      expect(page).to have_content("GitHub Accounts")
+      visit repositories_path
+      expect(page).to have_content("Repositories")
     end
   end
 
@@ -17,13 +17,13 @@ describe "Collecting email", type: :system do
 
     before do
       login_as(user)
-      visit github_accounts_path
+      visit repositories_path
     end
 
     it "prompts the user for an email address" do
       fill_in "Email", with: "test@example.com"
       click_on "Continue"
-      expect(page).to have_content("GitHub Accounts")
+      expect(page).to have_content("Repositories")
     end
 
     context "invalid email address" do
