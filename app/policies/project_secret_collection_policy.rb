@@ -4,6 +4,6 @@ class ProjectSecretCollectionPolicy < ApplicationPolicy
   end
 
   def update?
-    record.project.user == user
+    record.repository.user == user
   end
 end
