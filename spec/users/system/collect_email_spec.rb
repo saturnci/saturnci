@@ -6,7 +6,7 @@ describe "Collecting email", type: :system do
 
     before { login_as(user) }
 
-    it "allows the GitHubAccounts page to be shown" do
+    it "allows the Repositories page to be shown" do
       visit repositories_path
       expect(page).to have_content("Repositories")
     end

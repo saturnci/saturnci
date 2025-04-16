@@ -2,18 +2,18 @@ class RepositoriesController < ApplicationController
   skip_before_action :authenticate_user_or_404!, only: :index
 
   def index
-    if user_signed_in?
-      if current_user.email.present?
-        @repositories = current_user.repositories
-        authorize @repositories
-      else
-        skip_authorization
-        redirect_to new_user_email_path
-      end
-    else
+    if !user_signed_in?
       skip_authorization
-      redirect_to new_user_session_path
+      redirect_to new_user_session_path and return
     end
+
+    if user_signed_in? && current_user.email.blank?
+      skip_authorization
+      redirect_to new_user_email_path and return
+    end
+
+    @repositories = current_user.repositories
+    authorize @repositories
   end
 
   def show
