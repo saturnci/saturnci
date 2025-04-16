@@ -3,13 +3,13 @@ require "rails_helper"
 describe ProjectSecretCollection, type: :model do
   describe "#project_secrets_attributes=" do
     let!(:project_secret_collection) do
-      ProjectSecretCollection.new(project: create(:project))
+      ProjectSecretCollection.new(repository: create(:repository))
     end
 
     context "empty attributes" do
       let!(:project_secret_collection) do
         ProjectSecretCollection.new(
-          project: create(:project),
+          repository: create(:repository),
           project_secrets_attributes: {
             "0" => {
               "key"=>"DATABASE_USERNAME",
@@ -25,14 +25,14 @@ describe ProjectSecretCollection, type: :model do
 
       it "skips the empty attributes" do
         project_secret_collection.save!
-        expect(project_secret_collection.project.project_secrets.count).to eq(1)
+        expect(project_secret_collection.repository.project_secrets.count).to eq(1)
       end
     end
   end
 
   describe "#save!" do
     let!(:project_secret_collection) do
-      ProjectSecretCollection.new(project: create(:project))
+      ProjectSecretCollection.new(repository: create(:repository))
     end
 
     it "creates a project secret for each key and value" do
@@ -55,7 +55,7 @@ describe ProjectSecretCollection, type: :model do
 
       context "value is new" do
         before do
-          project_secret_collection.project = project_secret.project
+          project_secret_collection.repository = project_secret.repository
 
           project_secret_collection.project_secrets_attributes = {
             "0" => {
@@ -77,7 +77,7 @@ describe ProjectSecretCollection, type: :model do
 
       context "value is the same" do
         before do
-          project_secret_collection.project = project_secret.project
+          project_secret_collection.repository = project_secret.repository
 
           project_secret_collection.project_secrets_attributes = {
             "0" => {
@@ -100,7 +100,7 @@ describe ProjectSecretCollection, type: :model do
 
     context "adding a project secret" do
       let!(:project_secret_collection) do
-        ProjectSecretCollection.new(project: create(:project))
+        ProjectSecretCollection.new(repository: create(:repository))
       end
 
       it "creates a project secret" do
@@ -124,7 +124,7 @@ describe ProjectSecretCollection, type: :model do
         }
         project_secret_collection.save!
 
-        expect(project_secret_collection.project.project_secrets.count).to eq(2)
+        expect(project_secret_collection.repository.project_secrets.count).to eq(2)
       end
     end
   end

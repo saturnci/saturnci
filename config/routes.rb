@@ -23,6 +23,11 @@ Rails.application.routes.draw do
   resources :test_suite_runs, only: :create
 
   resources :repositories do
+    resource :settings do
+      resource :general_settings, only: %i(show update)
+      resource :project_secret_collection, only: %i(show update)
+    end
+
     resources :test_suite_runs, only: %i(index show create destroy) do
       resources :runs, only: :show do
         get ":partial", to: "runs#show", on: :member, as: "run_detail_content"

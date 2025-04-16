@@ -1,14 +1,14 @@
 require "rails_helper"
 
 describe "Add secrets", type: :system do
-  let!(:project) { create(:project) }
+  let!(:repository) { create(:repository) }
 
   before do
-    login_as(project.user, scope: :user)
+    login_as(repository.user)
   end
 
   it "adds a secret" do
-    visit project_settings_project_secret_collection_path(project)
+    visit repository_settings_project_secret_collection_path(repository)
 
     fill_in "project_secrets_0_key", with: "DATABASE_USERNAME"
     fill_in "project_secrets_0_value", with: "steve"
@@ -20,7 +20,7 @@ describe "Add secrets", type: :system do
 
   context "secret already exists" do
     before do
-      visit project_settings_project_secret_collection_path(project)
+      visit repository_settings_project_secret_collection_path(repository)
 
       # This setup step is to make the secret already exist
       fill_in "project_secrets_0_key", with: "DATABASE_USERNAME"

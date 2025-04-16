@@ -1,11 +1,11 @@
 require "rails_helper"
 
 describe "Change start builds automatically on Git push", type: :system do
-  let!(:project) { create(:project) }
+  let!(:repository) { create(:repository) }
 
   before do
-    login_as(project.user, scope: :user)
-    visit project_settings_general_settings_path(project)
+    login_as(repository.user)
+    visit repository_settings_general_settings_path(repository)
   end
 
   context "from yes to no" do
@@ -16,7 +16,7 @@ describe "Change start builds automatically on Git push", type: :system do
       # To prevent race condition
       expect(page).to have_content("Settings saved")
 
-      expect(page).to have_checked_field("project_start_builds_automatically_on_git_push_false")
+      expect(page).to have_checked_field("repository_start_builds_automatically_on_git_push_false")
     end
   end
 end
