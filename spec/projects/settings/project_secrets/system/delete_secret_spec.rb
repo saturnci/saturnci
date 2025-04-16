@@ -1,20 +1,20 @@
 require "rails_helper"
 
 describe "Delete secret", type: :system do
-  let!(:project) { create(:project) }
+  let!(:repository) { create(:repository) }
 
   before do
-    login_as(project.user, scope: :user)
+    login_as(repository.user)
   end
 
   context "secret FOO exists" do
     before do
-      create(:project_secret, key: "FOO", value: "BAR", project:)
-      create(:project_secret, key: "BAR", value: "BAR", project:)
+      create(:project_secret, key: "FOO", value: "BAR", repository:)
+      create(:project_secret, key: "BAR", value: "BAR", repository:)
     end
 
     it "deletes the target secret" do
-      visit project_settings_project_secret_collection_path(project)
+      visit repository_settings_project_secret_collection_path(repository)
       find_field("project_secrets_0_key", with: "FOO").set("")
       click_on "Save"
 
@@ -23,7 +23,7 @@ describe "Delete secret", type: :system do
     end
 
     it "does not delete other secrets" do
-      visit project_settings_project_secret_collection_path(project)
+      visit repository_settings_project_secret_collection_path(repository)
       find_field("project_secrets_0_key", with: "FOO").set("")
       click_on "Save"
 
