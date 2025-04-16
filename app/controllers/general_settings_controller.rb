@@ -7,20 +7,20 @@ class GeneralSettingsController < ApplicationController
   end
 
   def update
-    @project = Project.find(params[:project_id])
-    authorize @project, :update?
+    @repository = Repository.find(params[:repository_id])
+    authorize @repository, :update?
 
-    @project.update!(project_params)
+    @repository.update!(repository_params)
 
     flash[:notice] = "Settings saved"
 
-    redirect_to project_settings_general_settings_path(@project)
+    redirect_to repository_settings_general_settings_path(@repository)
   end
 
   private
 
-  def project_params
-    params.require(:project).permit(
+  def repository_params
+    params.require(:repository).permit(
       :start_builds_automatically_on_git_push,
       :concurrency
     )
