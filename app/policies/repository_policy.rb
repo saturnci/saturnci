@@ -1,6 +1,6 @@
 class RepositoryPolicy < ApplicationPolicy
   def index?
-    record.all? { |r| r.user == user }
+    true
   end
 
   def show?

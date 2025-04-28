@@ -12,7 +12,15 @@ class RepositoriesController < ApplicationController
       redirect_to new_user_email_path and return
     end
 
-    @repositories = current_user.repositories
+    client = current_user.github_client
+    @github_repositories = client.repositories
+
+    loop do
+      break if client.last_response.rels[:next].nil?
+      @github_repositories.concat client.get(client.last_response.rels[:next].href)
+    end
+
+    @repositories = Repository.where(github_repo_full_name: @github_repositories.map(&:full_name))
     authorize @repositories
   end
 
