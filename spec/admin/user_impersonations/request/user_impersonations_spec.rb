@@ -10,7 +10,12 @@ describe "User impersonations", type: :request do
     end
 
     context "user has a project" do
-      let!(:target_user_project) { create(:project, user: target_user) }
+      let!(:target_user_project) do
+        create(
+          :project,
+          github_account: create(:github_account, user: target_user)
+        )
+      end
 
       it "redirects to the user's projects" do
         post admin_user_impersonations_path(user_id: target_user.id)
