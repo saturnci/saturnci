@@ -6,11 +6,7 @@ module Admin
       user = User.find(params[:user_id])
       sign_in(:user, user)
 
-      if user.projects.any?
-        redirect_to user.projects.first
-      else
-        redirect_to github_accounts_path
-      end
+      redirect_to repositories_path
     end
   end
 end

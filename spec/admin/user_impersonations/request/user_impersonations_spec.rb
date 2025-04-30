@@ -6,29 +6,12 @@ describe "User impersonations", type: :request do
     let!(:target_user) { create(:user) }
 
     before do
-      login_as(super_admin_user, scope: :user)
+      login_as(super_admin_user)
     end
 
-    context "user has a project" do
-      let!(:target_user_project) { create(:project, user: target_user) }
-
-      it "redirects to the user's projects" do
-        post admin_user_impersonations_path(user_id: target_user.id)
-        expect(response).to redirect_to(target_user_project)
-      end
-
-      it "shows the target user's projects" do
-        post admin_user_impersonations_path(user_id: target_user.id)
-        get github_accounts_path
-        expect(response.body).to include("Signed in as #{target_user.name}")
-      end
-    end
-
-    context "user does not have a project" do
-      it "redirects somewhere else" do
-        post admin_user_impersonations_path(user_id: target_user.id)
-        expect(response.code).to eq("302")
-      end
+    it "redirects to repositories page" do
+      post admin_user_impersonations_path(user_id: target_user.id)
+      expect(response).to redirect_to(repositories_path)
     end
   end
 

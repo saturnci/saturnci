@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_26_225024) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_30_122711) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -79,14 +79,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_26_225024) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "github_repo_full_name"
-    t.uuid "user_id", null: false
     t.uuid "github_account_id"
     t.boolean "active", default: true, null: false
     t.boolean "start_builds_automatically_on_git_push", default: false, null: false
     t.datetime "deleted_at"
     t.integer "concurrency", default: 2, null: false
     t.index ["github_account_id"], name: "index_repositories_on_github_account_id"
-    t.index ["user_id"], name: "index_repositories_on_user_id"
   end
 
   create_table "rsa_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -257,7 +255,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_26_225024) do
   add_foreign_key "github_oauth_tokens", "users"
   add_foreign_key "project_secrets", "repositories", column: "project_id"
   add_foreign_key "repositories", "github_accounts"
-  add_foreign_key "repositories", "users"
   add_foreign_key "run_events", "runs"
   add_foreign_key "run_test_runners", "runs"
   add_foreign_key "run_test_runners", "test_runners"

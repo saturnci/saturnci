@@ -10,7 +10,7 @@ describe "Show new test suite run", type: :system do
 
   context "two test suite runs, two projects" do
     let!(:other_project) do
-      create(:project, user: test_suite_run.project.user)
+      create(:project, github_account: create(:github_account, user: test_suite_run.project.user))
     end
 
     let!(:new_test_suite_run) { create(:build, project: test_suite_run.project) }
