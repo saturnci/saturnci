@@ -1,19 +1,25 @@
 <div class="container">
   <h1>Repositories</h1>
 
- <% if @repositories.any? %>
-   <% @repositories.each do |repository| %>
-     <div class="bg-eee p-20 mt-20 mb-20" style="width: 600px;">
-       <h2><%= link_to repository.name, repository %></h2>
+  <% if @repositories.any? %>
+    <% @repositories.each do |repository| %>
+      <div class="bg-eee p-20 mt-20 mb-20" style="width: 600px;">
+        <h2><%= link_to repository.name, repository %></h2>
 
-       <div>
-         Account:
-         <%= link_to repository.github_account.account_name, repository.github_account %>
-       </div>
-     </div>
-   <% end %>
+        <div>
+          Account:
+          <%= link_to repository.github_account.account_name, repository.github_account %>
+        </div>
+      </div>
+    <% end %>
 
- <% else %>
-   (No repositories)
- <% end %>
+  <% else %>
+    (No repositories)
+  <% end %>
+
+  <% @github_repositories.each do |github_repository| %>
+    <div>
+      <%= github_repository.full_name %>
+    </div>
+  <% end %>
 </div>
