@@ -2,7 +2,6 @@ require "octokit"
 
 class User < ApplicationRecord
   acts_as_paranoid
-  has_many :repositories
   has_many :projects
   has_many :runs, through: :projects
   has_many :github_accounts
