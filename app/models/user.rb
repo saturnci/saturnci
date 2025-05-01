@@ -26,6 +26,17 @@ class User < ApplicationRecord
     github_oauth_tokens.order(created_at: :desc).first.value
   end
 
+  def github_repositories
+    repositories = github_client.repositories
+
+    loop do
+      break if github_client.last_response.rels[:next].nil?
+      repositories.concat github_client.get(github_client.last_response.rels[:next].href)
+    end
+
+    Repository.where(github_repo_full_name: repositories.map(&:full_name))
+  end
+
   def email_required?
     false
   end
