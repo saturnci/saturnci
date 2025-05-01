@@ -4,10 +4,10 @@ class RepositoryPolicy < ApplicationPolicy
   end
 
   def show?
-    true
+    record.user == user
   end
 
   def update?
-    true
+    record.user == user
   end
 end
