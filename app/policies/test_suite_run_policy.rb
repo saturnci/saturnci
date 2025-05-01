@@ -4,14 +4,14 @@ class TestSuiteRunPolicy < ApplicationPolicy
   end
 
   def create?
-    record.project.user == user
+    record.repository.user == user
   end
 
   def show?
-    record.project.user == user
+    record.repository.user == user
   end
 
   def destroy?
-    record.project.user == user
+    record.repository.user == user
   end
 end
