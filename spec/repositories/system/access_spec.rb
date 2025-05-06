@@ -4,9 +4,11 @@ describe "Repository access", type: :system do
   let!(:user) { create(:user) }
   let!(:github_client) { instance_double(Octokit::Client) }
 
-  before do
+  let!(:repository) do
     create(:repository, name: "panda", github_repo_full_name: "panda")
+  end
 
+  before do
     allow(github_client).to receive(:last_response).and_return(
       double(rels: { next: nil })
     )
@@ -14,11 +16,7 @@ describe "Repository access", type: :system do
 
   context "user has access" do
     before do
-      allow(github_client).to receive(:repositories).and_return([
-        double(full_name: "panda")
-      ])
-
-      allow_any_instance_of(User).to receive(:github_client).and_return(github_client)
+      allow(user).to receive(:github_repositories).and_return([repository])
       login_as(user)
     end
 
@@ -30,10 +28,7 @@ describe "Repository access", type: :system do
 
   context "user does not have access" do
     before do
-      allow(github_client).to receive(:repositories).and_return([])
-
-      allow_any_instance_of(User).to receive(:github_client).and_return(github_client)
-      login_as(user)
+      allow(user).to receive(:github_repositories).and_return([])
     end
 
     it "does not show the repository" do
