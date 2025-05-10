@@ -4,14 +4,14 @@ class BuildPolicy < ApplicationPolicy
   end
 
   def create?
-    record.repository.user == user
+    user.github_repositories.include?(record.repository)
   end
 
   def show?
-    record.repository.user == user
+    user.github_repositories.include?(record.repository)
   end
 
   def destroy?
-    record.repository.user == user
+    user.github_repositories.include?(record.repository)
   end
 end
