@@ -23,7 +23,7 @@ class User < ApplicationRecord
   end
 
   def github_oauth_token
-    github_oauth_tokens.order(created_at: :desc).first.value
+    github_oauth_tokens.order(created_at: :desc).first&.value
   end
 
   def github_repositories
