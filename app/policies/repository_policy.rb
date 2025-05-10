@@ -1,6 +1,6 @@
 class RepositoryPolicy < ApplicationPolicy
   def index?
-    user.github_repositories.include?(record)
+    record == user.github_repositories
   end
 
   def show?
