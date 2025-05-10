@@ -18,6 +18,10 @@ class User < ApplicationRecord
     omniauth_providers: [:github]
   )
 
+  def can_access_repository?(repository)
+    github_repositories.map(&:id).include?(repository.id)
+  end
+
   def github_client
     @github_client ||= Octokit::Client.new(access_token: github_oauth_token)
   end

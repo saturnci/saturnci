@@ -4,14 +4,14 @@ class TestSuiteRunPolicy < ApplicationPolicy
   end
 
   def create?
-    user.github_repositories.include?(record.repository)
+    user.can_access_repository?(record.repository)
   end
 
   def show?
-    user.github_repositories.include?(record.repository)
+    user.can_access_repository?(record.repository)
   end
 
   def destroy?
-    user.github_repositories.include?(record.repository)
+    user.can_access_repository?(record.repository)
   end
 end

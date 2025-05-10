@@ -1,5 +1,5 @@
 class TestCaseRunPolicy < ApplicationPolicy
   def show?
-    user.github_repositories.include?(record.repository)
+    user.can_access_repository?(record.repository)
   end
 end
