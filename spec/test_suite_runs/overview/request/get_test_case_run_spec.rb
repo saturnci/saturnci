@@ -22,6 +22,7 @@ describe "test case run", type: :request do
   end
 
   before do
+    allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
     login_as(passed_test_case_run.project.user)
   end
 

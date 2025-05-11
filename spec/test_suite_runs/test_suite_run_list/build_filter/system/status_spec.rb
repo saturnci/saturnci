@@ -12,7 +12,8 @@ describe "Status filtering", type: :system do
   end
 
   before do
-    login_as(passed_run.build.project.user, scope: :user)
+    allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
+    login_as(passed_run.build.project.user)
     visit run_path(passed_run, "test_output")
     click_on "Filters"
   end

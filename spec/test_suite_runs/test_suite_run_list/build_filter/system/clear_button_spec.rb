@@ -21,6 +21,7 @@ describe "Clearing filter selections", type: :system do
         commit_message: "Commit from 'filter' branch"
       )
 
+      allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
       login_as(project.user)
     end
 

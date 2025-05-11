@@ -4,6 +4,7 @@ describe "Showing and hiding filters", type: :system do
   let!(:build) { create(:build) }
 
   before do
+    allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
     login_as(build.project.user)
     visit project_build_path(id: build.id, project_id: build.project.id)
   end

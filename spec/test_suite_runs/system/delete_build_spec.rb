@@ -4,6 +4,7 @@ describe "Delete build", type: :system do
   let!(:run) { create(:run, :with_test_runner) }
 
   before do
+    allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
     login_as(run.build.project.user)
   end
 

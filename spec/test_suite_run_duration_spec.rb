@@ -2,6 +2,8 @@ require "rails_helper"
 
 describe "Test suite run duration", type: :system do
   it "displays the test suite run duration" do
+    allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
+
     run = create(:run, :passed)
 
     create(

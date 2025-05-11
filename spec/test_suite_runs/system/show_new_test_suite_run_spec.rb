@@ -4,6 +4,7 @@ describe "Show new test suite run", type: :system do
   let!(:test_suite_run) { create(:build) }
 
   before do
+    allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
     login_as(test_suite_run.project.user)
     visit project_path(test_suite_run.project)
   end

@@ -5,13 +5,17 @@ describe "Test suite run infinite scroll", type: :system do
 
   let!(:project) { create(:project) }
 
+  before do
+    allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
+  end
+
   describe "large number of test suite runs" do
     let!(:builds) do
       create_list(:build, 100, project:)
     end
 
     before do
-      login_as(project.user, scope: :user)
+      login_as(project.user)
       visit project_build_path(project, builds.first)
     end
 

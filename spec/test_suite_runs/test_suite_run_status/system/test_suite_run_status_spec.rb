@@ -6,7 +6,10 @@ describe "Test suite run status", type: :system do
   let!(:run) { create(:run, :with_test_runner) }
   let!(:user) { run.test_suite_run.project.user }
 
-  before { login_as(user) }
+  before do
+    allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
+    login_as(user)
+  end
 
   context "test suite run goes from running to passed" do
     context "no page refresh" do
