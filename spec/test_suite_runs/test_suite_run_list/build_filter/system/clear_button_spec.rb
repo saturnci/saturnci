@@ -3,6 +3,10 @@ require "rails_helper"
 describe "Clearing filter selections", type: :system do
   let!(:project) { create(:project) }
 
+  before do
+    allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
+  end
+
   context "branch selection" do
     before do
       create(
@@ -21,7 +25,6 @@ describe "Clearing filter selections", type: :system do
         commit_message: "Commit from 'filter' branch"
       )
 
-      allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
       login_as(project.user)
     end
 
@@ -67,7 +70,7 @@ describe "Clearing filter selections", type: :system do
     end
 
     before do
-      login_as(failed_build.project.user, scope: :user)
+      login_as(failed_build.project.user)
     end
 
     it "clears status selection" do

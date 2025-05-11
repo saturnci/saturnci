@@ -15,6 +15,8 @@ describe "Infinite scroll", type: :system do
   end
 
   before do
+    allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
+
     create_list(:test_case_run, 100, run:, path: "spec/models/apple_spec.rb")
 
     login_as(build.project.user)
