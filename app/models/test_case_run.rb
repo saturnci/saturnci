@@ -12,6 +12,10 @@ class TestCaseRun < ApplicationRecord
     run.build.project
   end
 
+  def repository
+    run.test_suite_run.repository
+  end
+
   def tidy_identifier
     identifier.gsub("\.\/spec\/", "")
   end
