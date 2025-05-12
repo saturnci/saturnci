@@ -6,7 +6,6 @@
       <th>Created</th>
       <th>Name</th>
       <th>Email</th>
-      <th>Repositories</th>
       <th></th>
     </tr>
     <% @users.each do |user| %>
@@ -17,7 +16,6 @@
 
         <td><%= user.name %></td>
         <td><%= user.email %></td>
-        <td class="number"><%= user.github_repositories.count %></td>
 
         <td>
           <%= link_to "Become",
