@@ -29,7 +29,7 @@ class User < ApplicationRecord
   end
 
   def github_repositories
-    Rails.cache.fetch("user/#{id}/github_repositories", expires_in: 1.week) do
+    Rails.cache.fetch("user/#{id}/github_repositories", expires_in: 1.hour) do
       repositories = github_client.repositories
 
       loop do

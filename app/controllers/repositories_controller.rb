@@ -12,15 +12,8 @@ class RepositoriesController < ApplicationController
       redirect_to new_user_email_path and return
     end
 
-    begin
-      @repositories = current_user.github_repositories
-      authorize @repositories
-    rescue Octokit::Unauthorized
-      @repositories = []
-      skip_authorization
-      sign_out current_user
-      redirect_to new_user_session_path and return
-    end
+    @repositories = current_user.github_repositories
+    authorize @repositories
   end
 
   def show
