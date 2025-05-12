@@ -6,9 +6,7 @@
       <th>Created</th>
       <th>Name</th>
       <th>Email</th>
-      <th>Projects</th>
-      <th>Runs</th>
-      <th>Most recent run</th>
+      <th>Repositories</th>
       <th></th>
     </tr>
     <% @users.each do |user| %>
@@ -19,14 +17,7 @@
 
         <td><%= user.name %></td>
         <td><%= user.email %></td>
-        <td class="number"><%= user.projects.count %></td>
-        <td class="number"><%= user.runs.finished.count %></td>
-
-        <td>
-          <% if user.runs.finished.any? %>
-            <%= l(user.runs.finished.order("created_at desc").first.created_at.in_time_zone(Rails.application.config.admin_time_zone)) %>
-          <% end %>
-        </td>
+        <td class="number"><%= user.github_repositories.count %></td>
 
         <td>
           <%= link_to "Become",
