@@ -7,7 +7,8 @@ describe "Build navigation stickiness", type: :system do
   end
 
   before do
-    login_as(run.build.project.user, scope: :user)
+    allow_any_instance_of(User).to receive(:can_hit_github_api?).and_return(true)
+    login_as(run.build.project.user)
   end
 
   context "the log pane is scrolled all the way to the bottom" do
