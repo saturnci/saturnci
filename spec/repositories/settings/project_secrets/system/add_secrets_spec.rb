@@ -4,7 +4,6 @@ describe "Add secrets", type: :system do
   let!(:repository) { create(:repository) }
 
   before do
-    allow_any_instance_of(User).to receive(:can_hit_github_api?).and_return(true)
     login_as(repository.user)
   end
 

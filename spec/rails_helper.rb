@@ -80,6 +80,10 @@ RSpec.configure do |config|
   config.include ActiveSupport::Testing::TimeHelpers
   config.include ViewComponent::TestHelpers, type: :component
 
+  config.before :each do
+    allow_any_instance_of(User).to receive(:can_hit_github_api?).and_return(true)
+  end
+
   config.before :suite do
     Warden.test_mode!
   end

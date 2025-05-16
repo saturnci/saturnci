@@ -4,7 +4,6 @@ describe "Change start builds automatically on Git push", type: :system do
   let!(:repository) { create(:repository) }
 
   before do
-    allow_any_instance_of(User).to receive(:can_hit_github_api?).and_return(true)
     allow_any_instance_of(User).to receive(:github_repositories).and_return([repository])
     login_as(repository.user)
     visit repository_settings_general_settings_path(repository)
