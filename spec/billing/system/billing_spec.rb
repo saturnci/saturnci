@@ -1,13 +1,16 @@
 require "rails_helper"
 
 describe "Billing", type: :system do
+  include GitHubAPIHelper
+
   let!(:run) do
     create(:run, created_at: "2020-01-01")
   end
 
   before do
     run.finish!
-    login_as(run.test_suite_run.project.user, scope: :user)
+    GitHubAPIHelper.mock_api(run.test_suite_run.project.user)
+    login_as(run.test_suite_run.project.user)
     allow_any_instance_of(Charge).to receive(:run_duration).and_return(420)
   end
 
