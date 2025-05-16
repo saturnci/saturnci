@@ -7,7 +7,8 @@ describe "Billing", type: :system do
 
   before do
     run.finish!
-    login_as(run.test_suite_run.project.user, scope: :user)
+    login_as(run.test_suite_run.project.user)
+    allow_any_instance_of(User).to receive(:can_hit_github_api?).and_return(true)
     allow_any_instance_of(Charge).to receive(:run_duration).and_return(420)
   end
 
