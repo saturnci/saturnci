@@ -7,7 +7,7 @@ describe "Build navigation stickiness", type: :system do
   end
 
   before do
-    login_as(run.build.project.user, scope: :user)
+    login_as(run.build.project.user)
   end
 
   context "the log pane is scrolled all the way to the bottom" do
