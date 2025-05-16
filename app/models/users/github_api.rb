@@ -7,6 +7,13 @@ module Users
       has_many :github_oauth_tokens
     end
 
+    def can_hit_github_api?
+      github_client.user
+      true
+    rescue Octokit::Unauthorized
+      false
+    end
+
     def can_access_repository?(repository)
       github_repositories.map(&:id).include?(repository.id)
     end
