@@ -1,9 +1,11 @@
 require "rails_helper"
 
 describe "Add secrets", type: :system do
+  include GitHubAPIHelper
   let!(:repository) { create(:repository) }
 
   before do
+    GitHubAPIHelper.mock_api(repository.user)
     login_as(repository.user)
   end
 
