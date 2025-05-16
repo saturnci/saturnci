@@ -1,6 +1,7 @@
 require "rails_helper"
 
 describe "Active link", type: :system do
+  include GitHubAPIHelper
   let!(:project) { create(:project) }
 
   let!(:build_1) do
@@ -20,8 +21,8 @@ describe "Active link", type: :system do
   end
 
   before do
-    allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
-    login_as(project.user, scope: :user)
+    GitHubAPIHelper.mock_api(project.user)
+    login_as(project.user)
     visit project_build_path(project, build_1)
   end
 
