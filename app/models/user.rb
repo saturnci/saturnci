@@ -1,7 +1,7 @@
 require "octokit"
 
 class User < ApplicationRecord
-  include GitHubAPI
+  include Users::GitHubAPI
   acts_as_paranoid
   has_secure_token :api_token
 
