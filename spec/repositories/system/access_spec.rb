@@ -2,18 +2,12 @@ require "rails_helper"
 
 describe "Repository access", type: :system do
   let!(:user) { create(:user) }
-  let!(:github_client) { instance_double(Octokit::Client) }
 
   let!(:repository) do
     create(:repository, name: "panda", github_repo_full_name: "panda")
   end
 
   context "GitHub OAuth token is valid" do
-    before do
-      allow(github_client).to receive(:user)
-      allow(user).to receive(:github_client).and_return(github_client)
-    end
-
     context "user has access" do
       before do
         allow(user).to receive(:github_repositories).and_return([repository])
@@ -41,8 +35,7 @@ describe "Repository access", type: :system do
 
   context "GitHub OAuth token is invalid" do
     before do
-      allow(github_client).to receive(:user)
-      allow(user).to receive(:github_client).and_raise(Octokit::Unauthorized)
+      allow(user).to receive(:can_hit_github_api?).and_return(false)
       login_as(user)
     end
 

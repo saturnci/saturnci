@@ -5,7 +5,6 @@ describe "GitHub token", type: :request do
 
   context "user has GitHub token" do
     before do
-      allow(user).to receive_message_chain(:github_client, :user)
       allow(user).to receive(:github_repositories).and_return(Repository.none)
       login_as(user)
     end
@@ -18,7 +17,7 @@ describe "GitHub token", type: :request do
 
   context "user does not have GitHub token" do
     before do
-      allow(user).to receive(:github_client).and_raise(Octokit::Unauthorized)
+      allow(user).to receive(:can_hit_github_api?).and_return(false)
       login_as(user)
     end
 
