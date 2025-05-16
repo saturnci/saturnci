@@ -10,9 +10,8 @@ describe "Repository access", type: :system do
 
   context "GitHub OAuth token is valid" do
     before do
-      allow(github_client).to receive(:last_response).and_return(
-        double(rels: { next: nil })
-      )
+      allow(github_client).to receive(:user)
+      allow(user).to receive(:github_client).and_return(github_client)
     end
 
     context "user has access" do
@@ -42,8 +41,8 @@ describe "Repository access", type: :system do
 
   context "GitHub OAuth token is invalid" do
     before do
-      allow(github_client).to receive(:last_response).and_return(double(rels: { next: nil }))
-      allow(user).to receive(:github_repositories).and_raise(Octokit::Unauthorized)
+      allow(github_client).to receive(:user)
+      allow(user).to receive(:github_client).and_raise(Octokit::Unauthorized)
       login_as(user)
     end
 
