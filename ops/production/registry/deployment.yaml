@@ -4,6 +4,11 @@ metadata:
   name: registry-deployment
 spec:
   replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0       # Don't create new pods before old ones terminate
+      maxUnavailable: 1 # Allow one pod to be unavailable during update
   selector:
     matchLabels:
       app: registry
@@ -26,9 +31,17 @@ spec:
           value: "600s"  # 10 minutes
         - name: REGISTRY_HTTP_RESPONSEHEADER_TIMEOUT
           value: "600s"  # 10 minutes
+        - name: REGISTRY_AUTH
+          value: "htpasswd"
+        - name: REGISTRY_AUTH_HTPASSWD_REALM
+          value: "Registry Realm"
+        - name: REGISTRY_AUTH_HTPASSWD_PATH
+          value: "/auth/htpasswd"
         volumeMounts:
         - name: registry-data
           mountPath: /var/lib/registry
+        - name: auth-volume
+          mountPath: /auth
         resources:
           requests:
             memory: "2Gi"
@@ -40,3 +53,6 @@ spec:
       - name: registry-data
         persistentVolumeClaim:
           claimName: registry-pvc
+      - name: auth-volume
+        secret:
+          secretName: registry-secrets
