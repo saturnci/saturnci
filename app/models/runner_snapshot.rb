@@ -20,18 +20,11 @@ class RunnerSnapshot
   private
 
   def self.create_droplet(client)
-    snapshot_name = [
-      "runner-snapshot",
-      DropletConfig::OS,
-      DropletConfig::SIZE,
-      Time.zone.now.strftime("%Y-%m-%d-%H-%M-%S")
-    ].join("-")
-
-    rsa_key = Cloud::RSAKey.generate
+    rsa_key = Cloud::RSAKey.new("runner-snapshot-#{Time.now.to_i}")
 
     droplet_kit_ssh_key = DropletKit::SSHKey.new(
-      name: snapshot_name,
-      public_key: rsa_key.public_key_value
+      name: rsa_key.filename,
+      public_key: File.read("#{rsa_key.file_path}.pub")
     )
 
     ssh_key = client.ssh_keys.create(droplet_kit_ssh_key)
@@ -41,9 +34,9 @@ class RunnerSnapshot
     end
     
     droplet = DropletKit::Droplet.new(
-      name: snapshot_name,
+      name: "runner-snapshot-#{Time.now.to_i}",
       region: DropletConfig::REGION,
-      image: DropletConfig::OS,
+      image: DropletConfig::SNAPSHOT_IMAGE_ID,
       size: DropletConfig::SIZE,
       user_data: user_data,
       ssh_keys: [ssh_key.id]
