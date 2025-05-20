@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_30_122711) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_19_130909) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -193,6 +193,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_30_122711) do
     t.datetime "updated_at", null: false
     t.index ["test_runner_id", "type"], name: "index_test_runner_events_on_test_runner_id_and_type", unique: true
     t.index ["test_runner_id"], name: "index_test_runner_events_on_test_runner_id"
+  end
+
+  create_table "test_runner_snapshots", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "cloud_id", null: false
+    t.string "os", null: false
+    t.string "size", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "test_runners", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

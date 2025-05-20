@@ -1,0 +1,2 @@
+class TestRunnerSnapshot < ApplicationRecord
+end
