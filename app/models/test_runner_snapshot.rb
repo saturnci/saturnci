@@ -22,16 +22,25 @@ class TestRunnerSnapshot < ApplicationRecord
     loop do
       droplet_info = client.droplets.find(id: droplet_id)
       break if droplet_info.status == 'active'
-      sleep(10) # Adjust waiting time as needed
+      sleep(5)
     end
     droplet_info
   end
 
   def self.create_snapshot(client, droplet_id)
-    # Ensure the droplet is powered off before taking a snapshot
     client.droplet_actions.power_off(droplet_id: droplet_id)
-    # Waiting for the droplet to power off
-    sleep(60) # Adjust timing based on your observations
+    power_off_initiated_at = Time.zone.now
+
+    # Poll until droplet is powered off
+    loop do
+      droplet = client.droplets.find(id: droplet_id)
+      break if droplet.status == 'off'
+      puts "Waiting for droplet to power off. Current status: #{droplet.status}"
+      sleep(10) # Check every 5 seconds
+      puts "Waited #{(Time.zone.now - power_off_initiated_at).floor} seconds"
+    end
+
+    # Create snapshot once droplet is confirmed to be off
     client.droplet_actions.snapshot(droplet_id: droplet_id, name: "docker-ruby-snapshot-#{Time.now.to_i}")
   end
 end
