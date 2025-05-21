@@ -16,11 +16,13 @@ class TestRunnerDropletSpecification
   private
 
   def droplet_specification
+    test_runner_snapshot = TestRunnerSnapshot.order("created_at desc").first
+
     DropletKit::Droplet.new(
       name: @name,
       region: DropletConfig::REGION,
-      image: DropletConfig::SNAPSHOT_IMAGE_ID,
-      size: DropletConfig::SIZE,
+      image: test_runner_snapshot.cloud_id,
+      size: test_runner_snapshot.size,
       user_data:,
       tags: ["saturnci"],
       ssh_keys: [@ssh_key.id]
