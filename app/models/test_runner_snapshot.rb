@@ -18,11 +18,12 @@ class TestRunnerSnapshot < ApplicationRecord
   private
 
   def self.create_droplet(client)
-    rsa_key = Cloud::RSAKey.new("runner-snapshot-#{Time.now.to_i}")
+    name = "runner-snapshot-#{Time.now.to_i}"
+    rsa_key = Cloud::RSAKey.generate
 
     droplet_kit_ssh_key = DropletKit::SSHKey.new(
-      name: rsa_key.filename,
-      public_key: File.read("#{rsa_key.file_path}.pub")
+      name: name,
+      public_key: rsa_key.public_key_value,
     )
 
     ssh_key = client.ssh_keys.create(droplet_kit_ssh_key)
@@ -34,8 +35,8 @@ class TestRunnerSnapshot < ApplicationRecord
     droplet = DropletKit::Droplet.new(
       name: "runner-snapshot-#{Time.now.to_i}",
       region: DropletConfig::REGION,
-      image: DropletConfig::SNAPSHOT_IMAGE_ID,
-      size: DropletConfig::SIZE,
+      image: "ubuntu-24-10-x64",
+      size: "s-4vcpu-8gb",
       user_data: user_data,
       ssh_keys: [ssh_key.id]
     )
