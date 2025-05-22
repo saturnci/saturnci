@@ -1,17 +1,23 @@
 class TestRunnerSnapshot < ApplicationRecord
   def self.generate
+    name = "test-runner-snapshot-#{Time.zone.now.to_i}"
     client = DropletKitClientFactory.client
 
     puts "Creating droplet..."
-    droplet = TestRunnerSnapshots::DropletRequest.new(client).execute
+    droplet = TestRunnerSnapshots::DropletRequest.new(client:, name:).execute
 
     puts "Waiting for droplet to be ready..."
     wait_until_droplet_is_ready(client, droplet.id)
+    puts "Droplet is ready. ID: #{droplet.id}"
 
-    puts "Droplet is ready, creating snapshot..."
-    snapshot_action = TestRunnerSnapshots::SnapshotRequest.new(client, droplet.id).execute
+    puts "Creating snapshot..."
+    snapshot_action = TestRunnerSnapshots::SnapshotRequest.new(
+      client:,
+      droplet_id: droplet.id,
+      name:
+    ).execute
 
-    puts "Snapshot created. Action ID: #{snapshot_action.id}"
+    puts "Snapshot created. Name: #{name}. Action ID: #{snapshot_action.id}"
   end
 
   private

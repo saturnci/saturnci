@@ -1,8 +1,9 @@
 module TestRunnerSnapshots
   class SnapshotRequest
-    def initialize(client, droplet_id)
+    def initialize(client:, droplet_id:, name:)
       @client = client
       @droplet_id = droplet_id
+      @name = name
     end
 
     def execute
@@ -20,7 +21,7 @@ module TestRunnerSnapshots
 
       @client.droplet_actions.snapshot(
         droplet_id: @droplet_id,
-        name: "docker-ruby-snapshot-#{Time.now.to_i}"
+        name: @name
       )
     end
   end

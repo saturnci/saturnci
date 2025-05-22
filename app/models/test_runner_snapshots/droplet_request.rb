@@ -1,15 +1,15 @@
 module TestRunnerSnapshots
   class DropletRequest
-    def initialize(client)
+    def initialize(client:, name:)
       @client = client
+      @name = "droplet-for-#{name}"
     end
 
     def execute
-      name = "runner-snapshot-#{Time.now.to_i}"
       rsa_key = Cloud::RSAKey.generate
 
       droplet_kit_ssh_key = DropletKit::SSHKey.new(
-        name: name,
+        name: @name,
         public_key: rsa_key.public_key_value,
       )
 
@@ -20,10 +20,10 @@ module TestRunnerSnapshots
       end
       
       droplet = DropletKit::Droplet.new(
-        name: "runner-snapshot-#{Time.now.to_i}",
+        name: @name,
         region: DropletConfig::REGION,
         image: "ubuntu-24-10-x64",
-        size: "s-4vcpu-8gb",
+        size: "s-2vcpu-8gb-amd",
         user_data: user_data,
         ssh_keys: [ssh_key.id]
       )
