@@ -5,7 +5,7 @@ module API
         run = Run.find(params[:run_id])
         authorize run, :destroy?
 
-        run.delete_runner if run.terminate_on_completion
+        run.delete_runner if run.test_runner.terminate_on_completion
 
         head :ok
       end

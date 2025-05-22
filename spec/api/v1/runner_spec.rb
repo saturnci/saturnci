@@ -26,7 +26,7 @@ describe "Delete runner", type: :request do
 
   context "terminate_on_completion is false" do
     let!(:run) do
-      create(:run, terminate_on_completion: false)
+      create(:run, :with_test_runner)
     end
 
     let!(:endpoint) do
@@ -34,6 +34,8 @@ describe "Delete runner", type: :request do
     end
 
     it "does not delete the runner" do
+      run.test_runner.update!(terminate_on_completion: false)
+
       delete(
         api_v1_run_runner_path(run.id),
         headers: api_authorization_headers(run.test_suite_run.project.user)
