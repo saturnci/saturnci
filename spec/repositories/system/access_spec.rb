@@ -10,7 +10,7 @@ describe "Repository access", type: :system do
   context "GitHub OAuth token is valid" do
     context "user has access" do
       before do
-        allow(user).to receive(:github_repositories).and_return([repository])
+        allow(user).to receive(:github_repositories).and_return(Repository.all)
         login_as(user)
       end
 
@@ -22,7 +22,7 @@ describe "Repository access", type: :system do
 
     context "user does not have access" do
       before do
-        allow(user).to receive(:github_repositories).and_return([])
+        allow(user).to receive(:github_repositories).and_return(Repository.none)
         login_as(user)
       end
 
