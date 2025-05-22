@@ -7,6 +7,8 @@ class Repository < ApplicationRecord
   belongs_to :github_account
   delegate :user, to: :github_account
 
+  scope :active, -> { where(active: true) }
+
   def to_s
     name
   end

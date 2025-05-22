@@ -12,7 +12,7 @@ class RepositoriesController < ApplicationController
       redirect_to new_user_email_path and return
     end
 
-    @repositories = current_user.github_repositories
+    @repositories = current_user.github_repositories.active
     authorize @repositories
   end
 
