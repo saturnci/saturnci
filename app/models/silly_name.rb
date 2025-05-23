@@ -450,5 +450,7 @@ class SillyName
     sailor
     uncle
     weakling
+    hag
+    sow
   )
 end
