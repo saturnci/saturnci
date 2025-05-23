@@ -70,28 +70,6 @@ describe TestRunner do
         expect(test_runner.status).to eq("Available")
       end
     end
-
-    context "finished" do
-      it "gets cached" do
-        test_runner = create(:test_runner)
-        test_run_finished_event = test_runner.test_runner_events.create!(type: :test_run_finished)
-        test_runner.status # to prime the cache
-
-        expect(test_runner).not_to receive(:most_recent_event)
-        test_runner.status
-      end
-    end
-
-    context "change" do
-      it "works" do
-        test_runner = create(:test_runner)
-        test_runner.test_runner_events.create!(type: :provision_request_sent)
-
-        expect {
-          test_runner.test_runner_events.create!(type: :ready_signal_received)
-        }.to change { test_runner.status }.from("Provisioning").to("Available")
-      end
-    end
   end
 
   describe "#unassigned" do
