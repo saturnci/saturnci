@@ -2,7 +2,7 @@ module API
   module V1
     class TestRunnersController < APIController
       def index
-        test_runners = TestRunner.order("created_at desc")
+        test_runners = TestRunner.order("created_at desc").limit(100)
         authorize test_runners
         render json: test_runners
       rescue StandardError => e
