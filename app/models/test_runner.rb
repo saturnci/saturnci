@@ -64,16 +64,17 @@ class TestRunner < ApplicationRecord
   end
 
   def status
-    return "" if most_recent_event.blank?
+    cache_key = "test_runner/#{id}/status"
 
-    {
-      "provision_request_sent" => "Provisioning",
-      "ready_signal_received" => "Available",
-      "assignment_made" => "Assigned",
-      "assignment_acknowledged" => "Running",
-      "error" => "Error",
-      "test_run_finished" => "Finished",
-    }[most_recent_event.type]
+    if Rails.cache.exist?(cache_key)
+      return Rails.cache.fetch(cache_key)
+    end
+
+    calculated_status.tap do |value|
+      if value == "Finished"
+        Rails.cache.write(cache_key, value)
+      end
+    end
   end
 
   def most_recent_event
@@ -93,5 +94,20 @@ class TestRunner < ApplicationRecord
       test_runner_events.create!(type: :assignment_made)
       TestRunnerAssignment.create!(test_runner: self, run:)
     end
+  end
+
+  private
+
+  def calculated_status
+    return "" if most_recent_event.blank?
+
+    {
+      "provision_request_sent" => "Provisioning",
+      "ready_signal_received" => "Available",
+      "assignment_made" => "Assigned",
+      "assignment_acknowledged" => "Running",
+      "error" => "Error",
+      "test_run_finished" => "Finished",
+    }[most_recent_event.type]
   end
 end
