@@ -2,8 +2,9 @@ version: "3.8"
 
 services:
   saturn_test_app:
-    # This is what will go in the Capybara host config.
+    # This hostname is what will go in the Capybara host config.
     hostname: saturn_test_app
+
     image: ${SATURN_TEST_APP_IMAGE_URL}:latest
     volumes:
       - ../:/code

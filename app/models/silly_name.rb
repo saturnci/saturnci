@@ -265,6 +265,7 @@ class SillyName
     muscular
     weak
     unruly
+    choking
   )
 
   NOUNS = %w(
@@ -452,5 +453,7 @@ class SillyName
     weakling
     hag
     sow
+    scab
+    scarecrow
   )
 end
