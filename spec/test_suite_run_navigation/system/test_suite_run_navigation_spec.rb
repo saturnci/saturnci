@@ -14,7 +14,7 @@ describe "Test suite run navigation", type: :system do
 
       before do
         login_as(run.project.user)
-        visit project_build_path(run.project, run.test_suite_run)
+        visit project_test_suite_run_path(run.project, run.test_suite_run)
       end
 
       it "stays selected after refresh" do
