@@ -29,7 +29,7 @@ RSpec.describe Run, type: :model do
 example_id                                                 | status | run_time        |
 ---------------------------------------------------------- | ------ | --------------- |
 ./spec/models/github_token_spec.rb[1:2:1]                  | passed | 0.00288 seconds |
-./spec/rebuilds_spec.rb[1:1:1]                             | passed | 0.04704 seconds |
+./spec/reruns_spec.rb[1:1:1]                             | passed | 0.04704 seconds |
 ./spec/sign_up_spec.rb[1:1:1]                              | passed | 0.1331 seconds  |
 ./spec/test_spec.rb[1:1]                                   | passed | 0.00798 seconds |
     RESULTS
@@ -40,7 +40,7 @@ example_id                                                 | status | run_time  
 example_id                                                 | status | run_time        |
 ---------------------------------------------------------- | ------ | --------------- |
 ./spec/models/github_token_spec.rb[1:2:1]                  | passed | 0.00288 seconds |
-./spec/rebuilds_spec.rb[1:1:1]                             | passed | 0.04704 seconds |
+./spec/reruns_spec.rb[1:1:1]                             | passed | 0.04704 seconds |
 ./spec/sign_up_spec.rb[1:1:1]                              | passed | 0.1331 seconds  |
 ./spec/test_spec.rb[1:1]                                   | failed | 0.00798 seconds |
     RESULTS
