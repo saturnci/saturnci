@@ -7,7 +7,7 @@ describe "Test suite run navigation stickiness", type: :system do
   end
 
   before do
-    login_as(run.test_suite_run.project.user)
+    login_as(run.test_suite_run.repository.user)
   end
 
   context "the log pane is scrolled all the way to the bottom" do
