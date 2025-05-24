@@ -5,6 +5,6 @@ class TestSuiteRerunsController < ApplicationController
     authorize test_suite_run, :create?
     test_suite_run.start!
 
-    redirect_to test_suite_run.project
+    redirect_to test_suite_run.repository
   end
 end
