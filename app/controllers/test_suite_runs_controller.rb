@@ -1,4 +1,28 @@
 class TestSuiteRunsController < ApplicationController
+  def index
+    project = Project.find(params[:project_id])
+    authorize project, :show?
+
+    test_suite_run_list_query = TestSuiteRunListQuery.new(
+      project: project,
+      branch_name: params[:branch_name],
+      statuses: params[:statuses]
+    )
+
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.append(
+          "additional_test_suite_runs",
+          partial: "test_suite_runs/list_items",
+          locals: {
+            builds: test_suite_run_list_query.test_suite_runs.offset(params[:offset]).limit(TestSuiteRunListQuery::CHUNK_SIZE),
+            active_build: nil
+          }
+        )
+      end
+    end
+  end
+
   def create
     test_suite_run = TestSuiteRun.find(params[:test_suite_run_id])
     authorize test_suite_run
