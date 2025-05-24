@@ -1,17 +1,17 @@
 require "rails_helper"
 
-describe "Build navigation stickiness", type: :system do
+describe "Test suite run navigation stickiness", type: :system do
   let!(:run) do
     test_output = ("asdf\n" * 1000) + "bottom of test output"
     create(:run, test_output: test_output)
   end
 
   before do
-    login_as(run.build.project.user)
+    login_as(run.test_suite_run.project.user)
   end
 
   context "the log pane is scrolled all the way to the bottom" do
-    it "keeps the build navigation visible" do
+    it "keeps the test suite run navigation visible" do
       visit run_path(run, "test_output")
 
       page.execute_script('document.querySelector(".run-details").scrollTop = document.querySelector(".run-details").scrollHeight')
