@@ -12,6 +12,9 @@ services:
       - postgres
       - chrome
 
+    # .saturnci/.env is where SaturnCI will put the environment variables
+    # that you set in your repository's Secrets section in Settings.
+    #
     # Optionally, you can add a local .saturnci.env file to provide environment
     # variables when you run your SaturnCI setup locally.
     env_file:
