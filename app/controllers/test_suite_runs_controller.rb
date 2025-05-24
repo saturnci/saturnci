@@ -30,8 +30,8 @@ class TestSuiteRunsController < ApplicationController
     end
 
     if test_case_run.present?
-      redirect_to project_test_case_run_path(
-        @test_suite_run.project,
+      redirect_to repository_test_case_run_path(
+        @test_suite_run.repository,
         test_case_run,
         request.query_parameters
       ) and return
