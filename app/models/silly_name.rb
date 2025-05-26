@@ -266,6 +266,10 @@ class SillyName
     weak
     unruly
     choking
+    bent
+    misshapen
+    disfigured
+    dissolved
   )
 
   NOUNS = %w(
