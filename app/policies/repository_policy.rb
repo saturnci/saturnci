@@ -6,10 +6,10 @@ class RepositoryPolicy < ApplicationPolicy
   end
 
   def show?
-    user.github_repositories.include?(record)
+    user.can_access_repository?(record.repository)
   end
 
   def update?
-    user.github_repositories.include?(record)
+    user.can_access_repository?(record.repository)
   end
 end
