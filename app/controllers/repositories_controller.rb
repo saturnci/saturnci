@@ -16,6 +16,18 @@ class RepositoriesController < ApplicationController
     authorize @repositories
   end
 
+  def new
+    @repository = Repository.new
+    authorize @repository
+
+    @github_repositories = current_user.github_client.repositories
+
+    loop do
+      break if current_user.github_client.last_response.rels[:next].nil?
+      @github_repositories.concat current_user.github_client.get(current_user.github_client.last_response.rels[:next].href)
+    end
+  end
+
   def show
     @repository = Repository.find(params[:id])
     authorize @repository
