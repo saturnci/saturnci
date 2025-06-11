@@ -8,7 +8,10 @@ module Users
     end
 
     def can_hit_github_api?
-      github_client.user
+      Rails.cache.fetch("user/#{id}/can_hit_github_api", expires_in: 1.hour) do
+        github_client.user
+      end
+
       true
     rescue Octokit::Unauthorized
       false
