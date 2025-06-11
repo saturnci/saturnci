@@ -1,6 +1,8 @@
 <div class="container">
   <h1>Repositories</h1>
 
+  <%= link_to "Add Repository", new_repository_path %>
+
   <% if @repositories.any? %>
     <% @repositories.each do |repository| %>
       <div class="bg-eee p-20 mt-20 mb-20" style="width: 600px;">

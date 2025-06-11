@@ -5,6 +5,14 @@ class RepositoryPolicy < ApplicationPolicy
     end
   end
 
+  def new?
+    true
+  end
+
+  def create?
+    user.github_repositories.include?(record)
+  end
+
   def show?
     user.github_repositories.include?(record)
   end

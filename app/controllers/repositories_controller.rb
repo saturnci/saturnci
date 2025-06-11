@@ -16,6 +16,34 @@ class RepositoriesController < ApplicationController
     authorize @repositories
   end
 
+  def new
+    @repository = Repository.new
+    authorize @repository
+
+    @github_repositories = current_user.github_client.repositories
+
+    loop do
+      break if current_user.github_client.last_response.rels[:next].nil?
+      @github_repositories.concat current_user.github_client.get(current_user.github_client.last_response.rels[:next].href)
+    end
+  end
+
+  def create
+    github_account = current_user.github_accounts.first
+    repo_full_name = params[:repo_full_name]
+    raise "Repository name missing" if repo_full_name.blank?
+    repo = github_account.installation_access_octokit_client.get("/repos/#{repo_full_name}")
+
+    repository = Repository.create!(
+      github_account:,
+      name: repo_full_name,
+      github_repo_full_name: repo_full_name
+    )
+    authorize repository
+
+    redirect_to repositories_path
+  end
+
   def show
     @repository = Repository.find(params[:id])
     authorize @repository
