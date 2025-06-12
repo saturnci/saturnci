@@ -4,10 +4,13 @@ include APIAuthenticationHelper
 describe "Test runner assignments", type: :request do
   describe "GET /api/v1/test_runners/:test_runner_id/test_runner_assignments" do
     context "assignment exists" do
-      it "returns the assignment" do
-        test_runner_assignment = create(:test_runner_assignment)
-        user = create(:user, super_admin: true)
+      let!(:test_runner_assignment) do
+        create(:test_runner_assignment)
+      end
 
+      let!(:user) { create(:user, super_admin: true) }
+
+      it "returns the assignment" do
         get(
           api_v1_test_runner_test_runner_assignments_path(test_runner_id: test_runner_assignment.test_runner_id, format: :json),
           headers: api_authorization_headers(user)
@@ -15,6 +18,18 @@ describe "Test runner assignments", type: :request do
 
         response_body = JSON.parse(response.body)[0]
         expect(response_body["run_id"]).to eq(test_runner_assignment.run_id)
+      end
+
+      context "no project secrets exist" do
+        it "assigns env_vars to an empty hash" do
+          get(
+            api_v1_test_runner_test_runner_assignments_path(test_runner_id: test_runner_assignment.test_runner_id, format: :json),
+            headers: api_authorization_headers(user)
+          )
+
+          response_body = JSON.parse(response.body)[0]
+          expect(response_body["env_vars"]).to eq({})
+        end
       end
     end
   end

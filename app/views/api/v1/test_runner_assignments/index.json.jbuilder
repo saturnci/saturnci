@@ -18,6 +18,7 @@ json.array! @test_runner_assignments do |test_runner_assignment|
   json.github_installation_id project.github_account.github_installation_id
   json.github_repo_full_name project.github_repo_full_name
 
+  json.env_vars({})
   json.env_vars do
     project.project_secrets.each do |secret|
       json.set! secret.key, secret.value
