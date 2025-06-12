@@ -17,29 +17,43 @@ describe "Test runners", type: :request do
       allow_any_instance_of(RunnerNetwork).to receive(:ip_address).and_return("")
     end
 
-    it "returns a 200 response" do
-      get(
-        api_v1_test_runner_path(test_runner.id),
-        headers: api_authorization_headers(user)
-      )
-      expect(response).to have_http_status(200)
-    end
-
-    context "a run assignment exists" do
-      let!(:run) { create(:run) }
-
-      before do
-        test_runner.assign(run)
-      end
-
-      it "includes the run id" do
+    context "a test runner exists" do
+      it "returns a 200 response" do
         get(
           api_v1_test_runner_path(test_runner.id),
           headers: api_authorization_headers(user)
         )
-
         expect(response).to have_http_status(200)
-        expect(JSON.parse(response.body)["run_id"]).to eq(run.id)
+      end
+
+      context "a run assignment exists" do
+        let!(:run) { create(:run) }
+
+        before do
+          test_runner.assign(run)
+        end
+
+        it "includes the run id" do
+          get(
+            api_v1_test_runner_path(test_runner.id),
+            headers: api_authorization_headers(user)
+          )
+
+          expect(response).to have_http_status(200)
+          expect(JSON.parse(response.body)["run_id"]).to eq(run.id)
+        end
+      end
+    end
+
+    context "a test runner does not exist" do
+      it "returns a 404 response" do
+        get(
+          api_v1_test_runner_path("123"),
+          headers: api_authorization_headers(user)
+        )
+
+        expect(response).to have_http_status(404)
+        expect(JSON.parse(response.body)["error"]).to eq("Test runner 123 not found")
       end
     end
   end

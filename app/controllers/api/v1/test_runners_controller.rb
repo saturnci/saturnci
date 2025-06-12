@@ -11,6 +11,16 @@ module API
 
       def show
         test_runner = TestRunner.find_by_abbreviated_hash(params[:id])
+
+        if test_runner.nil?
+          skip_authorization
+
+          return render(
+            json: { error: "Test runner #{params[:id]} not found" },
+            status: :not_found
+          )
+        end
+
         authorize test_runner
 
         render json: test_runner.as_json.merge(
