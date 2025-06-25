@@ -37,6 +37,7 @@ class Run < ApplicationRecord
     not_finished
       .left_joins(:test_runner_assignment)
       .where(test_runner_assignments: { run_id: nil })
+      .where(exit_code: nil)
   end
 
   def name

@@ -146,6 +146,20 @@ describe TestRunnerSupervisor do
         end
       end
     end
+
+    context "a run has already been executed but its assignment was deleted" do
+      it "does not reassign the run" do
+        completed_run = create(:run, :passed)
+
+        test_runner_assignment = create(:test_runner_assignment, run: completed_run)
+        test_runner_assignment.destroy
+
+        test_runner = create(:test_runner)
+        allow(TestRunner).to receive(:available).and_return([test_runner])
+
+        expect { TestRunnerSupervisor.check }.to_not change(TestRunnerAssignment, :count)
+      end
+    end
   end
 
   describe ".test_runner_pool_size" do
