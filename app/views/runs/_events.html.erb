@@ -1,22 +1,20 @@
 <div class="run-info-container non-terminal-run-info">
-  <%= run_container current_tab_name, run do %>
-    <table border>
+  <table border>
+    <tr>
+      <th>Event</th>
+      <th>Timestamp</th>
+      <th>Duration (s)</th>
+    </tr>
+    <% run.run_events.order(:created_at).each_with_index do |run_event, index| %>
       <tr>
-        <th>Event</th>
-        <th>Timestamp</th>
-        <th>Duration (s)</th>
+        <td><%= run_event.type %></td>
+        <td><%= run_event.created_at %></td>
+        <td class="number">
+          <% if index > 0 %>
+            <%= (run_event.created_at - run.run_events.order(:created_at)[index - 1].created_at).round(2) %>
+          <% end %>
+        </td>
       </tr>
-      <% run.run_events.order(:created_at).each_with_index do |run_event, index| %>
-        <tr>
-          <td><%= run_event.type %></td>
-          <td><%= run_event.created_at %></td>
-          <td class="number">
-            <% if index > 0 %>
-              <%= (run_event.created_at - run.run_events.order(:created_at)[index - 1].created_at).round(2) %>
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
-    </table>
-  <% end %>
+    <% end %>
+  </table>
 </div>
