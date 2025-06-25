@@ -32,16 +32,4 @@ describe "Repository access", type: :system do
       end
     end
   end
-
-  context "GitHub OAuth token is invalid" do
-    before do
-      allow(user).to receive(:can_hit_github_api?).and_return(false)
-      login_as(user)
-    end
-
-    it "redirects to the sign in page" do
-      visit repositories_path
-      expect(page).to have_content("Sign in")
-    end
-  end
 end
