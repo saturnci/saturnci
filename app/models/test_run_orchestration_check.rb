@@ -12,4 +12,12 @@ class TestRunOrchestrationCheck
       .where("test_runner_assignments.created_at > ?", 1.day.ago)
       .where.not(test_runner_id: non_orphaned_test_runners)
   end
+
+  def test_runner_pool_size
+    if Run.where("runs.created_at > ?", 1.hour.ago).any?
+      ENV.fetch("TEST_RUNNER_POOL_SIZE", 12).to_i
+    else
+      0
+    end
+  end
 end

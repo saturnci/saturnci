@@ -9,21 +9,23 @@ describe TestRunnerSupervisor do
 
   describe ".check" do
     describe "pool" do
+      let!(:c) { TestRunOrchestrationCheck.new }
+
       before do
-        allow(TestRunnerSupervisor).to receive(:test_runner_pool_size).and_return(4)
+        allow(c).to receive(:test_runner_pool_size).and_return(4)
       end
 
       context "there are 3 test runners" do
         it "creates 1 test runner" do
           create_list(:test_runner, 3)
-          expect { TestRunnerSupervisor.check }.to change(TestRunner, :count).by(1)
+          expect { TestRunnerSupervisor.check(c) }.to change(TestRunner, :count).by(1)
         end
       end
 
       context "there are 4 test runners" do
         it "does not create a test runner" do
           create_list(:test_runner, 4)
-          expect { TestRunnerSupervisor.check }.to_not change(TestRunner, :count)
+          expect { TestRunnerSupervisor.check(c) }.to_not change(TestRunner, :count)
         end
       end
 
@@ -33,7 +35,7 @@ describe TestRunnerSupervisor do
           test_runner = create(:test_runner)
           test_runner.test_runner_events.create!(type: :error)
 
-          TestRunnerSupervisor.check
+          TestRunnerSupervisor.check(c)
           expect(TestRunner.count).to eq(4)
         end
       end
@@ -42,14 +44,14 @@ describe TestRunnerSupervisor do
         it "creates 4 - 1 = 3 test runners" do
           create_list(:test_runner_assignment, 4)
           create(:test_runner)
-          expect { TestRunnerSupervisor.check }.to change(TestRunner, :count).by(3)
+          expect { TestRunnerSupervisor.check(c) }.to change(TestRunner, :count).by(3)
         end
       end
 
       context "there are 6 unassigned test runners" do
         it "deletes an unassigned test runner" do
           create_list(:test_runner, 5)
-          expect { TestRunnerSupervisor.check }.to change(TestRunner, :count).by(-1)
+          expect { TestRunnerSupervisor.check(c) }.to change(TestRunner, :count).by(-1)
         end
       end
 
@@ -62,7 +64,7 @@ describe TestRunnerSupervisor do
             test_runner.test_runner_events.create!(type: :error)
           end
 
-          expect { TestRunnerSupervisor.check }.to change(TestRunner, :count).by(-2)
+          expect { TestRunnerSupervisor.check(c) }.to change(TestRunner, :count).by(-2)
         end
       end
 
@@ -81,7 +83,7 @@ describe TestRunnerSupervisor do
           test_runner = create(:test_runner_assignment).test_runner
 
           travel_to(2.hours.from_now) do
-            expect { TestRunnerSupervisor.check }.to_not change { TestRunner.exists?(test_runner.id) }
+            expect { TestRunnerSupervisor.check(c) }.to_not change { TestRunner.exists?(test_runner.id) }
           end
         end
       end
@@ -158,27 +160,6 @@ describe TestRunnerSupervisor do
         allow(TestRunner).to receive(:available).and_return([test_runner])
 
         expect { TestRunnerSupervisor.check }.to_not change(TestRunnerAssignment, :count)
-      end
-    end
-  end
-
-  describe ".test_runner_pool_size" do
-    before do
-      stub_const("ENV", ENV.to_hash.merge("TEST_RUNNER_POOL_SIZE" => "10"))
-      create(:run)
-    end
-
-    context "a run has been created within the last hour" do
-      it "returns TEST_RUNNER_POOL_SIZE" do
-        expect(TestRunnerSupervisor.test_runner_pool_size).to eq(10)
-      end
-    end
-
-    context "a run has not been created within the last hour" do
-      it "returns 0" do
-        travel_to(2.hours.from_now) do
-          expect(TestRunnerSupervisor.test_runner_pool_size).to eq(0)
-        end
       end
     end
   end

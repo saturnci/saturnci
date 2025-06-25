@@ -1,13 +1,12 @@
 class TestRunnerSupervisor
   TEST_RUNNER_POOL_BUFFER = 2
 
-  def self.check
+  def self.check(c = TestRunOrchestrationCheck.new)
     log "-" * 80
-    c = TestRunOrchestrationCheck.new
 
     delete_old_test_runners(c.old_test_runners)
     remove_orphaned_test_runner_assignments(c.orphaned_test_runner_assignments)
-    fix_test_runner_pool
+    fix_test_runner_pool(c.test_runner_pool_size)
 
     available_test_runners = nil
     unassigned_test_runners = nil
@@ -31,21 +30,13 @@ class TestRunnerSupervisor
     end
   end
 
-  def self.test_runner_pool_size
-    if Run.where("runs.created_at > ?", 1.hour.ago).any?
-      ENV.fetch("TEST_RUNNER_POOL_SIZE", 12).to_i
-    else
-      0
-    end
-  end
-
   def self.delete_old_test_runners(old_test_runners)
     log "-" * 20
     log "Deleting #{old_test_runners.count} old test runners"
     old_test_runners.destroy_all
   end
 
-  def self.fix_test_runner_pool
+  def self.fix_test_runner_pool(test_runner_pool_size)
     log "-" * 20
     log "Desired test runner pool size: #{test_runner_pool_size}"
 
