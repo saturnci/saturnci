@@ -6,7 +6,7 @@ class TestRunnerSupervisor
     c = TestRunOrchestrationCheck.new
 
     delete_old_test_runners(c.old_test_runners)
-    remove_orphaned_test_runner_assignments
+    remove_orphaned_test_runner_assignments(c.orphaned_test_runner_assignments)
     fix_test_runner_pool
 
     available_test_runners = nil
@@ -66,7 +66,7 @@ class TestRunnerSupervisor
     end
   end
 
-  def self.remove_orphaned_test_runner_assignments
+  def self.remove_orphaned_test_runner_assignments(orphaned_test_runner_assignments)
     log "Deleting #{orphaned_test_runner_assignments.count} orphaned test runners"
 
     ActiveRecord::Base.transaction do
@@ -77,14 +77,6 @@ class TestRunnerSupervisor
         test_runner_assignment.destroy
       end
     end
-  end
-
-  def self.orphaned_test_runner_assignments
-    non_orphaned_test_runners = TestRunner.running + TestRunner.recently_assigned
-
-    TestRunnerAssignment
-      .where("test_runner_assignments.created_at > ?", 1.day.ago)
-      .where.not(test_runner_id: non_orphaned_test_runners)
   end
 
   def self.log(message)
