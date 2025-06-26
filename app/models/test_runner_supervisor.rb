@@ -11,12 +11,17 @@ class TestRunnerSupervisor
     unassigned_runs = Run.unassigned.where("runs.created_at > ?", 1.day.ago)
 
     log "Unassigned runs: #{unassigned_runs.count}"
+
+    ActiveRecord::Base.uncached do
+      c.available_test_runners = TestRunner.available.to_a.shuffle
+      c.unassigned_test_runners = TestRunner.unassigned
+    end
     log "Available test runners: #{c.available_test_runners.count}"
     log "Unassigned test runners: #{c.unassigned_test_runners.count}"
 
     unassigned_runs.each do |run|
       break if c.available_test_runners.empty?
-      test_runner = c.available_test_runners.shuffle.shift
+      test_runner = c.available_test_runners.shift
       log "Assigning #{test_runner.name} to #{run.id}"
       test_runner.assign(run)
     end
