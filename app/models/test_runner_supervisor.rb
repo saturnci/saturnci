@@ -8,7 +8,6 @@ class TestRunnerSupervisor
     remove_orphaned_test_runner_assignments(c.orphaned_test_runner_assignments)
     fix_test_runner_pool(c.test_runner_pool_size)
 
-    available_test_runners = nil
     unassigned_test_runners = nil
 
     unassigned_runs = Run.unassigned.where("runs.created_at > ?", 1.day.ago)
@@ -16,15 +15,15 @@ class TestRunnerSupervisor
     log "Unassigned runs: #{unassigned_runs.count}"
 
     ActiveRecord::Base.uncached do
-      available_test_runners = TestRunner.available.to_a.shuffle
+      c.available_test_runners = TestRunner.available.to_a.shuffle
       unassigned_test_runners = TestRunner.unassigned
     end
-    log "Available test runners: #{available_test_runners.count}"
+    log "Available test runners: #{c.available_test_runners.count}"
     log "Unassigned test runners: #{unassigned_test_runners.count}"
 
     unassigned_runs.each do |run|
-      break if available_test_runners.empty?
-      test_runner = available_test_runners.shift
+      break if c.available_test_runners.empty?
+      test_runner = c.available_test_runners.shift
       log "Assigning #{test_runner.name} to #{run.id}"
       test_runner.assign(run)
     end

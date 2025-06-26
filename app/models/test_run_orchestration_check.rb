@@ -1,5 +1,10 @@
 class TestRunOrchestrationCheck
   TEST_RUNNER_OLDNESS_THRESHOLD = 1.hour
+  attr_accessor :available_test_runners
+
+  def initialize
+    @available_test_runners = nil
+  end
 
   def old_test_runners
     TestRunner.unassigned.where("test_runners.created_at < ?", TEST_RUNNER_OLDNESS_THRESHOLD.ago)
