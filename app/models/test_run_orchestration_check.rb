@@ -1,10 +1,12 @@
 class TestRunOrchestrationCheck
   TEST_RUNNER_OLDNESS_THRESHOLD = 1.hour
-  attr_accessor :available_test_runners, :unassigned_test_runners
+  attr_reader :available_test_runners, :unassigned_test_runners
 
   def initialize
-    @available_test_runners = nil
-    @unassigned_test_runners = nil
+    ActiveRecord::Base.uncached do
+      @available_test_runners = TestRunner.available.to_a
+      @unassigned_test_runners = TestRunner.unassigned
+    end
   end
 
   def old_test_runners
