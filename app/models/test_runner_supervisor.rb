@@ -8,13 +8,11 @@ class TestRunnerSupervisor
     remove_orphaned_test_runner_assignments(c.orphaned_test_runner_assignments)
     fix_test_runner_pool(c.test_runner_pool_size)
 
-    unassigned_runs = Run.unassigned.where("runs.created_at > ?", 1.day.ago)
-
-    log "Unassigned runs: #{unassigned_runs.count}"
+    log "Unassigned runs: #{c.unassigned_runs.count}"
     log "Available test runners: #{c.available_test_runners.count}"
     log "Unassigned test runners: #{c.unassigned_test_runners.count}"
 
-    unassigned_runs.each do |run|
+    c.unassigned_runs.each do |run|
       break if c.available_test_runners.empty?
       test_runner = c.available_test_runners.shuffle.shift
       log "Assigning #{test_runner.name} to #{run.id}"

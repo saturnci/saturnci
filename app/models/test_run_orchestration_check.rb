@@ -9,6 +9,10 @@ class TestRunOrchestrationCheck
     end
   end
 
+  def unassigned_runs
+    Run.unassigned.where("runs.created_at > ?", 1.day.ago)
+  end
+
   def old_test_runners
     TestRunner.unassigned.where("test_runners.created_at < ?", TEST_RUNNER_OLDNESS_THRESHOLD.ago)
   end
