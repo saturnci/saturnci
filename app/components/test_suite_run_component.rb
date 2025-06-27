@@ -25,8 +25,8 @@ class TestSuiteRunComponent < ViewComponent::Base
 
   def repository_component
     @repository_component ||= RepositoryComponent.new(
-      @build.project,
-      extra_css_classes: "project-home"
+      @build.repository,
+      extra_css_classes: "repository-home"
     )
   end
 end
