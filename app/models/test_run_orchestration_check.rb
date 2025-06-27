@@ -18,7 +18,7 @@ class TestRunOrchestrationCheck
     @available_test_runners.shift
   end
 
-  def old_test_runners
+  def old_unassigned_test_runners
     TestRunner.unassigned.where("test_runners.created_at < ?", TEST_RUNNER_OLDNESS_THRESHOLD.ago)
   end
 

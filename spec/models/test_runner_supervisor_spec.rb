@@ -120,7 +120,7 @@ describe TestRunnerSupervisor do
 
       context "run is more than a day old" do
         before do
-          allow(TestRunnerSupervisor).to receive(:delete_old_test_runners)
+          allow(TestRunnerSupervisor).to receive(:delete_test_runners)
         end
 
         it "does not delete the assignment" do

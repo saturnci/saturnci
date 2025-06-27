@@ -4,7 +4,7 @@ class TestRunnerSupervisor
   def self.check(c = TestRunOrchestrationCheck.new)
     log "-" * 80
 
-    delete_old_test_runners(c.old_test_runners)
+    delete_test_runners(c.old_unassigned_test_runners)
     remove_orphaned_test_runner_assignments(c.orphaned_test_runner_assignments)
     fix_test_runner_pool(c.test_runner_pool_size)
 
@@ -20,10 +20,10 @@ class TestRunnerSupervisor
     end
   end
 
-  def self.delete_old_test_runners(old_test_runners)
+  def self.delete_test_runners(test_runners)
     log "-" * 20
-    log "Deleting #{old_test_runners.count} old test runners"
-    old_test_runners.destroy_all
+    log "Deleting #{test_runners.count} old test runners"
+    test_runners.destroy_all
   end
 
   def self.fix_test_runner_pool(test_runner_pool_size)
