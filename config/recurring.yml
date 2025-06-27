@@ -1,4 +1,4 @@
 production:
   supervise_test_runners_task:
     command: "TestRunnerSupervisor.check"
-    schedule: "*/15 * * * * *"
+    schedule: "1 * * * * *"
