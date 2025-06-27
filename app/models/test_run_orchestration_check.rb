@@ -3,8 +3,10 @@ class TestRunOrchestrationCheck
   attr_accessor :available_test_runners, :unassigned_test_runners
 
   def initialize
-    @available_test_runners = nil
-    @unassigned_test_runners = nil
+    ActiveRecord::Base.uncached do
+      @available_test_runners = TestRunner.available.shuffle
+      @unassigned_test_runners = TestRunner.unassigned
+    end
   end
 
   def old_test_runners
