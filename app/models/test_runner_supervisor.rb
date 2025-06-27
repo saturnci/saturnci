@@ -17,7 +17,7 @@ class TestRunnerSupervisor
 
     unassigned_runs.each do |run|
       break if c.available_test_runners.empty?
-      test_runner = c.available_test_runners.shift
+      test_runner = c.shift_available_test_runner
       log "Assigning #{test_runner.name} to #{run.id}"
       test_runner.assign(run)
     end
