@@ -5,6 +5,7 @@ class TestRunnerSupervisor
     log "-" * 80
 
     delete_test_runners(c.old_unassigned_test_runners)
+    delete_test_runners(c.very_old_test_runners)
     remove_orphaned_test_runner_assignments(c.orphaned_test_runner_assignments)
     fix_test_runner_pool(c.test_runner_pool_size)
 

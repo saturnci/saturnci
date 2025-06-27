@@ -1,5 +1,6 @@
 class TestRunOrchestrationCheck
   TEST_RUNNER_OLDNESS_THRESHOLD = 1.hour
+  VERY_OLD_TEST_RUNNER_THRESHOLD = 1.day
 
   attr_reader :available_test_runners,
     :unassigned_test_runners,
@@ -20,6 +21,10 @@ class TestRunOrchestrationCheck
 
   def old_unassigned_test_runners
     TestRunner.unassigned.where("test_runners.created_at < ?", TEST_RUNNER_OLDNESS_THRESHOLD.ago)
+  end
+
+  def very_old_test_runners
+    TestRunner.where("test_runners.created_at < ?", VERY_OLD_TEST_RUNNER_THRESHOLD.ago)
   end
 
   def orphaned_test_runner_assignments
