@@ -13,7 +13,7 @@ class TestRunnerSupervisor
     log "Unassigned runs: #{unassigned_runs.count}"
 
     ActiveRecord::Base.uncached do
-      c.available_test_runners = TestRunner.available.to_a.shuffle
+      c.available_test_runners = TestRunner.available.shuffle
       c.unassigned_test_runners = TestRunner.unassigned
     end
     log "Available test runners: #{c.available_test_runners.count}"
