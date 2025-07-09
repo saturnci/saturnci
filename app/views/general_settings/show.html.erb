@@ -7,16 +7,10 @@
       <h1>General Settings</h1>
 
       <br>
-      <b>Start test suite runs automatically on git push</b>
-
       <%= form_with model: @repository, url: repository_settings_general_settings_path(@repository), method: :patch do |form| %>
         <div>
-          <%= form.radio_button :start_builds_automatically_on_git_push, true %>
-          <%= form.label :start_builds_automatically_on_git_push, "Yes", value: true %>
-        </div>
-        <div>
-          <%= form.radio_button :start_builds_automatically_on_git_push, false %>
-          <%= form.label :start_builds_automatically_on_git_push, "No", value: false %>
+          <%= form.check_box :start_builds_automatically_on_git_push %>
+          <%= form.label :start_builds_automatically_on_git_push, "Start test suite runs automatically on git push" %>
         </div>
 
         <br>
