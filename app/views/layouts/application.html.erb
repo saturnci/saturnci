@@ -22,8 +22,8 @@
         <div style="display: flex;justify-content: space-between">
           <div>
             <b><%= link_to "SaturnCI", root_path %></b>
-            <%= link_to "Repositories", repositories_path %>
             <%= link_to "GitHub Accounts", github_accounts_path %>
+            <%= link_to "Repositories", repositories_path %>
 
             <% if current_user.super_admin? %>
               <%= link_to "Admin", admin_root_path %>
