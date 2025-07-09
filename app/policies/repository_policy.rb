@@ -1,7 +1,7 @@
 class RepositoryPolicy < ApplicationPolicy
   def index?
     [record].flatten.all? do |repository|
-      user.github_repositories.include?(repository)
+      user.can_access_repository?(record)
     end
   end
 
@@ -10,14 +10,14 @@ class RepositoryPolicy < ApplicationPolicy
   end
 
   def create?
-    user.github_repositories.include?(record)
+    user.can_access_repository?(record)
   end
 
   def show?
-    user.github_repositories.include?(record)
+    user.can_access_repository?(record)
   end
 
   def update?
-    user.github_repositories.include?(record)
+    user.can_access_repository?(record)
   end
 end
