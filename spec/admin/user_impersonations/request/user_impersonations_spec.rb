@@ -13,6 +13,17 @@ describe "User impersonations", type: :request do
       post admin_user_impersonations_path(user_id: target_user.id)
       expect(response).to redirect_to(repositories_path)
     end
+
+    context "GitHub token is invalid" do
+      before do
+        allow_any_instance_of(User).to receive(:can_hit_github_api?).and_return(false)
+      end
+
+      it "still works" do
+        post admin_user_impersonations_path(user_id: target_user.id)
+        expect(response).to redirect_to(repositories_path)
+      end
+    end
   end
 
   context "non-super admin" do
