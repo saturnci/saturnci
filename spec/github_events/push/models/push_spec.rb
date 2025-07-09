@@ -27,7 +27,7 @@ describe "push" do
     GitHubEvents::Push.new(payload, "user/test")
   end
 
-  context "start builds automatically" do
+  context "start test suite runs automatically" do
     let!(:project) do
       create(
         :project,
@@ -42,7 +42,7 @@ describe "push" do
     end
   end
 
-  context "do not start builds automatically" do
+  context "do not start test suite runs automatically" do
     let!(:project) do
       create(
         :project,

@@ -7,7 +7,7 @@
       <h1>General Settings</h1>
 
       <br>
-      <b>Start builds automatically on git push</b>
+      <b>Start test suite runs automatically on git push</b>
 
       <%= form_with model: @repository, url: repository_settings_general_settings_path(@repository), method: :patch do |form| %>
         <div>

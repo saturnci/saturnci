@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Change start builds automatically on Git push", type: :system do
+describe "Change start test suite runs automatically on Git push", type: :system do
   let!(:repository) { create(:repository) }
 
   before do
