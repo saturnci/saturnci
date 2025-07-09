@@ -18,7 +18,7 @@ module Users
     end
 
     def can_access_repository?(repository)
-      github_repositories.map(&:id).include?(repository.id)
+      github_repositories.pluck(:id).include?(repository.id)
     end
 
     def github_client

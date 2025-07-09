@@ -1,7 +1,7 @@
 class RepositoryPolicy < ApplicationPolicy
   def index?
     [record].flatten.all? do |repository|
-      user.can_access_repository?(record)
+      user.can_access_repository?(repository)
     end
   end
 
