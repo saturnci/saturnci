@@ -1,4 +1,4 @@
-<div class="<%= @extra_css_classes %>">
+<div class="repository <%= @extra_css_classes %>">
   <header class="repository-header">
     <h2><%= link_to @repository.name, repository_path(@repository) %></h2>
     <%= link_to "Settings", repository_settings_general_settings_path(@repository) %>

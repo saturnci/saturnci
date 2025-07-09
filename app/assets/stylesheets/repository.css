@@ -1,4 +1,10 @@
+.repository {
+  background-color: #EEE;
+  height: 100vh;
+}
+
 .repository-home {
+  background-color: #FFF;
   overflow-y: hidden;
   display: flex;
   flex-direction: column;
@@ -11,10 +17,10 @@
   margin: 0;
   padding: 0 10px;
   background-color: #EEE;
-  box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.2);
-  z-index: 1;
   border-top: 2px solid #CCC;
   border-bottom: 2px solid #CCC;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1;
 }
 
 .repository-header h2 {
