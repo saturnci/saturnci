@@ -2,6 +2,14 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+Always be consistent about naming. Use predictable names.
+Bad: `repositories.each { |repo| repo.destroy }`
+Good: `repositories.each { |repository| repository.destroy }`
+Also good: `repositories.each { |r| r.destroy }`
+Bad: `admin_user.each { |user| user.destroy }`
+Good: `admin_user.each { |admin_user| admin_user.destroy }`
+Also good: `admin_user.each { |u| u.destroy }`
+
 ## Commands
 
 ### Development Setup
