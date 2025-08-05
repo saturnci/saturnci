@@ -4,9 +4,10 @@
 #
 
 # Check for trailing whitespace and other whitespace issues
-if git diff --check --cached; then
+if git diff --check --cached > /dev/null 2>&1; then
     exit 0
 else
     echo "Error: Found whitespace issues. Please fix them before committing."
+    git diff --check --cached
     exit 1
 fi
