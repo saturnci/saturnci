@@ -4,6 +4,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Workflow
 
+In general, don't make commits before you check with me.
+
 When you want to understand how existing code works, look first to the tests.
 
 Exceptions are occasionally justified, but in general, always use TDD.
