@@ -2,10 +2,16 @@ require "rails_helper"
 
 describe "Repositories", type: :request do
   describe "GET /repositories" do
-    it "returns 200" do
-      user = create(:user)
-      allow(user).to receive(:github_repositories).and_return(Repository.none)
+    let!(:user) { create(:user) }
+    let!(:github_client) { instance_double(GitHubClient) }
+
+    before do
+      allow(GitHubClient).to receive(:new).with(user).and_return(github_client)
+      allow(github_client).to receive(:repositories).and_return(Repository.none)
       login_as(user)
+    end
+
+    it "returns 200" do
       get repositories_path
       expect(response).to have_http_status(200)
     end
