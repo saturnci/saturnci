@@ -2,6 +2,15 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Workflow
+
+Exceptions are occasionally justified, but in general, always use TDD.
+1. Decide on the specifications.
+2. Encode the specifications in a test.
+3. Run the test and observe the failure.
+4. Write just enough code to make the failure go away (NOT enough code to necessarily make the test pass).
+5. Repeat from step 3 until the test passes.
+
 ## Style
 
 Always be consistent about naming. Use predictable names.
