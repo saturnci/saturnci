@@ -19,6 +19,7 @@ module SaturnCICLI
             label: "Run ID",
             format: -> (hash) { Helpers.truncated_hash(hash) }
           },
+          "repository_name" => { label: "Repository" },
           "commit_message" => {
             label: "Commit message",
             format: -> (value) { Helpers.truncate(Helpers.squish(value)) }

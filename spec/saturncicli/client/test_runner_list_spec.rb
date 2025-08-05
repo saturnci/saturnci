@@ -9,18 +9,21 @@ describe "test runner list" do
         "created_at" => "2023-10-01T00:00:00Z",
         "name" => "tr-5ab042f8-toxic-manager",
         "status" => "Provisioning",
+        "repository_name" => "my-repo",
       },
       {
         "id" => "bb4d0342-d32f-462a-b21c-3cddefb7b74d",
         "created_at" => "2023-10-01T00:00:00Z",
         "name" => "tr-a4c47d49-magical-lobster",
         "status" => "Provisioning",
+        "repository_name" => "another-repo",
       },
       {
         "id" => "7abd6b84-2da2-4273-994b-d3496f6684db",
         "created_at" => "2023-10-01T00:00:00Z",
         "name" => "tr-f66f0860-secret-grape",
         "status" => "Provisioning",
+        "repository_name" => nil,
       }
     ].to_json
 
@@ -38,9 +41,9 @@ describe "test runner list" do
 
   it "formats the output to a table" do
     expected_output = <<~OUTPUT
-    ID        Created at           Name                         Status        Run ID  Commit message
-    a68c4aef  2023-10-01 00:00:00  tr-5ab042f8-toxic-manager    Provisioning
-    bb4d0342  2023-10-01 00:00:00  tr-a4c47d49-magical-lobster  Provisioning
+    ID        Created at           Name                         Status        Run ID  Repository    Commit message
+    a68c4aef  2023-10-01 00:00:00  tr-5ab042f8-toxic-manager    Provisioning          my-repo
+    bb4d0342  2023-10-01 00:00:00  tr-a4c47d49-magical-lobster  Provisioning          another-repo
     7abd6b84  2023-10-01 00:00:00  tr-f66f0860-secret-grape     Provisioning
     OUTPUT
     expect {

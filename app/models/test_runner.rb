@@ -85,6 +85,7 @@ class TestRunner < ApplicationRecord
       status:,
       run_id: run&.id,
       commit_message: run&.test_suite_run&.commit_message,
+      repository_name: run&.repository&.name,
     )
   end
 
