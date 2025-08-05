@@ -2,6 +2,8 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Style
+
 Always be consistent about naming. Use predictable names.
 Bad: `repositories.each { |repo| repo.destroy }`
 Good: `repositories.each { |repository| repository.destroy }`
@@ -9,6 +11,12 @@ Also good: `repositories.each { |r| r.destroy }`
 Bad: `admin_user.each { |user| user.destroy }`
 Good: `admin_user.each { |admin_user| admin_user.destroy }`
 Also good: `admin_user.each { |u| u.destroy }`
+
+## Git Usage
+
+Always commit using full sentences with a period at the end.
+
+When merging, always use --squash.
 
 ## Commands
 
