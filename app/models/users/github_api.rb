@@ -30,7 +30,7 @@ module Users
     end
 
     def github_repositories
-      github_client = GitHubClient.new(github_oauth_token)
+      GitHubClient.new(self).repositories
     end
   end
 end

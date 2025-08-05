@@ -1,14 +1,14 @@
 class GitHubClient
-  def initialize(github_oauth_token)
-    @github_oauth_token = github_oauth_token
+  def initialize(user)
+    @user = user
   end
 
   def octokit_client
-    @octokit_client ||= Octokit::Client.new(access_token: @github_oauth_token)
+    @octokit_client ||= Octokit::Client.new(access_token: @user.github_oauth_token)
   end
 
   def repositories
-    Rails.cache.fetch("user/#{id}/github_repositories", expires_in: 1.week) do
+    Rails.cache.fetch("user/#{@user.id}/github_repositories", expires_in: 1.week) do
       repositories = octokit_client.repositories
 
       loop do
