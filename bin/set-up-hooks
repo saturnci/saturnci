@@ -1,0 +1,12 @@
+#!/bin/bash
+#
+# Setup git hooks for the project
+#
+
+echo "Setting up git hooks..."
+
+# Create symlink for pre-commit hook
+ln -sf ../../bin/pre-commit-hook .git/hooks/pre-commit
+
+echo "Git hooks installed successfully!"
+echo "Run this script after cloning: bin/set-up-hooks"

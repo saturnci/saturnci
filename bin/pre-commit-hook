@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# Pre-commit hook to check for whitespace issues
+#
+
+# Check for trailing whitespace and other whitespace issues
+if git diff --check --cached; then
+    exit 0
+else
+    echo "Error: Found whitespace issues. Please fix them before committing."
+    exit 1
+fi
