@@ -9,7 +9,7 @@ module Users
 
     def can_hit_github_api?
       Rails.cache.fetch("user/#{id}/can_hit_github_api", expires_in: 1.hour) do
-        github_client.user
+        octokit_client.user
       end
 
       true
@@ -21,8 +21,8 @@ module Users
       github_repositories.pluck(:id).include?(repository.id)
     end
 
-    def github_client
-      @github_client ||= Octokit::Client.new(access_token: github_oauth_token)
+    def octokit_client
+      @octokit_client ||= Octokit::Client.new(access_token: github_oauth_token)
     end
 
     def github_oauth_token
@@ -31,11 +31,11 @@ module Users
 
     def github_repositories
       Rails.cache.fetch("user/#{id}/github_repositories", expires_in: 1.week) do
-        repositories = github_client.repositories
+        repositories = octokit_client.repositories
 
         loop do
-          break if github_client.last_response.rels[:next].nil?
-          repositories.concat github_client.get(github_client.last_response.rels[:next].href)
+          break if octokit_client.last_response.rels[:next].nil?
+          repositories.concat octokit_client.get(octokit_client.last_response.rels[:next].href)
         end
 
         Repository.where(github_repo_full_name: repositories.map(&:full_name))
