@@ -27,7 +27,12 @@ Exceptions are occasionally justified, but in general, always use TDD.
 Remember arrange/act/assert.
 In general, arrange can be done with `let!`. Act can be done with `before`. Assert can of course be done with `expect`.
 
+Never create setup data that's not needed.
+Always try to make a distinction between meaningful setup data and data that's just there to satisfy the test.
+
 ## Style
+
+Use comments approximately never.
 
 Always be consistent about naming. Use predictable names.
 Bad: `repositories.each { |repo| repo.destroy }`
