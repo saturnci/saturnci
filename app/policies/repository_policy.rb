@@ -10,7 +10,7 @@ class RepositoryPolicy < ApplicationPolicy
   end
 
   def create?
-    user.can_access_repository?(record)
+    true
   end
 
   def show?

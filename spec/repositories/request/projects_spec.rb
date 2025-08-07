@@ -6,7 +6,7 @@ describe "Projects", type: :request do
       let!(:build) { create(:build) }
 
       before do
-        login_as(build.project.user, scope: :user)
+        login_as(build.project.user)
       end
 
       it "redirects to the build" do

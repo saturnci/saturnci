@@ -32,7 +32,6 @@ class RepositoriesController < ApplicationController
     github_account = current_user.github_accounts.first
     repo_full_name = params[:repo_full_name]
     raise "Repository name missing" if repo_full_name.blank?
-    repo = github_account.installation_access_octokit_client.get("/repos/#{repo_full_name}")
 
     repository = Repository.create!(
       github_account:,
@@ -40,6 +39,8 @@ class RepositoriesController < ApplicationController
       github_repo_full_name: repo_full_name
     )
     authorize repository
+
+    GitHubClient.new(current_user).invalidate_repositories_cache
 
     redirect_to repositories_path
   end
