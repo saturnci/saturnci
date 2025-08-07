@@ -1,0 +1,8 @@
+Performance improvement: clicking among test suite runs
+Don't allow adding same repo twice
+Bug: flash message shows up in Settings even when it has nothing to do with settings
+Bug: impersonation doesn't work if user's GitHub token is expired
+Defect: precompile happens for every deployment
+Ability to delete/archive repositories (put in Settings)
+Fix data model that connects GitHub accounts and users
+Ability to run SaturnCI env locally without modifying config/database.yml
