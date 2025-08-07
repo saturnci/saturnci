@@ -18,6 +18,14 @@ Exceptions are occasionally justified, but in general, always use TDD.
 
 ## Style
 
+### Testing
+
+In this project, the tests are the backbone. The application code is subservient to the tests.
+
+In this project, tests are organized by domain concept, not by test type.
+See this post for an explanation:
+https://www.codewithjason.com/why-i-organize-my-tests-by-domain-concept-not-by-test-type/
+
 Always be consistent about naming. Use predictable names.
 Bad: `repositories.each { |repo| repo.destroy }`
 Good: `repositories.each { |repository| repository.destroy }`
