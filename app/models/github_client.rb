@@ -21,11 +21,14 @@ class GitHubClient
 
   def octokit_repositories
     repositories = octokit_client.repositories
+    return [] if repositories.nil?
 
     loop do
       break if octokit_client.last_response.rels[:next].nil?
       repositories.concat octokit_client.get(octokit_client.last_response.rels[:next].href)
     end
+
+    return repositories
   end
 
   def cache_key

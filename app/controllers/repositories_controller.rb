@@ -20,11 +20,11 @@ class RepositoriesController < ApplicationController
     @repository = Repository.new
     authorize @repository
 
-    @github_repositories = current_user.github_client.repositories
+    @github_repositories = current_user.octokit_client.repositories
 
     loop do
-      break if current_user.github_client.last_response.rels[:next].nil?
-      @github_repositories.concat current_user.github_client.get(current_user.github_client.last_response.rels[:next].href)
+      break if current_user.octokit_client.last_response.rels[:next].nil?
+      @github_repositories.concat current_user.octokit_client.get(current_user.octokit_client.last_response.rels[:next].href)
     end
   end
 
