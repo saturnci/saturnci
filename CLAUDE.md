@@ -7,6 +7,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 In general, don't make commits before you check with me.
 Push after every commit.
 
+## Testing
+
+In this project, the tests are the backbone. The application code is subservient to the tests.
+
+In this project, tests are organized by domain concept, not by test type.
+See this post for an explanation:
+https://www.codewithjason.com/why-i-organize-my-tests-by-domain-concept-not-by-test-type/
+
 When you want to understand how existing code works, look first to the tests.
 
 Exceptions are occasionally justified, but in general, always use TDD.
@@ -16,15 +24,10 @@ Exceptions are occasionally justified, but in general, always use TDD.
 4. Write just enough code to make the failure go away (NOT enough code to necessarily make the test pass).
 5. Repeat from step 3 until the test passes.
 
+Remember arrange/act/assert.
+In general, arrange can be done with `let!`. Act can be done with `before`. Assert can of course be done with `expect`.
+
 ## Style
-
-### Testing
-
-In this project, the tests are the backbone. The application code is subservient to the tests.
-
-In this project, tests are organized by domain concept, not by test type.
-See this post for an explanation:
-https://www.codewithjason.com/why-i-organize-my-tests-by-domain-concept-not-by-test-type/
 
 Always be consistent about naming. Use predictable names.
 Bad: `repositories.each { |repo| repo.destroy }`
