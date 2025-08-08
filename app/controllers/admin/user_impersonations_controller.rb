@@ -5,8 +5,10 @@ module Admin
 
       user = User.find(params[:user_id])
       sign_in(:user, user)
+      session[:impersonating] = true
 
       redirect_to repositories_path
     end
+
   end
 end
