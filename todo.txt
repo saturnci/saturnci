@@ -6,13 +6,5 @@ Defect: precompile happens for every deployment
 Ability to delete/archive repositories (put in Settings)
 Fix data model that connects GitHub accounts and users
 Ability to run SaturnCI env locally without modifying config/database.yml
-
-2025-08-07T15:34:16.502451+00:00 cloud-init[621]: Error: invalid slice size
-2025-08-07T15:34:16.502915+00:00 cloud-init[621]: /root/test_runner_agent/lib/script.rb:132:in `each_slice'
-2025-08-07T15:34:16.503256+00:00 cloud-init[621]: /root/test_runner_agent/lib/script.rb:132:in `execute_script'
-2025-08-07T15:34:16.503403+00:00 cloud-init[621]: /root/test_runner_agent/lib/test_runner_agent.rb:84:in `execute'
-2025-08-07T15:34:16.503788+00:00 cloud-init[621]: bin/test_runner_agent:26:in `<main>'
-2025-08-07T15:34:16.503957+00:00 cloud-init[621]: Run finished
-2025-08-07T15:34:16.632508+00:00 cloud-init[621]: Run finished response code: 200
-2025-08-07T15:34:16.633976+00:00 cloud-init[621]: Deleting runner
-2025-08-07T15:34:16.634949+00:00 cloud-init[621]: Done
+When you scroll up on the logs, it should stop auto-scrolling you
+Ability to manipulate test runner pool via CLI
