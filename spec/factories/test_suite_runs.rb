@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :test_suite_run do
-    project
+    repository
     branch_name { "main" }
     author_name { Faker::Name.name }
     commit_hash { Faker::Alphanumeric.alphanumeric(number: 7) }
