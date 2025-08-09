@@ -1,12 +1,11 @@
 <div class="container">
-  <h2>Users (<%= @users.length %>)</h2>
+  <h2>Users (<%= @users.count %>)</h2>
 
   <table border>
     <tr>
       <th>Created</th>
       <th>Name</th>
       <th>Email</th>
-      <th>Most Recent Test Run</th>
       <th></th>
     </tr>
     <% @users.each do |user| %>
@@ -17,13 +16,6 @@
 
         <td><%= user.name %></td>
         <td><%= user.email %></td>
-        <td>
-          <% if user.respond_to?(:most_recent_test_run) && user.most_recent_test_run %>
-            <%= l(user.most_recent_test_run.in_time_zone(Rails.application.config.admin_time_zone)) %>
-          <% else %>
-            <em>Never</em>
-          <% end %>
-        </td>
 
         <td>
           <%= link_to "Become",
