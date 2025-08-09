@@ -18,13 +18,15 @@ describe "User impersonations", type: :request do
         auth_header = request.headers['Authorization']
         case auth_header
         when "token admin_token_123"
-          { status: 200, body: { login: "admin" }.to_json, headers: { 'Content-Type' => 'application/json' } }
+          { status: 200 }
         when "token valid_token_789"
-          { status: 200, body: { login: "valid_user" }.to_json, headers: { 'Content-Type' => 'application/json' } }
+          { status: 200 }
         when "token non_admin_token_999"
-          { status: 200, body: { login: "non_admin" }.to_json, headers: { 'Content-Type' => 'application/json' } }
+          { status: 200 }
         when "token expired_token_456"
-          { status: 401, body: "", headers: {} }
+          { status: 401 }
+        else
+          { status: 401 }
         end
       end
   end
@@ -66,7 +68,6 @@ describe "User impersonations", type: :request do
 
       follow_redirect!
 
-      # Should succeed and show repositories page (200), not redirect to login
       expect(response).to have_http_status(200)
     end
   end
