@@ -19,6 +19,7 @@ class ApplicationController < ActionController::Base
 
   def check_github_api_access
     return if current_user.can_hit_github_api?
+    return if current_user.super_admin?
 
     sign_out current_user
     redirect_to new_user_session_path
