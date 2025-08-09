@@ -1,0 +1,27 @@
+## Bugs
+- Don't allow adding same repo twice
+- Flash message shows up in Settings even when it has nothing to do with settings
+- Impersonation doesn't work if user's GitHub token is expired
+
+## Defects
+- Fix data model that connects GitHub accounts and users
+- When you scroll up on the logs, it should stop auto-scrolling you
+- Precompile happens for every deployment
+
+## Missing features
+- Put repository name in HTML title
+- Flash message after settings change
+
+## Performance
+- Performance improvement: clicking among test suite runs
+
+## Setup
+- Ability to run SaturnCI env locally without modifying config/database.yml
+
+## Test runner management
+- Easy way to see error for a test runner
+- Ability to manipulate test runner pool via CLI
+
+## Misc
+- Ability to delete/archive repositories (put in Settings)
+- In system log or something, list runner name and id
