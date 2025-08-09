@@ -48,6 +48,10 @@ Always commit using full sentences with a period at the end.
 
 When merging, always use --squash.
 
+## Project-specific FYIs
+
+There's a model called Repository which used to be called Project.
+
 ## Commands
 
 ### Development Setup
