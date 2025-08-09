@@ -9,6 +9,5 @@ module Admin
 
       redirect_to repositories_path
     end
-
   end
 end

@@ -1,13 +1,27 @@
 #!/bin/sh
 #
-# Pre-commit hook to check for whitespace issues
+# Pre-commit hook to automatically fix whitespace issues
 #
 
 # Check for trailing whitespace and other whitespace issues
 if git diff --check --cached > /dev/null 2>&1; then
     exit 0
 else
-    echo "Error: Found whitespace issues. Please fix them before committing."
-    git diff --check --cached
-    exit 1
+    echo "Found whitespace issues. Auto-fixing..."
+    
+    # Get list of staged files
+    staged_files=$(git diff --cached --name-only --diff-filter=ACM)
+    
+    # Fix whitespace in working directory files
+    for file in $staged_files; do
+        if [ -f "$file" ]; then
+            # Remove trailing whitespace
+            sed -i 's/[[:space:]]*$//' "$file"
+            # Re-stage the fixed file
+            git add "$file"
+        fi
+    done
+    
+    echo "Whitespace issues fixed and files re-staged."
+    exit 0
 fi

@@ -1,8 +1,7 @@
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
   before_action :authenticate_user_or_404!, unless: :devise_controller?
-  before_action :check_github_api_access, if: -> { user_signed_in? }
-  #before_action :check_github_api_access, if: -> { user_signed_in? && !impersonating? }
+  before_action :check_github_api_access, if: -> { user_signed_in? && !impersonating? }
   after_action :verify_authorized, unless: :devise_controller?
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
