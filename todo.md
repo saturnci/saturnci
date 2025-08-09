@@ -7,6 +7,7 @@
 - Fix data model that connects GitHub accounts and users
 - When you scroll up on the logs, it should stop auto-scrolling you
 - Precompile happens for every deployment
+- In the beginning of a test suite, the horizontal scroll bar gets pushed down in an ugly way
 
 ## Missing features
 - Put repository name in HTML title
