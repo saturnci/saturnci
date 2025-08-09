@@ -1,17 +1,14 @@
 require "rails_helper"
 
 describe "User impersonations", type: :request do
-  # Set up all users and tokens once
   let!(:super_admin_user) { create(:user, super_admin: true) }
   let!(:expired_token_user) { create(:user) }
   let!(:valid_token_user) { create(:user) }
-  let!(:non_admin_user) { create(:user) }
 
   before do
     GitHubOAuthToken.create!(user: super_admin_user, value: "admin_token_123")
     GitHubOAuthToken.create!(user: expired_token_user, value: "expired_token_456") 
     GitHubOAuthToken.create!(user: valid_token_user, value: "valid_token_789")
-    GitHubOAuthToken.create!(user: non_admin_user, value: "non_admin_token_999")
 
     stub_request(:get, "https://api.github.com/user")
       .to_return do |request|
@@ -20,8 +17,6 @@ describe "User impersonations", type: :request do
         when "token admin_token_123"
           { status: 200 }
         when "token valid_token_789"
-          { status: 200 }
-        when "token non_admin_token_999"
           { status: 200 }
         when "token expired_token_456"
           { status: 401 }
@@ -73,7 +68,14 @@ describe "User impersonations", type: :request do
   end
 
   context "non-super admin attempting impersonation" do
+    let!(:non_admin_user) { create(:user) }
+
     before do
+      GitHubOAuthToken.create!(user: non_admin_user, value: "non_admin_token_999")
+      
+      stub_request(:get, "https://api.github.com/user")
+        .to_return(status: 200)
+      
       login_as(non_admin_user)
     end
 
