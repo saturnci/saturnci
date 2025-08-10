@@ -21,7 +21,7 @@ class TestSuiteRunFilterComponent < ViewComponent::Base
   end
 
   def branch_names
-    @test_suite_run.project.test_suite_runs.map(&:branch_name).uniq
+    @test_suite_run.project.test_suite_runs.map(&:branch_name).uniq.sort
   end
 
   def statuses
