@@ -26,7 +26,7 @@ describe "Starting test suite run" do
         end
       end
 
-      allow(TestRunnerPool).to receive(:scale)
+      allow(TestRunnerFleet).to receive(:scale)
     end
 
     it "does not add test runners" do

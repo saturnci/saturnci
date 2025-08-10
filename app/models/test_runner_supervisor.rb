@@ -1,5 +1,5 @@
 class TestRunnerSupervisor
-  TEST_RUNNER_POOL_BUFFER = 2
+  TEST_RUNNER_FLEET_BUFFER = 2
   MAX_NUMBER_OF_VERY_OLD_TEST_RUNNERS_TO_DELETE_AT_ONE_TIME = 10
 
   def self.check(c = TestRunOrchestrationCheck.new)
@@ -8,7 +8,7 @@ class TestRunnerSupervisor
     delete_test_runners(c.old_unassigned_test_runners)
     delete_test_runners(c.very_old_test_runners.limit(MAX_NUMBER_OF_VERY_OLD_TEST_RUNNERS_TO_DELETE_AT_ONE_TIME))
     remove_orphaned_test_runner_assignments(c.orphaned_test_runner_assignments)
-    fix_test_runner_pool(c.test_runner_pool_size)
+    fix_test_runner_fleet(c.test_runner_fleet_size)
 
     log "Unassigned runs: #{c.unassigned_runs.count}"
     log "Available test runners: #{c.available_test_runners.count}"
@@ -28,16 +28,16 @@ class TestRunnerSupervisor
     test_runners.destroy_all
   end
 
-  def self.fix_test_runner_pool(test_runner_pool_size)
+  def self.fix_test_runner_fleet(test_runner_fleet_size)
     log "-" * 20
-    log "Desired test runner pool size: #{test_runner_pool_size}"
+    log "Desired test runner fleet size: #{test_runner_fleet_size}"
 
     unassigned_test_runners = TestRunner.unassigned
 
     number_of_test_runners = unassigned_test_runners.count
     log "Number of unassigned test runners: #{number_of_test_runners}"
 
-    number_of_needed_test_runners = test_runner_pool_size - number_of_test_runners
+    number_of_needed_test_runners = test_runner_fleet_size - number_of_test_runners
     log "Change needed: #{number_of_needed_test_runners}"
 
     if number_of_needed_test_runners > 0
