@@ -3,6 +3,7 @@
 - Flash message shows up in Settings even when it has nothing to do with settings
 - Don't allow adding same repo twice
 - If you're on the Overview tab when the test suite run finishes, the Overview tab doesn't update
+- Sometimes, when a test suite run finishes, the status doesn't get updated from "Running" to "Passed" (or "Failed")
 
 ## Defects
 - Fix data model that connects GitHub accounts and users
