@@ -15,6 +15,11 @@ class User < ApplicationRecord
     omniauth_providers: [:github]
   )
 
+  attr_accessor :impersonating
+  def impersonating?
+    impersonating
+  end
+
   def email_required?
     false
   end

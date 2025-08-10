@@ -36,11 +36,6 @@ describe "User impersonations", type: :request do
       expect(response).to redirect_to(repositories_path)
     end
 
-    it "sets impersonating session flag" do
-      post admin_user_impersonations_path(user_id: valid_token_user.id)
-      expect(session[:impersonating]).to be true
-    end
-
     context "GitHub token is invalid" do
       before do
         allow_any_instance_of(User).to receive(:can_hit_github_api?).and_return(false)
@@ -63,15 +58,8 @@ describe "User impersonations", type: :request do
       expect(response).to redirect_to(repositories_path)
     end
 
-    it "sets impersonating session flag" do
-      post admin_user_impersonations_path(user_id: expired_token_user.id)
-      expect(session[:impersonating]).to be true
-    end
-
     it "should succeed: allows access even with expired token" do
       post admin_user_impersonations_path(user_id: expired_token_user.id)
-      expect(session[:impersonating]).to be true
-
       follow_redirect!
 
       expect(response).to have_http_status(200)

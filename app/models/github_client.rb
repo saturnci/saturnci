@@ -8,8 +8,13 @@ class GitHubClient
   end
 
   def repositories
-    Rails.cache.fetch(cache_key, expires_in: 1.week) do
-      Repository.where(github_repo_full_name: octokit_repositories.map(&:full_name))
+    if @user.impersonating?
+      @repositories = Repository.joins(:github_account)
+        .where(github_accounts: { user_id: @user.id })
+    else
+      Rails.cache.fetch(cache_key, expires_in: 1.week) do
+        Repository.where(github_repo_full_name: octokit_repositories.map(&:full_name))
+      end
     end
   end
 

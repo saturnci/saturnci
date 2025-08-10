@@ -12,14 +12,7 @@ class RepositoriesController < ApplicationController
       redirect_to new_user_email_path and return
     end
 
-    if current_user.can_hit_github_api?
-      @repositories = GitHubClient.new(current_user).repositories.active.order("github_repo_full_name asc")
-    else
-      @repositories = Repository.joins(:github_account)
-        .where(github_accounts: { user_id: current_user.id })
-        .active.order("github_repo_full_name asc")
-    end
-
+    @repositories = GitHubClient.new(current_user).repositories.active.order("github_repo_full_name asc")
     authorize @repositories
   end
 

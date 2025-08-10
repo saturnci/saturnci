@@ -1,7 +1,8 @@
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
   before_action :authenticate_user_or_404!, unless: :devise_controller?
-  before_action :check_github_api_access, if: -> { user_signed_in? && !impersonating? }
+  before_action :set_current_user_impersonating, if: :user_signed_in?
+  before_action :check_github_api_access, if: -> { user_signed_in? && !current_user.impersonating? }
   after_action :verify_authorized, unless: :devise_controller?
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
@@ -25,7 +26,7 @@ class ApplicationController < ActionController::Base
     redirect_to new_user_session_path
   end
 
-  def impersonating?
-    session[:impersonating] == true
+  def set_current_user_impersonating
+    current_user.impersonating = session[:impersonating]
   end
 end
