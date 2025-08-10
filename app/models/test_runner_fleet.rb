@@ -1,4 +1,4 @@
-class TestRunnerPool
+class TestRunnerFleet
   def self.scale(count)
     ActiveRecord::Base.transaction do
       change = count - TestRunner.unassigned.count

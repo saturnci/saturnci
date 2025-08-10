@@ -11,7 +11,7 @@ describe TestRunnerSupervisor do
     let!(:c) { TestRunOrchestrationCheck.new }
 
     before do
-      allow(c).to receive(:test_runner_pool_size).and_return(4)
+      allow(c).to receive(:test_runner_fleet_size).and_return(4)
     end
 
     context "there are 3 test runners" do
