@@ -12,6 +12,7 @@
 ## Missing features
 - Put repository name in HTML title
 - Flash message after settings change
+- Tab with concatenated system logs and test output
 
 ## Administration
 - Send email when a new user signs up
