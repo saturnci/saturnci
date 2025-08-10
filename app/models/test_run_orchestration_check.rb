@@ -42,4 +42,25 @@ class TestRunOrchestrationCheck
       0
     end
   end
+
+  def prune
+    delete_test_runners(old_unassigned_test_runners)
+    delete_test_runners(very_old_test_runners.limit(10))
+  end
+
+  private
+
+  def delete_test_runners(test_runners)
+    log "-" * 20
+    log "Deleting #{test_runners.count} old test runners"
+    test_runners.destroy_all
+  end
+
+  def log(message)
+    if Rails.env.production?
+      Rails.logger.info message
+    else
+      puts message
+    end
+  end
 end

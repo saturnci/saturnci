@@ -2,3 +2,6 @@ production:
   supervise_test_runners_task:
     command: "TestRunnerSupervisor.check"
     schedule: "1 * * * * *"
+  prune_test_runners_task:
+    command: "TestRunnerPool.prune"
+    schedule: "0 0 * * * *"

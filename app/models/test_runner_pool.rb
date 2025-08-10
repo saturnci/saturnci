@@ -13,4 +13,8 @@ class TestRunnerPool
       end
     end
   end
+
+  def self.prune
+    TestRunOrchestrationCheck.new.prune
+  end
 end

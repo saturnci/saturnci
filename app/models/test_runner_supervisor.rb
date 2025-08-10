@@ -1,12 +1,9 @@
 class TestRunnerSupervisor
   TEST_RUNNER_POOL_BUFFER = 2
-  MAX_NUMBER_OF_VERY_OLD_TEST_RUNNERS_TO_DELETE_AT_ONE_TIME = 10
 
   def self.check(c = TestRunOrchestrationCheck.new)
     log "-" * 80
 
-    delete_test_runners(c.old_unassigned_test_runners)
-    delete_test_runners(c.very_old_test_runners.limit(MAX_NUMBER_OF_VERY_OLD_TEST_RUNNERS_TO_DELETE_AT_ONE_TIME))
     remove_orphaned_test_runner_assignments(c.orphaned_test_runner_assignments)
     fix_test_runner_pool(c.test_runner_pool_size)
 
@@ -20,12 +17,6 @@ class TestRunnerSupervisor
       log "Assigning #{test_runner.name} to #{run.id}"
       test_runner.assign(run)
     end
-  end
-
-  def self.delete_test_runners(test_runners)
-    log "-" * 20
-    log "Deleting #{test_runners.count} old test runners"
-    test_runners.destroy_all
   end
 
   def self.fix_test_runner_pool(test_runner_pool_size)
