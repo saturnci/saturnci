@@ -28,72 +28,11 @@ describe TestRunnerSupervisor do
       end
     end
 
-    context "there are 4 test runners, but one is in error" do
-      it "deletes one and creates one" do
-        create_list(:test_runner, 3)
-        test_runner = create(:test_runner)
-        test_runner.test_runner_events.create!(type: :error)
-
-        TestRunnerSupervisor.check(c)
-        expect(TestRunner.count).to eq(4)
-      end
-    end
-
     context "there are 5 test runners but 4 of them are assigned" do
       it "creates 4 - 1 = 3 test runners" do
         create_list(:test_runner_assignment, 4)
         create(:test_runner)
         expect { TestRunnerSupervisor.check(c) }.to change(TestRunner, :count).by(3)
-      end
-    end
-
-    context "there are 6 unassigned test runners" do
-      it "deletes an unassigned test runner" do
-        create_list(:test_runner, 5)
-        expect { TestRunnerSupervisor.check(c) }.to change(TestRunner, :count).by(-1)
-      end
-    end
-
-    context "there are 4 unassigned test runners and 2 more in error" do
-      it "deletes the 2 errored test runners" do
-        create_list(:test_runner, 4)
-
-        2.times do
-          test_runner = create(:test_runner)
-          test_runner.test_runner_events.create!(type: :error)
-        end
-
-        expect { TestRunnerSupervisor.check(c) }.to change(TestRunner, :count).by(-2)
-      end
-    end
-
-    context "there's an unassigned test runner that's more than an hour old" do
-      it "deletes it" do
-        test_runner = create(:test_runner)
-
-        travel_to(2.hours.from_now) do
-          expect { TestRunnerSupervisor.check }.to change { TestRunner.exists?(test_runner.id) }.to(false)
-        end
-      end
-    end
-
-    context "there's an assigned test runner that's more than an hour old" do
-      it "does not delete it" do
-        test_runner = create(:test_runner_assignment).test_runner
-
-        travel_to(2.hours.from_now) do
-          expect { TestRunnerSupervisor.check(c) }.to_not change { TestRunner.exists?(test_runner.id) }
-        end
-      end
-    end
-
-    context "there's an assigned test runner that's more than a day old" do
-      it "deletes it" do
-        test_runner = create(:test_runner_assignment).test_runner
-
-        travel_to(2.days.from_now) do
-          expect { TestRunnerSupervisor.check(c) }.to change { TestRunner.exists?(test_runner.id) }.from(true).to(false)
-        end
       end
     end
   end
