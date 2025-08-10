@@ -2,10 +2,12 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Workflow
+## ⚠️ CRITICAL WORKFLOW REQUIREMENTS
 
-In general, don't make commits before you check with me.
-Push after every commit.
+**NEVER commit without explicit user approval.** Always ask permission before making any commits.
+Push after every commit only after user approval.
+
+## Workflow
 
 Commit messages should be a single short sentence with a period at the end.
 
@@ -209,7 +211,10 @@ docker build -f Dockerfile.production -t saturnci:latest .
 
 ## Git Commit Guidelines
 
+**CRITICAL: NEVER commit without explicit user approval first.**
+
 When creating commits:
+- ALWAYS ask for permission before committing
 - Use concise commit messages that focus on the change
 - DO NOT add co-author attribution (no "Co-Authored-By: Claude")
 - DO NOT add emoji decorations or "Generated with Claude Code" messages
