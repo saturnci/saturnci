@@ -38,6 +38,8 @@ Always try to make a distinction between meaningful setup data and data that's j
 
 Use comments approximately never.
 
+Always favor double-quoted strings over single-quoted strings.
+
 Always be consistent about naming. Use predictable names.
 Bad: `repositories.each { |repo| repo.destroy }`
 Good: `repositories.each { |repository| repository.destroy }`
