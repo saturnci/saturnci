@@ -12,7 +12,7 @@ class RepositoriesController < ApplicationController
       redirect_to new_user_email_path and return
     end
 
-    if current_user.can_hit_github_api?
+    if current_user.can_hit_github_api? && !impersonating?
       @repositories = GitHubClient.new(current_user).repositories.active.order("github_repo_full_name asc")
     else
       @repositories = Repository.joins(:github_account)
@@ -27,11 +27,15 @@ class RepositoriesController < ApplicationController
     @repository = Repository.new
     authorize @repository
 
-    @github_repositories = current_user.octokit_client.repositories
+    if impersonating?
+      @github_repositories = []
+    else
+      @github_repositories = current_user.octokit_client.repositories
 
-    loop do
-      break if current_user.octokit_client.last_response.rels[:next].nil?
-      @github_repositories.concat current_user.octokit_client.get(current_user.octokit_client.last_response.rels[:next].href)
+      loop do
+        break if current_user.octokit_client.last_response.rels[:next].nil?
+        @github_repositories.concat current_user.octokit_client.get(current_user.octokit_client.last_response.rels[:next].href)
+      end
     end
   end
 
@@ -47,7 +51,7 @@ class RepositoriesController < ApplicationController
     )
     authorize repository
 
-    GitHubClient.new(current_user).invalidate_repositories_cache
+    GitHubClient.new(current_user).invalidate_repositories_cache unless impersonating?
 
     redirect_to repositories_path
   end
