@@ -47,7 +47,7 @@ describe "User impersonations", type: :request do
       end
 
       it "still works" do
-        post admin_user_impersonations_path(user_id: target_user.id)
+        post admin_user_impersonations_path(user_id: valid_token_user.id)
         expect(response).to redirect_to(repositories_path)
       end
     end
