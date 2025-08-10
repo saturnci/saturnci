@@ -1,5 +1,5 @@
 class TestRunnerSupervisor
-  TEST_RUNNER_POOL_BUFFER = 2
+  TEST_RUNNER_FLEET_BUFFER = 2
   MAX_NUMBER_OF_VERY_OLD_TEST_RUNNERS_TO_DELETE_AT_ONE_TIME = 10
 
   def self.check(c = TestRunOrchestrationCheck.new)
@@ -30,7 +30,7 @@ class TestRunnerSupervisor
 
   def self.fix_test_runner_fleet(test_runner_fleet_size)
     log "-" * 20
-    log "Desired test runner pool size: #{test_runner_fleet_size}"
+    log "Desired test runner fleet size: #{test_runner_fleet_size}"
 
     unassigned_test_runners = TestRunner.unassigned
 

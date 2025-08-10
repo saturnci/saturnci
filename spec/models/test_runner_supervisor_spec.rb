@@ -7,7 +7,7 @@ describe TestRunnerSupervisor do
     allow(TestRunnerSupervisor).to receive(:log)
   end
 
-  describe "pool" do
+  describe "fleet" do
     let!(:c) { TestRunOrchestrationCheck.new }
 
     before do
