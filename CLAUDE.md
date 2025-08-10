@@ -207,4 +207,8 @@ docker build -f Dockerfile.production -t saturnci:latest .
 
 ## Git Commit Guidelines
 
-When creating commits, use concise commit messages without co-author attribution or emoji decorations. Focus on clear, descriptive messages that explain the change.
+When creating commits:
+- Use concise commit messages that focus on the change
+- DO NOT add co-author attribution (no "Co-Authored-By: Claude")
+- DO NOT add emoji decorations or "Generated with Claude Code" messages
+- Write commit messages as if you were the developer making the change
