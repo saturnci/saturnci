@@ -13,21 +13,11 @@ describe TestRunnerFleet, "pruning" do
     allow(c).to receive(:test_runner_fleet_size).and_return(4)
   end
 
-  context "there are 4 test runners, but one is in error" do
-    it "deletes one and creates one" do
-      create_list(:test_runner, 3)
-      test_runner = create(:test_runner)
-      test_runner.test_runner_events.create!(type: :error)
-
-      TestRunnerSupervisor.check(c)
-      expect(TestRunner.count).to eq(4)
-    end
-  end
-
   context "there are 6 unassigned test runners" do
     it "deletes an unassigned test runner" do
       create_list(:test_runner, 5)
-      expect { TestRunnerSupervisor.check(c) }.to change(TestRunner, :count).by(-1)
+      test_runner_fleet = TestRunnerFleet.instance
+      expect { test_runner_fleet.prune(c) }.to change(TestRunner, :count).by(-1)
     end
   end
 

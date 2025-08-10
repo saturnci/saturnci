@@ -7,6 +7,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 In general, don't make commits before you check with me.
 Push after every commit.
 
+Commit messages should be a single short sentence with a period at the end.
+
 ## Testing
 
 In this project, the tests are the backbone. The application code is subservient to the tests.
