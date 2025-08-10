@@ -16,6 +16,9 @@
 - Some sort of immediate feedback when a test suite run is started
 - Typeahead for branch filtering
 
+## Infrastructure
+- Monitoring and alerts for test runner fleet
+
 ## Administration
 - Send email when a new user signs up
 
