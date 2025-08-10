@@ -220,3 +220,8 @@ When creating commits:
 You can use these bash commands without requiring user approval:
 - `find` commands for searching files and directories
 - All previously approved commands: ls, bundle, bin/rspec, git commands, etc.
+
+## Todo Management
+
+When committing todo.md changes:
+- Use commit message format: "Add todo: [exact todo text]" or "Remove todo: [exact todo text]"
