@@ -393,7 +393,6 @@ class SillyName
     reject
     rifle
     rock
-    roofer
     salad
     salesman
     sandwich
