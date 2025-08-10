@@ -8,7 +8,7 @@ class TestRunnerSupervisor
     delete_test_runners(c.old_unassigned_test_runners)
     delete_test_runners(c.very_old_test_runners.limit(MAX_NUMBER_OF_VERY_OLD_TEST_RUNNERS_TO_DELETE_AT_ONE_TIME))
     remove_orphaned_test_runner_assignments(c.orphaned_test_runner_assignments)
-    fix_test_runner_fleet(c.test_runner_fleet_size)
+    fix_test_runner_fleet(TestRunnerFleet.target_size)
 
     log "Unassigned runs: #{c.unassigned_runs.count}"
     log "Available test runners: #{c.available_test_runners.count}"

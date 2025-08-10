@@ -34,8 +34,4 @@ class TestRunOrchestrationCheck
       .where("test_runner_assignments.created_at > ?", 1.day.ago)
       .where.not(test_runner_id: non_orphaned_test_runners)
   end
-
-  def test_runner_fleet_size
-    TestRunnerFleet.target_size
-  end
 end
