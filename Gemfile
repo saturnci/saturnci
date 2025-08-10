@@ -22,6 +22,9 @@ gem "turbo-rails", "~> 1.5"
 gem "bugsnag"
 gem "net-ssh"
 
+# For email delivery
+gem "postmark-rails"
+
 # For soft deletion
 gem "paranoia"
 
