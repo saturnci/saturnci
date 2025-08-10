@@ -135,6 +135,7 @@ class SillyName
     nervous
     noisy
     nonexistent
+    nuclear
     pickled
     plastic
     poisonous
@@ -284,6 +285,7 @@ class SillyName
     beard
     bird
     blanket
+    bomb
     breakfast
     brick
     buffalo
