@@ -1,7 +1,7 @@
 ## Bugs
-- Don't allow adding same repo twice
+- Can't cancel test suite runs
 - Flash message shows up in Settings even when it has nothing to do with settings
-- Impersonation doesn't work if user's GitHub token is expired
+- Don't allow adding same repo twice
 
 ## Defects
 - Fix data model that connects GitHub accounts and users
@@ -32,3 +32,8 @@
 ## Misc
 - Ability to delete/archive repositories (put in Settings)
 - In system log or something, list runner name and id
+
+----------------------------------------------------------------
+
+## Finished
+- Impersonation doesn't work if user's GitHub token is expired
