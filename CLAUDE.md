@@ -212,3 +212,9 @@ When creating commits:
 - DO NOT add co-author attribution (no "Co-Authored-By: Claude")
 - DO NOT add emoji decorations or "Generated with Claude Code" messages
 - Write commit messages as if you were the developer making the change
+
+## Tool Usage Permissions
+
+You can use these bash commands without requiring user approval:
+- `find` commands for searching files and directories
+- All previously approved commands: ls, bundle, bin/rspec, git commands, etc.
