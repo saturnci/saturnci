@@ -36,10 +36,6 @@ class TestRunOrchestrationCheck
   end
 
   def test_runner_fleet_size
-    if Run.where("runs.created_at > ?", 1.hour.ago).any?
-      ENV.fetch("TEST_RUNNER_FLEET_SIZE", 12).to_i
-    else
-      0
-    end
+    TestRunnerFleet.target_size
   end
 end

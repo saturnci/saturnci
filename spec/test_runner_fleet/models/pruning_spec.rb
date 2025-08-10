@@ -10,14 +10,14 @@ describe TestRunnerFleet, "pruning" do
   let!(:c) { TestRunOrchestrationCheck.new }
 
   before do
-    allow(c).to receive(:test_runner_fleet_size).and_return(4)
+    allow(TestRunnerFleet).to receive(:target_size).and_return(4)
   end
 
   context "there are 6 unassigned test runners" do
     it "deletes an unassigned test runner" do
       create_list(:test_runner, 5)
       test_runner_fleet = TestRunnerFleet.instance
-      expect { test_runner_fleet.prune(c) }.to change(TestRunner, :count).by(-1)
+      expect { test_runner_fleet.prune }.to change(TestRunner, :count).by(-1)
     end
   end
 
@@ -63,4 +63,5 @@ describe TestRunnerFleet, "pruning" do
       end
     end
   end
+
 end
