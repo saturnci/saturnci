@@ -29,7 +29,7 @@
 - Send email when a new user signs up
 
 ## Performance
-- Performance improvement: clicking among test suite runs
+- Clicking among test suite runs is too slow
 
 ## Setup
 - Ability to run SaturnCI env locally without modifying config/database.yml
