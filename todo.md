@@ -17,6 +17,7 @@
 - Some sort of immediate feedback when a test suite run is started
 - Typeahead for branch filtering
 - On each runner's tab, show an icon for whether it's running or finished
+- Test suite runs should link to the GitHub page for that commit so the changes can easily be seen
 
 ## Refactoring
 - TestRunOrchestrationCheck is stupid
