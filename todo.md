@@ -26,6 +26,7 @@
 
 ## Infrastructure
 - Monitoring and alerts for test runner fleet
+- Monitoring for registry disk space
 
 ## Administration
 - Send email when a new user signs up
