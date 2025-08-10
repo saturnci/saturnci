@@ -15,6 +15,7 @@
 - Tab with concatenated system logs and test output
 - Some sort of immediate feedback when a test suite run is started
 - Typeahead for branch filtering
+- On each runner's tab, show an icon for whether it's running or finished
 
 ## Infrastructure
 - Monitoring and alerts for test runner fleet
