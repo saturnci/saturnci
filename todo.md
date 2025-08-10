@@ -14,6 +14,7 @@
 - Flash message after settings change
 - Tab with concatenated system logs and test output
 - Some sort of immediate feedback when a test suite run is started
+- Typeahead for branch filtering
 
 ## Administration
 - Send email when a new user signs up
