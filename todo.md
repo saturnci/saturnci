@@ -11,6 +11,7 @@
 - In the beginning of a test suite, the horizontal scroll bar gets pushed down in an ugly way
 
 ## Missing features
+- User that triggered a test suite run should get an email once it finishes
 - Put repository name in HTML title
 - Flash message after settings change
 - Tab with concatenated system logs and test output
