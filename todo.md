@@ -18,6 +18,9 @@
 - Typeahead for branch filtering
 - On each runner's tab, show an icon for whether it's running or finished
 
+## Refactoring
+- TestRunOrchestrationCheck is stupid
+
 ## Infrastructure
 - Monitoring and alerts for test runner fleet
 
