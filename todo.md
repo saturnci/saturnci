@@ -13,6 +13,9 @@
 - Put repository name in HTML title
 - Flash message after settings change
 
+## Administration
+- Send email when a new user signs up
+
 ## Performance
 - Performance improvement: clicking among test suite runs
 
