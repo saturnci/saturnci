@@ -185,6 +185,11 @@ spec:
             secretKeyRef:
               name: saturn-secrets
               key: BUGSNAG_API_KEY
+        - name: POSTMARK_API_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: POSTMARK_API_TOKEN
       initContainers:
       - name: saturn-migrations
         image: registry.digitalocean.com/saturnci/saturnci:$TAG
@@ -357,3 +362,8 @@ spec:
             secretKeyRef:
               name: saturn-secrets
               key: BUGSNAG_API_KEY
+        - name: POSTMARK_API_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: POSTMARK_API_TOKEN

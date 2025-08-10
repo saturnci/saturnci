@@ -179,3 +179,8 @@ spec:
             secretKeyRef:
               name: saturn-secrets
               key: DOCKER_REGISTRY_CACHE_PASSWORD
+        - name: POSTMARK_API_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: POSTMARK_API_TOKEN
