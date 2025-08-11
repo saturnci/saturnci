@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_19_130909) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_11_022210) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -147,6 +147,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_19_130909) do
     t.datetime "updated_at", null: false
     t.uuid "run_id", null: false
     t.index ["run_id"], name: "index_screenshots_on_run_id"
+  end
+
+  create_table "sent_emails", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "to", null: false
+    t.string "subject", null: false
+    t.text "body", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "solid_cable_messages", force: :cascade do |t|
