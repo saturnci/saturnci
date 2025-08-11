@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_11_022210) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_11_024531) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -223,6 +223,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_11_022210) do
     t.index ["rsa_key_id"], name: "index_test_runners_on_rsa_key_id"
   end
 
+  create_table "test_suite_run_result_notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "test_suite_run_id", null: false
+    t.uuid "sent_email_id", null: false
+    t.string "email", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sent_email_id"], name: "index_test_suite_run_result_notifications_on_sent_email_id"
+    t.index ["test_suite_run_id", "email"], name: "index_tsrrn_on_test_suite_run_and_email", unique: true
+    t.index ["test_suite_run_id"], name: "index_test_suite_run_result_notifications_on_test_suite_run_id"
+  end
+
   create_table "test_suite_runs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "project_id", null: false
     t.datetime "created_at", null: false
@@ -282,5 +293,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_11_022210) do
   add_foreign_key "test_runner_assignments", "test_runners"
   add_foreign_key "test_runner_events", "test_runners"
   add_foreign_key "test_runners", "rsa_keys"
+  add_foreign_key "test_suite_run_result_notifications", "sent_emails"
+  add_foreign_key "test_suite_run_result_notifications", "test_suite_runs"
   add_foreign_key "test_suite_runs", "repositories", column: "project_id"
 end
