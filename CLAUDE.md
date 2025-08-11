@@ -34,13 +34,21 @@ In general, arrange can be done with `let!`. Act can be done with `before`. Asse
 Never create setup data that's not needed.
 Always try to make a distinction between meaningful setup data and data that's just there to satisfy the test.
 
+Use one assertion per test case.
+
 Always favor `let!` over `let`.
 
 ## Style
 
+### Comments
+
 Use comments approximately never.
 
+### Strings
+
 Always favor double-quoted strings over single-quoted strings.
+
+### Naming
 
 Always be consistent about naming. Use predictable names.
 Bad: `repositories.each { |repo| repo.destroy }`
@@ -49,6 +57,23 @@ Also good: `repositories.each { |r| r.destroy }`
 Bad: `admin_user.each { |user| user.destroy }`
 Good: `admin_user.each { |admin_user| admin_user.destroy }`
 Also good: `admin_user.each { |u| u.destroy }`
+
+### Formatting
+
+Bad:
+```ruby
+sent_email = SentEmail.create!(to: test_suite_run.repository.user.email, subject: email.subject, body: email.body.to_s)
+```
+
+Good:
+```ruby
+sent_email = SentEmail.create!(
+  to: test_suite_run.repository.user.email,
+  subject: email.subject,
+  body: email.body.to_s
+)
+```
+
 
 ## Git Usage
 
