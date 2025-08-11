@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Example usage: ./deploy production
+# cd into the ops directory before attempting to run this script
 
 APP_VERSION=$(date +%s)
 ENVIRONMENT=$1
