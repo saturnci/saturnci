@@ -5,6 +5,12 @@ class TestSuiteRun < ApplicationRecord
   has_many :runs, foreign_key: "build_id", dependent: :destroy
   has_many :test_case_runs, through: :runs
   alias_attribute :repository_id, :project_id
+  
+  has_many :test_suite_run_result_notifications, dependent: :destroy
+  scope :needing_notification, -> do
+    left_joins(:test_suite_run_result_notifications)
+      .where(test_suite_run_result_notifications: { id: nil })
+  end
 
   after_initialize do
     self.seed ||= rand(10000)
