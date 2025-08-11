@@ -1,4 +1,6 @@
 class TestSuiteRun < ApplicationRecord
+  NOTIFICATION_FEATURE_LAUNCH_DATETIME = Time.zone.parse("2025-08-11 23:00:00 UTC")
+  
   acts_as_paranoid
   belongs_to :repository, foreign_key: "project_id"
   belongs_to :project
@@ -10,6 +12,7 @@ class TestSuiteRun < ApplicationRecord
   scope :needing_notification, -> do
     left_joins(:test_suite_run_result_notifications)
       .where(test_suite_run_result_notifications: { id: nil })
+      .where("test_suite_runs.created_at > ?", NOTIFICATION_FEATURE_LAUNCH_DATETIME)
   end
 
   after_initialize do
