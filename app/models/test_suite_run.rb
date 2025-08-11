@@ -1,5 +1,5 @@
 class TestSuiteRun < ApplicationRecord
-  NOTIFICATION_FEATURE_LAUNCH_DATETIME = Time.zone.parse("2025-08-11 23:00:00 UTC")
+  NOTIFICATION_FEATURE_LAUNCH_DATETIME = "2025-08-11 22:00:00 UTC"
   
   acts_as_paranoid
   belongs_to :repository, foreign_key: "project_id"

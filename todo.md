@@ -30,6 +30,7 @@
 ## Infrastructure
 - Monitoring and alerts for test runner fleet
 - Monitoring for registry disk space
+- Replace "saturn" with "saturnci" in Kubernetes deployment files (deployment.yaml, secrets.yaml, service.yaml, etc.)
 
 ## Administration
 - Send email when a new user signs up
