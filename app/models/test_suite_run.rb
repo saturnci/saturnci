@@ -13,6 +13,7 @@ class TestSuiteRun < ApplicationRecord
     left_joins(:test_suite_run_result_notifications)
       .where(test_suite_run_result_notifications: { id: nil })
       .where("test_suite_runs.created_at > ?", NOTIFICATION_FEATURE_LAUNCH_DATETIME)
+      .where.not(cached_status: ["Running", "Not Started"])
   end
 
   after_initialize do
