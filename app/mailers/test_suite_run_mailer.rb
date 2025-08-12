@@ -6,7 +6,7 @@ class TestSuiteRunMailer < ApplicationMailer
 
     mail(
       to: @user.email,
-      subject: "#{@test_suite_run.status} test suite run for #{@repository.name}"
+      subject: "#{@test_suite_run.status}: test suite run for #{@repository.name}"
     )
   end
 end
