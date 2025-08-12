@@ -1,7 +1,11 @@
 <h1><%= @test_suite_run.status %></h1>
 
-<p><strong>Message:</strong> <%= @test_suite_run.commit_message.truncate(100) %></p>
-<p><strong>Commit:</strong> <%= @test_suite_run.commit_hash %></p>
+<p>
+  <%= link_to @test_suite_run.commit_message.truncate(100),
+    repository_test_suite_run_url(@repository, @test_suite_run) %>
+</p>
+
+<p><%= @abbreviated_hash %></p>
 <p><strong>Branch:</strong> <%= @test_suite_run.branch_name %></p>
 <p><strong>Author:</strong> <%= @test_suite_run.author_name %></p>
-<p><strong>Test cases:</strong> <%= @test_suite_run.test_case_runs.count %></p>
+<%= @test_suite_run.test_case_runs.count %> total test cases
