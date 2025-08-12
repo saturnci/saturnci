@@ -1,12 +1,20 @@
 class TestSuiteRunMailer < ApplicationMailer
+  include ApplicationHelper
+  
   def completion_notification(test_suite_run)
     @test_suite_run = test_suite_run
     @repository = test_suite_run.repository
     @user = @repository.user
 
+    short_hash = abbreviated_hash(@test_suite_run.commit_hash)
+    truncated_message = @test_suite_run.commit_message.truncate(15)
+    
     mail(
       to: @user.email,
-      subject: "#{@test_suite_run.status}: test suite run for #{@repository.name}"
+      subject: "#{@test_suite_run.status}: " \
+               "\"#{truncated_message}\" " \
+               "(#{short_hash}) " \
+               "on #{@repository.github_account.account_name}/#{@repository.name}"
     )
   end
 end

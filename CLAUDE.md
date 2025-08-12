@@ -34,6 +34,9 @@ In general, arrange can be done with `let!`. Act can be done with `before`. Asse
 Never create setup data that's not needed.
 Always try to make a distinction between meaningful setup data and data that's just there to satisfy the test.
 
+Never write a test that says "it does such-and-such 'correctly'".
+Instead of saying that it works correctly, specify what "correctly" MEANS.
+
 Use one assertion per test case.
 
 Always favor `let!` over `let`.
