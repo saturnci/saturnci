@@ -1,11 +1,7 @@
-<h1>Test Suite Run Completed</h1>
+<h1><%= @test_suite_run.status %></h1>
 
-<p>Your test suite run for <strong><%= @repository.name %></strong> has completed.</p>
-
-<p><strong>Result:</strong> <%= @test_suite_run.status %></p>
-
-<p><strong>Branch:</strong> <%= @test_suite_run.branch_name %></p>
-<p><strong>Commit:</strong> <%= @test_suite_run.commit_hash %></p>
 <p><strong>Message:</strong> <%= @test_suite_run.commit_message.truncate(100) %></p>
+<p><strong>Commit:</strong> <%= @test_suite_run.commit_hash %></p>
+<p><strong>Branch:</strong> <%= @test_suite_run.branch_name %></p>
 <p><strong>Author:</strong> <%= @test_suite_run.author_name %></p>
 <p><strong>Test cases:</strong> <%= @test_suite_run.test_case_runs.count %></p>
