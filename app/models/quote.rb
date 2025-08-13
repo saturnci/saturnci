@@ -22,6 +22,7 @@ class Quote
     "\"I learned very early the difference between knowing the name of something and knowing something.\"<br>- Richard Feynman",
     "\"For each desired change, make the change easy (warning: this may be hard), then make the easy change.\"<br>- Kent Beck",
     "\"A complex system that works is invariably found to have evolved from a simple system that worked. A complex system designed from scratch never works and cannot be patched up to make it work. You have to start over with a working simple system.\"<br>- John Gall",
+    "\"The reasonable man adapts himself to the world: the unreasonable one persists in trying to adapt the world to himself. Therefore all progress depends on the unreasonable man.\"<br>- George Bernard Shaw",
   ]
 
   def self.random
