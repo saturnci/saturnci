@@ -23,7 +23,8 @@
 - Test suite runs should link to the GitHub page for that commit so the changes can easily be seen
 - When a test suite run says "Failed" it should say e.g. "Failed (2)"
 - When on a list (such as test suite runs or test cases), up and down keys should move the cursor to the next/previous item
-- On each test runner tab, list somewhere how many test cases it has
+- On each runner tab, list somewhere how many test cases it has
+- When a runner has finished running, show the elapsed time
 
 ## Refactoring
 - TestRunOrchestrationCheck is stupid
