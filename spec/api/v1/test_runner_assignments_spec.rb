@@ -50,4 +50,19 @@ describe "Test runner assignments", type: :request do
       expect(response_body.size).to eq(0)
     end
   end
+
+  describe "when test runner does not exist" do
+    it "returns bad request with error message" do
+      user = create(:user, super_admin: true)
+
+      get(
+        api_v1_test_runner_test_runner_assignments_path(test_runner_id: "nonexistent", format: :json),
+        headers: api_authorization_headers(user)
+      )
+
+      expect(response).to have_http_status(:bad_request)
+      response_body = JSON.parse(response.body)
+      expect(response_body["error"]).to be_present
+    end
+  end
 end

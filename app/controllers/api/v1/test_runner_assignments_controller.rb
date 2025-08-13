@@ -12,6 +12,7 @@ module API
           render json: []
         end
       rescue StandardError => e
+        skip_authorization
         render(json: { error: e.message }, status: :bad_request)
       end
     end
