@@ -7,7 +7,7 @@ module API
 
       def create
         begin
-          new_content = Base64.decode64(request.body.read)
+          new_content = Base64.decode64(request.body.read).force_encoding('UTF-8')
 
           if new_content.blank?
             skip_authorization
