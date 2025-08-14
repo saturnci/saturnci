@@ -13,6 +13,7 @@ describe "System logs scrolling", type: :system do
   end
 
   it "scrolls to the bottom" do
+    sleep 0.3
     log_console = PageObjects::LogConsole.new(page)
     expect(log_console).to have_visible_text("bottom line")
   end
