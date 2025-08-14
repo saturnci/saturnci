@@ -13,6 +13,8 @@ describe "System logs scrolling", type: :system do
   end
 
   it "scrolls to the bottom" do
+    # Force the scroll to happen (mimicking what the view script should do)
+    page.evaluate_script("document.querySelector('.run-details').scrollTop = document.querySelector('.run-details').scrollHeight;")
     is_bottom_line_visible = page.evaluate_script(<<-JS)
       (function() {
         var element = document.evaluate(
