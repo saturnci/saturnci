@@ -11,25 +11,8 @@ describe "Test output scrolling", type: :system do
   end
 
   it "scrolls to the bottom" do
-    is_bottom_line_visible = page.evaluate_script(<<-JS)
-      (function() {
-        var element = document.evaluate(
-          "//*[contains(text(), 'bottom line')]",
-          document,
-          null,
-          XPathResult.FIRST_ORDERED_NODE_TYPE,
-          null
-        ).singleNodeValue;
-
-        if (!element) {
-          return false;
-        } else {
-          var rect = element.getBoundingClientRect();
-          return rect.top < window.innerHeight && rect.bottom >= 0;
-        }
-      })();
-    JS
-
-    expect(is_bottom_line_visible).to be_truthy
+    sleep 0.5  # Give time for auto-scroll to execute
+    log_console = PageObjects::LogConsole.new(page)
+    expect(log_console).to have_visible_text("bottom line")
   end
 end
