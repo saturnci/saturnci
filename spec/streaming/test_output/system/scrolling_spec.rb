@@ -11,8 +11,6 @@ describe "Test output scrolling", type: :system do
   end
 
   it "scrolls to the bottom" do
-    # Force the scroll to happen (mimicking what the view script should do)
-    page.evaluate_script("document.querySelector('.run-details').scrollTop = document.querySelector('.run-details').scrollHeight;")
     log_console = PageObjects::LogConsole.new(page)
     expect(log_console).to have_visible_text("bottom line")
   end
