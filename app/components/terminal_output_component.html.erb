@@ -7,7 +7,9 @@
   
   <script>
   var element = document.querySelector('.run-details');
-  element.scrollTop = element.scrollHeight;
+  setTimeout(function() {
+    element.scrollTop = element.scrollHeight;
+  }, 200);
   
   document.querySelector('.terminal').classList.remove('terminal-masked');
   </script>
