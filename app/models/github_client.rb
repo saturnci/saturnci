@@ -35,7 +35,6 @@ class GitHubClient
 
     return repositories
   rescue Octokit::Unauthorized
-    @user.sign_out_everywhere!
     raise GitHubTokenExpiredError, "GitHub token has expired"
   end
 

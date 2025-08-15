@@ -30,7 +30,6 @@ class RepositoriesController < ApplicationController
       @github_repositories.concat current_user.octokit_client.get(current_user.octokit_client.last_response.rels[:next].href)
     end
   rescue Octokit::Unauthorized
-    current_user.sign_out_everywhere!
     skip_authorization
     redirect_to new_user_session_path
   end
