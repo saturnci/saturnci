@@ -15,5 +15,24 @@ RSpec.describe RepositoriesController, type: :request do
         expect(response).to redirect_to(new_user_session_path)
       end
     end
+
+    context "when GitHub returns Octokit::Unauthorized" do
+      let(:user) { create(:user) }
+      let(:octokit_client) { instance_double(Octokit::Client) }
+      
+      before do
+        login_as user
+        Rails.cache.clear
+        allow(Octokit::Client).to receive(:new).and_return(octokit_client)
+        allow(octokit_client).to receive(:user).and_return({ login: 'test' })
+        allow(octokit_client).to receive(:repositories).and_raise(Octokit::Unauthorized)
+        allow(octokit_client).to receive(:last_response).and_return(double(rels: {}))
+      end
+
+      it "redirects to login" do
+        get repositories_path
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
   end
 end
