@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
     return if current_user.super_admin?
 
     sign_out current_user
-    redirect_to new_user_session_path
+    redirect_to new_user_session_path and return
   end
 
   def set_current_user_impersonating

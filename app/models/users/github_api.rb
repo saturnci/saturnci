@@ -14,6 +14,7 @@ module Users
 
       true
     rescue Octokit::Unauthorized
+      Rails.cache.delete("user/#{id}/can_hit_github_api")
       false
     end
 

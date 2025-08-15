@@ -1,5 +1,6 @@
 class RepositoriesController < ApplicationController
   skip_before_action :authenticate_user_or_404!, only: :index
+  skip_before_action :check_github_api_access, only: :index
 
   def index
     if !user_signed_in?
@@ -12,10 +13,20 @@ class RepositoriesController < ApplicationController
       redirect_to new_user_email_path and return
     end
 
+    # Check GitHub API access only if not already redirecting
+    if user_signed_in? && !current_user.impersonating? && !current_user.super_admin?
+      unless current_user.can_hit_github_api?
+        sign_out current_user
+        skip_authorization
+        redirect_to new_user_session_path and return
+      end
+    end
+
     @repositories = GitHubClient.new(current_user).repositories.active.order("github_repo_full_name asc")
     authorize @repositories
   rescue GitHubTokenExpiredError
     skip_authorization
+    sign_out current_user
     redirect_to new_user_session_path
   end
 
