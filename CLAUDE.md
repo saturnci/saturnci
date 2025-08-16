@@ -10,6 +10,10 @@ Push after every commit only after user approval.
 ## Workflow
 
 Commits should be atomic.
+Don't mix jobs.
+Don't mix bugfixes with refactors.
+Don't mix bugfixes with behavior changes.
+Don't mix refactors with behavior changes.
 
 Commit messages should be a single short sentence with a period at the end.
 
