@@ -8,7 +8,7 @@ class TestRunnerSupervisor
     delete_test_runners(c.old_unassigned_test_runners)
     delete_test_runners(c.very_old_test_runners.limit(MAX_NUMBER_OF_VERY_OLD_TEST_RUNNERS_TO_DELETE_AT_ONE_TIME))
     remove_orphaned_test_runner_assignments(c.orphaned_test_runner_assignments)
-    fix_test_runner_fleet(TestRunnerFleet.target_size)
+    TestRunnerFleet.maintain_target_size
 
     log "Unassigned runs: #{c.unassigned_runs.count}"
     log "Available test runners: #{c.available_test_runners.count}"
@@ -28,26 +28,6 @@ class TestRunnerSupervisor
     test_runners.destroy_all
   end
 
-  def self.fix_test_runner_fleet(test_runner_fleet_size)
-    log "-" * 20
-    log "Desired test runner fleet size: #{test_runner_fleet_size}"
-
-    unassigned_test_runners = TestRunner.unassigned
-
-    number_of_test_runners = unassigned_test_runners.count
-    log "Number of unassigned test runners: #{number_of_test_runners}"
-
-    number_of_needed_test_runners = test_runner_fleet_size - number_of_test_runners
-    log "Change needed: #{number_of_needed_test_runners}"
-
-    if number_of_needed_test_runners > 0
-      log "Provisioning #{number_of_needed_test_runners} test runners"
-      number_of_needed_test_runners.times { TestRunner.provision }
-    elsif number_of_needed_test_runners < 0
-      log "Deleting #{number_of_needed_test_runners.abs} unassigned test runners"
-      unassigned_test_runners[0..(number_of_needed_test_runners.abs - 1)].each(&:destroy)
-    end
-  end
 
   def self.remove_orphaned_test_runner_assignments(orphaned_test_runner_assignments)
     log "Deleting #{orphaned_test_runner_assignments.count} orphaned test runners"
