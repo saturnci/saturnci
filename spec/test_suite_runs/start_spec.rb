@@ -25,8 +25,6 @@ describe "Starting test suite run" do
           test_runner.test_runner_events.create!(type: :ready_signal_received)
         end
       end
-
-      allow(TestRunnerFleet).to receive(:scale)
     end
 
     it "does not add test runners" do
