@@ -11,7 +11,7 @@ describe "Test output scrolling", type: :system do
   end
 
   it "scrolls to the bottom" do
-    sleep 0.3  # Allow 200ms setTimeout + buffer
+    sleep (TerminalOutputComponent::DOM_RENDER_DELAY_IN_MILLISECONDS + 100) / 1000.0  # Allow DOM render delay + buffer
     log_console = PageObjects::LogConsole.new(page)
     expect(log_console).to have_visible_text("bottom line")
   end
