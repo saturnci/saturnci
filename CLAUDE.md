@@ -73,6 +73,11 @@ Bad: `admin_user.each { |user| user.destroy }`
 Good: `admin_user.each { |admin_user| admin_user.destroy }`
 Also good: `admin_user.each { |u| u.destroy }`
 
+Another consistency example:
+
+Bad: `data-terminal-output-delay-value="<%= DOM_RENDER_DELAY_IN_MILLISECONDS %>">`
+Good: `data-terminal-output-dom-render-delay-value="<%= DOM_RENDER_DELAY_IN_MILLISECONDS %>"`
+
 ### Formatting
 
 Bad:

@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static values = { delay: Number }
+  static values = { domRenderDelay: Number }
 
   connect() {
     this.autoScrollToBottom()
@@ -13,7 +13,7 @@ export default class extends Controller {
     
     setTimeout(() => {
       element.scrollTop = element.scrollHeight
-    }, this.delayValue)
+    }, this.domRenderDelayValue)
   }
 
   unmaskTerminal() {
