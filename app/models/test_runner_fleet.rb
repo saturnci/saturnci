@@ -9,7 +9,7 @@ class TestRunnerFleet
     end
   end
 
-  def self.scale(count)
+  def scale(count)
     ActiveRecord::Base.transaction do
       change = count - TestRunner.unassigned.count
       puts "Change: #{change}"
