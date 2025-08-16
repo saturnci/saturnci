@@ -10,7 +10,7 @@ class TestRunnerSupervisor
     remove_orphaned_test_runner_assignments(c.orphaned_test_runner_assignments)
 
     test_runner_fleet = TestRunnerFleet.instance
-    test_runner_fleet.scale
+    test_runner_fleet.scale(TestRunnerFleet.target_size)
 
     log "Unassigned runs: #{c.unassigned_runs.count}"
     log "Available test runners: #{c.available_test_runners.count}"
