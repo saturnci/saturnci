@@ -16,7 +16,9 @@
       <% end %>
     </ul>
 
-    <div class="run-details">
+    <div class="run-details"
+         data-controller="terminal-output"
+         data-terminal-output-dom-render-delay-value="<%= TerminalOutputComponent::DOM_RENDER_DELAY_IN_MILLISECONDS %>">
       <div id="<%= run_output_stream.target %>">
         <%= render current_tab_name, current_tab_name: current_tab_name, run: @run %>
       </div>
