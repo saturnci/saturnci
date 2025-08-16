@@ -6,12 +6,10 @@ describe TestRunnerFleet do
       allow(TestRunner).to receive(:create_vm)
     end
 
-    let!(:test_runner_fleet) { TestRunnerFleet.instance }
-
     context "scaling to 10" do
       it "creates 10 test runners" do
         expect {
-          test_runner_fleet.scale(10)
+          TestRunnerFleet.scale(10)
         }.to change { TestRunner.count }.from(0).to(10)
       end
     end
@@ -19,7 +17,7 @@ describe TestRunnerFleet do
     context "scaling to 2" do
       it "creates 2 test runners" do
         expect {
-          test_runner_fleet.scale(2)
+          TestRunnerFleet.scale(2)
         }.to change { TestRunner.count }.from(0).to(2)
       end
     end
@@ -32,20 +30,20 @@ describe TestRunnerFleet do
       end
 
       it "works" do
-        test_runner_fleet.scale(10)
+        TestRunnerFleet.scale(10)
 
         expect {
-          test_runner_fleet.scale(2)
+          TestRunnerFleet.scale(2)
         }.to change { TestRunner.count }.from(10).to(2)
       end
     end
 
     context "scaling and then scaling again to the same number" do
       it "does not delete test runners" do
-        test_runner_fleet.scale(2)
+        TestRunnerFleet.scale(2)
 
         expect {
-          test_runner_fleet.scale(2)
+          TestRunnerFleet.scale(2)
         }.not_to change { TestRunner.all.map(&:id) }
       end
     end
