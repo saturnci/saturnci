@@ -1,2 +1,0 @@
-class GitHubTokenExpiredError < StandardError
-end

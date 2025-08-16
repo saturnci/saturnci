@@ -14,9 +14,6 @@ class RepositoriesController < ApplicationController
 
     @repositories = GitHubClient.new(current_user).repositories.active.order("github_repo_full_name asc")
     authorize @repositories
-  rescue GitHubTokenExpiredError
-    skip_authorization
-    redirect_to new_user_session_path
   end
 
   def new
@@ -29,10 +26,6 @@ class RepositoriesController < ApplicationController
       break if current_user.octokit_client.last_response.rels[:next].nil?
       @github_repositories.concat current_user.octokit_client.get(current_user.octokit_client.last_response.rels[:next].href)
     end
-  rescue Octokit::Unauthorized
-    current_user.sign_out_everywhere!
-    skip_authorization
-    redirect_to new_user_session_path
   end
 
   def create
