@@ -9,7 +9,15 @@ Push after every commit only after user approval.
 
 ## Workflow
 
+Commits should be atomic.
+
 Commit messages should be a single short sentence with a period at the end.
+
+### Debugging
+
+The first step of debugging is to determine an EXPLANATION of why the bug is occurring.
+Don't just make guesses and then try to apply the guesses.
+Come up with hypotheses and then see if you can find any way to disprove them.
 
 ## Testing
 
