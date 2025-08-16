@@ -4,6 +4,13 @@
       <pre class="terminal terminal-masked"><%= helpers.ansi_to_html(body) %></pre>
     </div>
   </div>
+  
+  <script>
+  var element = document.querySelector('.run-details');
+  element.scrollTop = element.scrollHeight;
+  
+  document.querySelector('.terminal').classList.remove('terminal-masked');
+  </script>
 <% else %>
   <div class="non-terminal-run-info">
     <p class="waiting-for-output">Waiting for output to start...</p>

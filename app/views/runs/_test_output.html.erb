@@ -1,8 +1,1 @@
 <%= render TerminalOutputComponent.new(run:, current_tab_name:, body: run.test_output) %>
-
-<script>
-var element = document.querySelector('.run-details');
-element.scrollTop = element.scrollHeight;
-
-document.querySelector('.terminal').classList.remove('terminal-masked');
-</script>
