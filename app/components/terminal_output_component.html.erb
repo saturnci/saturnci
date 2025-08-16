@@ -6,12 +6,33 @@
   </div>
   
   <script>
-  var element = document.querySelector('.run-details');
-  setTimeout(function() {
-    element.scrollTop = element.scrollHeight;
-  }, <%= DOM_RENDER_DELAY_IN_MILLISECONDS %>);
-  
-  document.querySelector('.terminal').classList.remove('terminal-masked');
+  (function() {
+    var runDetails = document.querySelector('.run-details');
+    var autoScrollEnabled = true;
+    
+    function isAtBottom() {
+      return runDetails.scrollTop + runDetails.clientHeight >= runDetails.scrollHeight - 5;
+    }
+    
+    function scrollToBottom() {
+      if (autoScrollEnabled) {
+        runDetails.scrollTop = runDetails.scrollHeight;
+      }
+    }
+    
+    // Initial scroll to bottom
+    setTimeout(scrollToBottom, <%= DOM_RENDER_DELAY_IN_MILLISECONDS %>);
+    
+    // Listen for user scroll events
+    runDetails.addEventListener('scroll', function() {
+      autoScrollEnabled = isAtBottom();
+    });
+    
+    // Expose function for potential future use with streaming content
+    window.terminalAutoScroll = scrollToBottom;
+    
+    document.querySelector('.terminal').classList.remove('terminal-masked');
+  })();
   </script>
 <% else %>
   <div class="non-terminal-run-info">
