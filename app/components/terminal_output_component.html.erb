@@ -9,7 +9,7 @@
   var element = document.querySelector('.run-details');
   setTimeout(function() {
     element.scrollTop = element.scrollHeight;
-  }, 200);
+  }, <%= DOM_RENDER_DELAY_IN_MILLISECONDS %>);
   
   document.querySelector('.terminal').classList.remove('terminal-masked');
   </script>
