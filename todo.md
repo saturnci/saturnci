@@ -4,6 +4,7 @@
 - Don't allow adding same repo twice
 - If you're on the Overview tab when the test suite run finishes, the Overview tab doesn't update
 - Sometimes, when a test suite run finishes, the status doesn't get updated from "Running" to "Passed" (or "Failed")
+- Newer test suite runs sometimes show up behind older ones
 
 ## Defects
 - Fix data model that connects GitHub accounts and users
