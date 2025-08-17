@@ -2,18 +2,8 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   connect() {
-    this.autoScrollToBottom()
+    this.dispatch("newContent")
     this.unmaskTerminal()
-  }
-
-  autoScrollToBottom() {
-    const element = document.querySelector('.run-details')
-    
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        element.scrollTop = element.scrollHeight
-      })
-    })
   }
 
   unmaskTerminal() {
