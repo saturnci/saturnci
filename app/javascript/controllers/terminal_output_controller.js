@@ -11,9 +11,11 @@ export default class extends Controller {
   autoScrollToBottom() {
     const element = document.querySelector('.run-details')
     
-    setTimeout(() => {
-      element.scrollTop = element.scrollHeight
-    }, this.domRenderDelayValue)
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        element.scrollTop = element.scrollHeight
+      })
+    })
   }
 
   unmaskTerminal() {
