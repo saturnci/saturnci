@@ -1,5 +1,7 @@
 <% if body.present? %>
-  <div class="run-info-container">
+  <div class="run-info-container"
+       data-controller="terminal-output"
+       data-terminal-output-dom-render-delay-value="<%= DOM_RENDER_DELAY_IN_MILLISECONDS %>">
     <div id="<%= dom_id(run, current_tab_name) %>">
       <pre class="terminal terminal-masked"><%= helpers.ansi_to_html(body) %></pre>
     </div>

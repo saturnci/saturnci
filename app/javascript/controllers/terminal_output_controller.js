@@ -9,8 +9,10 @@ export default class extends Controller {
   }
 
   autoScrollToBottom() {
+    const element = document.querySelector('.run-details')
+    
     setTimeout(() => {
-      this.element.scrollTop = this.element.scrollHeight
+      element.scrollTop = element.scrollHeight
     }, this.domRenderDelayValue)
   }
 
