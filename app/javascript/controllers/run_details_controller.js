@@ -5,16 +5,11 @@ export default class extends Controller {
 
   connect() {
     this.scrollMode = "auto"
-    
-    // Initial scroll to bottom
     this.autoScrollToBottom()
 
     document.addEventListener("terminal-output:newContent", () => {
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          // Skip if element not ready
-          if (this.element.scrollHeight === 0) return;
-          
           if (this.scrollMode === "auto") {
             this.autoScrollToBottom()
           }
@@ -28,9 +23,6 @@ export default class extends Controller {
   }
 
   isAtBottom() {
-    // Defensive check for uninitialized element
-    if (this.element.scrollHeight === 0) return true;
-    
     return (this.element.scrollTop + this.element.clientHeight) >= this.element.scrollHeight - 5
   }
 
