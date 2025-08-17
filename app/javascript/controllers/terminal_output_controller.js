@@ -4,33 +4,15 @@ export default class extends Controller {
   static values = { domRenderDelay: Number }
 
   connect() {
-    this.initializeScrollPolicy()
     this.autoScrollToBottom()
     this.unmaskTerminal()
   }
 
-  initializeScrollPolicy() {
-    if (!window.scrollPolicy) {
-      window.scrollPolicy = 'auto'
-      window.programmaticScroll = false
-      
-      this.element.addEventListener('scroll', () => {
-        if (!window.programmaticScroll) {
-          window.scrollPolicy = 'manual'
-        }
-      })
-    }
-  }
-
   autoScrollToBottom() {
+    const element = document.querySelector('.run-details')
+    
     setTimeout(() => {
-      if (window.scrollPolicy === 'auto') {
-        window.programmaticScroll = true
-        this.element.scrollTop = this.element.scrollHeight
-        setTimeout(() => {
-          window.programmaticScroll = false
-        }, 10)
-      }
+      element.scrollTop = element.scrollHeight
     }, this.domRenderDelayValue)
   }
 
