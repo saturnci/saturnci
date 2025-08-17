@@ -26,14 +26,14 @@ describe "Test output scrolling", type: :system do
       create(:run, test_output: ("line\n" * 500) + "bottom line")
     end
 
-    it "pauses auto-scroll" do
-      log_console = PageObjects::LogConsole.new(page)
-      expect(log_console).to have_visible_text("bottom line")
+    let!(:log_console) { PageObjects::LogConsole.new(page) }
 
-      page.execute_script("""
-        const runDetails = document.querySelector('.run-details');
-        runDetails.scrollTop -= 50;
-      """)
+    before do
+      expect(log_console).to have_visible_text("bottom line")
+    end
+
+    it "pauses auto-scroll" do
+      log_console.scroll_up(px: 50)
 
       new_content = "\ntop of new content\n" + ("middle line\n" * 100) + "bottom of new content"
       http_request(
@@ -44,7 +44,7 @@ describe "Test output scrolling", type: :system do
 
       expect(log_console).not_to have_visible_text("bottom of new content")
 
-      page.execute_script("document.querySelector('.run-details').scrollTop = document.querySelector('.run-details').scrollHeight")
+      log_console.scroll_to_bottom
       expect(log_console).to have_visible_text("bottom of new content")
     end
   end

@@ -4,6 +4,14 @@ module PageObjects
       @page = page
     end
 
+    def scroll_up(px:)
+      @page.execute_script("document.querySelector('.run-details').scrollTop -= #{px}")
+    end
+
+    def scroll_to_bottom
+      @page.execute_script("document.querySelector('.run-details').scrollTop = document.querySelector('.run-details').scrollHeight")
+    end
+
     def has_visible_text?(text)
       escaped_text = text.gsub("'", "\\\\'").gsub('"', '\\"')
       @page.evaluate_script(<<-JS)
