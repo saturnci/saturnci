@@ -8,7 +8,6 @@
 
 ## Defects
 - Fix data model that connects GitHub accounts and users
-- When you scroll up on the logs, it should stop auto-scrolling you
 - Precompile happens for every deployment
 - In the beginning of a test suite, the horizontal scroll bar gets pushed down in an ugly way
 - Raw errors don't show up on the Overview tab
@@ -56,3 +55,4 @@
 
 ## Finished
 - Impersonation doesn't work if user's GitHub token is expired
+- When you scroll up on the logs, it should stop auto-scrolling you
