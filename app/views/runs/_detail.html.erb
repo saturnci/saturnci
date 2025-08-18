@@ -16,7 +16,7 @@
       <% end %>
     </ul>
 
-    <div class="run-details">
+    <div class="run-details" data-controller="run-details">
       <div id="<%= run_output_stream.target %>">
         <%= render current_tab_name, current_tab_name: current_tab_name, run: @run %>
       </div>
