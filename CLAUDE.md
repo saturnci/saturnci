@@ -40,6 +40,8 @@ Exceptions are occasionally justified, but in general, always use TDD.
 4. Write just enough code to make the failure go away (NOT enough code to necessarily make the test pass).
 5. Repeat from step 3 until the test passes.
 
+TDD still applies when fixing bugs.
+
 Remember arrange/act/assert.
 In general, arrange can be done with `let!`. Act can be done with `before`. Assert can of course be done with `expect`.
 

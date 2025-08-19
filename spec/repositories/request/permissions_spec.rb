@@ -33,5 +33,24 @@ describe "Repository permissions", type: :request do
         expect(response).to have_http_status(:not_found)
       end
     end
+
+    context "user with expired GitHub token" do
+      let!(:user_with_expired_token) { create(:user) }
+      let!(:github_client) { instance_double(GitHubClient) }
+
+      before do
+        login_as(user_with_expired_token)
+        
+        # Mock GitHubClient to raise Octokit::Unauthorized when accessing repositories
+        allow(GitHubClient).to receive(:new).with(user_with_expired_token).and_return(github_client)
+        allow(github_client).to receive(:repositories)
+          .and_raise(Octokit::Unauthorized.new)
+      end
+
+      it "redirects to GitHub OAuth when GitHub API authentication fails" do
+        get repositories_path
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
   end
 end
