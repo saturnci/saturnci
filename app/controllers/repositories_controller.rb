@@ -12,8 +12,13 @@ class RepositoriesController < ApplicationController
       redirect_to new_user_email_path and return
     end
 
-    @repositories = GitHubClient.new(current_user).repositories.active.order("github_repo_full_name asc")
-    authorize @repositories
+    begin
+      @repositories = GitHubClient.new(current_user).repositories.active.order("github_repo_full_name asc")
+      authorize @repositories
+    rescue Octokit::Unauthorized
+      skip_authorization
+      redirect_to new_user_session_path
+    end
   end
 
   def new
