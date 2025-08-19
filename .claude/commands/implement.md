@@ -5,11 +5,13 @@ allowed-tools: Read, Write, Edit, MultiEdit, Bash, TodoWrite, Grep
 
 # Implement $ARGUMENTS
 
-## Step 1: Understand the request
+## Phase 1: Understand the request
 
-Repeat the request back to the user in your own words and ask if you have the right understanding.
+1. If there are any ambiguities in the request, ask the user to clarify.
+2. Repeat the request back to the user in your own words and ask if you have the right understanding.
+3. If no, repeat from step 1. If yes, proceed.
 
-## Step 2: Implement the change using TDD
+## Phase 2: Implement the change using TDD
 
 1. Decide on the specifications.
 2. Encode the specifications in a test.
