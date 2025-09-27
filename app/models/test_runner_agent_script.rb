@@ -32,6 +32,7 @@ class TestRunnerAgentScript
       export HOST=#{ENV["SATURNCI_HOST"]}
       export DOCKER_REGISTRY_CACHE_USERNAME=#{ENV["DOCKER_REGISTRY_CACHE_USERNAME"]}
       export DOCKER_REGISTRY_CACHE_PASSWORD=#{ENV["DOCKER_REGISTRY_CACHE_PASSWORD"]}
+      export TEST_SUITE_RUN_ID=#{@run.test_suite_run.id}
       export PROJECT_NAME=#{@run.test_suite_run.repository.name}
       export BRANCH_NAME=#{@run.test_suite_run.branch_name}
       export RUN_ID=#{@run.id}
