@@ -1,4 +1,4 @@
-class RunnerScript
+class TestRunnerAgentScript
   def initialize(run, github_installation_id)
     @run = run
     @github_installation_id = github_installation_id

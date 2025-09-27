@@ -77,7 +77,7 @@ class Run < ApplicationRecord
   end
 
   def provision_test_runner
-    runner_script = RunnerScript.new(self, test_suite_run.project.github_account.github_installation_id)
+    runner_script = TestRunnerAgentScript.new(self, test_suite_run.project.github_account.github_installation_id)
 
     test_runner = TestRunner.provision(
       client: DropletKitClientFactory.client,
