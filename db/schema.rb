@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_11_024531) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_27_003449) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -249,6 +249,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_11_024531) do
     t.string "cached_status"
     t.datetime "deleted_at"
     t.string "api_token"
+    t.integer "dry_run_example_count"
     t.index ["project_id"], name: "index_test_suite_runs_on_project_id"
   end
 
