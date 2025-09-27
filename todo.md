@@ -1,5 +1,6 @@
 ## Bugs
 - Test case count is sometimes wrong
+- New commits don't always show up at the top of the list
 - Can't cancel test suite runs
 - Flash message shows up in Settings even when it has nothing to do with settings
 - Don't allow adding same repo twice
