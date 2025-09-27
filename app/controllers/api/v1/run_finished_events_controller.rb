@@ -11,7 +11,7 @@ module API
             run.test_runner.test_runner_events.create!(type: :test_run_finished)
 
             if run.build.runs.all?(&:finished?)
-              build.check_test_case_run_integrity!
+              run.build.check_test_case_run_integrity!
               TestSuiteRunLinkComponent.refresh(run.build)
               GitHubCheckRun.find_by(build: run.build)&.finish!
             end

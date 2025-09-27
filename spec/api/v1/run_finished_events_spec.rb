@@ -8,6 +8,7 @@ describe "run finished events", type: :request do
     end
 
     allow(GitHubCheckRun).to receive(:new).and_return(github_check_run_stub)
+    allow_any_instance_of(TestSuiteRun).to receive(:check_test_case_run_integrity!)
   end
 
   describe "POST /api/v1/runs/:id/run_finished_events" do
