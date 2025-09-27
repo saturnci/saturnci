@@ -8,6 +8,7 @@ json.array! @test_runner_assignments do |test_runner_assignment|
 
   json.run_id run.id
   json.run_order_index run.order_index
+  json.test_suite_run_id test_suite_run.id
   json.project_name project.name
   json.branch_name test_suite_run.branch_name
   json.user_id user.id
