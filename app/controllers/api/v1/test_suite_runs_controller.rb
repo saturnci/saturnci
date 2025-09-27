@@ -12,6 +12,20 @@ module API
 
         render json: test_suite_runs
       end
+
+      def update
+        test_suite_run = TestSuiteRun.find(params[:id])
+        authorize test_suite_run, :update?
+
+        test_suite_run.update!(test_suite_run_params)
+        render json: test_suite_run
+      end
+
+      private
+
+      def test_suite_run_params
+        params.permit(:dry_run_example_count)
+      end
     end
   end
 end

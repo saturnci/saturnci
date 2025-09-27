@@ -4,14 +4,18 @@ class TestSuiteRunPolicy < ApplicationPolicy
   end
 
   def create?
-    user.can_access_repository?(record.repository)
+    user.super_admin? || user.can_access_repository?(record.repository)
   end
 
   def show?
-    user.can_access_repository?(record.repository)
+    user.super_admin? || user.can_access_repository?(record.repository)
   end
 
   def destroy?
-    user.can_access_repository?(record.repository)
+    user.super_admin? || user.can_access_repository?(record.repository)
+  end
+
+  def update?
+    user.super_admin? || user.can_access_repository?(record.repository)
   end
 end
