@@ -10,12 +10,14 @@ class TestRunnerFleet
   end
 
   def scale(count)
-    ActiveRecord::Base.transaction do
-      change = count - TestRunner.unassigned.count
+    change = count - TestRunner.unassigned.count
 
-      if change > 0
+    if change > 0
+      ActiveRecord::Base.transaction do
         change.times { TestRunner.provision }
-      else
+      end
+    else
+      ActiveRecord::Base.transaction do
         TestRunner.unassigned.limit(change.abs).each do |tr|
           tr.destroy
         end
