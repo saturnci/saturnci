@@ -109,6 +109,12 @@ class TestSuiteRun < ApplicationRecord
     )
   end
 
+  def check_test_case_run_integrity!
+    if test_case_runs.count != dry_run_example_count
+      raise "Test case count mismatch: expected #{dry_run_example_count}, got #{test_case_runs.count}"
+    end
+  end
+
   def status_cache_key
     "test_case_run/#{id}/status"
   end
