@@ -40,6 +40,11 @@ module SaturnCICLI
       end
     end
 
+    def delete_all_test_runners
+      response = delete("test_runner_collection")
+      puts response.inspect
+    end
+
     def test_suite_runs(options = {})
       response = get("test_suite_runs")
 
