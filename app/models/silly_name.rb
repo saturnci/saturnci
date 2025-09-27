@@ -297,6 +297,7 @@ class SillyName
     caterpillar
     caveman
     chair
+    cigarette
     clock
     cow
     cowboy
