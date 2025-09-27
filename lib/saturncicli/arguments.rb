@@ -11,8 +11,12 @@ module SaturnCICLI
         when nil
           [:test_runners]
         when "delete"
-          test_runner_ids = @argv[2..-1]
-          [:delete_test_runner, test_runner_ids]
+          if @argv[2] == "--all"
+            [:delete_all_test_runners]
+          else
+            test_runner_ids = @argv[2..-1]
+            [:delete_test_runner, test_runner_ids]
+          end
         when "ssh"
           test_runner_id = @argv[2]
           [:ssh_by_test_runner_id, test_runner_id]

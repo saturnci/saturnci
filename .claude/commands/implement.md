@@ -15,6 +15,8 @@ Specification example:
 2. When the server gives a 422 response, expect a validation error message.
 3. When the server gives a 500 response, expect a graceful error message.
 
+Never use words like "correctly" in a specification. Instead, say what it _means_ for the behavior to be correct.
+
 ## Phase 1: Understand the request
 
 Search for relevant tests, which again serve as executable specifications, to see if they can help you understand the request.
