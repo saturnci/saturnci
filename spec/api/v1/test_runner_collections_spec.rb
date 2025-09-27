@@ -21,7 +21,24 @@ describe "Test runner collections", type: :request do
     end
   end
 
-  context "test runner status is something other than finished" do
+  context "test runner status is running" do
+    let!(:running_test_runner) { create(:test_runner) }
+
+    before do
+      running_test_runner.test_runner_events.create!(type: :assignment_acknowledged)
+    end
+
+    it "does not delete the test runner" do
+      expect {
+        delete(
+          api_v1_test_runner_collection_path,
+          headers: api_authorization_headers(user)
+        )
+      }.not_to change { TestRunner.count }
+    end
+  end
+
+  context "test runner status is something other than finished or running" do
     let!(:available_test_runner) { create(:test_runner) }
 
     before do
