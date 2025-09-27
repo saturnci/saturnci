@@ -12,6 +12,7 @@ namespace :api do
 
     resources :runs, only: %w[index show update]
     resource :orphaned_runner_collection, only: :destroy
+    resource :test_runner_collection, only: :destroy
     resources :test_suite_runs, only: :index
 
     resources :test_runners, only: %i[index show update destroy] do
