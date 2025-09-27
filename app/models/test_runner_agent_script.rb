@@ -17,7 +17,7 @@ class TestRunnerAgentScript
   def content
     encoded_script = Base64.strict_encode64(library_content + script_content)
 
-    secrets = @run.test_suite_run.project.project_secrets.map do |secret| 
+    secrets = @run.test_suite_run.repository.project_secrets.map do |secret| 
       "#{secret.key}=#{secret.value}"
     end
 
@@ -32,17 +32,17 @@ class TestRunnerAgentScript
       export HOST=#{ENV["SATURNCI_HOST"]}
       export DOCKER_REGISTRY_CACHE_USERNAME=#{ENV["DOCKER_REGISTRY_CACHE_USERNAME"]}
       export DOCKER_REGISTRY_CACHE_PASSWORD=#{ENV["DOCKER_REGISTRY_CACHE_PASSWORD"]}
-      export PROJECT_NAME=#{@run.test_suite_run.project.name}
+      export PROJECT_NAME=#{@run.test_suite_run.repository.name}
       export BRANCH_NAME=#{@run.test_suite_run.branch_name}
       export RUN_ID=#{@run.id}
       export RUN_ORDER_INDEX=#{@run.order_index}
-      export USER_ID=#{@run.test_suite_run.project.user.id}
-      export USER_API_TOKEN=#{@run.test_suite_run.project.user.api_token}
-      export NUMBER_OF_CONCURRENT_RUNS=#{@run.test_suite_run.project.concurrency}
+      export USER_ID=#{@run.test_suite_run.repository.user.id}
+      export USER_API_TOKEN=#{@run.test_suite_run.repository.user.api_token}
+      export NUMBER_OF_CONCURRENT_RUNS=#{@run.test_suite_run.repository.concurrency}
       export COMMIT_HASH=#{@run.test_suite_run.commit_hash}
       export RSPEC_SEED=#{@run.test_suite_run.seed}
       export GITHUB_INSTALLATION_ID=#{@github_installation_id}
-      export GITHUB_REPO_FULL_NAME=#{@run.test_suite_run.project.github_repo_full_name}
+      export GITHUB_REPO_FULL_NAME=#{@run.test_suite_run.repository.github_repo_full_name}
 
       RUBY_SCRIPT_PATH=/tmp/runner_script.rb
       echo #{encoded_script} | base64 --decode > $RUBY_SCRIPT_PATH
