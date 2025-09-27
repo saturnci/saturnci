@@ -12,9 +12,10 @@ class TestRunnerSupervisor
     test_runner_fleet = TestRunnerFleet.instance
     test_runner_fleet.scale(TestRunnerFleet.target_size)
 
-    log "Unassigned runs: #{c.unassigned_runs.count}"
+    log "Test runner fleet target size: #{TestRunnerFleet.target_size}"
     log "Available test runners: #{c.available_test_runners.count}"
     log "Unassigned test runners: #{c.unassigned_test_runners.count}"
+    log "Unassigned runs: #{c.unassigned_runs.count}"
 
     c.unassigned_runs.each do |run|
       break if c.available_test_runners.empty?
@@ -25,7 +26,6 @@ class TestRunnerSupervisor
   end
 
   def self.delete_test_runners(test_runners)
-    log "-" * 20
     log "Deleting #{test_runners.count} old test runners"
     test_runners.destroy_all
   end

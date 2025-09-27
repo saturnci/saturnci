@@ -12,7 +12,6 @@ class TestRunnerFleet
   def scale(count)
     ActiveRecord::Base.transaction do
       change = count - TestRunner.unassigned.count
-      puts "Change: #{change}"
 
       if change > 0
         change.times { TestRunner.provision }
