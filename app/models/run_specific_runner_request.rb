@@ -31,6 +31,6 @@ class RunSpecificRunnerRequest
 
   # /var/lib/cloud/instances/456688083/scripts/part-001
   def user_data
-    RunnerScript.new(@run, @github_installation_id).content
+    TestRunnerAgentScript.new(@run, @github_installation_id).content
   end
 end
