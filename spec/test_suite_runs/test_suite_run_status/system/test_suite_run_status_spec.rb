@@ -8,6 +8,7 @@ describe "Test suite run status", type: :system do
 
   before do
     allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
+    allow_any_instance_of(TestSuiteRun).to receive(:check_test_case_run_integrity!)
     login_as(user)
   end
 
