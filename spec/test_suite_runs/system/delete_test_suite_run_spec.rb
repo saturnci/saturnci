@@ -5,7 +5,7 @@ describe "Delete test suite run", type: :system do
 
   before do
     allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
-    login_as(run.build.repository.user)
+    login_as(run.test_suite_run.repository.user)
   end
 
   context "runner still exists on Digital Ocean" do
@@ -15,24 +15,24 @@ describe "Delete test suite run", type: :system do
 
     context "branch is only branch" do
       it "removes the test suite run" do
-        visit repository_test_suite_run_path(run.build.repository, run.build)
+        visit repository_test_suite_run_path(run.test_suite_run.repository, run.test_suite_run)
         click_on "Delete"
-        expect(page).not_to have_content(run.build.commit_hash)
+        expect(page).not_to have_content(run.test_suite_run.commit_hash)
       end
     end
 
     context "deleted test suite run is not the only test suite run" do
       let!(:other_test_suite_run) do
-        create(:build, :with_run, repository: run.build.repository)
+        create(:test_suite_run, :with_run, repository: run.test_suite_run.repository)
       end
 
       before do
-        visit repository_test_suite_run_path(run.build.repository, run.build)
+        visit repository_test_suite_run_path(run.test_suite_run.repository, run.test_suite_run)
         click_on "Delete"
       end
 
       it "removes the deleted test suite run" do
-        expect(page).not_to have_content(run.build.commit_hash)
+        expect(page).not_to have_content(run.test_suite_run.commit_hash)
       end
 
       it "does not remove the other test suite run" do
@@ -46,9 +46,9 @@ describe "Delete test suite run", type: :system do
       end
 
       it "still works" do
-        visit repository_test_suite_run_path(run.build.repository, run.build)
+        visit repository_test_suite_run_path(run.test_suite_run.repository, run.test_suite_run)
         click_on "Delete"
-        expect(page).not_to have_content(run.build.commit_hash)
+        expect(page).not_to have_content(run.test_suite_run.commit_hash)
         expect(page).to have_content("SaturnCI")
       end
     end
@@ -60,9 +60,9 @@ describe "Delete test suite run", type: :system do
     end
 
     it "removes the test suite run" do
-      visit project_build_path(id: run.build.id, project_id: run.build.project.id)
+      visit repository_test_suite_run_path(run.test_suite_run.repository, run.test_suite_run)
       click_on "Delete"
-      expect(page).not_to have_content(run.build.commit_hash)
+      expect(page).not_to have_content(run.test_suite_run.commit_hash)
     end
   end
 end
