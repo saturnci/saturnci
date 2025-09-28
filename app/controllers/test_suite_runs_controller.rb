@@ -70,4 +70,22 @@ class TestSuiteRunsController < ApplicationController
     )
   end
 
+  def destroy
+    test_suite_run = TestSuiteRun.find(params[:id])
+    authorize test_suite_run
+
+    begin
+      test_suite_run.delete_runners
+    rescue DropletKit::Error => e
+      if e.message.include?("404")
+        Rails.logger.error "Failed to delete runner: #{e.message}"
+      else
+        raise
+      end
+    end
+
+    test_suite_run.destroy
+    redirect_to repository_path(test_suite_run.repository)
+  end
+
 end

@@ -36,7 +36,7 @@ Rails.application.routes.draw do
       get ":partial", to: "builds#show", on: :member, as: "build_detail_content"
     end
 
-    resources :builds, only: %i(index show create destroy) do
+    resources :builds, only: %i(index show create) do
       resources :runs, only: :show do
         get ":partial", to: "runs#show", on: :member, as: "run_detail_content"
       end
@@ -61,7 +61,7 @@ Rails.application.routes.draw do
       get ":partial", to: "builds#show", on: :member, as: "build_detail_content"
     end
 
-    resources :builds, only: %i(index show create destroy) do
+    resources :builds, only: %i(index show create) do
       resources :runs, only: :show do
         get ":partial", to: "runs#show", on: :member, as: "run_detail_content"
       end
