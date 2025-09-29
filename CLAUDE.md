@@ -17,6 +17,8 @@ Don't mix refactors with behavior changes.
 
 Commit messages should be a single short sentence with a period at the end.
 
+Unless otherwise specified, favor making changes on feature branches rather than the main branch.
+
 ### Debugging
 
 The first step of debugging is to determine an EXPLANATION of why the bug is occurring.
