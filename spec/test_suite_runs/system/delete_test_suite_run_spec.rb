@@ -2,12 +2,9 @@ require "rails_helper"
 
 describe "Delete test suite run", type: :system do
   let!(:run) { create(:run, :with_test_runner) }
-  let!(:github_client) { instance_double(GitHubClient) }
 
   before do
     allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
-    allow(GitHubClient).to receive(:new).with(run.test_suite_run.repository.user).and_return(github_client)
-    allow(github_client).to receive(:repositories).and_return(Repository.none)
     login_as(run.test_suite_run.repository.user)
   end
 
