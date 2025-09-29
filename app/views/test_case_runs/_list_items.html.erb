@@ -2,7 +2,7 @@
   <% cache [test_case_run, test_case_run == active_test_case_run] do %>
     <li class="test-case-run-status-<%= test_case_run.status %>">
       <%= link_to "#{File.basename(test_case_run.path)}:#{test_case_run.line_number}",
-        project_test_case_run_path(test_case_run.project, test_case_run),
+        repository_test_case_run_path(test_case_run.repository, test_case_run),
         data: {
           turbo_frame: "test_case_run_details",
           action: "click->test-case-run-list#makeActive",
