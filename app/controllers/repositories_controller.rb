@@ -57,8 +57,6 @@ class RepositoriesController < ApplicationController
     if @repository.test_suite_runs.any?
       test_suite_run = @repository.test_suite_runs.order("created_at desc").first
       redirect_to TestSuiteRunLinkPath.new(test_suite_run).value
-    else
-      # Render the empty state view
     end
   end
 end
