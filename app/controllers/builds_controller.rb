@@ -71,21 +71,4 @@ class BuildsController < ApplicationController
     )
   end
 
-  def destroy
-    build = Build.find(params[:id])
-    authorize build
-
-    begin
-      build.delete_runners
-    rescue DropletKit::Error => e
-      if e.message.include?("404")
-        Rails.logger.error "Failed to delete runner: #{e.message}"
-      else
-        raise
-      end
-    end
-
-    build.destroy
-    redirect_to project_path(build.project)
-  end
 end
