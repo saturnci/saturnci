@@ -74,9 +74,7 @@ Rails.application.routes.draw do
     get "billing(/:year(/:month))", to: "billing#index", as: "billing"
   end
 
-  resources :github_accounts do
-    resources :project_integrations, only: %i(new create)
-  end
+  resources :github_accounts
 
   resources :test_suite_reruns, only: :create
   resources :test_suite_run_cancellations, only: :create

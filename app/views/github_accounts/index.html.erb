@@ -28,22 +28,6 @@
             github_account_path(github_account),
             data: { turbo_method: :delete } %>
         </div>
-
-        <br>
-
-        <div>
-          Projects:
-          <ul>
-            <% github_account.projects.each do |project| %>
-              <li><%= link_to project, project %></li>
-            <% end %>
-          </ul>
-
-          <div>
-            <%= link_to "Add Project",
-              new_github_account_project_integration_path(github_account) %>
-          </div>
-        </div>
       </div>
     <% end %>
   <% else %>
