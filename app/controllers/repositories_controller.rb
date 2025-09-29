@@ -57,15 +57,6 @@ class RepositoriesController < ApplicationController
     if @repository.test_suite_runs.any?
       test_suite_run = @repository.test_suite_runs.order("created_at desc").first
       redirect_to TestSuiteRunLinkPath.new(test_suite_run).value
-    else
-      test_suite_run = TestSuiteRunFromCommitFactory.new(
-        TestSuiteRunFromCommitFactory.most_recent_commit(@repository)
-      ).test_suite_run
-
-      test_suite_run.repository = @repository
-      test_suite_run.save!
-
-      redirect_to TestSuiteRunLinkPath.new(test_suite_run).value
     end
   end
 end
