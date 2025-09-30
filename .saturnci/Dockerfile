@@ -22,6 +22,10 @@ COPY config/initializers ./config/initializers
 COPY config/application.rb config/boot.rb config/environment.rb ./config/
 COPY public ./public
 
+# Dummy database environment variables required for asset precompilation.
+# Rails loads the application environment during asset compilation, which
+# evaluates database.yml and may trigger database connections in initializers.
+# These dummy values prevent build failures when no database is available.
 ENV DATABASE_NAME=dummy_database_name
 ENV DATABASE_USERNAME=dummy_database_username
 ENV DATABASE_PASSWORD=dummy_database_password
