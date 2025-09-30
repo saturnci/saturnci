@@ -1,3 +1,14 @@
+# SaturnCI Docker Environment
+#
+# This Docker Compose file specifies the environment that SaturnCI uses to run your tests.
+#
+# Local Development Usage:
+#   cd .saturnci
+#   docker-compose up -d                    # Start all services
+#   docker-compose run saturn_test_app bash # Get shell in app container
+#   docker-compose run saturn_test_app bundle exec rspec  # Run tests
+#   docker-compose down                     # Stop and remove containers
+
 version: "3.8"
 
 services:
