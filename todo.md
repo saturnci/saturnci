@@ -35,6 +35,7 @@
 - Monitoring and alerts for test runner fleet
 - Monitoring for registry disk space
 - Replace "saturn" with "saturnci" in Kubernetes deployment files (deployment.yaml, secrets.yaml, service.yaml, etc.)
+- e2e tests (see spec/e2e/rails_app.txt)
 
 ## Administration
 - Send email when a new user signs up
@@ -44,6 +45,7 @@
 
 ## Setup
 - Ability to run SaturnCI env locally without modifying config/database.yml
+- Documentation for how to run SaturnCI env locally
 
 ## Test runner management
 - Easy way to see error for a test runner
