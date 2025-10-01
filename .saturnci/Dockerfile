@@ -16,11 +16,22 @@ WORKDIR /app
 
 ENV RAILS_ENV=test
 
+# Update the package list to get the latest available packages.
 RUN apt-get update && apt-get install -y \
+
+    # Install compilers and build tools needed for native gem compilation.
     build-essential \
+
+    # Install PostgreSQL client libraries for database connections.
     libpq-dev \
+
+    # Install JavaScript runtime for asset processing.
     nodejs \
+
+    # Install version control system for dependency management.
     git \
+
+    # Clean up package cache to reduce image size.
     && rm -rf /var/lib/apt/lists/*
 
 COPY Gemfile Gemfile.lock ./
