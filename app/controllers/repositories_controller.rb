@@ -29,6 +29,7 @@ class RepositoriesController < ApplicationController
       @github_repositories = GitHubClient.new(current_user).octokit_repositories
     rescue Octokit::Unauthorized
       skip_authorization
+      sign_out current_user
       redirect_to new_user_session_path
     end
   end

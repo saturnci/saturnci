@@ -35,6 +35,11 @@ describe "Repositories", type: :request do
         get new_repository_path
         expect(response).to redirect_to(new_user_session_path)
       end
+
+      it "signs the user out" do
+        get new_repository_path
+        expect(controller.current_user).to be_nil
+      end
     end
   end
 
