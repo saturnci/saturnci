@@ -1,3 +1,11 @@
+# SaturnCI Test Environment Docker Image
+#
+# This Dockerfile creates the container image that SaturnCI uses to run
+# your tests. It includes all necessary dependencies for a Rails application with
+# PostgreSQL and handles asset precompilation during the build process.
+#
+# This image is used by .saturnci/docker-compose.yml to create the test execution environment.
+
 FROM ruby:3.3.5-slim
 
 WORKDIR /app
