@@ -16,7 +16,10 @@ services:
     # This hostname is what will go in the Capybara host config.
     hostname: saturn_test_app
 
-    image: ${SATURN_TEST_APP_IMAGE_URL}:latest
+    image: ${SATURN_TEST_APP_IMAGE_URL:-saturnci-local}
+    build:
+      context: ..
+      dockerfile: .saturnci/Dockerfile
     volumes:
       - ../:/code
       - ./database.yml:/code/config/database.yml:ro
