@@ -1,9 +1,14 @@
 # Feature: end-to-end test for a Rails app
 
-1. Create a fresh Rails app
-2. Create a repository for the app (or overwrite an existing one)
+1. Create a repository for the app (or overwrite an existing one)
+2. Create a fresh Rails app
 3. Push the app to the repository
 4. Add the repository to SaturnCI
 5. Add SaturnCI config to the app
 6. Run the app on SaturnCI
 7. Report the result
+
+Details:
+
+# Create a repository for the app (or overwrite an existing one)
+

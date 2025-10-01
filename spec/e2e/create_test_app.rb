@@ -2,13 +2,13 @@
 
 require "tmpdir"
 
-# 1. Create a new repository
-timestamp = Time.now.to_i
-repo_name = "saturnci-test-app-#{timestamp}"
+# 1. Use fixed repository name
+repo_name = "saturnci-e2e-test-app"
 username = `gh api user --jq .login`.strip
 
-puts "Creating GitHub repository: #{repo_name}"
-system("gh repo create #{repo_name} --public")
+puts "Using repository: #{repo_name}"
+# Create repo if it doesn't exist (will fail silently if it already exists)
+system("gh repo create #{repo_name} --public 2>/dev/null")
 
 # 2. Run rails new
 temp_dir = Dir.mktmpdir("rails-app")
@@ -25,7 +25,7 @@ Dir.chdir(temp_dir) do
     system("git commit -m 'Initial commit'")
     token = `gh auth token`.strip
     system("git remote add origin https://#{token}@github.com/#{username}/#{repo_name}.git")
-    system("git push -u origin main")
+    system("git push -u origin main --force")
   end
 end
 
