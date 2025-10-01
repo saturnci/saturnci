@@ -22,6 +22,10 @@ class GitHubClient
     Rails.cache.delete(cache_key)
   end
 
+  def fetch_all_github_repositories
+    octokit_repositories
+  end
+
   private
 
   def octokit_repositories

@@ -25,11 +25,11 @@ class RepositoriesController < ApplicationController
     @repository = Repository.new
     authorize @repository
 
-    @github_repositories = current_user.octokit_client.repositories
-
-    loop do
-      break if current_user.octokit_client.last_response.rels[:next].nil?
-      @github_repositories.concat current_user.octokit_client.get(current_user.octokit_client.last_response.rels[:next].href)
+    begin
+      @github_repositories = GitHubClient.new(current_user).fetch_all_github_repositories
+    rescue Octokit::Unauthorized
+      skip_authorization
+      redirect_to new_user_session_path
     end
   end
 
