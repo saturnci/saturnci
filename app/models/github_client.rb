@@ -22,8 +22,6 @@ class GitHubClient
     Rails.cache.delete(cache_key)
   end
 
-  private
-
   def octokit_repositories
     repositories = octokit_client.repositories
     return [] if repositories.nil?
@@ -35,6 +33,8 @@ class GitHubClient
 
     return repositories
   end
+
+  private
 
   def cache_key
     "user/#{@user.id}/github_repositories"
