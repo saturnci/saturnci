@@ -21,8 +21,8 @@ services:
       context: ..
       dockerfile: .saturnci/Dockerfile
     volumes:
-      - ../:/code
-      - ./database.yml:/code/config/database.yml:ro
+      - ../:/app
+      - ./database.yml:/app/config/database.yml:ro
     depends_on:
       - postgres
       - chrome

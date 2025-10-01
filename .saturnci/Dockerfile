@@ -1,6 +1,6 @@
 FROM ruby:3.3.5-slim
 
-WORKDIR /code
+WORKDIR /app
 
 ENV RAILS_ENV=test
 
