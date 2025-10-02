@@ -33,16 +33,13 @@ Dir.chdir(temp_dir) do
     system("rails generate rspec:install")
 
     # Create a simple passing test
-    system("mkdir -p spec/requests")
-    File.write("spec/requests/root_spec.rb", <<~RSPEC)
+    system("mkdir -p spec/models")
+    File.write("spec/models/application_record_spec.rb", <<~RSPEC)
       require 'rails_helper'
 
-      RSpec.describe "Root", type: :request do
-        describe "GET /" do
-          it "returns a successful response" do
-            get "/"
-            expect(response).to have_http_status(:success)
-          end
+      RSpec.describe ApplicationRecord, type: :model do
+        it "exists" do
+          expect(ApplicationRecord).to be_a(Class)
         end
       end
     RSPEC
