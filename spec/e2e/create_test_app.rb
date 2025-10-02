@@ -16,16 +16,24 @@ Dir.chdir(temp_dir) do
   puts "Generating Rails app in #{temp_dir}"
   system("rails new #{repo_name} --database=postgresql")
 
-  # 3. Push the resulting code to the repo
+  # 3. Push the initial Rails app
   Dir.chdir(repo_name) do
-    puts "Pushing to GitHub..."
+    puts "Committing initial Rails app..."
     # Remove workflow file that requires special permissions
     system("rm -rf .github")
     system("git add .")
-    system("git commit -m 'Initial commit'")
+    system("git commit -m 'Initial Rails app'")
     token = `gh auth token`.strip
     system("git remote add origin https://#{token}@github.com/#{username}/#{repo_name}.git")
     system("git push -u origin main --force")
+
+    puts "Applying SaturnCI template..."
+    system("rails app:template LOCATION=https://raw.githubusercontent.com/saturnci/saturnci-config-templates/main/rails/template.rb")
+
+    puts "Committing SaturnCI configuration..."
+    system("git add .")
+    system("git commit -m 'Add SaturnCI configuration via Rails template'")
+    system("git push")
   end
 end
 
