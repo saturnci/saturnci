@@ -61,57 +61,72 @@ Dir.chdir(temp_dir) do
     # 4. Add multiple database support
     puts "Adding multiple database configuration..."
 
-    # Update database.yml to include a second database
-    # First, update the test database to use migrations_paths
+    # Update config/database.yml to use proper multi-database structure
     database_yml = File.read("config/database.yml")
 
-    # Add analytics database configuration
-    database_yml += <<~YAML
-
-      analytics:
-        adapter: postgresql
-        encoding: unicode
-        pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-        database: #{repo_name}_analytics_test
-        username: <%= ENV.fetch("DATABASE_USERNAME", "postgres") %>
-        password: <%= ENV.fetch("DATABASE_PASSWORD", "") %>
-        host: <%= ENV.fetch("DATABASE_HOST", "localhost") %>
-        port: <%= ENV.fetch("DATABASE_PORT", "5432") %>
-        migrations_paths: db/analytics_migrate
-    YAML
-
+    # Replace the test: section with primary + analytics nested structure
+    database_yml = database_yml.gsub(
+      /^test:\n  <<: \*default\n  database: #{repo_name}_test$/,
+      <<~YAML.chomp
+        test:
+          primary:
+            <<: *default
+            database: #{repo_name}_test
+          analytics:
+            <<: *default
+            database: #{repo_name}_analytics_test
+            migrations_paths: db/analytics_migrate
+      YAML
+    )
     File.write("config/database.yml", database_yml)
 
     # Also update .saturnci/database.yml (used by test runner)
     saturnci_database_yml = File.read(".saturnci/database.yml")
-    saturnci_database_yml += <<~YAML
 
-      analytics:
-        adapter: postgresql
-        encoding: unicode
-        database: #{repo_name}_analytics_test
-        username: <%= ENV.fetch("DATABASE_USERNAME") %>
-        host: <%= ENV.fetch("DATABASE_HOST") %>
-        port: <%= ENV.fetch("DATABASE_PORT") %>
-        migrations_paths: db/analytics_migrate
-    YAML
+    # Replace the test: section with primary + analytics nested structure
+    saturnci_database_yml = saturnci_database_yml.gsub(
+      /^test:\n(.*\n)+?(?=\n\S|\z)/m,
+      <<~YAML.chomp
+        test:
+          primary:
+            database: saturn_test
+            adapter: postgresql
+            encoding: unicode
+            username: <%= ENV.fetch("DATABASE_USERNAME") %>
+            host: <%= ENV.fetch("DATABASE_HOST") %>
+            port: <%= ENV.fetch("DATABASE_PORT") %>
+          analytics:
+            database: #{repo_name}_analytics_test
+            adapter: postgresql
+            encoding: unicode
+            username: <%= ENV.fetch("DATABASE_USERNAME") %>
+            host: <%= ENV.fetch("DATABASE_HOST") %>
+            port: <%= ENV.fetch("DATABASE_PORT") %>
+            migrations_paths: db/analytics_migrate
+      YAML
+    )
     File.write(".saturnci/database.yml", saturnci_database_yml)
 
-    # Create analytics database configuration in application.rb
-    application_rb = File.read("config/application.rb")
-    application_rb = application_rb.gsub(
-      /(class Application < Rails::Application\n)/,
-      "\\1    config.active_record.database_selector = { delay: 2.seconds }\n    config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver\n    config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session\n\n"
+    # Update ApplicationRecord to connect to primary database
+    application_record_content = File.read("app/models/application_record.rb")
+    application_record_content = application_record_content.gsub(
+      /class ApplicationRecord < ActiveRecord::Base\n  self\.abstract_class = true\nend/,
+      <<~RUBY.chomp
+        class ApplicationRecord < ActiveRecord::Base
+          self.abstract_class = true
+
+          connects_to database: { writing: :primary }
+        end
+      RUBY
     )
-    File.write("config/application.rb", application_rb)
+    File.write("app/models/application_record.rb", application_record_content)
 
     # Create AnalyticsRecord base class
-    system("mkdir -p app/models/analytics")
     File.write("app/models/analytics_record.rb", <<~RUBY)
       class AnalyticsRecord < ActiveRecord::Base
         self.abstract_class = true
 
-        connects_to database: { writing: :analytics, reading: :analytics }
+        connects_to database: { writing: :analytics }
       end
     RUBY
 
@@ -148,6 +163,13 @@ Dir.chdir(temp_dir) do
       end
     RSPEC
 
+    # Update pre.sh to handle multiple databases
+    File.write(".saturnci/pre.sh", <<~SCRIPT)
+      #!/bin/bash
+      bundle exec rails db:create
+      bundle exec rails db:migrate:primary
+      bundle exec rails db:migrate:analytics
+    SCRIPT
     system("chmod +x .saturnci/pre.sh")
 
     puts "Committing multiple database configuration..."
