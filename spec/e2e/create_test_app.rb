@@ -57,6 +57,126 @@ Dir.chdir(temp_dir) do
     puts "Committing SaturnCI configuration..."
     system("git add .")
     system("git commit -m 'Add SaturnCI configuration via Rails template'")
+
+    # 4. Add multiple database support
+    puts "Adding multiple database configuration..."
+
+    # Update config/database.yml to use proper multi-database structure
+    database_yml = File.read("config/database.yml")
+
+    # Replace the test: section with primary + analytics nested structure
+    database_yml = database_yml.gsub(
+      /^test:\n  <<: \*default\n  database: #{repo_name}_test$/,
+      <<~YAML.chomp
+        test:
+          primary:
+            <<: *default
+            database: #{repo_name}_test
+          analytics:
+            <<: *default
+            database: #{repo_name}_analytics_test
+            migrations_paths: db/analytics_migrate
+      YAML
+    )
+    File.write("config/database.yml", database_yml)
+
+    # Also update .saturnci/database.yml (used by test runner)
+    saturnci_database_yml = File.read(".saturnci/database.yml")
+
+    # Replace the test: section with primary + analytics nested structure
+    saturnci_database_yml = saturnci_database_yml.gsub(
+      /^test:\n(.*\n)+?(?=\n\S|\z)/m,
+      <<~YAML.chomp
+        test:
+          primary:
+            database: saturn_test
+            adapter: postgresql
+            encoding: unicode
+            username: <%= ENV.fetch("DATABASE_USERNAME") %>
+            host: <%= ENV.fetch("DATABASE_HOST") %>
+            port: <%= ENV.fetch("DATABASE_PORT") %>
+          analytics:
+            database: #{repo_name}_analytics_test
+            adapter: postgresql
+            encoding: unicode
+            username: <%= ENV.fetch("DATABASE_USERNAME") %>
+            host: <%= ENV.fetch("DATABASE_HOST") %>
+            port: <%= ENV.fetch("DATABASE_PORT") %>
+            migrations_paths: db/analytics_migrate
+      YAML
+    )
+    File.write(".saturnci/database.yml", saturnci_database_yml)
+
+    # Update ApplicationRecord to connect to primary database
+    application_record_content = File.read("app/models/application_record.rb")
+    application_record_content = application_record_content.gsub(
+      /class ApplicationRecord < ActiveRecord::Base\n  self\.abstract_class = true\nend/,
+      <<~RUBY.chomp
+        class ApplicationRecord < ActiveRecord::Base
+          self.abstract_class = true
+
+          connects_to database: { writing: :primary }
+        end
+      RUBY
+    )
+    File.write("app/models/application_record.rb", application_record_content)
+
+    # Create AnalyticsRecord base class
+    File.write("app/models/analytics_record.rb", <<~RUBY)
+      class AnalyticsRecord < ActiveRecord::Base
+        self.abstract_class = true
+
+        connects_to database: { writing: :analytics }
+      end
+    RUBY
+
+    # Create analytics migrations directory
+    system("mkdir -p db/analytics_migrate")
+
+    # Create a simple analytics model and migration
+    File.write("app/models/event.rb", <<~RUBY)
+      class Event < AnalyticsRecord
+      end
+    RUBY
+
+    File.write("db/analytics_migrate/#{Time.now.utc.strftime('%Y%m%d%H%M%S')}_create_events.rb", <<~RUBY)
+      class CreateEvents < ActiveRecord::Migration[8.0]
+        def change
+          create_table :events do |t|
+            t.string :name
+            t.timestamps
+          end
+        end
+      end
+    RUBY
+
+    # Add a test for the analytics database
+    File.write("spec/models/event_spec.rb", <<~RSPEC)
+      require 'rails_helper'
+
+      RSpec.describe Event, type: :model do
+        it "can be created in the analytics database" do
+          event = Event.create(name: "test_event")
+          expect(event).to be_persisted
+          expect(event.name).to eq("test_event")
+        end
+      end
+    RSPEC
+
+    # Update pre.sh to handle multiple databases
+    File.write(".saturnci/pre.sh", <<~SCRIPT)
+      #!/bin/bash
+      bundle exec rails db:create
+      bundle exec rails db:migrate:primary
+      bundle exec rails db:migrate:analytics
+    SCRIPT
+    system("chmod +x .saturnci/pre.sh")
+
+    puts "Committing multiple database configuration..."
+    system("git add .")
+    system("git commit -m 'Add multiple database support with analytics database'")
+
+    # Important: this script should do one git push and one git push only.
     system("git remote add origin https://#{token}@github.com/#{username}/#{repo_name}.git")
     system("git push -u origin main --force")
   end
