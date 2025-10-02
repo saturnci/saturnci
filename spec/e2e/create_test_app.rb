@@ -53,8 +53,6 @@ Dir.chdir(temp_dir) do
     system("git add .")
     system("git commit -m 'Initial Rails app with RSpec test suite'")
     token = `gh auth token`.strip
-    system("git remote add origin https://#{token}@github.com/#{username}/#{repo_name}.git")
-    system("git push -u origin main --force")
 
     puts "Applying SaturnCI template..."
     system("rails app:template LOCATION=https://raw.githubusercontent.com/saturnci/saturnci-config-templates/main/rails/template.rb")
@@ -62,7 +60,8 @@ Dir.chdir(temp_dir) do
     puts "Committing SaturnCI configuration..."
     system("git add .")
     system("git commit -m 'Add SaturnCI configuration via Rails template'")
-    system("git push")
+    system("git remote add origin https://#{token}@github.com/#{username}/#{repo_name}.git")
+    system("git push -u origin main --force")
   end
 end
 
