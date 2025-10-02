@@ -1,0 +1,21 @@
+# Version control
+.git
+.gitignore
+
+# Logs and temp files
+log
+tmp
+*.log
+
+# Dependency directories
+node_modules
+coverage
+
+# Environment and secrets
+.env*
+
+# Documentation
+*.md
+
+# System files
+.DS_Store
