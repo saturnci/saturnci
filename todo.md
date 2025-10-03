@@ -26,7 +26,6 @@
 - When on a list (such as test suite runs or test cases), up and down keys should move the cursor to the next/previous item
 - On each runner tab, list somewhere how many test cases it has
 - When a runner has finished running, show the elapsed time
-- Multi-db support
 
 ## Refactoring
 - TestRunOrchestrationCheck is stupid
