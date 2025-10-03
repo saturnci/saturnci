@@ -35,7 +35,7 @@ describe "adding a repository", type: :request do
       allow(github_client).to receive(:invalidate_repositories_cache)
     end
 
-    it "queries GitHub API to determine which installation owns the repository" do
+    it "associates it with the org installation rather than the personal installation" do
       jwt_client = instance_double(Octokit::Client)
       allow(Octokit::Client).to receive(:new).and_return(jwt_client)
       allow(jwt_client).to receive(:find_repository_installation)
