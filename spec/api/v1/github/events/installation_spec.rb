@@ -23,7 +23,7 @@ describe API::V1::GitHubEventsController, type: :controller do
       }
     end
 
-    it "creates a new saturn installation for the user" do
+    it "creates a new github account for the user" do
       expect {
         post :create, params: payload, as: :json
       }.to change { user.github_accounts.count }.by(1)
@@ -60,7 +60,7 @@ describe API::V1::GitHubEventsController, type: :controller do
       }
     end
 
-    it "creates a new saturn installation for the user" do
+    it "creates a new github account for the user" do
       expect {
         post :create, params: payload, as: :json
       }.to change { user.github_accounts.count }.by(1)
