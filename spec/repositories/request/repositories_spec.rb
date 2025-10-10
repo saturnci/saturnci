@@ -15,6 +15,26 @@ describe "Repositories", type: :request do
       get repositories_path
       expect(response).to have_http_status(200)
     end
+
+    context "when GitHub API returns unauthorized" do
+      before do
+        allow(github_client).to receive(:repositories).and_raise(Octokit::Unauthorized)
+      end
+
+      it "does not create a redirect loop" do
+        get repositories_path
+        expect(response).to redirect_to(new_user_session_path)
+
+        follow_redirect!
+        expect(response).not_to redirect_to(repositories_path)
+      end
+
+      it "signs the user out before redirecting" do
+        get repositories_path
+        follow_redirect!
+        expect(controller.current_user).to be_nil
+      end
+    end
   end
 
   describe "GET /repositories/new" do

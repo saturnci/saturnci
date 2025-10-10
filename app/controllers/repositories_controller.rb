@@ -17,6 +17,7 @@ class RepositoriesController < ApplicationController
       authorize @repositories
     rescue Octokit::Unauthorized
       skip_authorization
+      sign_out current_user
       redirect_to new_user_session_path
     end
   end
