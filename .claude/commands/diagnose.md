@@ -1,6 +1,8 @@
 # Diagnose $ARGUMENTS
 
 Diagnose the described problem.
+Before you begin the diagnosis, make sure you have an accurate and appropriately specific understanding of the presenting symptoms.
+If you're not 100% sure you understand, ask questions.
 
 Remember: a diagnosis is an explanation.
 
