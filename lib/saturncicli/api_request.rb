@@ -21,8 +21,8 @@ module SaturnCICLI
         puts
       end
 
-      Net::HTTP.start(uri.hostname, uri.port, use_ssl: use_ssl?) do |http|
-        http.request(request)
+      http_client.start do
+        http_client.request(request)
       end.tap do |response|
         if @debug
           puts "Response:"
@@ -37,6 +37,18 @@ module SaturnCICLI
     end
 
     private
+
+    def http_client
+      Net::HTTP.new(uri.hostname, uri.port).tap do |c|
+        c.use_ssl = use_ssl?
+
+        # Without this cert_store stuff, we get:
+        # certificate verify failed (unable to get local issuer certificate)
+        # (OpenSSL::SSL::SSLError)
+        c.cert_store = OpenSSL::X509::Store.new
+        c.cert_store.set_default_paths
+      end
+    end
 
     def request
       method.new(uri).tap do |request|
