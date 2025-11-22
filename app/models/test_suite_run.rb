@@ -2,11 +2,11 @@ class TestSuiteRun < ApplicationRecord
   NOTIFICATION_FEATURE_LAUNCH_DATETIME = "2025-08-11 22:00:00 UTC"
   
   acts_as_paranoid
-  belongs_to :repository, foreign_key: "project_id"
-  belongs_to :project
+  belongs_to :repository
+  belongs_to :project, foreign_key: "repository_id"
   has_many :runs, foreign_key: "build_id", dependent: :destroy
   has_many :test_case_runs, through: :runs
-  alias_attribute :repository_id, :project_id
+  alias_attribute :project_id, :repository_id
   
   has_many :test_suite_run_result_notifications, dependent: :destroy
   scope :needing_notification, -> do
