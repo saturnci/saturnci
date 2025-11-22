@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_22_223341) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_22_224037) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -235,7 +235,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_22_223341) do
   end
 
   create_table "test_suite_runs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "project_id", null: false
+    t.uuid "repository_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "report"
@@ -250,7 +250,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_22_223341) do
     t.datetime "deleted_at"
     t.string "api_token"
     t.integer "dry_run_example_count"
-    t.index ["project_id"], name: "index_test_suite_runs_on_project_id"
+    t.index ["repository_id"], name: "index_test_suite_runs_on_repository_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -296,5 +296,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_22_223341) do
   add_foreign_key "test_runners", "rsa_keys"
   add_foreign_key "test_suite_run_result_notifications", "sent_emails"
   add_foreign_key "test_suite_run_result_notifications", "test_suite_runs"
-  add_foreign_key "test_suite_runs", "repositories", column: "project_id"
+  add_foreign_key "test_suite_runs", "repositories"
 end
