@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_22_221255) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_22_223341) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -50,9 +50,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_22_221255) do
     t.jsonb "body", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "project_id"
+    t.uuid "repository_id"
     t.string "type", null: false
-    t.index ["project_id"], name: "index_github_events_on_project_id"
+    t.index ["repository_id"], name: "index_github_events_on_repository_id"
   end
 
   create_table "github_oauth_tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -279,7 +279,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_22_221255) do
   add_foreign_key "charges", "runs"
   add_foreign_key "github_accounts", "users"
   add_foreign_key "github_check_runs", "test_suite_runs", column: "build_id"
-  add_foreign_key "github_events", "repositories", column: "project_id"
+  add_foreign_key "github_events", "repositories"
   add_foreign_key "github_oauth_tokens", "users"
   add_foreign_key "project_secrets", "repositories", column: "project_id"
   add_foreign_key "repositories", "github_accounts"
