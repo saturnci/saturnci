@@ -1,10 +1,10 @@
 require "rails_helper"
 
 describe "installation" do
-  let!(:github_account_id) { 12756485 }
+  let!(:github_user_id) { 12756485 }
 
   let!(:user) do
-    create(:user, uid: github_account_id, provider: "github")
+    create(:user, uid: github_user_id, provider: "github")
   end
 
   let!(:payload) do

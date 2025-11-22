@@ -18,12 +18,12 @@ module GitHubEvents
     private
 
     def user
-      Rails.logger.info "GitHub account id: #{github_account_id}"
+      Rails.logger.info "GitHub user id: #{github_user_id}"
 
-      User.find_by!(uid: github_account_id, provider: "github")
+      User.find_by!(uid: github_user_id, provider: "github")
     end
 
-    def github_account_id
+    def github_user_id
       Rails.logger.info "Account type: #{@payload["installation"]["account"]["type"]}"
 
       if @payload["installation"]["account"]["type"] == "Organization"
