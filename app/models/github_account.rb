@@ -5,7 +5,7 @@ require "octokit"
 class GitHubAccount < ApplicationRecord
   acts_as_paranoid
   belongs_to :user
-  has_many :projects, dependent: :destroy
+  has_many :repositories, dependent: :destroy
 
   def octokit_client
     Octokit::Client.new(bearer_token: GitHubJWTToken.generate)
