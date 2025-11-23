@@ -3,7 +3,7 @@ require "rails_helper"
 describe "Test suite run infinite scroll", type: :system do
   include ScrollingHelper
 
-  let!(:project) { create(:project) }
+  let!(:repository) { create(:repository) }
 
   before do
     allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
@@ -11,12 +11,12 @@ describe "Test suite run infinite scroll", type: :system do
 
   describe "large number of test suite runs" do
     let!(:builds) do
-      create_list(:build, 100, project:)
+      create_list(:build, 100, repository:)
     end
 
     before do
-      login_as(project.user)
-      visit project_build_path(project, builds.first)
+      login_as(repository.user)
+      visit repository_build_path(repository, builds.first)
     end
 
     it "initially only shows the first 20 test suite runs" do
@@ -54,16 +54,16 @@ describe "Test suite run infinite scroll", type: :system do
 
   describe "chunking" do
     let!(:oldest_build) do
-      create(:build, project:, commit_message: "21st test suite run")
+      create(:build, repository:, commit_message: "21st test suite run")
     end
 
     let!(:builds) do
-      create_list(:build, 20, project:)
+      create_list(:build, 20, repository:)
     end
 
     before do
-      login_as(project.user, scope: :user)
-      visit project_build_path(project, builds.first)
+      login_as(repository.user, scope: :user)
+      visit repository_build_path(repository, builds.first)
     end
 
     context "before scrolling to the bottom" do
@@ -87,21 +87,21 @@ describe "Test suite run infinite scroll", type: :system do
   context "when a filter is applied (e.g. 'passed')" do
     let!(:failed_runs) do
       10.times.map do
-        create(:run, :failed, build: create(:build, project:))
+        create(:run, :failed, build: create(:build, repository:))
       end
     end
 
     let!(:passed_runs) do
       30.times.map do
-        create(:run, :passed, build: create(:build, project:))
+        create(:run, :passed, build: create(:build, repository:))
       end
     end
 
     before do
       Build.all.each(&:status) # to prime cache
 
-      login_as(project.user)
-      visit project_build_path(project, passed_runs.first.build)
+      login_as(repository.user)
+      visit repository_build_path(repository, passed_runs.first.build)
       click_on "Filters"
       check "Passed"
       click_on "Apply"
