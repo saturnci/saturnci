@@ -9,11 +9,29 @@ TAG="$ENVIRONMENT-$APP_VERSION"
 echo "Deploying $TAG"
 
 cd ..
-docker build --platform linux/amd64 -t $TAG -f Dockerfile.production .
+timeout 600 docker build --platform linux/amd64 -t $TAG -f Dockerfile.production .
+if [ $? -eq 124 ]; then
+  echo "Error: Docker build timed out after 10 minutes"
+  exit 1
+fi
 cd -
 
-doctl registry login
-docker tag $TAG registry.digitalocean.com/saturnci/saturnci:$TAG
-docker push registry.digitalocean.com/saturnci/saturnci:$TAG
+timeout 10 doctl registry login
+if [ $? -eq 124 ]; then
+  echo "Error: Registry login timed out after 10 seconds"
+  exit 1
+fi
 
-./apply $ENVIRONMENT $TAG
+docker tag $TAG registry.digitalocean.com/saturnci/saturnci:$TAG
+
+timeout 180 docker push registry.digitalocean.com/saturnci/saturnci:$TAG
+if [ $? -eq 124 ]; then
+  echo "Error: Docker push timed out after 3 minutes"
+  exit 1
+fi
+
+timeout 60 ./apply $ENVIRONMENT $TAG
+if [ $? -eq 124 ]; then
+  echo "Error: Kubectl apply timed out after 1 minute"
+  exit 1
+fi
