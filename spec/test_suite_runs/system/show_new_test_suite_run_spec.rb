@@ -19,6 +19,9 @@ describe "Show new test suite run", type: :system do
 
     before do
       new_test_suite_run.broadcast
+      within ".test-suite-run-list" do
+        expect(page).to have_content(new_test_suite_run.commit_hash)
+      end
       other_repository_new_test_suite_run.broadcast
     end
 
