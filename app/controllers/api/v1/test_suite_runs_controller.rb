@@ -21,6 +21,18 @@ module API
         render json: test_suite_run
       end
 
+      def create
+        repository = Repository.find(params[:repository_id])
+
+        test_suite_run = TestSuiteRun.create!(
+          repository: repository,
+          branch_name: params[:branch_name],
+          commit_hash: params[:commit_hash],
+          commit_message: params[:commit_message],
+          author_name: params[:author_name]
+        )
+      end
+
       private
 
       def test_suite_run_params

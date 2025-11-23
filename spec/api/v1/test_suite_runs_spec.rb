@@ -53,4 +53,25 @@ describe "test suite runs", type: :request do
       expect(test_suite_run.reload.dry_run_example_count).to eq(566)
     end
   end
+
+  describe "POST /api/v1/test_suite_runs" do
+    let!(:repository) { create(:repository) }
+    let!(:user) { repository.user }
+
+    it "creates a test suite run" do
+      expect {
+        post(
+          api_v1_test_suite_runs_path,
+          params: {
+            repository_id: repository.id,
+            branch_name: "main",
+            commit_hash: "abc123",
+            commit_message: "Test commit",
+            author_name: "Test Author"
+          },
+          headers: api_authorization_headers(user)
+        )
+      }.to change { TestSuiteRun.count }.by(1)
+    end
+  end
 end
