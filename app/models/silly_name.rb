@@ -109,7 +109,9 @@ class SillyName
     green
     guilty
     hairy
+    happy
     haunted
+    heartbroken
     heavy
     hidden
     hideous
@@ -188,6 +190,7 @@ class SillyName
     rolling
     rubber
     sacred
+    sad
     sandy
     savage
     scary
@@ -213,6 +216,7 @@ class SillyName
     smoking
     soggy
     soiled
+    sorrowful
     sour
     sparkly
     special
