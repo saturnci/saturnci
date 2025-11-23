@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "Show new test suite run", type: :system do
-  let!(:test_suite_run) { create(:build) }
+  let!(:test_suite_run) { create(:test_suite_run) }
 
   before do
     allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
@@ -14,8 +14,8 @@ describe "Show new test suite run", type: :system do
       create(:repository, github_account: create(:github_account, user: test_suite_run.repository.user))
     end
 
-    let!(:new_test_suite_run) { create(:build, repository: test_suite_run.repository) }
-    let!(:other_repository_new_test_suite_run) { create(:build, repository: other_repository) }
+    let!(:new_test_suite_run) { create(:test_suite_run, repository: test_suite_run.repository) }
+    let!(:other_repository_new_test_suite_run) { create(:test_suite_run, repository: other_repository) }
 
     before do
       new_test_suite_run.broadcast
@@ -37,7 +37,7 @@ describe "Show new test suite run", type: :system do
   end
 
   context "a new test suite run gets created" do
-    let!(:new_test_suite_run) { create(:build, repository: test_suite_run.repository) }
+    let!(:new_test_suite_run) { create(:test_suite_run, repository: test_suite_run.repository) }
 
     it "shows the new test suite run" do
       within ".test-suite-run-list" do
@@ -75,7 +75,7 @@ describe "Show new test suite run", type: :system do
 
   context "a different user's test suite run" do
     it "does not show the new test suite run" do
-      new_test_suite_run = create(:build, repository: create(:repository))
+      new_test_suite_run = create(:test_suite_run, repository: create(:repository))
       new_test_suite_run.broadcast
       expect(page).not_to have_content(new_test_suite_run.commit_hash)
     end
@@ -83,11 +83,11 @@ describe "Show new test suite run", type: :system do
 
   context "test suite run gets not just created but started" do
     let!(:new_test_suite_run) do
-      create(:build, repository: test_suite_run.repository)
+      create(:test_suite_run, repository: test_suite_run.repository)
     end
 
     let!(:run) do
-      create(:run, build: new_test_suite_run, order_index: 2)
+      create(:run, test_suite_run: new_test_suite_run, order_index: 2)
     end
 
     it "shows the new test suite run" do
