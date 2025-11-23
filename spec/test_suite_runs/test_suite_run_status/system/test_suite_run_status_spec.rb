@@ -4,7 +4,7 @@ describe "Test suite run status", type: :system do
   include SaturnAPIHelper
 
   let!(:run) { create(:run, :with_test_runner) }
-  let!(:user) { run.test_suite_run.project.user }
+  let!(:user) { run.test_suite_run.repository.user }
 
   before do
     allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
@@ -15,7 +15,7 @@ describe "Test suite run status", type: :system do
   context "test suite run goes from running to passed" do
     context "no page refresh" do
       it "changes the status from running to passed" do
-        visit project_build_path(id: run.test_suite_run.id, project_id: run.test_suite_run.project.id)
+        visit repository_build_path(id: run.test_suite_run.id, repository_id: run.test_suite_run.repository.id)
         expect(page).to have_content("Running")
 
         run.update!(test_output: "COMMAND_EXIT_CODE=\"0\"")
@@ -31,7 +31,7 @@ describe "Test suite run status", type: :system do
 
     context "full page refresh after test suite run finishes" do
       it "maintains the 'passed' status" do
-        visit project_build_path(id: run.test_suite_run.id, project_id: run.test_suite_run.project.id)
+        visit repository_build_path(id: run.test_suite_run.id, repository_id: run.test_suite_run.repository.id)
         expect(page).to have_content("Running")
 
         run.update!(test_output: "COMMAND_EXIT_CODE=\"0\"")
@@ -43,7 +43,7 @@ describe "Test suite run status", type: :system do
 
         expect(page).to have_content("Passed") # to prevent race condition
 
-        visit project_build_path(id: run.test_suite_run.id, project_id: run.test_suite_run.project.id)
+        visit repository_build_path(id: run.test_suite_run.id, repository_id: run.test_suite_run.repository.id)
         expect(page).to have_content("Passed")
       end
     end
@@ -51,11 +51,11 @@ describe "Test suite run status", type: :system do
 
   describe "test suite run list links" do
     context "test suite run goes from running to finished" do
-      let!(:other_test_suite_run) { create(:build, project: run.test_suite_run.project) }
+      let!(:other_test_suite_run) { create(:build, repository: run.test_suite_run.repository) }
       let!(:other_run) { create(:run, build: other_test_suite_run) }
 
       it "maintains the currently active build" do
-        visit project_build_path(id: run.test_suite_run.id, project_id: run.test_suite_run.project.id)
+        visit repository_build_path(id: run.test_suite_run.id, repository_id: run.test_suite_run.repository.id)
 
         within ".test-suite-run-list" do
           expect(page).to have_content("Running", count: 2)
@@ -75,7 +75,7 @@ describe "Test suite run status", type: :system do
   describe "elapsed time" do
     context "running test suite run" do
       it "does not show the elapsed test suite run time" do
-        visit project_build_path(run.test_suite_run.project, run.test_suite_run)
+        visit repository_build_path(run.test_suite_run.repository, run.test_suite_run)
         expect(page).to have_selector("[data-elapsed-test-suite-run-time-target='value']")
       end
     end
@@ -83,7 +83,7 @@ describe "Test suite run status", type: :system do
     context "finished test suite run" do
       it "shows the elapsed test suite run time" do
         run.update!(exit_code: 0)
-        visit project_build_path(run.test_suite_run.project, run.test_suite_run)
+        visit repository_build_path(run.test_suite_run.repository, run.test_suite_run)
         expect(page).not_to have_selector("[data-elapsed-test-suite-run-time-target='value']")
       end
     end
@@ -91,7 +91,7 @@ describe "Test suite run status", type: :system do
     context "when the test suite run goes from running to finished" do
       before do
         allow_any_instance_of(TestSuiteRun).to receive(:duration_formatted).and_return("3m 40s")
-        visit project_build_path(run.test_suite_run.project, run.test_suite_run)
+        visit repository_build_path(run.test_suite_run.repository, run.test_suite_run)
       end
 
       it "changes the elapsed time from counting to not counting" do

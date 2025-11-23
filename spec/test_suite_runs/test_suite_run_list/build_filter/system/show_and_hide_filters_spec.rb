@@ -5,8 +5,8 @@ describe "Showing and hiding filters", type: :system do
 
   before do
     allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
-    login_as(build.project.user)
-    visit project_build_path(id: build.id, project_id: build.project.id)
+    login_as(build.repository.user)
+    visit repository_build_path(id: build.id, repository_id: build.repository.id)
   end
 
   describe "Hiding filters" do

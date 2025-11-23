@@ -7,13 +7,13 @@ describe "Status filtering", type: :system do
     create(
       :run,
       :failed,
-      build: create(:build, project: passed_run.build.project)
+      build: create(:build, repository: passed_run.build.repository)
     ).finish!
   end
 
   before do
     allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
-    login_as(passed_run.build.project.user)
+    login_as(passed_run.build.repository.user)
     visit run_path(passed_run, "test_output")
     click_on "Filters"
   end
@@ -113,7 +113,7 @@ describe "Status filtering", type: :system do
     end
 
     before do
-      visit project_build_path(failed_run.build.project, failed_run.build)
+      visit repository_build_path(failed_run.build.repository, failed_run.build)
       click_on "Filters"
       check "Passed"
       click_on "Apply"

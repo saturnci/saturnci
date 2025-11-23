@@ -11,12 +11,12 @@ describe "Start test suite run", type: :system do
     allow(TestRunner).to receive(:create_vm)
 
     allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
-    login_as(test_suite_run.project.user)
+    login_as(test_suite_run.repository.user)
   end
 
   it "starts the test suite run" do
     perform_enqueued_jobs do
-      visit project_build_path(id: test_suite_run.id, project_id: test_suite_run.project.id)
+      visit repository_build_path(id: test_suite_run.id, repository_id: test_suite_run.repository.id)
       expect(page).to have_content("Not Started")
 
       click_on "Start"

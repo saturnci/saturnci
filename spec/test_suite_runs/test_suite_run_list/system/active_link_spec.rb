@@ -1,14 +1,14 @@
 require "rails_helper"
 
 describe "Active link", type: :system do
-  let!(:project) { create(:project) }
+  let!(:repository) { create(:repository) }
 
   let!(:build_1) do
-    create(:build, :with_run, project: project)
+    create(:build, :with_run, repository: repository)
   end
 
   let!(:build_2) do
-    create(:build, :with_run, project: project)
+    create(:build, :with_run, repository: repository)
   end
 
   let!(:test_suite_run_link_1) do
@@ -20,9 +20,9 @@ describe "Active link", type: :system do
   end
 
   before do
-    allow(project.user).to receive(:can_access_repository?).and_return(true)
-    login_as(project.user)
-    visit project_build_path(project, build_1)
+    allow(repository.user).to receive(:can_access_repository?).and_return(true)
+    login_as(repository.user)
+    visit repository_build_path(repository, build_1)
   end
 
   context "link clicked" do

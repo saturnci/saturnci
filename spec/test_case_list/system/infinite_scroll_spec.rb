@@ -19,8 +19,8 @@ describe "Infinite scroll", type: :system do
 
     create_list(:test_case_run, 100, run:, path: "spec/models/apple_spec.rb")
 
-    login_as(build.project.user)
-    visit project_build_path(id: build.id, project_id: build.project.id)
+    login_as(build.repository.user)
+    visit repository_build_path(id: build.id, repository_id: build.repository.id)
   end
 
   it "initially shows only the first 100 test case runs" do
