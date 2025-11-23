@@ -97,12 +97,12 @@ class TestSuiteRun < ApplicationRecord
 
   def broadcast
     broadcast_remove_to(
-      [project.user, "test_suite_runs"],
+      [repository.user, "test_suite_runs"],
       target: ActionView::RecordIdentifier.dom_id(self)
     )
 
     broadcast_prepend_to(
-      [project, project.user, "test_suite_runs"],
+      [project, repository.user, "test_suite_runs"],
       target: "test-suite-run-list",
       partial: "test_suite_runs/test_suite_run_link",
       locals: { build: self, active_build: nil }
