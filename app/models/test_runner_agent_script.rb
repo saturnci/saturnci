@@ -37,8 +37,6 @@ class TestRunnerAgentScript
       export BRANCH_NAME=#{@run.test_suite_run.branch_name}
       export RUN_ID=#{@run.id}
       export RUN_ORDER_INDEX=#{@run.order_index}
-      export USER_ID=#{@run.test_suite_run.repository.user.id}
-      export USER_API_TOKEN=#{@run.test_suite_run.repository.user.api_token}
       export SATURNCI_USER_ID=#{@run.test_suite_run.repository.user.id}
       export SATURNCI_USER_API_TOKEN=#{@run.test_suite_run.repository.user.api_token}
       export NUMBER_OF_CONCURRENT_RUNS=#{@run.test_suite_run.repository.concurrency}
