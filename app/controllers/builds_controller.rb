@@ -1,6 +1,6 @@
 class BuildsController < ApplicationController
   def index
-    project = Project.find(params[:project_id])
+    project = Project.find(params[:project_id] || params[:repository_id])
     authorize project, :show?
 
     test_suite_run_list_query = TestSuiteRunListQuery.new(
