@@ -1,14 +1,14 @@
 class BillingController < ApplicationController
   def index
-    @project = Project.find(params[:project_id])
-    authorize @project, :show?
+    @repository = Project.find(params[:project_id] || params[:repository_id])
+    authorize @repository, :show?
 
     @runs = BillingReport.new(
-      project: @project,
+      repository: @repository,
       year: params[:year] || Time.current.year,
       month: params[:month] || Time.current.month
     ).runs
 
-    @billing_navigation_component = BillingNavigationComponent.new(project: @project)
+    @billing_navigation_component = BillingNavigationComponent.new(repository: @repository)
   end
 end

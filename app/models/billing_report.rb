@@ -1,12 +1,12 @@
 class BillingReport
-  def initialize(project:, year:, month:)
-    @project = project
+  def initialize(repository:, year:, month:)
+    @repository = repository
     @year = year
     @month = month
   end
 
   def runs
-    @project.runs
+    @repository.runs
       .joins(:charge)
       .where(created_at: start_date..end_date)
       .order("runs.created_at desc")

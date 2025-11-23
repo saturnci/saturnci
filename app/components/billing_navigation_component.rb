@@ -1,10 +1,10 @@
 class BillingNavigationComponent < ViewComponent::Base
-  def initialize(project:)
-    @project = project
+  def initialize(repository:)
+    @repository = repository
   end
 
   def dates
-    @project.runs
+    @repository.runs
       .joins(:charge)
       .select("to_char(runs.created_at, 'YYYY-MM') as month")
       .order("month desc")

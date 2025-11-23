@@ -7,7 +7,7 @@ describe BillingNavigationComponent, type: :component do
     end
 
     let!(:billing_navigation_component) do
-      BillingNavigationComponent.new(project: run.build.project)
+      BillingNavigationComponent.new(repository: run.build.repository)
     end
 
     it "includes a date for January 2020" do
@@ -21,7 +21,7 @@ describe BillingNavigationComponent, type: :component do
     end
 
     let!(:billing_navigation_component) do
-      BillingNavigationComponent.new(project: run.build.project)
+      BillingNavigationComponent.new(repository: run.build.repository)
     end
 
     it "does not include a date for January 2020" do
