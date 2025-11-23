@@ -38,7 +38,7 @@ class TestRunnerDropletSpecification
       export TEST_RUNNER_ID=#{@test_runner_id}
       export SATURNCI_API_HOST=#{ENV["SATURNCI_HOST"]}
       export SATURNCI_USER_ID=#{admin_user.id}
-      export SATURNCI_API_TOKEN=#{admin_user.api_token}
+      export SATURNCI_USER_API_TOKEN=#{admin_user.api_token}
 
       export DOCKER_REGISTRY_CACHE_USERNAME=#{ENV["DOCKER_REGISTRY_CACHE_USERNAME"]}
       export DOCKER_REGISTRY_CACHE_PASSWORD=#{ENV["DOCKER_REGISTRY_CACHE_PASSWORD"]}
