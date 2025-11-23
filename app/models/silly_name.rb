@@ -6,9 +6,15 @@ class SillyName
   MODIFIERS = %w(
     abandoned
     airborne
+    angry
+    antique
     awful
     battered
     beautiful
+    befouled
+    bent
+    blazing
+    blazing
     bleeding
     bloated
     bloody
@@ -20,15 +26,19 @@ class SillyName
     buttery
     cackling
     cheap
+    chilly
     chocolate
+    choking
     colossal
     confused
+    contaminated
     crazy
     creepy
     crumbled
     crumpled
     crushed
     crystal
+    curious
     cursed
     damaged
     dancing
@@ -36,8 +46,10 @@ class SillyName
     dark
     dead
     deadly
+    decapitated
     decayed
     decimated
+    defaced
     deformed
     delirious
     demented
@@ -45,12 +57,18 @@ class SillyName
     devastated
     disappointed
     diseased
+    disfigured
     disintegrated
+    dissolved
     divine
     doomed
+    droopy
     dusty
     dying
+    electrocuted
     emaciated
+    embarrassed
+    embarrassing
     enchanted
     escaped
     evil
@@ -65,14 +83,18 @@ class SillyName
     filthy
     flaming
     flattened
+    floating
     fluffy
     flying
     foreign
     forgotten
     fossilized
+    foul
     fried
     friendly
+    frightened
     frozen
+    furious
     fuzzy
     gelatinous
     gentle
@@ -82,6 +104,7 @@ class SillyName
     glittering
     glowing
     golden
+    gooey
     greasy
     green
     guilty
@@ -91,6 +114,7 @@ class SillyName
     hidden
     hideous
     holy
+    hot
     humongous
     hungry
     illegal
@@ -123,11 +147,14 @@ class SillyName
     microscopic
     mighty
     miserable
+    misshapen
     missing
     moldy
     monstrous
     muddy
+    multicolored
     murdered
+    muscular
     mutant
     mystical
     nasty
@@ -136,6 +163,13 @@ class SillyName
     noisy
     nonexistent
     nuclear
+    old
+    oozing
+    overexcited
+    overgrown
+    overgrown
+    overpriced
+    perfect
     pickled
     plastic
     poisonous
@@ -145,6 +179,7 @@ class SillyName
     psychotic
     puffy
     purple
+    rabid
     radioactive
     reeking
     rejected
@@ -156,8 +191,11 @@ class SillyName
     sandy
     savage
     scary
+    scorching
     screaming
+    seasick
     secret
+    shaky
     shattered
     shiny
     shredded
@@ -179,9 +217,12 @@ class SillyName
     sparkly
     special
     speeding
+    splattered
     splendid
+    spoiled
     squashed
     steel
+    stolen
     stone
     strange
     submerged
@@ -189,18 +230,22 @@ class SillyName
     sweaty
     swimming
     swollen
+    tainted
+    terrified
     thirsty
     tiny
     tormented
     tortured
     toxic
     triumphant
+    tropical
     twisted
     unbearable
     uncontrollable
     underwater
     unhealthy
     unnecessary
+    unruly
     unstable
     unstoppable
     untamed
@@ -210,67 +255,26 @@ class SillyName
     unworthy
     useless
     vaporized
+    vicious
     vile
     violent
+    vomiting
+    warm
     warped
+    weak
     weary
+    whining
     wicked
     wild
     wiley
     wilted
     winged
     wooden
+    wounded
     wretched
     wrinkled
     wrinkled
     yellow
-    gooey
-    vicious
-    rabid
-    terrified
-    angry
-    furious
-    embarrassed
-    frightened
-    multicolored
-    curious
-    defaced
-    electrocuted
-    tainted
-    floating
-    antique
-    stolen
-    splattered
-    whining
-    blazing
-    scorching
-    tropical
-    decapitated
-    wounded
-    vomiting
-    old
-    shaky
-    overexcited
-    overgrown
-    overpriced
-    overgrown
-    embarrassing
-    foul
-    befouled
-    droopy
-    oozing
-    seasick
-    perfect
-    spoiled
-    contaminated
-    muscular
-    weak
-    unruly
-    choking
-    bent
-    misshapen
-    disfigured
-    dissolved
   )
 
   NOUNS = %w(
@@ -284,8 +288,10 @@ class SillyName
     baseball
     beard
     bird
+    biscuit
     blanket
     bomb
+    brain
     breakfast
     brick
     buffalo
@@ -314,10 +320,12 @@ class SillyName
     doctor
     dolphin
     donut
+    eagle
     elf
     eyeball
     fairy
     farmer
+    father
     feather
     fish
     foot
@@ -331,10 +339,14 @@ class SillyName
     glove
     goat
     goblin
+    goose
+    grandfather
     grandmother
     grape
     grave
     guest
+    hag
+    heart
     hog
     horse
     hospital
@@ -347,10 +359,12 @@ class SillyName
     leg
     lemon
     librarian
+    liver
     loaf
     lobster
     log
     loser
+    lung
     machine
     manager
     marshmallow
@@ -358,26 +372,34 @@ class SillyName
     meatball
     mechanic
     meteorologist
+    microwave
     mind
     monstrosity
     moose
     moron
+    mother
     muffin
+    mushroom
     mustache
     noodle
+    octogenarian
     ogre
     onion
+    owl
     pancake
     pants
+    pastry
     pencil
     penguin
     phone
     piano
+    pig
     pigeon
     pillow
     pineapple
     pinecone
     pizza
+    planet
     plant
     plumber
     policeman
@@ -388,78 +410,64 @@ class SillyName
     princess
     printer
     puppet
+    queen
     rabbit
     rainbow
+    raisin
     rat
+    refrigerator
     reject
     rifle
     rock
+    sailor
     salad
     salesman
     sandwich
     sausage
+    scab
+    scarecrow
     shark
     sheep
     shovel
     singer
     skeleton
+    skull
     slug
     snail
     snowplow
     sofa
     soldier
     soul
+    sow
     spatula
     spectacle
     squid
     squirrel
     stapler
+    stork
     strawberry
     sweater
     sword
+    taco
     thief
+    toaster
     toilet
     tractor
     tree
     trout
     trumpet
+    uncle
     villain
     volcano
     waiter
     walnut
     walrus
+    weakling
     weasel
     whale
     whiteboard
     witch
     wizard
-    brain
-    liver
-    lung
-    refrigerator
-    microwave
-    toaster
-    raisin
-    skull
-    pig
     worm
-    pastry
-    heart
-    father
-    mother
-    grandfather
-    octogenarian
-    planet
-    queen
-    stork
-    owl
-    eagle
-    sailor
-    uncle
-    weakling
-    hag
-    sow
-    scab
-    scarecrow
   )
 end
