@@ -5,21 +5,21 @@ describe "Show new test suite run", type: :system do
 
   before do
     allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
-    login_as(test_suite_run.project.user)
-    visit project_path(test_suite_run.project)
+    login_as(test_suite_run.repository.user)
+    visit repository_path(test_suite_run.repository)
   end
 
-  context "two test suite runs, two projects" do
-    let!(:other_project) do
-      create(:project, github_account: create(:github_account, user: test_suite_run.project.user))
+  context "two test suite runs, two repositories" do
+    let!(:other_repository) do
+      create(:repository, github_account: create(:github_account, user: test_suite_run.repository.user))
     end
 
-    let!(:new_test_suite_run) { create(:build, project: test_suite_run.project) }
-    let!(:other_project_new_test_suite_run) { create(:build, project: other_project) }
+    let!(:new_test_suite_run) { create(:build, repository: test_suite_run.repository) }
+    let!(:other_repository_new_test_suite_run) { create(:build, repository: other_repository) }
 
     before do
       new_test_suite_run.broadcast
-      other_project_new_test_suite_run.broadcast
+      other_repository_new_test_suite_run.broadcast
     end
 
     it "shows the new test suite run" do
@@ -28,16 +28,16 @@ describe "Show new test suite run", type: :system do
       end
     end
 
-    it "does not show the other project's new test suite run" do
+    it "does not show the other repository's new test suite run" do
       within ".test-suite-run-list" do
         expect(page).to have_content(new_test_suite_run.commit_hash) # to prevent race condition
-        expect(page).not_to have_content(other_project_new_test_suite_run.commit_hash)
+        expect(page).not_to have_content(other_repository_new_test_suite_run.commit_hash)
       end
     end
   end
 
   context "a new test suite run gets created" do
-    let!(:new_test_suite_run) { create(:build, project: test_suite_run.project) }
+    let!(:new_test_suite_run) { create(:build, repository: test_suite_run.repository) }
 
     it "shows the new test suite run" do
       within ".test-suite-run-list" do
@@ -51,7 +51,7 @@ describe "Show new test suite run", type: :system do
 
     context "the page gets loaded before the broadcast occurs" do
       it "does not show the new test suite run twice" do
-        visit project_path(test_suite_run.project)
+        visit repository_path(test_suite_run.repository)
         new_test_suite_run.broadcast
 
         within ".test-suite-run-list" do
@@ -62,7 +62,7 @@ describe "Show new test suite run", type: :system do
 
     context "broadcast occurs twice" do
       it "only shows the new test suite run once" do
-        visit project_path(test_suite_run.project)
+        visit repository_path(test_suite_run.repository)
 
         new_test_suite_run.broadcast
 
@@ -75,7 +75,7 @@ describe "Show new test suite run", type: :system do
 
   context "a different user's test suite run" do
     it "does not show the new test suite run" do
-      new_test_suite_run = create(:build, project: create(:project))
+      new_test_suite_run = create(:build, repository: create(:repository))
       new_test_suite_run.broadcast
       expect(page).not_to have_content(new_test_suite_run.commit_hash)
     end
@@ -83,7 +83,7 @@ describe "Show new test suite run", type: :system do
 
   context "test suite run gets not just created but started" do
     let!(:new_test_suite_run) do
-      create(:build, project: test_suite_run.project)
+      create(:build, repository: test_suite_run.repository)
     end
 
     let!(:run) do
