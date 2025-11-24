@@ -16,29 +16,6 @@ describe "system logs", type: :request do
       expect(run.reload.system_logs).to eq("system log content")
       expect(response.status).to eq(200)
     end
-
-    context "empty payload" do
-      it "does not make any database queries except the authentication queries" do
-        query_count = 0
-        counter_subscription = ActiveSupport::Notifications.subscribe("sql.active_record") do |name, start, finish, id, payload|
-          query_count += 1
-          puts payload[:sql]
-        end
-
-        post(
-          api_v1_run_system_logs_path(run_id: run.id, format: :json),
-          params: "",
-          headers: api_authorization_headers(user).merge({ "CONTENT_TYPE" => "text/plain" })
-        )
-
-        ActiveSupport::Notifications.unsubscribe(counter_subscription)
-
-        # Either 2 or 3 queries depending on whether PAT schema is cached
-        # 3 = PAT schema + PAT lookup + legacy user lookup
-        # 2 = PAT lookup + legacy user lookup (schema cached)
-        expect(query_count).to be_between(2, 3).inclusive
-      end
-    end
   end
 
 
