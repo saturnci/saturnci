@@ -15,6 +15,7 @@
 - Raw errors don't show up on the Overview tab
 
 ## Missing features
+- Need a way to easily inspect errored test runners
 - User that triggered a test suite run should get an email once it finishes
 - Put repository name in HTML title
 - Flash message after settings change
