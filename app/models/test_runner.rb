@@ -1,6 +1,6 @@
 class TestRunner < ApplicationRecord
   belongs_to :rsa_key, class_name: "Cloud::RSAKey", optional: true
-  belongs_to :access_token, optional: true
+  belongs_to :access_token
   has_many :test_runner_events, dependent: :destroy
   has_one :run_test_runner
   has_one :test_runner_assignment, dependent: :destroy

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_24_212612) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_24_222015) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -233,7 +233,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_24_212612) do
     t.datetime "updated_at", null: false
     t.uuid "rsa_key_id"
     t.boolean "terminate_on_completion", default: true, null: false
-    t.uuid "access_token_id"
+    t.uuid "access_token_id", null: false
     t.index ["cloud_id"], name: "index_test_runners_on_cloud_id", unique: true
     t.index ["name"], name: "index_test_runners_on_name", unique: true
     t.index ["rsa_key_id"], name: "index_test_runners_on_rsa_key_id"
