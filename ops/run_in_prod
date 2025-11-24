@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Get the first running pod
+pod=$(kubectl -n production get pods --field-selector=status.phase=Running -o jsonpath="{.items[1].metadata.name}")
+
+# Execute the command passed as arguments
+kubectl -n production exec $pod -- "$@"
