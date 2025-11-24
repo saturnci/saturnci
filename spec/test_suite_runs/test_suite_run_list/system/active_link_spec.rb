@@ -3,35 +3,35 @@ require "rails_helper"
 describe "Active link", type: :system do
   let!(:repository) { create(:repository) }
 
-  let!(:build_1) do
-    create(:build, :with_run, repository: repository)
+  let!(:test_suite_run_1) do
+    create(:test_suite_run, :with_run, repository: repository)
   end
 
-  let!(:build_2) do
-    create(:build, :with_run, repository: repository)
+  let!(:test_suite_run_2) do
+    create(:test_suite_run, :with_run, repository: repository)
   end
 
   let!(:test_suite_run_link_1) do
-    PageObjects::TestSuiteRunLink.new(page, build_1)
+    PageObjects::TestSuiteRunLink.new(page, test_suite_run_1)
   end
 
   let!(:test_suite_run_link_2) do
-    PageObjects::TestSuiteRunLink.new(page, build_2)
+    PageObjects::TestSuiteRunLink.new(page, test_suite_run_2)
   end
 
   before do
     allow(repository.user).to receive(:can_access_repository?).and_return(true)
     login_as(repository.user)
-    visit repository_build_path(repository, build_1)
+    visit repository_test_suite_run_path(repository, test_suite_run_1)
   end
 
   context "link clicked" do
-    it "sets that build to active" do
+    it "sets that test_suite_run to active" do
       test_suite_run_link_2.click
       expect(test_suite_run_link_2).to be_active
     end
 
-    it "sets other builds to inactive" do
+    it "sets other test_suite_runs to inactive" do
       test_suite_run_link_2.click
       expect(test_suite_run_link_2).to be_active
 

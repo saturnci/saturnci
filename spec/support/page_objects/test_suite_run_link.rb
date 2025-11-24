@@ -1,12 +1,12 @@
 module PageObjects
   class TestSuiteRunLink
-    def initialize(page, build)
+    def initialize(page, test_suite_run)
       @page = page
-      @build = build
+      @test_suite_run = test_suite_run
     end
 
     def click
-      @page.click_on "test_suite_run_link_#{@build.id}"
+      @page.click_on "test_suite_run_link_#{@test_suite_run.id}"
     end
 
     def active?
@@ -16,7 +16,7 @@ module PageObjects
     private
 
     def css_classes
-      link = @page.find("#test_suite_run_link_#{@build.id}")
+      link = @page.find("#test_suite_run_link_#{@test_suite_run.id}")
       link.ancestor("li")[:class].split
     end
   end
