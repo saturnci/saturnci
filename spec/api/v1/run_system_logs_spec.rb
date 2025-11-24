@@ -33,7 +33,10 @@ describe "system logs", type: :request do
 
         ActiveSupport::Notifications.unsubscribe(counter_subscription)
 
-        expect(query_count).to eq(3) # PAT schema + PAT lookup + legacy user lookup
+        # Either 2 or 3 queries depending on whether PAT schema is cached
+        # 3 = PAT schema + PAT lookup + legacy user lookup
+        # 2 = PAT lookup + legacy user lookup (schema cached)
+        expect(query_count).to be_between(2, 3).inclusive
       end
     end
   end
