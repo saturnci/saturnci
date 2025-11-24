@@ -66,6 +66,11 @@ describe TestRunner do
         .to change { AccessToken.count }
         .from(0).to(1)
     end
+
+    it "assigns the access token to the test runner" do
+      test_runner = TestRunner.provision
+      expect(test_runner.access_token).to be_present
+    end
   end
 
   describe "status" do

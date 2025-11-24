@@ -1,5 +1,6 @@
 class TestRunner < ApplicationRecord
   belongs_to :rsa_key, class_name: "Cloud::RSAKey", optional: true
+  belongs_to :access_token, optional: true
   has_many :test_runner_events, dependent: :destroy
   has_one :run_test_runner
   has_one :test_runner_assignment, dependent: :destroy
@@ -35,10 +36,10 @@ class TestRunner < ApplicationRecord
   end
 
   def self.provision
-    AccessToken.create!
+    access_token = AccessToken.create!
     name = "tr-#{SecureRandom.uuid[0..7]}-#{SillyName.random.gsub(/ /, "-")}"
 
-    create!(name:).tap do |test_runner|
+    create!(name:, access_token:).tap do |test_runner|
       create_vm(test_runner, name)
       test_runner.test_runner_events.create!(type: :provision_request_sent)
     end
