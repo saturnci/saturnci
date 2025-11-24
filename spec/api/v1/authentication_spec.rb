@@ -10,7 +10,7 @@ describe "Authentication", type: :request do
       it "returns success" do
         credentials = ActionController::HttpAuthentication::Basic.encode_credentials(
           user.id.to_s,
-          personal_access_token.value
+          personal_access_token.access_token.value
         )
 
         get(

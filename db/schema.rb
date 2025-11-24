@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_24_190410) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_24_191724) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -72,10 +72,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_24_190410) do
 
   create_table "personal_access_tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
-    t.string "value", null: false
+    t.uuid "access_token_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id", "value"], name: "index_personal_access_tokens_on_user_id_and_value", unique: true
+    t.index ["access_token_id"], name: "index_personal_access_tokens_on_access_token_id"
     t.index ["user_id"], name: "index_personal_access_tokens_on_user_id"
   end
 
@@ -296,6 +296,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_24_190410) do
   add_foreign_key "github_check_runs", "test_suite_runs", column: "build_id"
   add_foreign_key "github_events", "repositories"
   add_foreign_key "github_oauth_tokens", "users"
+  add_foreign_key "personal_access_tokens", "access_tokens"
   add_foreign_key "personal_access_tokens", "users"
   add_foreign_key "project_secrets", "repositories", column: "project_id"
   add_foreign_key "repositories", "github_accounts"
