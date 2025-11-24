@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_secure_token :api_token
 
   has_many :personal_access_tokens, dependent: :destroy
+  has_many :access_tokens, through: :personal_access_tokens
 
   devise(
     :database_authenticatable,
