@@ -10,13 +10,13 @@ describe "Test suite run infinite scroll", type: :system do
   end
 
   describe "large number of test suite runs" do
-    let!(:builds) do
-      create_list(:build, 100, repository:)
+    let!(:test_suite_runs) do
+      create_list(:test_suite_run, 100, repository:)
     end
 
     before do
       login_as(repository.user)
-      visit repository_build_path(repository, builds.first)
+      visit repository_test_suite_run_path(repository, test_suite_runs.first)
     end
 
     it "initially only shows the first 20 test suite runs" do
@@ -53,17 +53,17 @@ describe "Test suite run infinite scroll", type: :system do
   end
 
   describe "chunking" do
-    let!(:oldest_build) do
-      create(:build, repository:, commit_message: "21st test suite run")
+    let!(:oldest_test_suite_run) do
+      create(:test_suite_run, repository:, commit_message: "21st test suite run")
     end
 
-    let!(:builds) do
-      create_list(:build, 20, repository:)
+    let!(:test_suite_runs) do
+      create_list(:test_suite_run, 20, repository:)
     end
 
     before do
       login_as(repository.user, scope: :user)
-      visit repository_build_path(repository, builds.first)
+      visit repository_test_suite_run_path(repository, test_suite_runs.first)
     end
 
     context "before scrolling to the bottom" do
@@ -87,21 +87,21 @@ describe "Test suite run infinite scroll", type: :system do
   context "when a filter is applied (e.g. 'passed')" do
     let!(:failed_runs) do
       10.times.map do
-        create(:run, :failed, build: create(:build, repository:))
+        create(:run, :failed, test_suite_run: create(:test_suite_run, repository:))
       end
     end
 
     let!(:passed_runs) do
       30.times.map do
-        create(:run, :passed, build: create(:build, repository:))
+        create(:run, :passed, test_suite_run: create(:test_suite_run, repository:))
       end
     end
 
     before do
-      Build.all.each(&:status) # to prime cache
+      TestSuiteRun.all.each(&:status) # to prime cache
 
       login_as(repository.user)
-      visit repository_build_path(repository, passed_runs.first.build)
+      visit repository_test_suite_run_path(repository, passed_runs.first.test_suite_run)
       click_on "Filters"
       check "Passed"
       click_on "Apply"
