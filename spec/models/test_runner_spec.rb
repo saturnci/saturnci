@@ -60,6 +60,12 @@ describe TestRunner do
       test_runner = TestRunner.provision
       expect(test_runner.status).to eq("Provisioning")
     end
+
+    it "creates an access token" do
+      expect { TestRunner.provision }
+        .to change { AccessToken.count }
+        .from(0).to(1)
+    end
   end
 
   describe "status" do

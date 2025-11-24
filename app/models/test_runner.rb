@@ -35,6 +35,7 @@ class TestRunner < ApplicationRecord
   end
 
   def self.provision
+    AccessToken.create!
     name = "tr-#{SecureRandom.uuid[0..7]}-#{SillyName.random.gsub(/ /, "-")}"
 
     create!(name:).tap do |test_runner|
