@@ -18,7 +18,7 @@ describe "system logs", type: :request do
     end
 
     context "empty payload" do
-      it "does not make any database queries except the one" do
+      it "does not make any database queries except the authentication queries" do
         query_count = 0
         counter_subscription = ActiveSupport::Notifications.subscribe("sql.active_record") do |name, start, finish, id, payload|
           query_count += 1
@@ -33,7 +33,7 @@ describe "system logs", type: :request do
 
         ActiveSupport::Notifications.unsubscribe(counter_subscription)
 
-        expect(query_count).to eq(1)
+        expect(query_count).to eq(3) # PAT schema + PAT lookup + legacy user lookup
       end
     end
   end
