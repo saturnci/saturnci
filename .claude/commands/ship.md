@@ -1,3 +1,3 @@
 1. Squash-merge the current branch into the main branch.
 2. Push the main branch to the remote repository.
-3. Deploy using ops/deploy.
+3. Deploy using saturnci/ops/deploy.
