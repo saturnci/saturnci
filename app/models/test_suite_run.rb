@@ -96,13 +96,15 @@ class TestSuiteRun < ApplicationRecord
   end
 
   def broadcast
+    channel = [repository, repository.user, "test_suite_runs"]
+
     broadcast_remove_to(
-      [repository.user, "test_suite_runs"],
+      channel,
       target: ActionView::RecordIdentifier.dom_id(self)
     )
 
     broadcast_prepend_to(
-      [repository, repository.user, "test_suite_runs"],
+      channel,
       target: "test-suite-run-list",
       partial: "test_suite_runs/test_suite_run_link",
       locals: { build: self, active_build: nil }
