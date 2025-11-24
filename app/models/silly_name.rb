@@ -41,6 +41,7 @@ class SillyName
     curious
     cursed
     damaged
+    damp
     dancing
     dangerous
     dark
@@ -69,6 +70,7 @@ class SillyName
     emaciated
     embarrassed
     embarrassing
+    empty
     enchanted
     escaped
     evil
@@ -80,6 +82,8 @@ class SillyName
     fancy
     fat
     feathery
+    feeble
+    fierce
     filthy
     flaming
     flattened
@@ -115,6 +119,7 @@ class SillyName
     heavy
     hidden
     hideous
+    hollow
     holy
     hot
     humongous
@@ -183,6 +188,7 @@ class SillyName
     purple
     rabid
     radioactive
+    rancid
     reeking
     rejected
     repulsive
@@ -214,6 +220,8 @@ class SillyName
     sloppy
     smelly
     smoking
+    smooth
+    smug
     soggy
     soiled
     sorrowful
@@ -283,11 +291,13 @@ class SillyName
 
   NOUNS = %w(
     airplane
+    anvil
     astronomer
     bag
     balloon
     bandit
     barnacle
+    barrel
     baseball
     beard
     bird
@@ -306,6 +316,7 @@ class SillyName
     caterpillar
     caveman
     chair
+    chimney
     cigarette
     clock
     cow
@@ -378,9 +389,11 @@ class SillyName
     microwave
     mind
     monstrosity
+    moon
     moose
     moron
     mother
+    mountain
     muffin
     mushroom
     mustache
@@ -431,6 +444,8 @@ class SillyName
     scarecrow
     shark
     sheep
+    ship
+    shoe
     shovel
     singer
     skeleton
