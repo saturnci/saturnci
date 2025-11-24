@@ -24,9 +24,9 @@ fi
 
 docker tag $TAG registry.digitalocean.com/saturnci/saturnci:$TAG
 
-timeout 180 docker push registry.digitalocean.com/saturnci/saturnci:$TAG
+timeout 600 docker push registry.digitalocean.com/saturnci/saturnci:$TAG
 if [ $? -eq 124 ]; then
-  echo "Error: Docker push timed out after 3 minutes"
+  echo "Error: Docker push timed out after 10 minutes"
   exit 1
 fi
 
