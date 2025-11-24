@@ -284,7 +284,6 @@ class SillyName
   NOUNS = %w(
     airplane
     astronomer
-    bacterium
     bag
     balloon
     bandit
