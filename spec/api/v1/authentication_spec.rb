@@ -20,6 +20,24 @@ describe "Authentication", type: :request do
 
         expect(response).to have_http_status(:success)
       end
+
+      context "when user tries to use another user's token" do
+        let!(:other_user) { create(:user) }
+
+        it "returns unauthorized" do
+          credentials = ActionController::HttpAuthentication::Basic.encode_credentials(
+            other_user.id.to_s,
+            personal_access_token.access_token.value
+          )
+
+          get(
+            api_v1_test_suite_runs_path,
+            headers: { "Authorization" => credentials }
+          )
+
+          expect(response).to have_http_status(:unauthorized)
+        end
+      end
     end
 
     context "with valid credentials" do
