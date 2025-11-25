@@ -42,37 +42,9 @@ describe "Authentication", type: :request do
       end
     end
 
-    context "with valid credentials" do
-      it "returns success" do
-        credentials = ActionController::HttpAuthentication::Basic.encode_credentials(user.id.to_s, user.api_token)
-
-        post(
-          api_v1_debug_messages_path,
-          params: { message: "test" },
-          headers: { "Authorization" => credentials }
-        )
-
-        expect(response).to have_http_status(:success)
-      end
-    end
-
     context "with invalid credentials" do
       it "returns unauthorized" do
         credentials = ActionController::HttpAuthentication::Basic.encode_credentials(user.id.to_s, "wrongtoken")
-
-        post(
-          api_v1_debug_messages_path,
-          params: { message: "test" },
-          headers: { "Authorization" => credentials }
-        )
-
-        expect(response).to have_http_status(:unauthorized)
-      end
-    end
-
-    context "invalid user id" do
-      it "returns unauthorized" do
-        credentials = ActionController::HttpAuthentication::Basic.encode_credentials("wrongid", user.api_token)
 
         post(
           api_v1_debug_messages_path,

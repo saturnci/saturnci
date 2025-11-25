@@ -17,9 +17,6 @@ module API
               id: user_id,
               personal_access_tokens: { access_token: access_token }
             )
-          else
-            # legacy token
-            @current_user = User.find_by(id: user_id, api_token: api_token)
           end
 
           @current_user.present?
