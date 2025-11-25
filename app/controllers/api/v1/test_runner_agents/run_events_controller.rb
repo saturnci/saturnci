@@ -1,7 +1,7 @@
 module API
   module V1
     module TestRunnerAgents
-      class RunEventsController < APIController
+      class RunEventsController < TestRunnerAgentsAPIController
         def create
           run = Run.find(params[:run_id])
           authorize run, :update?

@@ -1,7 +1,7 @@
 module API
   module V1
     module TestRunnerAgents
-      class TestRunnerEventsController < APIController
+      class TestRunnerEventsController < TestRunnerAgentsAPIController
         def create
           test_runner = TestRunner.find(params[:test_runner_id])
           authorize test_runner, :update?
