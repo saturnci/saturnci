@@ -1,7 +1,7 @@
 module API
   module V1
     module TestRunnerAgents
-      class GitHubTokensController < APIController
+      class GitHubTokensController < TestRunnerAgentsAPIController
         def create
           skip_authorization
           render plain: GitHubToken.generate(params[:github_installation_id])

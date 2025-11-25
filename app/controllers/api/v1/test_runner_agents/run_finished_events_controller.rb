@@ -1,7 +1,7 @@
 module API
   module V1
     module TestRunnerAgents
-      class RunFinishedEventsController < APIController
+      class RunFinishedEventsController < TestRunnerAgentsAPIController
         def create
           begin
             run = Run.find(params[:run_id])

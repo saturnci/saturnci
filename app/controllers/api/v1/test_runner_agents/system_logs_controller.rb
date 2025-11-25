@@ -3,7 +3,7 @@ require "base64"
 module API
   module V1
     module TestRunnerAgents
-      class SystemLogsController < APIController
+      class SystemLogsController < TestRunnerAgentsAPIController
       TAB_NAME = "system_logs"
 
         def create

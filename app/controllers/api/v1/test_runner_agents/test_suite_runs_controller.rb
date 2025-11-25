@@ -1,7 +1,7 @@
 module API
   module V1
     module TestRunnerAgents
-      class TestSuiteRunsController < APIController
+      class TestSuiteRunsController < TestRunnerAgentsAPIController
         def update
           test_suite_run = TestSuiteRun.find(params[:id])
           authorize test_suite_run, :update?
