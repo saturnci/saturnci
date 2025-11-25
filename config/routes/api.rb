@@ -24,5 +24,25 @@ namespace :api do
     resources :github_tokens, only: :create
     resources :job_machine_images, only: :update
     resources :debug_messages, only: :create
+
+    # Test Runner Agents namespace - duplicated endpoints for migration
+    namespace :test_runner_agents do
+      resources :runs, only: [] do
+        resources :run_finished_events, only: :create
+        resources :system_logs, only: :create
+        resource :test_output, only: :create
+        resource :json_output, only: :create
+        resources :screenshots, only: :create
+        resources :run_events, only: :create
+        resource :runner, only: :destroy
+      end
+
+      resources :test_runners, only: [] do
+        resources :test_runner_events, only: :create
+        resources :test_runner_assignments, only: :index
+      end
+
+      resources :github_tokens, only: :create
+    end
   end
 end
