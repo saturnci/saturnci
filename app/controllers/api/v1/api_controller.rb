@@ -1,9 +1,12 @@
 module API
   module V1
-    class APIController < ApplicationController
+    class APIController < ActionController::Base
+      include Pundit::Authorization
+      rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
       skip_before_action :verify_authenticity_token
-      skip_before_action :authenticate_user_or_404!
       before_action :authenticate_api_user!
+      after_action :verify_authorized
 
       def authenticate_api_user!
         authenticate_or_request_with_http_basic do |user_id, api_token|
@@ -25,6 +28,10 @@ module API
 
       def current_user
         @current_user
+      end
+
+      def user_not_authorized
+        head :not_found
       end
     end
   end
