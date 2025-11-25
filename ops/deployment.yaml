@@ -98,6 +98,11 @@ spec:
             secretKeyRef:
               name: saturn-secrets
               key: RAILS_ENV
+        - name: SECRET_KEY_BASE
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: SECRET_KEY_BASE
         - name: SATURNCI_INSTALLATION_URL
           valueFrom:
             secretKeyRef:
@@ -275,6 +280,11 @@ spec:
             secretKeyRef:
               name: saturn-secrets
               key: RAILS_ENV
+        - name: SECRET_KEY_BASE
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: SECRET_KEY_BASE
         - name: SATURNCI_INSTALLATION_URL
           valueFrom:
             secretKeyRef:

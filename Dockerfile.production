@@ -1,7 +1,8 @@
-FROM ruby:3.3.5-slim as Builder
+# Build stage
+FROM ruby:3.3.5-slim as builder
 
 RUN apt-get update -qq \
-    && apt-get install -y build-essential libpq-dev postgresql-client openssh-client \
+    && apt-get install -y build-essential libpq-dev openssh-client \
     && curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
     && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
@@ -39,6 +40,22 @@ ENV RAILS_MAX_THREADS 5
 ENV RAILS_ENV production
 
 RUN bundle exec rails assets:precompile
+
+# Final stage
+FROM ruby:3.3.5-slim
+
+RUN apt-get update -qq \
+    && apt-get install -y libpq5 openssh-client \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV INSTALL_PATH /myapp
+WORKDIR $INSTALL_PATH
+
+ENV RAILS_MAX_THREADS 5
+ENV RAILS_ENV production
+
+COPY --from=builder /usr/local/bundle /usr/local/bundle
+COPY --from=builder $INSTALL_PATH $INSTALL_PATH
 
 EXPOSE 3000
 CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
