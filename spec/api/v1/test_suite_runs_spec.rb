@@ -52,6 +52,18 @@ describe "test suite runs", type: :request do
 
       expect(test_suite_run.reload.dry_run_example_count).to eq(566)
     end
+
+    it "returns 422 when updating dry_run_example_count to empty string" do
+      test_suite_run.update!(dry_run_example_count: 353)
+
+      patch(
+        api_v1_test_suite_run_path(test_suite_run),
+        params: { dry_run_example_count: "" },
+        headers: api_authorization_headers(user)
+      )
+
+      expect(response).to have_http_status(422)
+    end
   end
 
   describe "POST /api/v1/test_suite_runs" do
