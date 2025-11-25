@@ -47,7 +47,7 @@ class TestRunner < ApplicationRecord
 
   def self.create_vm(test_runner, name)
     test_runner_droplet_specification = TestRunnerDropletSpecification.new(
-      test_runner_id: test_runner.id,
+      test_runner:,
       name:,
     )
 
