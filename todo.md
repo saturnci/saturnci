@@ -52,6 +52,9 @@
 - Easy way to see error for a test runner
 - Ability to manipulate test runner pool via CLI
 
+## Development environment
+- Linting
+
 ## Misc
 - Ability to delete/archive repositories (put in Settings)
 - In system log or something, list runner name and id
