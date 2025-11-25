@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Tail production logs from all pods using stern
+# Usage: ./tail_logs [pattern]
+# Example: ./tail_logs run_finished_events
+
+PATTERN="${1:-}"
+
+if [ -z "$PATTERN" ]; then
+  # Show all logs
+  stern -n production saturnci --color=always
+else
+  # Filter logs by pattern
+  stern -n production saturnci --color=always | grep -i "$PATTERN"
+fi
