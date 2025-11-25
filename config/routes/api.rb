@@ -43,6 +43,7 @@ namespace :api do
       end
 
       resources :github_tokens, only: :create
+      resources :test_suite_runs, only: :update
     end
   end
 end

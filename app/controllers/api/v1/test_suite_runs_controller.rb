@@ -17,11 +17,6 @@ module API
         test_suite_run = TestSuiteRun.find(params[:id])
         authorize test_suite_run, :update?
 
-        if params.key?(:dry_run_example_count) && !params[:dry_run_example_count].match(/[0-9]/)
-          render json: { error: "dry_run_example_count must be a valid integer" }, status: :unprocessable_entity
-          return
-        end
-
         test_suite_run.update!(test_suite_run_params)
         render json: test_suite_run
       end
