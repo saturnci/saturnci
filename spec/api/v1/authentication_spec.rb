@@ -3,7 +3,7 @@ require "rails_helper"
 describe "Authentication", type: :request do
   let!(:user) { create(:user, super_admin: true) }
 
-  describe "GET /api/v1/test_suite_runs" do
+  describe "POST /api/v1/debug_messages" do
     context "with valid Personal Access Token" do
       let!(:personal_access_token) { create(:personal_access_token, user:) }
 
@@ -13,8 +13,9 @@ describe "Authentication", type: :request do
           personal_access_token.access_token.value
         )
 
-        get(
-          api_v1_test_suite_runs_path,
+        post(
+          api_v1_debug_messages_path,
+          params: { message: "test" },
           headers: { "Authorization" => credentials }
         )
 
@@ -30,8 +31,9 @@ describe "Authentication", type: :request do
             personal_access_token.access_token.value
           )
 
-          get(
-            api_v1_test_suite_runs_path,
+          post(
+            api_v1_debug_messages_path,
+            params: { message: "test" },
             headers: { "Authorization" => credentials }
           )
 
@@ -44,8 +46,9 @@ describe "Authentication", type: :request do
       it "returns success" do
         credentials = ActionController::HttpAuthentication::Basic.encode_credentials(user.id.to_s, user.api_token)
 
-        get(
-          api_v1_test_suite_runs_path,
+        post(
+          api_v1_debug_messages_path,
+          params: { message: "test" },
           headers: { "Authorization" => credentials }
         )
 
@@ -57,8 +60,9 @@ describe "Authentication", type: :request do
       it "returns unauthorized" do
         credentials = ActionController::HttpAuthentication::Basic.encode_credentials(user.id.to_s, "wrongtoken")
 
-        get(
-          api_v1_test_suite_runs_path,
+        post(
+          api_v1_debug_messages_path,
+          params: { message: "test" },
           headers: { "Authorization" => credentials }
         )
 
@@ -70,8 +74,9 @@ describe "Authentication", type: :request do
       it "returns unauthorized" do
         credentials = ActionController::HttpAuthentication::Basic.encode_credentials("wrongid", user.api_token)
 
-        get(
-          api_v1_test_suite_runs_path,
+        post(
+          api_v1_debug_messages_path,
+          params: { message: "test" },
           headers: { "Authorization" => credentials }
         )
 
@@ -81,7 +86,10 @@ describe "Authentication", type: :request do
 
     context "with missing credentials" do
       it "returns unauthorized" do
-        get api_v1_test_suite_runs_path
+        post(
+          api_v1_debug_messages_path,
+          params: { message: "test" }
+        )
 
         expect(response).to have_http_status(:unauthorized)
       end

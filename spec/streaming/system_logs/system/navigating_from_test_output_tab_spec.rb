@@ -21,7 +21,7 @@ describe "Navigating from test output tab", type: :system do
 
       http_request(
         api_authorization_headers: api_authorization_headers(run.build.project.user),
-        path: api_v1_run_system_logs_path(run_id: run.id, format: :json),
+        path: api_v1_test_runner_agents_run_system_logs_path(run_id: run.id, format: :json),
         body: Base64.encode64("new system log content")
       )
     end
