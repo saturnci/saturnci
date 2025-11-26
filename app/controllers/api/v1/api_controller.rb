@@ -10,15 +10,10 @@ module API
 
       def authenticate_api_user!
         authenticate_or_request_with_http_basic do |user_id, api_token|
-          access_token = AccessToken.find_by(value: api_token)
-
-          if access_token.present?
-            @current_user = User.joins(:personal_access_tokens).find_by(
-              id: user_id,
-              personal_access_tokens: { access_token: access_token }
-            )
-          end
-
+          @current_user = User.joins(:access_tokens).find_by(
+            id: user_id,
+            access_tokens: { value: api_token }
+          )
           @current_user.present?
         end
       end
