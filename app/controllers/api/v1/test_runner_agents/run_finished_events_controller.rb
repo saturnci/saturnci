@@ -5,8 +5,6 @@ module API
         def create
           begin
             run = Run.find(params[:run_id])
-            authorize run, :update?
-
             ActiveRecord::Base.transaction do
               run.finish!
               run.test_runner.test_runner_events.create!(type: :test_run_finished)

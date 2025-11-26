@@ -4,8 +4,6 @@ module API
       class RunEventsController < TestRunnerAgentsAPIController
         def create
           run = Run.find(params[:run_id])
-          authorize run, :update?
-
           run.run_events.create!(type: params[:type])
           head :ok
         end

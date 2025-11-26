@@ -4,8 +4,6 @@ module API
       class TestRunnerEventsController < TestRunnerAgentsAPIController
         def create
           test_runner = TestRunner.find(params[:test_runner_id])
-          authorize test_runner, :update?
-
           test_runner.test_runner_events.create!(type: params[:type])
           head :created
 
