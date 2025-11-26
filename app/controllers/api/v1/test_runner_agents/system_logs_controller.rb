@@ -11,14 +11,11 @@ module API
             new_content = Base64.decode64(request.body.read).force_encoding('UTF-8')
 
             if new_content.blank?
-              skip_authorization
               head :ok
               return
             end
 
             run = Run.find(params[:run_id])
-            authorize run, :update?
-
             runner_system_log = RunnerSystemLog.find_or_create_by(run:)
             runner_system_log.update!(content: runner_system_log.content + new_content)
 
