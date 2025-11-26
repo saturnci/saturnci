@@ -23,7 +23,6 @@ module API
 
       def create
         repository = Repository.find_by!(github_repo_full_name: params[:repository])
-        authorize :test_suite_run, :create?
 
         test_suite_run = TestSuiteRun.new(
           repository: repository,
@@ -32,7 +31,10 @@ module API
           commit_message: params[:commit_message],
           author_name: params[:author_name]
         )
+        authorize test_suite_run
+
         test_suite_run.start!
+        test_suite_run.broadcast
 
         render json: {
           id: test_suite_run.id,
