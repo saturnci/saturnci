@@ -5,7 +5,7 @@ describe "Navigating from test output tab", type: :system do
   include NavigationHelper
 
   let!(:run) do
-    create(:run) do |run|
+    create(:run, :with_test_runner) do |run|
       create(:runner_system_log, run:, content: "stuff")
     end
   end
@@ -20,7 +20,7 @@ describe "Navigating from test output tab", type: :system do
       navigate_to_build_tab("system_logs", run:)
 
       http_request(
-        api_authorization_headers: api_authorization_headers(run.build.project.user),
+        api_authorization_headers: test_runner_agents_api_authorization_headers(run.test_runner),
         path: api_v1_test_runner_agents_run_system_logs_path(run_id: run.id, format: :json),
         body: Base64.encode64("new system log content")
       )

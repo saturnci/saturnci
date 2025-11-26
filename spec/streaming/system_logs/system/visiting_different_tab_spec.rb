@@ -5,7 +5,7 @@ describe "Visiting different tab", type: :system do
   include SaturnAPIHelper
 
   let!(:run) do
-    create(:run) do |run|
+    create(:run, :with_test_runner) do |run|
       create(:runner_system_log, run:, content: "original system log content")
     end
   end
@@ -21,7 +21,7 @@ describe "Visiting different tab", type: :system do
         visit run_path(run, "test_output")
 
         http_request(
-          api_authorization_headers: api_authorization_headers(run.build.project.user),
+          api_authorization_headers: test_runner_agents_api_authorization_headers(run.test_runner),
           path: api_v1_test_runner_agents_run_system_logs_path(run_id: run.id, format: :json),
           body: "new system log content"
         )

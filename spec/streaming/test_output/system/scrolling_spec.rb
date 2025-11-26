@@ -12,7 +12,7 @@ describe "Test output scrolling", type: :system do
 
   context "no scrolling" do
     let!(:run) do
-      create(:run, test_output: ("line\n" * 500) + "bottom line")
+      create(:run, :with_test_runner, test_output: ("line\n" * 500) + "bottom line")
     end
 
     it "scrolls to the bottom" do
@@ -23,7 +23,7 @@ describe "Test output scrolling", type: :system do
 
   context "when user scrolls up" do
     let!(:run) do
-      create(:run, test_output: ("line\n" * 500) + "bottom line")
+      create(:run, :with_test_runner, test_output: ("line\n" * 500) + "bottom line")
     end
 
     let!(:log_console) { PageObjects::LogConsole.new(page) }
@@ -37,7 +37,7 @@ describe "Test output scrolling", type: :system do
 
       new_content = "\ntop of new content\n" + ("middle line\n" * 100) + "bottom of new content"
       http_request(
-        api_authorization_headers: api_authorization_headers(run.build.project.user),
+        api_authorization_headers: test_runner_agents_api_authorization_headers(run.test_runner),
         path: api_v1_test_runner_agents_run_test_output_path(run_id: run.id, format: :json),
         body: Base64.encode64(new_content)
       )

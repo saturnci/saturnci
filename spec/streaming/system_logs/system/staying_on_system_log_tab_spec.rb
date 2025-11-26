@@ -4,12 +4,13 @@ describe "Staying on system log tab", type: :system do
   include SaturnAPIHelper
 
   let!(:run) do
-    create(:run) do |run|
+    create(:run, :with_test_runner) do |run|
       create(:runner_system_log, run:, content: "original system log content")
     end
   end
 
   let!(:user) { run.build.project.user }
+  let!(:test_runner) { run.test_runner }
 
   before do
     login_as(run.build.project.user, scope: :user)
@@ -26,7 +27,7 @@ describe "Staying on system log tab", type: :system do
     context "after the first log update occurs" do
       before do
         http_request(
-          api_authorization_headers: api_authorization_headers(user),
+          api_authorization_headers: test_runner_agents_api_authorization_headers(test_runner),
           path: api_v1_test_runner_agents_run_system_logs_path(run_id: run.id, format: :json),
           body: Base64.encode64("new system log content")
         )
@@ -43,7 +44,7 @@ describe "Staying on system log tab", type: :system do
       context "after a second log update occurs" do
         before do
           http_request(
-            api_authorization_headers: api_authorization_headers(user),
+            api_authorization_headers: test_runner_agents_api_authorization_headers(test_runner),
             path: api_v1_test_runner_agents_run_system_logs_path(run_id: run.id, format: :json),
             body: Base64.encode64("second system log update")
           )
