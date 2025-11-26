@@ -7,7 +7,7 @@ namespace :api do
     # CLI endpoints
     resources :runs, only: %i[index show]
     resources :test_runners, only: %i[index show update destroy]
-    resources :test_suite_runs, only: :index
+    resources :test_suite_runs, only: %i[index create]
     resource :test_runner_collection, only: :destroy
 
     namespace :test_runner_agents do

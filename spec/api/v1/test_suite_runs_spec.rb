@@ -1,0 +1,47 @@
+require "rails_helper"
+
+describe "POST /api/v1/test_suite_runs", type: :request do
+  let!(:user) { create(:user, super_admin: true) }
+  let!(:personal_access_token) { create(:personal_access_token, user:) }
+  let!(:repository) { create(:repository, github_repo_full_name: "jasonswett/panda") }
+
+  let(:credentials) do
+    ActionController::HttpAuthentication::Basic.encode_credentials(
+      user.id.to_s,
+      personal_access_token.access_token.value
+    )
+  end
+
+  let(:params) do
+    {
+      repository: "jasonswett/panda",
+      commit_hash: "abc123",
+      branch_name: "main",
+      commit_message: "Test commit",
+      author_name: "Test Author"
+    }
+  end
+
+  describe "with valid params" do
+    it "creates a test suite run" do
+      expect {
+        post(
+          api_v1_test_suite_runs_path,
+          params:,
+          headers: { "Authorization" => credentials }
+        )
+      }.to change(TestSuiteRun, :count).by(1)
+    end
+
+    it "returns the test suite run id" do
+      post(
+        api_v1_test_suite_runs_path,
+        params:,
+        headers: { "Authorization" => credentials }
+      )
+
+      expect(response).to have_http_status(:success)
+      expect(JSON.parse(response.body)["id"]).to eq(TestSuiteRun.last.id)
+    end
+  end
+end
