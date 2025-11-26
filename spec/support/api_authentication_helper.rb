@@ -1,6 +1,9 @@
 module APIAuthenticationHelper
-  def api_authorization_headers(user)
-    encoded_credentials = ActionController::HttpAuthentication::Basic.encode_credentials(user.id, user.api_token)
+  def api_authorization_headers(personal_access_token)
+    encoded_credentials = ActionController::HttpAuthentication::Basic.encode_credentials(
+      personal_access_token.user.id,
+      personal_access_token.access_token.value
+    )
     { "Authorization" => encoded_credentials }
   end
 

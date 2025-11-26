@@ -6,7 +6,7 @@ describe "Visiting different build", type: :system do
   include NavigationHelper
 
   let!(:original_run) do
-    create(:run) do |run|
+    create(:run, :with_test_runner) do |run|
       create(:runner_system_log, run:, content: "original system log content")
     end
   end

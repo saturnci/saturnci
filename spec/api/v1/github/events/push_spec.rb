@@ -42,10 +42,10 @@ describe "Push", type: :request do
     end
 
     let!(:headers) do
-      api_authorization_headers(project.user).merge(
+      {
         "CONTENT_TYPE" => "application/json",
         "X-GitHub-Event" => "push"
-      )
+      }
     end
 
     it "returns 200" do

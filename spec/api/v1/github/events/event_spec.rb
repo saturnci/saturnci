@@ -27,10 +27,10 @@ describe "GitHub Events", type: :request do
         post(
           "/api/v1/github_events",
           params: payload,
-          headers: api_authorization_headers(user).merge(
+          headers: {
             "CONTENT_TYPE" => "application/json",
             "X-GitHub-Event" => "installation"
-          )
+          }
         )
       }.to change { GitHubAccount.count }.by(1)
     end
@@ -66,10 +66,10 @@ describe "GitHub Events", type: :request do
         post(
           "/api/v1/github_events",
           params: payload,
-          headers: api_authorization_headers(user).merge(
+          headers: {
             "CONTENT_TYPE" => "application/json",
             "X-GitHub-Event" => "push"
-          )
+          }
         )
       }.to change { GitHubEvent.count }.by(1)
     end
