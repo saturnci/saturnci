@@ -30,15 +30,11 @@ class TestRunnerDropletSpecification
   end
 
   def user_data
-    admin_user = User.find_by(super_admin: true)
-
     <<~SCRIPT
       #!/bin/bash
 
       export TEST_RUNNER_ID=#{@test_runner.id}
       export SATURNCI_API_HOST=#{ENV["SATURNCI_HOST"]}
-      export SATURNCI_USER_ID=#{admin_user.id}
-      export SATURNCI_USER_API_TOKEN=#{admin_user.api_token}
       export TEST_RUNNER_ACCESS_TOKEN=#{@test_runner.access_token.value}
 
       export DOCKER_REGISTRY_CACHE_USERNAME=#{ENV["DOCKER_REGISTRY_CACHE_USERNAME"]}
