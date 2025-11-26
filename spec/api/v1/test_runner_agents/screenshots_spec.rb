@@ -2,7 +2,8 @@ require "rails_helper"
 include APIAuthenticationHelper
 
 describe "Screenshots", type: :request do
-  let!(:run) { create(:run) }
+  let!(:run) { create(:run, :with_test_runner) }
+  let!(:test_runner) { run.test_runner }
 
   let!(:screenshot_file) do
     path = Rails.root.join("spec", "support", "images", "screenshot.png")
@@ -18,7 +19,7 @@ describe "Screenshots", type: :request do
     post(
       api_v1_test_runner_agents_run_screenshots_path(run_id: run.id),
       params: { screenshot: screenshot_file },
-      headers: api_authorization_headers(run.test_suite_run.project.user).merge(
+      headers: test_runner_agents_api_authorization_headers(test_runner).merge(
         "Content-Type" => "application/tar",
         "X-Filename" => "screenshot.tar.gz"
       )
@@ -32,7 +33,7 @@ describe "Screenshots", type: :request do
       post(
         api_v1_test_runner_agents_run_screenshots_path(run_id: run.id),
         params: { screenshot: screenshot_file },
-        headers: api_authorization_headers(run.test_suite_run.project.user).merge(
+        headers: test_runner_agents_api_authorization_headers(test_runner).merge(
           "Content-Type" => "application/tar",
           "X-Filename" => "screenshot.tar.gz"
         )
@@ -44,7 +45,7 @@ describe "Screenshots", type: :request do
     before do
       post(
         api_v1_test_runner_agents_run_screenshots_path(run_id: run.id),
-        headers: api_authorization_headers(run.test_suite_run.project.user)
+        headers: test_runner_agents_api_authorization_headers(test_runner)
       )
     end
 
