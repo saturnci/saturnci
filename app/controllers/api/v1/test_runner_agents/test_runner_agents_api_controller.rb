@@ -18,12 +18,15 @@ module API
                 id: user_id,
                 personal_access_tokens: { access_token: access_token }
               )
+
+              if @current_user.nil?
+                @current_test_runner = TestRunner.find_by(id: user_id, access_token: access_token)
+              end
             else
-              # legacy token
               @current_user = User.find_by(id: user_id, api_token: api_token)
             end
 
-            @current_user.present?
+            @current_user.present? || @current_test_runner.present?
           end
         end
 
