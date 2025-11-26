@@ -4,16 +4,13 @@ include APIAuthenticationHelper
 describe "Test runner assignments", type: :request do
   describe "GET /api/v1/test_runner_agents/test_runners/:test_runner_id/test_runner_assignments" do
     context "assignment exists" do
-      let!(:test_runner_assignment) do
-        create(:test_runner_assignment)
-      end
-
-      let!(:user) { create(:user, super_admin: true) }
+      let!(:test_runner_assignment) { create(:test_runner_assignment) }
+      let!(:test_runner) { test_runner_assignment.test_runner }
 
       it "returns the assignment" do
         get(
-          api_v1_test_runner_agents_test_runner_test_runner_assignments_path(test_runner_id: test_runner_assignment.test_runner_id, format: :json),
-          headers: api_authorization_headers(user)
+          api_v1_test_runner_agents_test_runner_test_runner_assignments_path(test_runner_id: test_runner.id, format: :json),
+          headers: test_runner_agents_api_authorization_headers(test_runner)
         )
 
         response_body = JSON.parse(response.body)[0]
@@ -23,8 +20,8 @@ describe "Test runner assignments", type: :request do
       context "no project secrets exist" do
         it "assigns env_vars to an empty hash" do
           get(
-            api_v1_test_runner_agents_test_runner_test_runner_assignments_path(test_runner_id: test_runner_assignment.test_runner_id, format: :json),
-            headers: api_authorization_headers(user)
+            api_v1_test_runner_agents_test_runner_test_runner_assignments_path(test_runner_id: test_runner.id, format: :json),
+            headers: test_runner_agents_api_authorization_headers(test_runner)
           )
 
           response_body = JSON.parse(response.body)[0]
@@ -37,13 +34,12 @@ describe "Test runner assignments", type: :request do
   describe "assignment is created, then test suite run is deleted" do
     it "does not show up in the list of assignments" do
       test_runner_assignment = create(:test_runner_assignment)
+      test_runner = test_runner_assignment.test_runner
       test_runner_assignment.run.test_suite_run.destroy
 
-      user = create(:user, super_admin: true)
-
       get(
-        api_v1_test_runner_agents_test_runner_test_runner_assignments_path(test_runner_id: test_runner_assignment.test_runner_id, format: :json),
-        headers: api_authorization_headers(user)
+        api_v1_test_runner_agents_test_runner_test_runner_assignments_path(test_runner_id: test_runner.id, format: :json),
+        headers: test_runner_agents_api_authorization_headers(test_runner)
       )
 
       response_body = JSON.parse(response.body)
@@ -53,11 +49,11 @@ describe "Test runner assignments", type: :request do
 
   describe "when test runner does not exist" do
     it "returns bad request with error message" do
-      user = create(:user, super_admin: true)
+      test_runner = create(:test_runner)
 
       get(
         api_v1_test_runner_agents_test_runner_test_runner_assignments_path(test_runner_id: "nonexistent", format: :json),
-        headers: api_authorization_headers(user)
+        headers: test_runner_agents_api_authorization_headers(test_runner)
       )
 
       expect(response).to have_http_status(:bad_request)
