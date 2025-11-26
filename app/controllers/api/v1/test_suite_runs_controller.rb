@@ -25,15 +25,19 @@ module API
         repository = Repository.find_by!(github_repo_full_name: params[:repository])
         authorize :test_suite_run, :create?
 
-        test_suite_run = TestSuiteRun.create!(
+        test_suite_run = TestSuiteRun.new(
           repository: repository,
           branch_name: params[:branch_name],
           commit_hash: params[:commit_hash],
           commit_message: params[:commit_message],
           author_name: params[:author_name]
         )
+        test_suite_run.start!
 
-        render json: { id: test_suite_run.id }
+        render json: {
+          id: test_suite_run.id,
+          runs: test_suite_run.runs.map { |run| { id: run.id } }
+        }
       end
 
       private

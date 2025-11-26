@@ -43,5 +43,30 @@ describe "POST /api/v1/test_suite_runs", type: :request do
       expect(response).to have_http_status(:success)
       expect(JSON.parse(response.body)["id"]).to eq(TestSuiteRun.last.id)
     end
+
+    it "creates runs" do
+      repository.update!(concurrency: 2)
+
+      post(
+        api_v1_test_suite_runs_path,
+        params:,
+        headers: { "Authorization" => credentials }
+      )
+
+      expect(TestSuiteRun.last.runs.count).to eq(2)
+    end
+
+    it "returns the run ids" do
+      repository.update!(concurrency: 2)
+
+      post(
+        api_v1_test_suite_runs_path,
+        params:,
+        headers: { "Authorization" => credentials }
+      )
+
+      response_body = JSON.parse(response.body)
+      expect(response_body["runs"].count).to eq(2)
+    end
   end
 end
