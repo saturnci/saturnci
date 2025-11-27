@@ -30,7 +30,7 @@ describe "GET /api/v1/test_suite_runs/:id", type: :request do
 
     it "returns the failed test details" do
       get(
-        api_v1_test_suite_run_path(test_suite_run),
+        api_v1_test_suite_run_path(test_suite_run.id[0..8]),
         headers: { "Authorization" => credentials }
       )
 

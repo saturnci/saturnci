@@ -16,7 +16,7 @@ module API
       end
 
       def show
-        test_suite_run = TestSuiteRun.find(params[:id])
+        test_suite_run = TestSuiteRun.find_by_abbreviated_hash(params[:id])
         authorize test_suite_run
 
         render json: {
