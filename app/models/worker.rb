@@ -5,7 +5,7 @@ class Worker < ApplicationRecord
   belongs_to :access_token
   has_many :test_runner_events, foreign_key: :test_runner_id, dependent: :destroy
   has_one :run_test_runner
-  has_one :test_runner_assignment, foreign_key: :test_runner_id, inverse_of: :test_runner, dependent: :destroy
+  has_one :test_runner_assignment, foreign_key: :test_runner_id, inverse_of: :worker, dependent: :destroy
   has_one :run, through: :test_runner_assignment
   before_destroy :deprovision
 
@@ -96,7 +96,7 @@ class Worker < ApplicationRecord
   def assign(run)
     transaction do
       test_runner_events.create!(type: :assignment_made)
-      TestRunnerAssignment.create!(test_runner: self, run:)
+      TestRunnerAssignment.create!(worker: self, run:)
     end
   end
 end

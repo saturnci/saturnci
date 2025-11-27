@@ -3,7 +3,7 @@ require "rails_helper"
 describe "Test Runner Agents Authentication", type: :request do
   describe "GET /api/v1/test_runner_agents/test_runners/:test_runner_id/test_runner_assignments" do
     let!(:test_runner_assignment) { create(:test_runner_assignment) }
-    let!(:test_runner) { test_runner_assignment.test_runner }
+    let!(:test_runner) { test_runner_assignment.worker }
 
     context "with valid test runner credentials" do
       it "returns success" do

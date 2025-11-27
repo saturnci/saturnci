@@ -62,7 +62,7 @@ describe Dispatcher do
     it "puts the test runner in error status" do
       travel_to(60.seconds.from_now) do
         Dispatcher.check
-        expect(test_runner_assignment.test_runner.status).to eq("Error")
+        expect(test_runner_assignment.worker.status).to eq("Error")
       end
     end
 
@@ -86,7 +86,7 @@ describe Dispatcher do
 
       create(
         :test_runner_event,
-        test_runner: test_runner_assignment.test_runner,
+        test_runner: test_runner_assignment.worker,
         type: :assignment_acknowledged
       )
 
