@@ -1,8 +1,7 @@
 require "rails_helper"
 
 describe "GET /api/v1/test_suite_runs", type: :request do
-  let!(:user) { create(:user) }
-  let!(:personal_access_token) { create(:personal_access_token, user:) }
+  let!(:user) { create(:user, :with_personal_access_token) }
 
   let!(:accessible_repository) { create(:repository) }
   let!(:accessible_test_suite_run) { create(:test_suite_run, repository: accessible_repository) }
@@ -13,7 +12,7 @@ describe "GET /api/v1/test_suite_runs", type: :request do
   let(:credentials) do
     ActionController::HttpAuthentication::Basic.encode_credentials(
       user.id.to_s,
-      personal_access_token.access_token.value
+      user.personal_access_tokens.first.access_token.value
     )
   end
 

@@ -1,15 +1,14 @@
 require "rails_helper"
 
 describe "GET /api/v1/test_suite_runs/:id", type: :request do
-  let!(:user) { create(:user, super_admin: true) }
-  let!(:personal_access_token) { create(:personal_access_token, user:) }
+  let!(:user) { create(:user, :with_personal_access_token, super_admin: true) }
   let!(:test_suite_run) { create(:build) }
   let!(:run) { create(:run, test_suite_run:) }
 
   let(:credentials) do
     ActionController::HttpAuthentication::Basic.encode_credentials(
       user.id.to_s,
-      personal_access_token.access_token.value
+      user.personal_access_tokens.first.access_token.value
     )
   end
 

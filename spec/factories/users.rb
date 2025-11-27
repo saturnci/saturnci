@@ -10,5 +10,11 @@ FactoryBot.define do
         )
       end
     end
+
+    trait :with_personal_access_token do
+      after(:create) do |user|
+        create(:personal_access_token, user:)
+      end
+    end
   end
 end
