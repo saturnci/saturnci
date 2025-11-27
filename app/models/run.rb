@@ -41,7 +41,7 @@ class Run < ApplicationRecord
   end
 
   def name
-    "Worker #{order_index}"
+    "Runner #{order_index}"
   end
 
   def cancel!
