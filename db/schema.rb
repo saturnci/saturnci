@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_24_222015) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_27_161043) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -226,19 +226,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_24_222015) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "test_runners", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name", null: false
-    t.string "cloud_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.uuid "rsa_key_id"
-    t.boolean "terminate_on_completion", default: true, null: false
-    t.uuid "access_token_id", null: false
-    t.index ["cloud_id"], name: "index_test_runners_on_cloud_id", unique: true
-    t.index ["name"], name: "index_test_runners_on_name", unique: true
-    t.index ["rsa_key_id"], name: "index_test_runners_on_rsa_key_id"
-  end
-
   create_table "test_suite_run_result_notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "test_suite_run_id", null: false
     t.uuid "sent_email_id", null: false
@@ -292,6 +279,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_24_222015) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "workers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.string "cloud_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "rsa_key_id"
+    t.boolean "terminate_on_completion", default: true, null: false
+    t.uuid "access_token_id", null: false
+    t.index ["cloud_id"], name: "index_workers_on_cloud_id", unique: true
+    t.index ["name"], name: "index_workers_on_name", unique: true
+    t.index ["rsa_key_id"], name: "index_workers_on_rsa_key_id"
+  end
+
   add_foreign_key "charges", "runs"
   add_foreign_key "github_accounts", "users"
   add_foreign_key "github_check_runs", "test_suite_runs", column: "build_id"
@@ -303,16 +303,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_24_222015) do
   add_foreign_key "repositories", "github_accounts"
   add_foreign_key "run_events", "runs"
   add_foreign_key "run_test_runners", "runs"
-  add_foreign_key "run_test_runners", "test_runners"
+  add_foreign_key "run_test_runners", "workers", column: "test_runner_id"
   add_foreign_key "runner_system_logs", "runs"
   add_foreign_key "runs", "test_suite_runs", column: "build_id"
   add_foreign_key "screenshots", "runs"
   add_foreign_key "test_case_runs", "runs"
   add_foreign_key "test_runner_assignments", "runs"
-  add_foreign_key "test_runner_assignments", "test_runners"
-  add_foreign_key "test_runner_events", "test_runners"
-  add_foreign_key "test_runners", "rsa_keys"
+  add_foreign_key "test_runner_assignments", "workers", column: "test_runner_id"
+  add_foreign_key "test_runner_events", "workers", column: "test_runner_id"
   add_foreign_key "test_suite_run_result_notifications", "sent_emails"
   add_foreign_key "test_suite_run_result_notifications", "test_suite_runs"
   add_foreign_key "test_suite_runs", "repositories"
+  add_foreign_key "workers", "rsa_keys"
 end

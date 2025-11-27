@@ -1,4 +1,6 @@
 class TestRunner < ApplicationRecord
+  self.table_name = "workers"
+
   belongs_to :rsa_key, class_name: "Cloud::RSAKey", optional: true
   belongs_to :access_token
   has_many :test_runner_events, dependent: :destroy
@@ -16,7 +18,7 @@ class TestRunner < ApplicationRecord
       .where(test_runner_events: { type: :ready_signal_received })
       .where("test_runner_events.created_at = (
         SELECT MAX(created_at) FROM test_runner_events
-        WHERE test_runner_events.test_runner_id = test_runners.id
+        WHERE test_runner_events.test_runner_id = workers.id
       )")
   end
 
