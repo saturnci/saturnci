@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe TestRunner do
+describe Worker do
   before do
     admin_user = double
     allow(admin_user).to receive(:id).and_return(1)
