@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :test_runner_event do
-    test_runner { nil }
+    association :worker, factory: :test_runner
     type { 1 }
   end
 end

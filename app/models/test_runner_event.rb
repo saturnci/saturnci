@@ -1,6 +1,6 @@
 class TestRunnerEvent < ApplicationRecord
   self.inheritance_column = :_type_not_used
-  belongs_to :test_runner, class_name: "TestRunner"
+  belongs_to :worker, foreign_key: :test_runner_id
 
   enum :type, [
     :provision_request_sent,
