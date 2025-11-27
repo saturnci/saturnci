@@ -86,7 +86,7 @@ describe Dispatcher do
 
       create(
         :test_runner_event,
-        test_runner: test_runner_assignment.worker,
+        worker: test_runner_assignment.worker,
         type: :assignment_acknowledged
       )
 
