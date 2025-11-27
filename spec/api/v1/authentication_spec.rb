@@ -7,6 +7,10 @@ describe "Authentication", type: :request do
     context "with valid Personal Access Token" do
       let!(:personal_access_token) { create(:personal_access_token, user:) }
 
+      before do
+        allow_any_instance_of(User).to receive(:github_repositories).and_return([])
+      end
+
       it "returns success" do
         credentials = ActionController::HttpAuthentication::Basic.encode_credentials(
           user.id.to_s,

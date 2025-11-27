@@ -1,6 +1,6 @@
 class TestSuiteRunPolicy < ApplicationPolicy
   def index?
-    user.super_admin?
+    true
   end
 
   def create?

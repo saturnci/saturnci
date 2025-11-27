@@ -4,11 +4,13 @@ module API
       DEFAULT_LIMIT = 30
 
       def index
-        test_suite_runs = TestSuiteRun.order("created_at DESC")
+        authorize :test_suite_run, :index?
+
+        test_suite_runs = TestSuiteRun
+          .where(repository_id: current_user.github_repositories.map(&:id))
+          .order("created_at DESC")
           .limit(DEFAULT_LIMIT)
           .as_json(methods: %w[status duration_formatted])
-
-        authorize :test_suite_run, :index?
 
         render json: test_suite_runs
       end
