@@ -1,7 +1,7 @@
 module API
   module V1
     class TestSuiteRunsController < APIController
-      DEFAULT_LIMIT = 10
+      DEFAULT_LIMIT = 30
 
       def index
         test_suite_runs = TestSuiteRun.order("created_at DESC")
