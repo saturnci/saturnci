@@ -96,7 +96,7 @@ class Worker < ApplicationRecord
   def assign(run)
     transaction do
       test_runner_events.create!(type: :assignment_made)
-      TestRunnerAssignment.create!(test_runner: self, run:)
+      TestRunnerAssignment.create!(worker: self, run:)
     end
   end
 end

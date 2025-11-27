@@ -32,7 +32,7 @@ describe Worker do
       it "does not include the test runner" do
         test_runner = create(:test_runner)
         create(:test_runner_event, test_runner:, type: :ready_signal_received)
-        create(:test_runner_assignment, test_runner:)
+        create(:test_runner_assignment, worker: test_runner)
         expect(TestRunner.available).not_to include(test_runner)
       end
     end

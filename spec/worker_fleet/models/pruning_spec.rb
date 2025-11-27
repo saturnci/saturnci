@@ -46,7 +46,7 @@ describe TestRunnerFleet, "pruning" do
 
   context "there's an assigned test runner that's more than an hour old" do
     it "does not delete it" do
-      test_runner = create(:test_runner_assignment).test_runner
+      test_runner = create(:test_runner_assignment).worker
 
       travel_to(2.hours.from_now) do
         expect { Dispatcher.check(c) }.to_not change { TestRunner.exists?(test_runner.id) }
@@ -56,7 +56,7 @@ describe TestRunnerFleet, "pruning" do
 
   context "there's an assigned test runner that's more than a day old" do
     it "deletes it" do
-      test_runner = create(:test_runner_assignment).test_runner
+      test_runner = create(:test_runner_assignment).worker
 
       travel_to(2.days.from_now) do
         expect { Dispatcher.check(c) }.to change { TestRunner.exists?(test_runner.id) }.from(true).to(false)

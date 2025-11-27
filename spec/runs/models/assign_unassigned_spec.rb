@@ -11,7 +11,7 @@ describe "Assigning unassigned runs" do
 
       expect {
         Dispatcher.check
-      }.to change { run.reload.test_runner }.from(nil).to(test_runner)
+      }.to change { run.reload.test_runner&.id }.from(nil).to(test_runner.id)
     end
   end
 end
