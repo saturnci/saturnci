@@ -13,7 +13,7 @@ describe "Starting test suite run" do
     it "makes the assignments" do
       expect do
         test_suite_run.start!
-        TestRunnerSupervisor.check
+        Dispatcher.check
       end.to change(TestRunnerAssignment, :count).by(2)
     end
   end
