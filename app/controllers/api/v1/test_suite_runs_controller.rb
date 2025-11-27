@@ -13,6 +13,29 @@ module API
         render json: test_suite_runs
       end
 
+      def show
+        test_suite_run = TestSuiteRun.find(params[:id])
+        authorize test_suite_run
+
+        render json: {
+          id: test_suite_run.id,
+          status: test_suite_run.status,
+          branch_name: test_suite_run.branch_name,
+          commit_hash: test_suite_run.commit_hash,
+          commit_message: test_suite_run.commit_message,
+          failed_tests: test_suite_run.test_case_runs.failed.map do |test_case_run|
+            {
+              path: test_case_run.path,
+              line_number: test_case_run.line_number,
+              description: test_case_run.description,
+              exception: test_case_run.exception,
+              exception_message: test_case_run.exception_message,
+              exception_backtrace: test_case_run.exception_backtrace
+            }
+          end
+        }
+      end
+
       def update
         test_suite_run = TestSuiteRun.find(params[:id])
         authorize test_suite_run, :update?
