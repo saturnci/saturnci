@@ -1,10 +1,12 @@
 require "rails_helper"
 
 describe "Authentication", type: :request do
-  let!(:user) { create(:user, :with_personal_access_token, super_admin: true) }
+  let!(:user) { create(:user, super_admin: true) }
 
   describe "GET /api/v1/test_suite_runs" do
     context "with valid Personal Access Token" do
+      let!(:personal_access_token) { create(:personal_access_token, user:) }
+
       before do
         allow_any_instance_of(User).to receive(:github_repositories).and_return([])
       end
@@ -12,7 +14,7 @@ describe "Authentication", type: :request do
       it "returns success" do
         credentials = ActionController::HttpAuthentication::Basic.encode_credentials(
           user.id.to_s,
-          user.personal_access_tokens.first.access_token.value
+          personal_access_token.access_token.value
         )
 
         get(
@@ -29,7 +31,7 @@ describe "Authentication", type: :request do
         it "returns unauthorized" do
           credentials = ActionController::HttpAuthentication::Basic.encode_credentials(
             other_user.id.to_s,
-            user.personal_access_tokens.first.access_token.value
+            personal_access_token.access_token.value
           )
 
           get(

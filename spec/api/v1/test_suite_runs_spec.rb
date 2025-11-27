@@ -1,13 +1,14 @@
 require "rails_helper"
 
 describe "POST /api/v1/test_suite_runs", type: :request do
-  let!(:user) { create(:user, :with_personal_access_token, super_admin: true) }
+  let!(:user) { create(:user, super_admin: true) }
+  let!(:personal_access_token) { create(:personal_access_token, user:) }
   let!(:repository) { create(:repository, github_repo_full_name: "jasonswett/panda") }
 
   let(:credentials) do
     ActionController::HttpAuthentication::Basic.encode_credentials(
       user.id.to_s,
-      user.personal_access_tokens.first.access_token.value
+      personal_access_token.access_token.value
     )
   end
 
