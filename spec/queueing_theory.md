@@ -12,6 +12,14 @@
 | `scale()` | **Auto-scaling** or **Capacity Management** |
 | orphaned assignments | **Timeout** / **Dead Letter** handling |
 
+| Queueing Theory | CI/CD Term | Your Current         |
+|-----------------|------------|----------------------|
+| Server/Worker   | Agent      | TestRunner           |
+| Job             | Job        | Run                  |
+| Queue           | Queue      | unassigned_runs      |
+| Server Pool     | Agent Pool | TestRunnerFleet      |
+| Dispatcher      | Dispatcher | TestRunnerSupervisor |
+
 ## Possible Renames
 
 - `TestRunnerSupervisor` -> `Dispatcher` or `Scheduler`
