@@ -4,7 +4,7 @@
 | Run                       | Job                   | Job                   |
 | unassigned_runs           | Queue                 | Queue                 |
 | TestRunnerFleet           | Server Pool           | Agent Pool            |
-| TestRunnerSupervisor      | Dispatcher            | Dispatcher            |
+| Dispatcher                | Dispatcher            | Dispatcher            |
 | TestRunnerAssignment      | Dispatch              | Assignment            |
 | available_test_runners    | Idle Servers          | Available Agents      |
 | TestRunOrchestrationCheck | Queue State           | Queue State           |

@@ -1,6 +1,6 @@
 production:
-  supervise_test_runners_task:
-    command: "TestRunnerSupervisor.check"
+  dispatch_task:
+    command: "Dispatcher.check"
     schedule: "1 * * * * *"
   send_test_suite_run_result_notifications:
     command: "SendTestSuiteRunResultNotificationsJob.perform_now"

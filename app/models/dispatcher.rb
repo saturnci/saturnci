@@ -1,4 +1,4 @@
-class TestRunnerSupervisor
+class Dispatcher
   TEST_RUNNER_FLEET_BUFFER = 2
   MAX_NUMBER_OF_VERY_OLD_TEST_RUNNERS_TO_DELETE_AT_ONE_TIME = 10
 

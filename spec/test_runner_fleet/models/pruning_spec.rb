@@ -4,7 +4,7 @@ describe TestRunnerFleet, "pruning" do
   before do
     allow(TestRunner).to receive(:create_vm)
     allow_any_instance_of(TestRunner).to receive(:deprovision)
-    allow(TestRunnerSupervisor).to receive(:log)
+    allow(Dispatcher).to receive(:log)
   end
 
   let!(:c) { TestRunOrchestrationCheck.new }
@@ -30,7 +30,7 @@ describe TestRunnerFleet, "pruning" do
         test_runner.test_runner_events.create!(type: :error)
       end
 
-      expect { TestRunnerSupervisor.check(c) }.to change(TestRunner, :count).by(-2)
+      expect { Dispatcher.check(c) }.to change(TestRunner, :count).by(-2)
     end
   end
 
@@ -39,7 +39,7 @@ describe TestRunnerFleet, "pruning" do
       test_runner = create(:test_runner)
 
       travel_to(2.hours.from_now) do
-        expect { TestRunnerSupervisor.check }.to change { TestRunner.exists?(test_runner.id) }.to(false)
+        expect { Dispatcher.check }.to change { TestRunner.exists?(test_runner.id) }.to(false)
       end
     end
   end
@@ -49,7 +49,7 @@ describe TestRunnerFleet, "pruning" do
       test_runner = create(:test_runner_assignment).test_runner
 
       travel_to(2.hours.from_now) do
-        expect { TestRunnerSupervisor.check(c) }.to_not change { TestRunner.exists?(test_runner.id) }
+        expect { Dispatcher.check(c) }.to_not change { TestRunner.exists?(test_runner.id) }
       end
     end
   end
@@ -59,7 +59,7 @@ describe TestRunnerFleet, "pruning" do
       test_runner = create(:test_runner_assignment).test_runner
 
       travel_to(2.days.from_now) do
-        expect { TestRunnerSupervisor.check(c) }.to change { TestRunner.exists?(test_runner.id) }.from(true).to(false)
+        expect { Dispatcher.check(c) }.to change { TestRunner.exists?(test_runner.id) }.from(true).to(false)
       end
     end
   end
