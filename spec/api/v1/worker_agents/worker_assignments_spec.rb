@@ -5,7 +5,7 @@ describe "Test runner assignments", type: :request do
   describe "GET /api/v1/test_runner_agents/test_runners/:test_runner_id/test_runner_assignments" do
     context "assignment exists" do
       let!(:test_runner_assignment) { create(:test_runner_assignment) }
-      let!(:test_runner) { test_runner_assignment.test_runner }
+      let!(:test_runner) { test_runner_assignment.worker }
 
       it "returns the assignment" do
         get(
@@ -34,7 +34,7 @@ describe "Test runner assignments", type: :request do
   describe "assignment is created, then test suite run is deleted" do
     it "does not show up in the list of assignments" do
       test_runner_assignment = create(:test_runner_assignment)
-      test_runner = test_runner_assignment.test_runner
+      test_runner = test_runner_assignment.worker
       test_runner_assignment.run.test_suite_run.destroy
 
       get(

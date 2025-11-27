@@ -35,9 +35,9 @@ class Dispatcher
 
     ActiveRecord::Base.transaction do
       orphaned_test_runner_assignments.each do |test_runner_assignment|
-        test_runner_assignment.test_runner.test_runner_events.create!(type: :error)
+        test_runner_assignment.worker.test_runner_events.create!(type: :error)
         log "Deleting orphaned test runner assignment: #{test_runner_assignment.id}"
-        log "Test runner: #{test_runner_assignment.test_runner.name}"
+        log "Test runner: #{test_runner_assignment.worker.name}"
         test_runner_assignment.destroy
       end
     end
