@@ -16,8 +16,8 @@ describe "test suite reruns", type: :request do
 
     before do
       allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
-      allow(TestRunner).to receive(:create_vm)
-      allow(TestRunner).to receive(:available).and_return([create(:test_runner)])
+      allow(Worker).to receive(:create_vm)
+      allow(Worker).to receive(:available).and_return([create(:test_runner)])
       login_as(test_suite_run.project.user, scope: :user)
     end
 

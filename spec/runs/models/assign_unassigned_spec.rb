@@ -6,8 +6,8 @@ describe "Assigning unassigned runs" do
       test_runner = create(:test_runner)
       run = create(:run)
 
-      allow(TestRunner).to receive(:available).and_return([test_runner])
-      allow(TestRunner).to receive(:create_vm)
+      allow(Worker).to receive(:available).and_return([test_runner])
+      allow(Worker).to receive(:create_vm)
 
       expect {
         Dispatcher.check

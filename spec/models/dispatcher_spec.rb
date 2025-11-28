@@ -2,8 +2,8 @@ require "rails_helper"
 
 describe Dispatcher do
   before do
-    allow(TestRunner).to receive(:create_vm)
-    allow_any_instance_of(TestRunner).to receive(:deprovision)
+    allow(Worker).to receive(:create_vm)
+    allow_any_instance_of(Worker).to receive(:deprovision)
     allow(Dispatcher).to receive(:log)
   end
 
@@ -17,14 +17,14 @@ describe Dispatcher do
     context "there are 3 test runners" do
       it "creates 1 test runner" do
         create_list(:test_runner, 3)
-        expect { Dispatcher.check(c) }.to change(TestRunner, :count).by(1)
+        expect { Dispatcher.check(c) }.to change(Worker, :count).by(1)
       end
     end
 
     context "there are 4 test runners" do
       it "does not create a test runner" do
         create_list(:test_runner, 4)
-        expect { Dispatcher.check(c) }.to_not change(TestRunner, :count)
+        expect { Dispatcher.check(c) }.to_not change(Worker, :count)
       end
     end
 
@@ -32,7 +32,7 @@ describe Dispatcher do
       it "creates 4 - 1 = 3 test runners" do
         create_list(:test_runner_assignment, 4)
         create(:test_runner)
-        expect { Dispatcher.check(c) }.to change(TestRunner, :count).by(3)
+        expect { Dispatcher.check(c) }.to change(Worker, :count).by(3)
       end
     end
   end
@@ -41,7 +41,7 @@ describe Dispatcher do
     let!(:run) { create(:run, :passed) }
 
     before do
-      allow(TestRunner).to receive(:available).and_return([create(:test_runner)])
+      allow(Worker).to receive(:available).and_return([create(:test_runner)])
     end
 
     it "does not add an assignment" do
@@ -105,7 +105,7 @@ describe Dispatcher do
       test_runner_assignment.destroy
 
       test_runner = create(:test_runner)
-      allow(TestRunner).to receive(:available).and_return([test_runner])
+      allow(Worker).to receive(:available).and_return([test_runner])
 
       expect { Dispatcher.check }.to_not change(TestRunnerAssignment, :count)
     end

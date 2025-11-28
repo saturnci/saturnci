@@ -3,7 +3,7 @@ require "rails_helper"
 describe TestRunnerFleet do
   describe "#scale" do
     before do
-      allow(TestRunner).to receive(:create_vm)
+      allow(Worker).to receive(:create_vm)
     end
 
     let!(:test_runner_fleet) { TestRunnerFleet.instance }
@@ -12,7 +12,7 @@ describe TestRunnerFleet do
       it "creates 10 test runners" do
         expect {
           test_runner_fleet.scale(10)
-        }.to change { TestRunner.count }.from(0).to(10)
+        }.to change { Worker.count }.from(0).to(10)
       end
     end
 
@@ -20,7 +20,7 @@ describe TestRunnerFleet do
       it "creates 2 test runners" do
         expect {
           test_runner_fleet.scale(2)
-        }.to change { TestRunner.count }.from(0).to(2)
+        }.to change { Worker.count }.from(0).to(2)
       end
     end
 
@@ -36,7 +36,7 @@ describe TestRunnerFleet do
 
         expect {
           test_runner_fleet.scale(2)
-        }.to change { TestRunner.count }.from(10).to(2)
+        }.to change { Worker.count }.from(10).to(2)
       end
     end
 
@@ -46,7 +46,7 @@ describe TestRunnerFleet do
 
         expect {
           test_runner_fleet.scale(2)
-        }.not_to change { TestRunner.all.map(&:id) }
+        }.not_to change { Worker.all.map(&:id) }
       end
     end
   end

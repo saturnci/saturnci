@@ -6,8 +6,8 @@ describe "Starting test suite run" do
 
   context "there are available test runners" do
     before do
-      allow(TestRunner).to receive(:available).and_return(create_list(:test_runner, 2))
-      allow(TestRunner).to receive(:create_vm)
+      allow(Worker).to receive(:available).and_return(create_list(:test_runner, 2))
+      allow(Worker).to receive(:create_vm)
     end
 
     it "makes the assignments" do
@@ -29,7 +29,7 @@ describe "Starting test suite run" do
 
     it "does not add test runners" do
       expect { test_suite_run.start! }
-        .not_to change(TestRunner, :count)
+        .not_to change(Worker, :count)
     end
   end
 end

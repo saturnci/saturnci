@@ -2,8 +2,8 @@ require "rails_helper"
 
 describe TestRunnerFleet, "pruning" do
   before do
-    allow(TestRunner).to receive(:create_vm)
-    allow_any_instance_of(TestRunner).to receive(:deprovision)
+    allow(Worker).to receive(:create_vm)
+    allow_any_instance_of(Worker).to receive(:deprovision)
     allow(Dispatcher).to receive(:log)
   end
 
@@ -17,7 +17,7 @@ describe TestRunnerFleet, "pruning" do
     it "deletes an unassigned test runner" do
       create_list(:test_runner, 5)
       test_runner_fleet = TestRunnerFleet.instance
-      expect { test_runner_fleet.prune }.to change(TestRunner, :count).by(-1)
+      expect { test_runner_fleet.prune }.to change(Worker, :count).by(-1)
     end
   end
 
@@ -30,7 +30,7 @@ describe TestRunnerFleet, "pruning" do
         test_runner.test_runner_events.create!(type: :error)
       end
 
-      expect { Dispatcher.check(c) }.to change(TestRunner, :count).by(-2)
+      expect { Dispatcher.check(c) }.to change(Worker, :count).by(-2)
     end
   end
 
@@ -39,7 +39,7 @@ describe TestRunnerFleet, "pruning" do
       test_runner = create(:test_runner)
 
       travel_to(2.hours.from_now) do
-        expect { Dispatcher.check }.to change { TestRunner.exists?(test_runner.id) }.to(false)
+        expect { Dispatcher.check }.to change { Worker.exists?(test_runner.id) }.to(false)
       end
     end
   end
@@ -49,7 +49,7 @@ describe TestRunnerFleet, "pruning" do
       test_runner = create(:test_runner_assignment).worker
 
       travel_to(2.hours.from_now) do
-        expect { Dispatcher.check(c) }.to_not change { TestRunner.exists?(test_runner.id) }
+        expect { Dispatcher.check(c) }.to_not change { Worker.exists?(test_runner.id) }
       end
     end
   end
@@ -59,7 +59,7 @@ describe TestRunnerFleet, "pruning" do
       test_runner = create(:test_runner_assignment).worker
 
       travel_to(2.days.from_now) do
-        expect { Dispatcher.check(c) }.to change { TestRunner.exists?(test_runner.id) }.from(true).to(false)
+        expect { Dispatcher.check(c) }.to change { Worker.exists?(test_runner.id) }.from(true).to(false)
       end
     end
   end
