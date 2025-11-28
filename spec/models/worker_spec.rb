@@ -23,7 +23,7 @@ describe Worker do
     context "when the test runner is available" do
       it "includes the test runner" do
         test_runner = create(:test_runner)
-        create(:test_runner_event, worker: test_runner, type: :ready_signal_received)
+        create(:worker_event, worker: test_runner, type: :ready_signal_received)
         expect(Worker.available).to include(test_runner)
       end
     end
@@ -31,7 +31,7 @@ describe Worker do
     context "when the test runner has an assignment" do
       it "does not include the test runner" do
         test_runner = create(:test_runner)
-        create(:test_runner_event, worker: test_runner, type: :ready_signal_received)
+        create(:worker_event, worker: test_runner, type: :ready_signal_received)
         create(:test_runner_assignment, worker: test_runner)
         expect(Worker.available).not_to include(test_runner)
       end
@@ -77,7 +77,7 @@ describe Worker do
     context "ready" do
       it "returns ready" do
         test_runner = create(:test_runner)
-        test_runner.test_runner_events.create!(type: :ready_signal_received)
+        test_runner.worker_events.create!(type: :ready_signal_received)
         expect(test_runner.status).to eq("Available")
       end
     end

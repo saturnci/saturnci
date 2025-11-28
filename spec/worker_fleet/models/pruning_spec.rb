@@ -27,7 +27,7 @@ describe TestRunnerFleet, "pruning" do
 
       2.times do
         test_runner = create(:test_runner)
-        test_runner.test_runner_events.create!(type: :error)
+        test_runner.worker_events.create!(type: :error)
       end
 
       expect { Dispatcher.check(c) }.to change(Worker, :count).by(-2)

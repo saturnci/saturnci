@@ -22,7 +22,7 @@ describe "Starting test suite run" do
     before do
       2.times do
         create(:test_runner) do |test_runner|
-          test_runner.test_runner_events.create!(type: :ready_signal_received)
+          test_runner.worker_events.create!(type: :ready_signal_received)
         end
       end
     end
