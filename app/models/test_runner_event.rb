@@ -1,4 +1,5 @@
 class TestRunnerEvent < ApplicationRecord
+  self.table_name = "worker_events"
   self.inheritance_column = :_type_not_used
   belongs_to :worker, foreign_key: :test_runner_id
 
