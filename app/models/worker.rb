@@ -15,21 +15,21 @@ class Worker < ApplicationRecord
 
   scope :available, -> do
     unassigned.joins(:test_runner_events)
-      .where(test_runner_events: { type: :ready_signal_received })
-      .where("test_runner_events.created_at = (
-        SELECT MAX(created_at) FROM test_runner_events
-        WHERE test_runner_events.test_runner_id = workers.id
+      .where(worker_events: { type: :ready_signal_received })
+      .where("worker_events.created_at = (
+        SELECT MAX(created_at) FROM worker_events
+        WHERE worker_events.test_runner_id = workers.id
       )")
   end
 
   scope :running, -> do
     joins(:test_runner_events)
-      .where(test_runner_events: { type: TestRunnerEvent.types[:assignment_acknowledged] })
+      .where(worker_events: { type: TestRunnerEvent.types[:assignment_acknowledged] })
   end
 
   scope :error, -> do
     joins(:test_runner_events)
-      .where(test_runner_events: { type: TestRunnerEvent.types[:error] })
+      .where(worker_events: { type: TestRunnerEvent.types[:error] })
   end
 
   scope :recently_assigned, -> do
