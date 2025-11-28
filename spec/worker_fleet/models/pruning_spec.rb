@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe TestRunnerFleet, "pruning" do
+describe WorkerPool, "pruning" do
   before do
     allow(Worker).to receive(:create_vm)
     allow_any_instance_of(Worker).to receive(:deprovision)
@@ -10,14 +10,14 @@ describe TestRunnerFleet, "pruning" do
   let!(:c) { TestRunOrchestrationCheck.new }
 
   before do
-    allow(TestRunnerFleet).to receive(:target_size).and_return(4)
+    allow(WorkerPool).to receive(:target_size).and_return(4)
   end
 
   context "there are 6 unassigned test runners" do
     it "deletes an unassigned test runner" do
       create_list(:test_runner, 5)
-      test_runner_fleet = TestRunnerFleet.instance
-      expect { test_runner_fleet.prune }.to change(Worker, :count).by(-1)
+      worker_pool = WorkerPool.instance
+      expect { worker_pool.prune }.to change(Worker, :count).by(-1)
     end
   end
 

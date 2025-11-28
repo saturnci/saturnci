@@ -9,10 +9,10 @@ class Dispatcher
     delete_test_runners(c.very_old_test_runners.limit(MAX_NUMBER_OF_VERY_OLD_TEST_RUNNERS_TO_DELETE_AT_ONE_TIME))
     remove_orphaned_test_runner_assignments(c.orphaned_test_runner_assignments)
 
-    test_runner_fleet = TestRunnerFleet.instance
-    test_runner_fleet.scale(TestRunnerFleet.target_size)
+    worker_pool = WorkerPool.instance
+    worker_pool.scale(WorkerPool.target_size)
 
-    log "Test runner fleet target size: #{TestRunnerFleet.target_size}"
+    log "Test runner fleet target size: #{WorkerPool.target_size}"
     log "Available test runners: #{c.available_test_runners.count}"
     log "Unassigned test runners: #{c.unassigned_test_runners.count}"
     log "Unassigned runs: #{c.unassigned_runs.count}"

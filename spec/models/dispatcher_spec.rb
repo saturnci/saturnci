@@ -11,7 +11,7 @@ describe Dispatcher do
     let!(:c) { TestRunOrchestrationCheck.new }
 
     before do
-      allow(TestRunnerFleet).to receive(:target_size).and_return(4)
+      allow(WorkerPool).to receive(:target_size).and_return(4)
     end
 
     context "there are 3 test runners" do
