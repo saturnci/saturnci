@@ -24,12 +24,12 @@ class Worker < ApplicationRecord
 
   scope :running, -> do
     joins(:test_runner_events)
-      .where(worker_events: { type: TestRunnerEvent.types[:assignment_acknowledged] })
+      .where(worker_events: { type: WorkerEvent.types[:assignment_acknowledged] })
   end
 
   scope :error, -> do
     joins(:test_runner_events)
-      .where(worker_events: { type: TestRunnerEvent.types[:error] })
+      .where(worker_events: { type: WorkerEvent.types[:error] })
   end
 
   scope :recently_assigned, -> do

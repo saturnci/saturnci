@@ -12,7 +12,7 @@ describe "Test runner events", type: :request do
           params: { type: "ready_signal_received" },
           headers: test_runner_agents_api_authorization_headers(test_runner)
         )
-      }.to change { TestRunnerEvent.count }.by(1)
+      }.to change { WorkerEvent.count }.by(1)
     end
 
     it "returns 201" do
