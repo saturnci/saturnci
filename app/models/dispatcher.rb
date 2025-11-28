@@ -4,8 +4,8 @@ class Dispatcher
   def self.check(c = TestRunOrchestrationCheck.new)
     log "-" * 80
 
-    delete_test_runners(c.old_unassigned_test_runners)
-    delete_test_runners(c.very_old_test_runners.limit(MAX_NUMBER_OF_VERY_OLD_TEST_RUNNERS_TO_DELETE_AT_ONE_TIME))
+    delete_workers(c.old_unassigned_test_runners)
+    delete_workers(c.very_old_test_runners.limit(MAX_NUMBER_OF_VERY_OLD_TEST_RUNNERS_TO_DELETE_AT_ONE_TIME))
     remove_orphaned_test_runner_assignments(c.orphaned_test_runner_assignments)
 
     worker_pool = WorkerPool.instance
@@ -24,9 +24,9 @@ class Dispatcher
     end
   end
 
-  def self.delete_test_runners(test_runners)
-    log "Deleting #{test_runners.count} old test runners"
-    test_runners.destroy_all
+  def self.delete_workers(workers)
+    log "Deleting #{workers.count} old test runners"
+    workers.destroy_all
   end
 
   def self.remove_orphaned_test_runner_assignments(orphaned_test_runner_assignments)

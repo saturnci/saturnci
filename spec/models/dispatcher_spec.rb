@@ -68,7 +68,7 @@ describe Dispatcher do
 
     context "run is more than a day old" do
       before do
-        allow(Dispatcher).to receive(:delete_test_runners)
+        allow(Dispatcher).to receive(:delete_workers)
       end
 
       it "does not delete the assignment" do
