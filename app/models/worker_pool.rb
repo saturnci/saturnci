@@ -3,7 +3,7 @@ class WorkerPool
 
   def self.target_size
     if Run.where("runs.created_at > ?", 1.hour.ago).any?
-      ENV.fetch("TEST_RUNNER_FLEET_SIZE", 20).to_i
+      ENV.fetch("WORKER_POOL_SIZE") { ENV.fetch("TEST_RUNNER_FLEET_SIZE", "20") }.to_i
     else
       0
     end

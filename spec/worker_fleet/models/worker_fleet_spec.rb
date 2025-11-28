@@ -53,12 +53,12 @@ describe WorkerPool do
 
   describe ".target_size" do
     before do
-      stub_const("ENV", ENV.to_hash.merge("TEST_RUNNER_FLEET_SIZE" => "10"))
+      stub_const("ENV", ENV.to_hash.merge("WORKER_POOL_SIZE" => "10"))
       create(:run)
     end
 
     context "a run has been created within the last hour" do
-      it "returns TEST_RUNNER_FLEET_SIZE" do
+      it "returns WORKER_POOL_SIZE" do
         expect(WorkerPool.target_size).to eq(10)
       end
     end
