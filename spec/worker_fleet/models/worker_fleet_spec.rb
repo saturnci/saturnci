@@ -1,17 +1,17 @@
 require "rails_helper"
 
-describe TestRunnerFleet do
+describe WorkerPool do
   describe "#scale" do
     before do
       allow(Worker).to receive(:create_vm)
     end
 
-    let!(:test_runner_fleet) { TestRunnerFleet.instance }
+    let!(:worker_pool) { WorkerPool.instance }
 
     context "scaling to 10" do
       it "creates 10 test runners" do
         expect {
-          test_runner_fleet.scale(10)
+          worker_pool.scale(10)
         }.to change { Worker.count }.from(0).to(10)
       end
     end
@@ -19,7 +19,7 @@ describe TestRunnerFleet do
     context "scaling to 2" do
       it "creates 2 test runners" do
         expect {
-          test_runner_fleet.scale(2)
+          worker_pool.scale(2)
         }.to change { Worker.count }.from(0).to(2)
       end
     end
@@ -32,20 +32,20 @@ describe TestRunnerFleet do
       end
 
       it "works" do
-        test_runner_fleet.scale(10)
+        worker_pool.scale(10)
 
         expect {
-          test_runner_fleet.scale(2)
+          worker_pool.scale(2)
         }.to change { Worker.count }.from(10).to(2)
       end
     end
 
     context "scaling and then scaling again to the same number" do
       it "does not delete test runners" do
-        test_runner_fleet.scale(2)
+        worker_pool.scale(2)
 
         expect {
-          test_runner_fleet.scale(2)
+          worker_pool.scale(2)
         }.not_to change { Worker.all.map(&:id) }
       end
     end
@@ -59,14 +59,14 @@ describe TestRunnerFleet do
 
     context "a run has been created within the last hour" do
       it "returns TEST_RUNNER_FLEET_SIZE" do
-        expect(TestRunnerFleet.target_size).to eq(10)
+        expect(WorkerPool.target_size).to eq(10)
       end
     end
 
     context "a run has not been created within the last hour" do
       it "returns 0" do
         travel_to(2.hours.from_now) do
-          expect(TestRunnerFleet.target_size).to eq(0)
+          expect(WorkerPool.target_size).to eq(0)
         end
       end
     end

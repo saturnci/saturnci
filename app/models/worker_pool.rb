@@ -1,4 +1,4 @@
-class TestRunnerFleet
+class WorkerPool
   include Singleton
 
   def self.target_size
