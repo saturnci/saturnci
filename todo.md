@@ -7,6 +7,7 @@
 - Sometimes, when a test suite run finishes, the status doesn't get updated from "Running" to "Passed" (or "Failed")
 - Newer test suite runs sometimes show up behind older ones
 - Sometimes, in the system logs, autoscrolling mysteriously stops working
+- Each deploy causes a 503 blip
 
 ## Defects
 - Fix data model that connects GitHub accounts and users
