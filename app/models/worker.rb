@@ -3,7 +3,7 @@ class Worker < ApplicationRecord
 
   belongs_to :rsa_key, class_name: "Cloud::RSAKey", optional: true
   belongs_to :access_token
-  has_many :test_runner_events, foreign_key: :test_runner_id, inverse_of: :worker, dependent: :destroy
+  has_many :worker_events, foreign_key: :test_runner_id, inverse_of: :worker, dependent: :destroy
   has_one :run_test_runner
   has_one :test_runner_assignment, foreign_key: :test_runner_id, inverse_of: :worker, dependent: :destroy
   has_one :run, through: :test_runner_assignment
@@ -14,7 +14,7 @@ class Worker < ApplicationRecord
   end
 
   scope :available, -> do
-    unassigned.joins(:test_runner_events)
+    unassigned.joins(:worker_events)
       .where(worker_events: { type: :ready_signal_received })
       .where("worker_events.created_at = (
         SELECT MAX(created_at) FROM worker_events
@@ -23,13 +23,13 @@ class Worker < ApplicationRecord
   end
 
   scope :running, -> do
-    joins(:test_runner_events)
-      .where(worker_events: { type: TestRunnerEvent.types[:assignment_acknowledged] })
+    joins(:worker_events)
+      .where(worker_events: { type: WorkerEvent.types[:assignment_acknowledged] })
   end
 
   scope :error, -> do
-    joins(:test_runner_events)
-      .where(worker_events: { type: TestRunnerEvent.types[:error] })
+    joins(:worker_events)
+      .where(worker_events: { type: WorkerEvent.types[:error] })
   end
 
   scope :recently_assigned, -> do
@@ -43,7 +43,7 @@ class Worker < ApplicationRecord
 
     create!(name:, access_token:).tap do |test_runner|
       create_vm(test_runner, name)
-      test_runner.test_runner_events.create!(type: :provision_request_sent)
+      test_runner.worker_events.create!(type: :provision_request_sent)
     end
   end
 
@@ -81,7 +81,7 @@ class Worker < ApplicationRecord
   end
 
   def most_recent_event
-    test_runner_events.order("created_at desc").first
+    worker_events.order("created_at desc").first
   end
 
   def as_json(options = {})
@@ -95,7 +95,7 @@ class Worker < ApplicationRecord
 
   def assign(run)
     transaction do
-      test_runner_events.create!(type: :assignment_made)
+      worker_events.create!(type: :assignment_made)
       TestRunnerAssignment.create!(worker: self, run:)
     end
   end

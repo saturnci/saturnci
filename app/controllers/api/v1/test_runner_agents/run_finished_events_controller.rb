@@ -7,7 +7,7 @@ module API
             run = Run.find(params[:run_id])
             ActiveRecord::Base.transaction do
               run.finish!
-              run.test_runner.test_runner_events.create!(type: :test_run_finished)
+              run.test_runner.worker_events.create!(type: :test_run_finished)
 
               if run.build.runs.all?(&:finished?)
                 run.build.check_test_case_run_integrity!
