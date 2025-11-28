@@ -10,15 +10,15 @@ class TestRunnerFleet
   end
 
   def scale(count)
-    change = count - TestRunner.unassigned.count
+    change = count - Worker.unassigned.count
 
     if change > 0
       ActiveRecord::Base.transaction do
-        change.times { TestRunner.provision }
+        change.times { Worker.provision }
       end
     else
       ActiveRecord::Base.transaction do
-        TestRunner.unassigned.limit(change.abs).each do |tr|
+        Worker.unassigned.limit(change.abs).each do |tr|
           tr.destroy
         end
       end
@@ -26,7 +26,7 @@ class TestRunnerFleet
   end
 
   def prune
-    unassigned_test_runners = TestRunner.unassigned
+    unassigned_test_runners = Worker.unassigned
     number_of_needed_test_runners = self.class.target_size - unassigned_test_runners.count
     
     if number_of_needed_test_runners < 0
