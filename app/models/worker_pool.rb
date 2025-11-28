@@ -18,19 +18,19 @@ class WorkerPool
       end
     else
       ActiveRecord::Base.transaction do
-        Worker.unassigned.limit(change.abs).each do |tr|
-          tr.destroy
+        Worker.unassigned.limit(change.abs).each do |worker|
+          worker.destroy
         end
       end
     end
   end
 
   def prune
-    unassigned_test_runners = Worker.unassigned
-    number_of_needed_test_runners = self.class.target_size - unassigned_test_runners.count
-    
-    if number_of_needed_test_runners < 0
-      unassigned_test_runners.limit(number_of_needed_test_runners.abs).each(&:destroy)
+    unassigned_workers = Worker.unassigned
+    number_of_needed_workers = self.class.target_size - unassigned_workers.count
+
+    if number_of_needed_workers < 0
+      unassigned_workers.limit(number_of_needed_workers.abs).each(&:destroy)
     end
   end
 end
