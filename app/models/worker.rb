@@ -10,7 +10,7 @@ class Worker < ApplicationRecord
   before_destroy :deprovision
 
   scope :unassigned, -> do
-    left_joins(:test_runner_assignment).where(test_runner_assignments: { run_id: nil })
+    left_joins(:test_runner_assignment).where(worker_assignments: { run_id: nil })
   end
 
   scope :available, -> do
@@ -34,7 +34,7 @@ class Worker < ApplicationRecord
 
   scope :recently_assigned, -> do
     joins(:test_runner_assignment)
-      .where("test_runner_assignments.created_at > ?", 10.seconds.ago)
+      .where("worker_assignments.created_at > ?", 10.seconds.ago)
   end
 
   def self.provision

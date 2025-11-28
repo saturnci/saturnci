@@ -36,7 +36,7 @@ class Run < ApplicationRecord
   scope :unassigned, -> do
     not_finished
       .left_joins(:test_runner_assignment)
-      .where(test_runner_assignments: { run_id: nil })
+      .where(worker_assignments: { run_id: nil })
       .where(exit_code: nil)
   end
 
