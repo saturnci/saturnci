@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_29_135659) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_29_162028) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -120,13 +120,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_29_135659) do
 
   create_table "run_workers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "run_id", null: false
-    t.uuid "test_runner_id", null: false
+    t.uuid "worker_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["run_id"], name: "index_run_workers_on_run_id"
     t.index ["run_id"], name: "run_test_runners_run_id", unique: true
-    t.index ["test_runner_id"], name: "index_run_workers_on_test_runner_id"
-    t.index ["test_runner_id"], name: "run_test_runners_test_runner_id", unique: true
+    t.index ["worker_id"], name: "index_run_workers_on_worker_id"
+    t.index ["worker_id"], name: "run_test_runners_test_runner_id", unique: true
   end
 
   create_table "runner_system_logs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -303,7 +303,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_29_135659) do
   add_foreign_key "repositories", "github_accounts"
   add_foreign_key "run_events", "runs"
   add_foreign_key "run_workers", "runs"
-  add_foreign_key "run_workers", "workers", column: "test_runner_id"
+  add_foreign_key "run_workers", "workers"
   add_foreign_key "runner_system_logs", "runs"
   add_foreign_key "runs", "test_suite_runs", column: "build_id"
   add_foreign_key "screenshots", "runs"
