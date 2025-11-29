@@ -1,4 +1,4 @@
 require "rails_helper"
 
-describe TestRunnerSnapshot do
+describe WorkerSnapshot do
 end
