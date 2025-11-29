@@ -1,4 +1,4 @@
-class TestRunnerDropletSpecification
+class WorkerDropletSpecification
   attr_reader :rsa_key
 
   def initialize(test_runner:, name:)

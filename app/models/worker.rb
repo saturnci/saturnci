@@ -48,15 +48,15 @@ class Worker < ApplicationRecord
   end
 
   def self.create_vm(test_runner, name)
-    test_runner_droplet_specification = TestRunnerDropletSpecification.new(
+    worker_droplet_specification = WorkerDropletSpecification.new(
       test_runner:,
       name:,
     )
 
-    droplet = test_runner_droplet_specification.execute
+    droplet = worker_droplet_specification.execute
 
     test_runner.update!(
-      rsa_key: test_runner_droplet_specification.rsa_key,
+      rsa_key: worker_droplet_specification.rsa_key,
       cloud_id: droplet.id
     )
   end
