@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_28_160408) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_29_034013) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -198,14 +198,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_28_160408) do
     t.index ["run_id"], name: "index_test_case_runs_on_run_id"
   end
 
-  create_table "test_runner_snapshots", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "cloud_id", null: false
-    t.string "os", null: false
-    t.string "size", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "test_suite_run_result_notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "test_suite_run_id", null: false
     t.uuid "sent_email_id", null: false
@@ -277,6 +269,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_28_160408) do
     t.datetime "updated_at", null: false
     t.index ["test_runner_id", "type"], name: "index_worker_events_on_test_runner_id_and_type", unique: true
     t.index ["test_runner_id"], name: "index_worker_events_on_test_runner_id"
+  end
+
+  create_table "worker_snapshots", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "cloud_id", null: false
+    t.string "os", null: false
+    t.string "size", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "workers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

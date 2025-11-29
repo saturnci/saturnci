@@ -1,4 +1,6 @@
 class TestRunnerSnapshot < ApplicationRecord
+  self.table_name = :worker_snapshots
+
   def self.generate
     name = "test-runner-snapshot-#{Time.zone.now.to_i}"
     client = DropletKitClientFactory.client
