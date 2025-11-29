@@ -1,4 +1,4 @@
-module WorkerSnapshots
+module TestRunnerSnapshots
   class SnapshotRequest
     def initialize(client:, droplet_id:, name:)
       @client = client
