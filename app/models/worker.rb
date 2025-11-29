@@ -3,7 +3,7 @@ class Worker < ApplicationRecord
 
   belongs_to :rsa_key, class_name: "Cloud::RSAKey", optional: true
   belongs_to :access_token
-  has_many :worker_events, foreign_key: :test_runner_id, inverse_of: :worker, dependent: :destroy
+  has_many :worker_events, inverse_of: :worker, dependent: :destroy
   has_one :run_test_runner
   has_one :test_runner_assignment, class_name: "WorkerAssignment", inverse_of: :worker, dependent: :destroy
   has_one :run, through: :test_runner_assignment
@@ -18,7 +18,7 @@ class Worker < ApplicationRecord
       .where(worker_events: { type: :ready_signal_received })
       .where("worker_events.created_at = (
         SELECT MAX(created_at) FROM worker_events
-        WHERE worker_events.test_runner_id = workers.id
+        WHERE worker_events.worker_id = workers.id
       )")
   end
 
