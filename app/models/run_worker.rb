@@ -1,4 +1,4 @@
 class RunWorker < ApplicationRecord
   belongs_to :run
-  belongs_to :test_runner
+  belongs_to :worker
 end
