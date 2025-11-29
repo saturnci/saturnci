@@ -32,6 +32,6 @@ class TestRunOrchestrationCheck
 
     TestRunnerAssignment
       .where("worker_assignments.created_at > ?", 1.day.ago)
-      .where.not(test_runner_id: non_orphaned_workers)
+      .where.not(worker_id: non_orphaned_workers)
   end
 end
