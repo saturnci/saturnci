@@ -43,7 +43,7 @@ class WorkerDropletSpecification
       cd ~
       git clone https://github.com/saturnci/worker_agent.git worker_agent
       cd worker_agent
-      bin/test_runner_agent send_ready_signal
+      bin/worker_agent send_ready_signal
     SCRIPT
   end
 end
