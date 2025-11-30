@@ -47,9 +47,9 @@ class Worker < ApplicationRecord
     end
   end
 
-  def self.create_vm(test_runner, name)
+  def self.create_vm(worker, name)
     worker_droplet_specification = WorkerDropletSpecification.new(
-      test_runner:,
+      worker:,
       name:,
     )
 

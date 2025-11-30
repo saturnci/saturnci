@@ -1,8 +1,8 @@
 class WorkerDropletSpecification
   attr_reader :rsa_key
 
-  def initialize(test_runner:, name:)
-    @test_runner = test_runner
+  def initialize(worker:, name:)
+    @worker = worker
     @client = DropletKitClientFactory.client
     @name = name
     @rsa_key = Cloud::RSAKey.generate
@@ -33,9 +33,9 @@ class WorkerDropletSpecification
     <<~SCRIPT
       #!/bin/bash
 
-      export TEST_RUNNER_ID=#{@test_runner.id}
+      export TEST_RUNNER_ID=#{@worker.id}
       export SATURNCI_API_HOST=#{ENV["SATURNCI_HOST"]}
-      export TEST_RUNNER_ACCESS_TOKEN=#{@test_runner.access_token.value}
+      export TEST_RUNNER_ACCESS_TOKEN=#{@worker.access_token.value}
 
       export DOCKER_REGISTRY_CACHE_USERNAME=#{ENV["DOCKER_REGISTRY_CACHE_USERNAME"]}
       export DOCKER_REGISTRY_CACHE_PASSWORD=#{ENV["DOCKER_REGISTRY_CACHE_PASSWORD"]}
