@@ -308,6 +308,7 @@ class SillyName
     captain
     carrot
     castle
+    cat
     caterpillar
     caveman
     chair
