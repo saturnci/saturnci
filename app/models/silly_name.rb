@@ -74,7 +74,6 @@ class SillyName
     enchanted
     escaped
     evil
-    expensive
     expired
     extraordinary
     extreme
@@ -175,7 +174,6 @@ class SillyName
     overexcited
     overgrown
     overgrown
-    overpriced
     perfect
     pickled
     plastic
@@ -292,7 +290,6 @@ class SillyName
   NOUNS = %w(
     airplane
     anvil
-    astronomer
     bag
     balloon
     bandit
@@ -310,7 +307,6 @@ class SillyName
     buffalo
     canoe
     captain
-    carpenter
     carrot
     castle
     caterpillar
@@ -326,12 +322,10 @@ class SillyName
     cupcake
     deer
     demon
-    dentist
     dessert
     device
     devil
     dinner
-    doctor
     dolphin
     donut
     eagle
@@ -348,7 +342,6 @@ class SillyName
     garden
     gardener
     gazebo
-    geologist
     ghost
     glove
     goat
@@ -384,8 +377,6 @@ class SillyName
     marshmallow
     meadow
     meatball
-    mechanic
-    meteorologist
     microwave
     mind
     monstrosity
@@ -398,7 +389,6 @@ class SillyName
     mushroom
     mustache
     noodle
-    octogenarian
     ogre
     onion
     owl
