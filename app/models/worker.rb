@@ -55,7 +55,7 @@ class Worker < ApplicationRecord
 
     droplet = worker_droplet_specification.execute
 
-    test_runner.update!(
+    worker.update!(
       rsa_key: worker_droplet_specification.rsa_key,
       cloud_id: droplet.id
     )
