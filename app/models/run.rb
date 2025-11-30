@@ -9,7 +9,7 @@ class Run < ApplicationRecord
   has_one :screenshot
   has_one :runner_system_log
   has_one :rsa_key, class_name: "Cloud::RSAKey"
-  has_one :run_test_runner
+  has_one :run_worker
   has_one :test_runner_assignment, dependent: :destroy
   has_one :test_runner, through: :test_runner_assignment, source: :worker
   alias_attribute :started_at, :created_at

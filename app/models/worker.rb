@@ -4,7 +4,7 @@ class Worker < ApplicationRecord
   belongs_to :rsa_key, class_name: "Cloud::RSAKey", optional: true
   belongs_to :access_token
   has_many :worker_events, inverse_of: :worker, dependent: :destroy
-  has_one :run_test_runner
+  has_one :run_worker
   has_one :test_runner_assignment, class_name: "WorkerAssignment", inverse_of: :worker, dependent: :destroy
   has_one :run, through: :test_runner_assignment
   before_destroy :deprovision

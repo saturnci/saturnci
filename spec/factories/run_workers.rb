@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :run_test_runner do
+  factory :run_worker do
     run
     test_runner
   end
