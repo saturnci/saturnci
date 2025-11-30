@@ -33,9 +33,11 @@ class WorkerDropletSpecification
     <<~SCRIPT
       #!/bin/bash
 
-      export TEST_RUNNER_ID=#{@worker.id}
       export SATURNCI_API_HOST=#{ENV["SATURNCI_HOST"]}
+      export TEST_RUNNER_ID=#{@worker.id}
       export TEST_RUNNER_ACCESS_TOKEN=#{@worker.access_token.value}
+      export WORKER_ID=#{@worker.id}
+      export WORKER_ACCESS_TOKEN=#{@worker.access_token.value}
 
       export DOCKER_REGISTRY_CACHE_USERNAME=#{ENV["DOCKER_REGISTRY_CACHE_USERNAME"]}
       export DOCKER_REGISTRY_CACHE_PASSWORD=#{ENV["DOCKER_REGISTRY_CACHE_PASSWORD"]}
