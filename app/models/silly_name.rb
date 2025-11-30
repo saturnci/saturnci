@@ -14,7 +14,6 @@ class SillyName
     befouled
     bent
     blazing
-    blazing
     bleeding
     bloated
     bloody
@@ -337,7 +336,6 @@ class SillyName
     feather
     fish
     foot
-    forklift
     fungus
     garden
     gardener
@@ -356,7 +354,6 @@ class SillyName
     heart
     hog
     horse
-    hospital
     insect
     king
     kitchen
@@ -365,7 +362,6 @@ class SillyName
     lawyer
     leg
     lemon
-    librarian
     liver
     loaf
     lobster
@@ -408,9 +404,7 @@ class SillyName
     planet
     plant
     plumber
-    policeman
     potato
-    president
     pretzel
     prince
     princess
@@ -425,13 +419,13 @@ class SillyName
     reject
     rifle
     rock
+    rope
     sailor
     salad
     salesman
     sandwich
     sausage
     scab
-    scarecrow
     shark
     sheep
     ship
@@ -465,15 +459,15 @@ class SillyName
     trout
     trumpet
     uncle
-    villain
     volcano
-    waiter
     walnut
     walrus
     weakling
     weasel
     whale
+    wheel
     whiteboard
+    wire
     witch
     wizard
     worm
