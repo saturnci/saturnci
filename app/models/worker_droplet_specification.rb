@@ -41,14 +41,8 @@ class WorkerDropletSpecification
       export DOCKER_REGISTRY_CACHE_PASSWORD=#{ENV["DOCKER_REGISTRY_CACHE_PASSWORD"]}
 
       cd ~
-      if git clone https://github.com/saturnci/worker_agent.git worker_agent 2>/dev/null; then
-        cd worker_agent
-      elif git clone https://github.com/saturnci/test_runner_agent.git worker_agent; then
-        cd worker_agent
-      else
-        echo "Failed to clone agent repo" && exit 1
-      fi
-
+      git clone https://github.com/saturnci/worker_agent.git worker_agent
+      cd worker_agent
       bin/test_runner_agent send_ready_signal
     SCRIPT
   end
