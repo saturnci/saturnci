@@ -28,35 +28,35 @@ describe "push" do
   end
 
   context "start test suite runs automatically" do
-    let!(:project) do
+    let!(:repository) do
       create(
-        :project,
+        :repository,
         start_builds_automatically_on_git_push: true
       )
     end
 
     it "starts the test suite run" do
-      test_suite_run = create(:test_suite_run, project:)
+      test_suite_run = create(:test_suite_run, repository:)
       expect(test_suite_run).to receive(:start!)
       push_event.prepare_test_suite_run(test_suite_run)
     end
   end
 
   context "do not start test suite runs automatically" do
-    let!(:project) do
+    let!(:repository) do
       create(
-        :project,
+        :repository,
         start_builds_automatically_on_git_push: false
       )
     end
 
     it "saves the test suite run" do
-      test_suite_run = build(:test_suite_run, project:)
+      test_suite_run = build(:test_suite_run, repository:)
       expect { push_event.prepare_test_suite_run(test_suite_run) }.to change(TestSuiteRun, :count).by(1)
     end
 
     it "does not start the test suite run" do
-      test_suite_run = build(:test_suite_run, project:)
+      test_suite_run = build(:test_suite_run, repository:)
       expect(test_suite_run).not_to receive(:start!)
       push_event.prepare_test_suite_run(test_suite_run)
     end

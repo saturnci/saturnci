@@ -9,8 +9,8 @@ module GitHubEvents
     end
 
     def process
-      Project.where(github_repo_full_name: @github_repo_full_name).each do |project|
-        test_suite_run = TestSuiteRun.new(project:)
+      Repository.where(github_repo_full_name: @github_repo_full_name).each do |repository|
+        test_suite_run = TestSuiteRun.new(repository:)
         test_suite_run.assign_attributes(test_suite_run_specification)
         prepare_test_suite_run(test_suite_run)
       end
@@ -29,7 +29,7 @@ module GitHubEvents
     end
 
     def prepare_test_suite_run(test_suite_run)
-      if test_suite_run.project.start_builds_automatically_on_git_push
+      if test_suite_run.repository.start_builds_automatically_on_git_push
         test_suite_run.start!
       else
         test_suite_run.save!
