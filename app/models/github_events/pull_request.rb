@@ -14,7 +14,7 @@ module GitHubEvents
       test_suite_run = TestSuiteRun.new(project: project)
       test_suite_run.assign_attributes(test_suite_run_specification)
       test_suite_run.start!
-      GitHubCheckRun.new(build: test_suite_run).start!
+      GitHubCheckRun.new(test_suite_run: test_suite_run).start!
     end
 
     def test_suite_run_specification

@@ -14,7 +14,7 @@ describe GitHubCheckRun do
         .with("user/test", "SaturnCI", "abc123", hash_including(status: "in_progress"))
         .and_return(stubbed_response)
 
-      check_run = GitHubCheckRun.new(build:)
+      check_run = GitHubCheckRun.new(test_suite_run: build)
       check_run.start!(github_client:)
 
       expect(github_client).to have_received(:create_check_run)
@@ -26,7 +26,7 @@ describe GitHubCheckRun do
     it "updates the check run" do
       allow(github_client).to receive(:update_check_run)
 
-      check_run = GitHubCheckRun.new(build:, github_check_run_id: "789")
+      check_run = GitHubCheckRun.new(test_suite_run: build, github_check_run_id: "789")
       check_run.finish!(github_client:)
 
       expect(github_client).to have_received(:update_check_run)
