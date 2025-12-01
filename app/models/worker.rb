@@ -41,9 +41,9 @@ class Worker < ApplicationRecord
     access_token = AccessToken.create!
     name = "tr-#{SecureRandom.uuid[0..7]}-#{SillyName.random.gsub(/ /, "-")}"
 
-    create!(name:, access_token:).tap do |test_runner|
-      create_vm(test_runner, name)
-      test_runner.worker_events.create!(type: :provision_request_sent)
+    create!(name:, access_token:).tap do |worker|
+      create_vm(worker, name)
+      worker.worker_events.create!(type: :provision_request_sent)
     end
   end
 
