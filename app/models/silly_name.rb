@@ -337,6 +337,7 @@ class SillyName
     feather
     fish
     foot
+    frog
     fungus
     garden
     gardener
