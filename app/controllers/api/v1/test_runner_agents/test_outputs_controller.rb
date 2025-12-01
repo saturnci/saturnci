@@ -9,10 +9,16 @@ module API
         def create
           run = Run.find(params[:run_id])
           new_content = Base64.decode64(request.body.read).force_encoding('UTF-8')
-          existing_content = run.attributes[TAB_NAME].to_s
-          run.update!(TAB_NAME => existing_content + new_content)
 
-          Streaming::RunOutputStream.new(run: run, tab_name: TAB_NAME).broadcast
+          Run.connection.execute(
+            Run.sanitize_sql([
+              "UPDATE runs SET test_output = COALESCE(test_output, '') || ? WHERE id = ?",
+              new_content,
+              run.id
+            ])
+          )
+
+          Streaming::RunOutputStream.new(run: run.reload, tab_name: TAB_NAME).broadcast
           head :ok
         end
       end
