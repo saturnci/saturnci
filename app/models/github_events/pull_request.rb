@@ -7,17 +7,17 @@ module GitHubEvents
 
     def process
       return unless @payload["action"] == "opened"
-      
+
       project = Project.find_by(github_repo_full_name: @github_repo_full_name)
       return unless project
-      
-      build = Build.new(project: project)
-      build.assign_attributes(build_specification)
-      build.start!
-      GitHubCheckRun.new(build:).start!
+
+      test_suite_run = TestSuiteRun.new(project: project)
+      test_suite_run.assign_attributes(test_suite_run_specification)
+      test_suite_run.start!
+      GitHubCheckRun.new(build: test_suite_run).start!
     end
 
-    def build_specification
+    def test_suite_run_specification
       pull_request = @payload["pull_request"]
       head = pull_request["head"]
       user = pull_request["user"]
