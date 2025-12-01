@@ -8,10 +8,10 @@ module GitHubEvents
     def process
       return unless @payload["action"] == "opened"
 
-      project = Project.find_by(github_repo_full_name: @github_repo_full_name)
-      return unless project
+      repository = Repository.find_by(github_repo_full_name: @github_repo_full_name)
+      return unless repository
 
-      test_suite_run = TestSuiteRun.new(project: project)
+      test_suite_run = TestSuiteRun.new(repository: repository)
       test_suite_run.assign_attributes(test_suite_run_specification)
       test_suite_run.start!
       GitHubCheckRun.new(test_suite_run: test_suite_run).start!

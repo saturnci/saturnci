@@ -7,19 +7,19 @@ describe "Pull Request", type: :request do
   end
 
   before do
-    allow(TestRunner).to receive(:create_vm)
-    allow(TestRunner).to receive(:available).and_return([create(:test_runner)])
+    allow(Worker).to receive(:create_vm)
+    allow(Worker).to receive(:available).and_return([create(:worker)])
   end
 
-  let!(:project) do
-    create(:project, github_repo_full_name: "user/test") do |project|
-      project.user.github_accounts.create!(
+  let!(:repository) do
+    create(:repository, github_repo_full_name: "user/test") do |repository|
+      repository.user.github_accounts.create!(
         github_installation_id: "1111111"
       )
     end
   end
 
-  let!(:personal_access_token) { create(:personal_access_token, user: project.user) }
+  let!(:personal_access_token) { create(:personal_access_token, user: repository.user) }
 
   let!(:payload) do
     {
@@ -70,14 +70,14 @@ describe "Pull Request", type: :request do
       expect(response).to have_http_status(:ok)
     end
 
-    it "creates a new test suite run for the project" do
+    it "creates a new test suite run for the repository" do
       expect {
         post(
           "/api/v1/github_events",
           params: payload,
           headers: headers
         )
-      }.to change { project.test_suite_runs.count }.by(1)
+      }.to change { repository.test_suite_runs.count }.by(1)
     end
 
     it "sets the correct branch name, commit hash, commit message, and author name for the test suite run" do
