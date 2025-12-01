@@ -12,7 +12,7 @@ module API
               if run.build.runs.all?(&:finished?)
                 run.build.check_test_case_run_integrity!
                 TestSuiteRunLinkComponent.refresh(run.build)
-                GitHubCheckRun.find_by(build: run.build)&.finish!
+                GitHubCheckRun.find_by(test_suite_run: run.build)&.finish!
               end
             end
           rescue StandardError => e

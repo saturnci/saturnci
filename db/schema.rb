@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_29_170417) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_01_233131) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -44,12 +44,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_29_170417) do
   end
 
   create_table "github_check_runs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "build_id", null: false
+    t.uuid "test_suite_run_id", null: false
     t.string "github_check_run_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["build_id", "github_check_run_id"], name: "index_github_check_runs_on_build_id_and_github_check_run_id", unique: true
-    t.index ["build_id"], name: "index_github_check_runs_on_build_id"
+    t.index ["test_suite_run_id", "github_check_run_id"], name: "idx_on_test_suite_run_id_github_check_run_id_3b7f89aa62", unique: true
+    t.index ["test_suite_run_id"], name: "index_github_check_runs_on_test_suite_run_id"
   end
 
   create_table "github_events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -294,7 +294,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_29_170417) do
 
   add_foreign_key "charges", "runs"
   add_foreign_key "github_accounts", "users"
-  add_foreign_key "github_check_runs", "test_suite_runs", column: "build_id"
+  add_foreign_key "github_check_runs", "test_suite_runs"
   add_foreign_key "github_events", "repositories"
   add_foreign_key "github_oauth_tokens", "users"
   add_foreign_key "personal_access_tokens", "access_tokens"
