@@ -31,7 +31,7 @@ describe "push" do
     let!(:repository) do
       create(
         :repository,
-        start_builds_automatically_on_git_push: true
+        start_test_suite_runs_automatically_on_git_push: true
       )
     end
 
@@ -46,7 +46,7 @@ describe "push" do
     let!(:repository) do
       create(
         :repository,
-        start_builds_automatically_on_git_push: false
+        start_test_suite_runs_automatically_on_git_push: false
       )
     end
 

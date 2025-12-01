@@ -23,7 +23,7 @@ describe "Change start test suite runs automatically on Git push", type: :system
 
   context "from checked to unchecked" do
     before do
-      repository.update!(start_builds_automatically_on_git_push: true)
+      repository.update!(start_test_suite_runs_automatically_on_git_push: true)
       visit repository_settings_general_settings_path(repository)
     end
 

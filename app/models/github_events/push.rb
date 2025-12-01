@@ -29,7 +29,7 @@ module GitHubEvents
     end
 
     def prepare_test_suite_run(test_suite_run)
-      if test_suite_run.repository.start_builds_automatically_on_git_push
+      if test_suite_run.repository.start_test_suite_runs_automatically_on_git_push
         test_suite_run.start!
       else
         test_suite_run.save!

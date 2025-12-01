@@ -21,7 +21,7 @@ class GeneralSettingsController < ApplicationController
 
   def repository_params
     params.require(:repository).permit(
-      :start_builds_automatically_on_git_push,
+      :start_test_suite_runs_automatically_on_git_push,
       :concurrency
     )
   end

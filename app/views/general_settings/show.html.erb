@@ -9,8 +9,8 @@
       <br>
       <%= form_with model: @repository, url: repository_settings_general_settings_path(@repository), method: :patch do |form| %>
         <div>
-          <%= form.check_box :start_builds_automatically_on_git_push %>
-          <%= form.label :start_builds_automatically_on_git_push, "Start test suite runs automatically on git push" %>
+          <%= form.check_box :start_test_suite_runs_automatically_on_git_push %>
+          <%= form.label :start_test_suite_runs_automatically_on_git_push, "Start test suite runs automatically on git push" %>
         </div>
 
         <br>
