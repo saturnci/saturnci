@@ -371,7 +371,6 @@ class SillyName
     loser
     lung
     machine
-    manager
     marshmallow
     meadow
     meatball
@@ -405,7 +404,6 @@ class SillyName
     pizza
     planet
     plant
-    plumber
     potato
     pretzel
     prince
