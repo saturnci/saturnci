@@ -424,7 +424,6 @@ class SillyName
     rope
     sailor
     salad
-    salesman
     sandwich
     sausage
     scab
@@ -433,7 +432,6 @@ class SillyName
     ship
     shoe
     shovel
-    singer
     skeleton
     skull
     slug
