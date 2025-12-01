@@ -35,10 +35,10 @@ describe "push" do
       )
     end
 
-    it "starts the build" do
-      build = create(:build, project:)
-      expect(build).to receive(:start!)
-      push_event.prepare_build(build)
+    it "starts the test suite run" do
+      test_suite_run = create(:test_suite_run, project:)
+      expect(test_suite_run).to receive(:start!)
+      push_event.prepare_test_suite_run(test_suite_run)
     end
   end
 
@@ -50,15 +50,15 @@ describe "push" do
       )
     end
 
-    it "saves the build" do
-      build = build(:build, project:)
-      expect { push_event.prepare_build(build) }.to change(Build, :count).by(1)
+    it "saves the test suite run" do
+      test_suite_run = build(:test_suite_run, project:)
+      expect { push_event.prepare_test_suite_run(test_suite_run) }.to change(TestSuiteRun, :count).by(1)
     end
 
-    it "does not start the build" do
-      build = build(:build, project:)
-      expect(build).not_to receive(:start!)
-      push_event.prepare_build(build)
+    it "does not start the test suite run" do
+      test_suite_run = build(:test_suite_run, project:)
+      expect(test_suite_run).not_to receive(:start!)
+      push_event.prepare_test_suite_run(test_suite_run)
     end
   end
 end

@@ -10,13 +10,13 @@ module GitHubEvents
 
     def process
       Project.where(github_repo_full_name: @github_repo_full_name).each do |project|
-        build = Build.new(project:)
-        build.assign_attributes(build_specification)
-        prepare_build(build)
+        test_suite_run = TestSuiteRun.new(project:)
+        test_suite_run.assign_attributes(test_suite_run_specification)
+        prepare_test_suite_run(test_suite_run)
       end
     end
 
-    def build_specification
+    def test_suite_run_specification
       ref_path = @payload["ref"]
       head_commit = @payload["head_commit"]
 
@@ -28,14 +28,14 @@ module GitHubEvents
       }
     end
 
-    def prepare_build(build)
-      if build.project.start_builds_automatically_on_git_push
-        build.start!
+    def prepare_test_suite_run(test_suite_run)
+      if test_suite_run.project.start_builds_automatically_on_git_push
+        test_suite_run.start!
       else
-        build.save!
+        test_suite_run.save!
       end
 
-      build.broadcast
+      test_suite_run.broadcast
     end
   end
 end
