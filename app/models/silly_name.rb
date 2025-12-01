@@ -291,6 +291,7 @@ class SillyName
     anvil
     bag
     balloon
+    banana
     bandit
     barnacle
     barrel
