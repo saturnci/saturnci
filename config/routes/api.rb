@@ -10,7 +10,7 @@ namespace :api do
     resources :test_suite_runs, only: %i[index show create]
     resource :test_runner_collection, only: :destroy
 
-    namespace :test_runner_agents do
+    namespace :worker_agents do
       resources :runs, only: [] do
         resources :run_finished_events, only: :create
         resources :system_logs, only: :create
@@ -30,8 +30,8 @@ namespace :api do
       resources :test_suite_runs, only: :update
     end
 
-    # Alias for worker_agents (points to test_runner_agents controllers)
-    scope path: "worker_agents", as: "worker_agents", module: "test_runner_agents" do
+    # Alias for backwards compatibility (points to worker_agents controllers)
+    scope path: "test_runner_agents", as: "test_runner_agents", module: "worker_agents" do
       resources :runs, only: [] do
         resources :run_finished_events, only: :create
         resources :system_logs, only: :create

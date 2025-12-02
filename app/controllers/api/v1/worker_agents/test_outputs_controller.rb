@@ -2,8 +2,8 @@ require "base64"
 
 module API
   module V1
-    module TestRunnerAgents
-      class TestOutputsController < TestRunnerAgentsAPIController
+    module WorkerAgents
+      class TestOutputsController < WorkerAgentsAPIController
       TAB_NAME = "test_output"
 
         def create

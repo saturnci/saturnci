@@ -1,7 +1,7 @@
 module API
   module V1
-    module TestRunnerAgents
-      class TestSuiteRunsController < TestRunnerAgentsAPIController
+    module WorkerAgents
+      class TestSuiteRunsController < WorkerAgentsAPIController
         def update
           test_suite_run = TestSuiteRun.find(params[:id])
           if params.key?(:dry_run_example_count) && params[:dry_run_example_count].to_s !~ /\A\d+\z/
