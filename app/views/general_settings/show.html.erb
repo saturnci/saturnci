@@ -14,6 +14,12 @@
         </div>
 
         <br>
+        <div>
+          <%= form.check_box :create_github_check_runs_on_pull_requests %>
+          <%= form.label :create_github_check_runs_on_pull_requests, "Create GitHub check runs on pull requests" %>
+        </div>
+
+        <br>
         <%= form.label :concurrency %>
         <div>
           <%= form.number_field :concurrency, min: 1 %>
