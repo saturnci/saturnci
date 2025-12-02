@@ -21,8 +21,8 @@ describe "Test suite run status", type: :system do
         run.update!(test_output: "COMMAND_EXIT_CODE=\"0\"")
 
         http_request(
-          api_authorization_headers: test_runner_agents_api_authorization_headers(run.test_runner),
-          path: api_v1_test_runner_agents_run_run_finished_events_path(run)
+          api_authorization_headers: worker_agents_api_authorization_headers(run.test_runner),
+          path: api_v1_worker_agents_run_run_finished_events_path(run)
         )
 
         expect(page).to have_content("Passed")
@@ -37,8 +37,8 @@ describe "Test suite run status", type: :system do
         run.update!(test_output: "COMMAND_EXIT_CODE=\"0\"")
 
         http_request(
-          api_authorization_headers: test_runner_agents_api_authorization_headers(run.test_runner),
-          path: api_v1_test_runner_agents_run_run_finished_events_path(run)
+          api_authorization_headers: worker_agents_api_authorization_headers(run.test_runner),
+          path: api_v1_worker_agents_run_run_finished_events_path(run)
         )
 
         expect(page).to have_content("Passed") # to prevent race condition
@@ -62,8 +62,8 @@ describe "Test suite run status", type: :system do
         end
 
         http_request(
-          api_authorization_headers: test_runner_agents_api_authorization_headers(other_run.test_runner),
-          path: api_v1_test_runner_agents_run_run_finished_events_path(other_run)
+          api_authorization_headers: worker_agents_api_authorization_headers(other_run.test_runner),
+          path: api_v1_worker_agents_run_run_finished_events_path(other_run)
         )
 
         other_run_test_suite_run_link = PageObjects::TestSuiteRunLink.new(page, other_test_suite_run)
@@ -100,8 +100,8 @@ describe "Test suite run status", type: :system do
         expect(page).not_to have_content("3m 40s")
 
         http_request(
-          api_authorization_headers: test_runner_agents_api_authorization_headers(run.test_runner),
-          path: api_v1_test_runner_agents_run_run_finished_events_path(run)
+          api_authorization_headers: worker_agents_api_authorization_headers(run.test_runner),
+          path: api_v1_worker_agents_run_run_finished_events_path(run)
         )
 
         # After the test suite run finishes, the counter will have

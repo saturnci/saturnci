@@ -1,7 +1,7 @@
 module API
   module V1
-    module TestRunnerAgents
-      class JSONOutputsController < TestRunnerAgentsAPIController
+    module WorkerAgents
+      class JSONOutputsController < WorkerAgentsAPIController
         def create
           begin
             run = Run.find(params[:run_id])

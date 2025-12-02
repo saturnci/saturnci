@@ -1,7 +1,7 @@
 require "rails_helper"
 
-describe "Test Runner Agents Authentication", type: :request do
-  describe "GET /api/v1/test_runner_agents/test_runners/:test_runner_id/test_runner_assignments" do
+describe "Worker Agents Authentication", type: :request do
+  describe "GET /api/v1/worker_agents/test_runners/:test_runner_id/test_runner_assignments" do
     let!(:test_runner_assignment) { create(:test_runner_assignment) }
     let!(:test_runner) { test_runner_assignment.worker }
 
@@ -13,7 +13,7 @@ describe "Test Runner Agents Authentication", type: :request do
         )
 
         get(
-          api_v1_test_runner_agents_test_runner_test_runner_assignments_path(
+          api_v1_worker_agents_test_runner_test_runner_assignments_path(
             test_runner_id: test_runner.id,
             format: :json
           ),

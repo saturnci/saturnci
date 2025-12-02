@@ -10,9 +10,9 @@ RSpec.describe "test output encoding", type: :request do
     encoded_content = Base64.encode64(test_content)
 
     post(
-      api_v1_test_runner_agents_run_test_output_path(run_id: run.id),
+      api_v1_worker_agents_run_test_output_path(run_id: run.id),
       params: encoded_content,
-      headers: test_runner_agents_api_authorization_headers(test_runner).merge({ "CONTENT_TYPE" => "text/plain" })
+      headers: worker_agents_api_authorization_headers(test_runner).merge({ "CONTENT_TYPE" => "text/plain" })
     )
 
     expect(response).to have_http_status(:ok)
@@ -29,9 +29,9 @@ RSpec.describe "test output encoding", type: :request do
     run.update!(test_output: "")
 
     post(
-      api_v1_test_runner_agents_run_test_output_path(run_id: run.id),
+      api_v1_worker_agents_run_test_output_path(run_id: run.id),
       params: encoded_content,
-      headers: test_runner_agents_api_authorization_headers(test_runner).merge({ "CONTENT_TYPE" => "text/plain" })
+      headers: worker_agents_api_authorization_headers(test_runner).merge({ "CONTENT_TYPE" => "text/plain" })
     )
 
     expect(response).to have_http_status(:ok)

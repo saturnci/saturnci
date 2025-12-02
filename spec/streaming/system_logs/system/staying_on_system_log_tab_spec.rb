@@ -27,8 +27,8 @@ describe "Staying on system log tab", type: :system do
     context "after the first log update occurs" do
       before do
         http_request(
-          api_authorization_headers: test_runner_agents_api_authorization_headers(test_runner),
-          path: api_v1_test_runner_agents_run_system_logs_path(run_id: run.id, format: :json),
+          api_authorization_headers: worker_agents_api_authorization_headers(test_runner),
+          path: api_v1_worker_agents_run_system_logs_path(run_id: run.id, format: :json),
           body: Base64.encode64("new system log content")
         )
       end
@@ -44,8 +44,8 @@ describe "Staying on system log tab", type: :system do
       context "after a second log update occurs" do
         before do
           http_request(
-            api_authorization_headers: test_runner_agents_api_authorization_headers(test_runner),
-            path: api_v1_test_runner_agents_run_system_logs_path(run_id: run.id, format: :json),
+            api_authorization_headers: worker_agents_api_authorization_headers(test_runner),
+            path: api_v1_worker_agents_run_system_logs_path(run_id: run.id, format: :json),
             body: Base64.encode64("second system log update")
           )
         end

@@ -1,7 +1,7 @@
 module API
   module V1
-    module TestRunnerAgents
-      class TestRunnerEventsController < TestRunnerAgentsAPIController
+    module WorkerAgents
+      class TestRunnerEventsController < WorkerAgentsAPIController
         def create
           test_runner = TestRunner.find(params[:test_runner_id])
           test_runner.worker_events.create!(type: params[:type])

@@ -5,8 +5,8 @@ module SaturnAPIHelper
 
   def system_log_http_request(run:, body: nil)
     http_request(
-      api_authorization_headers: test_runner_agents_api_authorization_headers(run.test_runner),
-      path: api_v1_test_runner_agents_run_system_logs_path(run_id: run.id, format: :json),
+      api_authorization_headers: worker_agents_api_authorization_headers(run.test_runner),
+      path: api_v1_worker_agents_run_system_logs_path(run_id: run.id, format: :json),
       body:
     )
 

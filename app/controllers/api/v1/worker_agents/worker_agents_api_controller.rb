@@ -1,7 +1,7 @@
 module API
   module V1
-    module TestRunnerAgents
-      class TestRunnerAgentsAPIController < ActionController::Base
+    module WorkerAgents
+      class WorkerAgentsAPIController < ActionController::Base
         skip_before_action :verify_authenticity_token
         before_action :authenticate_test_runner!
 

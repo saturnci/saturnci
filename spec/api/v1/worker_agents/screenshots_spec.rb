@@ -17,9 +17,9 @@ describe "Screenshots", type: :request do
 
   it "works" do
     post(
-      api_v1_test_runner_agents_run_screenshots_path(run_id: run.id),
+      api_v1_worker_agents_run_screenshots_path(run_id: run.id),
       params: { screenshot: screenshot_file },
-      headers: test_runner_agents_api_authorization_headers(test_runner).merge(
+      headers: worker_agents_api_authorization_headers(test_runner).merge(
         "Content-Type" => "application/tar",
         "X-Filename" => "screenshot.tar.gz"
       )
@@ -31,9 +31,9 @@ describe "Screenshots", type: :request do
   it "saves a screenshot record" do
     expect {
       post(
-        api_v1_test_runner_agents_run_screenshots_path(run_id: run.id),
+        api_v1_worker_agents_run_screenshots_path(run_id: run.id),
         params: { screenshot: screenshot_file },
-        headers: test_runner_agents_api_authorization_headers(test_runner).merge(
+        headers: worker_agents_api_authorization_headers(test_runner).merge(
           "Content-Type" => "application/tar",
           "X-Filename" => "screenshot.tar.gz"
         )
@@ -44,8 +44,8 @@ describe "Screenshots", type: :request do
   context "raw error" do
     before do
       post(
-        api_v1_test_runner_agents_run_screenshots_path(run_id: run.id),
-        headers: test_runner_agents_api_authorization_headers(test_runner)
+        api_v1_worker_agents_run_screenshots_path(run_id: run.id),
+        headers: worker_agents_api_authorization_headers(test_runner)
       )
     end
 

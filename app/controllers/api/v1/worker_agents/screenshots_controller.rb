@@ -1,7 +1,7 @@
 module API
   module V1
-    module TestRunnerAgents
-      class ScreenshotsController < TestRunnerAgentsAPIController
+    module WorkerAgents
+      class ScreenshotsController < WorkerAgentsAPIController
         def create
           begin
             run = Run.find(params[:run_id])
