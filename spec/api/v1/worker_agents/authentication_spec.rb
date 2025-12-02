@@ -1,20 +1,20 @@
 require "rails_helper"
 
 describe "Worker Agents Authentication", type: :request do
-  describe "GET /api/v1/worker_agents/test_runners/:test_runner_id/test_runner_assignments" do
-    let!(:test_runner_assignment) { create(:test_runner_assignment) }
-    let!(:test_runner) { test_runner_assignment.worker }
+  describe "GET /api/v1/worker_agents/workers/:worker_id/worker_assignments" do
+    let!(:worker_assignment) { create(:test_runner_assignment) }
+    let!(:worker) { worker_assignment.worker }
 
-    context "with valid test runner credentials" do
+    context "with valid worker credentials" do
       it "returns success" do
         credentials = ActionController::HttpAuthentication::Basic.encode_credentials(
-          test_runner.id,
-          test_runner.access_token.value
+          worker.id,
+          worker.access_token.value
         )
 
         get(
-          api_v1_worker_agents_test_runner_test_runner_assignments_path(
-            test_runner_id: test_runner.id,
+          api_v1_worker_agents_worker_worker_assignments_path(
+            worker_id: worker.id,
             format: :json
           ),
           headers: { "Authorization" => credentials }

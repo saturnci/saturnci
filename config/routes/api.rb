@@ -21,11 +21,6 @@ namespace :api do
         resource :runner, only: :destroy
       end
 
-      resources :test_runners, only: [] do
-        resources :test_runner_events, only: :create
-        resources :test_runner_assignments, only: :index
-      end
-
       resources :workers, only: [] do
         resources :worker_events, only: :create
         resources :worker_assignments, only: :index
