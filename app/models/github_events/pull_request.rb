@@ -14,7 +14,10 @@ module GitHubEvents
       test_suite_run = TestSuiteRun.new(repository: repository)
       test_suite_run.assign_attributes(test_suite_run_specification)
       test_suite_run.start!
-      GitHubCheckRun.new(test_suite_run: test_suite_run).start!
+
+      if repository.create_github_checks_automatically_upon_pull_request_creation
+        GitHubCheckRun.new(test_suite_run: test_suite_run).start!
+      end
     end
 
     def test_suite_run_specification

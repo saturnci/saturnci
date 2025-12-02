@@ -22,7 +22,7 @@ class GeneralSettingsController < ApplicationController
   def repository_params
     params.require(:repository).permit(
       :start_test_suite_runs_automatically_on_git_push,
-      :create_github_check_runs_on_pull_requests,
+      :create_github_checks_automatically_upon_pull_request_creation,
       :concurrency
     )
   end

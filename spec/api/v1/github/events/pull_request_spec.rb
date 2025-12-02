@@ -93,5 +93,37 @@ describe "Pull Request", type: :request do
       expect(test_suite_run.commit_message).to eq("Add new feature")
       expect(test_suite_run.author_name).to eq("contributor")
     end
+
+    context "when create_github_checks_automatically_upon_pull_request_creation is enabled" do
+      before do
+        repository.update!(create_github_checks_automatically_upon_pull_request_creation: true)
+      end
+
+      it "creates a GitHub check run" do
+        expect(GitHubCheckRun).to receive(:new).and_return(double(start!: true))
+
+        post(
+          "/api/v1/github_events",
+          params: payload,
+          headers: headers
+        )
+      end
+    end
+
+    context "when create_github_checks_automatically_upon_pull_request_creation is disabled" do
+      before do
+        repository.update!(create_github_checks_automatically_upon_pull_request_creation: false)
+      end
+
+      it "does not create a GitHub check run" do
+        expect(GitHubCheckRun).not_to receive(:new)
+
+        post(
+          "/api/v1/github_events",
+          params: payload,
+          headers: headers
+        )
+      end
+    end
   end
 end

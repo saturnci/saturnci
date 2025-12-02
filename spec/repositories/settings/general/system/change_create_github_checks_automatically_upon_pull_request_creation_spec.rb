@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Change create GitHub check runs on pull requests", type: :system do
+describe "Change create GitHub checks automatically upon pull request creation", type: :system do
   let!(:repository) { create(:repository) }
 
   before do
@@ -11,28 +11,28 @@ describe "Change create GitHub check runs on pull requests", type: :system do
 
   context "from unchecked to checked" do
     it "gets saved to checked" do
-      check "Create GitHub check runs on pull requests"
+      check "Create GitHub checks automatically upon pull request creation"
       click_on "Save"
 
       expect(page).to have_content("Settings saved")
 
-      expect(page).to have_checked_field("Create GitHub check runs on pull requests")
+      expect(page).to have_checked_field("Create GitHub checks automatically upon pull request creation")
     end
   end
 
   context "from checked to unchecked" do
     before do
-      repository.update!(create_github_check_runs_on_pull_requests: true)
+      repository.update!(create_github_checks_automatically_upon_pull_request_creation: true)
       visit repository_settings_general_settings_path(repository)
     end
 
     it "gets saved to unchecked" do
-      uncheck "Create GitHub check runs on pull requests"
+      uncheck "Create GitHub checks automatically upon pull request creation"
       click_on "Save"
 
       expect(page).to have_content("Settings saved")
 
-      expect(page).to have_unchecked_field("Create GitHub check runs on pull requests")
+      expect(page).to have_unchecked_field("Create GitHub checks automatically upon pull request creation")
     end
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_02_010829) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_02_011402) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -99,7 +99,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_02_010829) do
     t.boolean "start_test_suite_runs_automatically_on_git_push", default: false, null: false
     t.datetime "deleted_at"
     t.integer "concurrency", default: 2, null: false
-    t.boolean "create_github_check_runs_on_pull_requests", default: false, null: false
+    t.boolean "create_github_checks_automatically_upon_pull_request_creation", default: false, null: false
     t.index ["github_account_id"], name: "index_repositories_on_github_account_id"
   end
 
