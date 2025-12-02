@@ -29,26 +29,5 @@ namespace :api do
       resources :github_tokens, only: :create
       resources :test_suite_runs, only: :update
     end
-
-    # Alias for backwards compatibility (points to worker_agents controllers)
-    scope path: "test_runner_agents", as: "test_runner_agents", module: "worker_agents" do
-      resources :runs, only: [] do
-        resources :run_finished_events, only: :create
-        resources :system_logs, only: :create
-        resource :test_output, only: :create
-        resource :json_output, only: :create
-        resources :screenshots, only: :create
-        resources :run_events, only: :create
-        resource :runner, only: :destroy
-      end
-
-      resources :test_runners, only: [] do
-        resources :test_runner_events, only: :create
-        resources :test_runner_assignments, only: :index
-      end
-
-      resources :github_tokens, only: :create
-      resources :test_suite_runs, only: :update
-    end
   end
 end
