@@ -26,6 +26,11 @@ namespace :api do
         resources :test_runner_assignments, only: :index
       end
 
+      resources :workers, only: [] do
+        resources :worker_events, only: :create
+        resources :worker_assignments, only: :index
+      end
+
       resources :github_tokens, only: :create
       resources :test_suite_runs, only: :update
     end
