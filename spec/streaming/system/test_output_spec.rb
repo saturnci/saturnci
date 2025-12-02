@@ -24,8 +24,8 @@ describe "Test output streaming", type: :system do
       expect(page).to have_content("original test output content") # To prevent race condition
 
       http_request(
-        api_authorization_headers: test_runner_agents_api_authorization_headers(run.test_runner),
-        path: api_v1_test_runner_agents_run_test_output_path(run_id: run.id, format: :json),
+        api_authorization_headers: worker_agents_api_authorization_headers(run.test_runner),
+        path: api_v1_worker_agents_run_test_output_path(run_id: run.id, format: :json),
         body: Base64.encode64("new test output content")
       )
     end

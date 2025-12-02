@@ -8,18 +8,18 @@ describe "Test runner events", type: :request do
     it "creates a test runner event" do
       expect {
         post(
-          api_v1_test_runner_agents_test_runner_test_runner_events_path(test_runner_id: test_runner.id),
+          api_v1_worker_agents_test_runner_test_runner_events_path(test_runner_id: test_runner.id),
           params: { type: "ready_signal_received" },
-          headers: test_runner_agents_api_authorization_headers(test_runner)
+          headers: worker_agents_api_authorization_headers(test_runner)
         )
       }.to change { WorkerEvent.count }.by(1)
     end
 
     it "returns 201" do
       post(
-        api_v1_test_runner_agents_test_runner_test_runner_events_path(test_runner_id: test_runner.id),
+        api_v1_worker_agents_test_runner_test_runner_events_path(test_runner_id: test_runner.id),
         params: { type: "ready_signal_received" },
-        headers: test_runner_agents_api_authorization_headers(test_runner)
+        headers: worker_agents_api_authorization_headers(test_runner)
       )
 
       expect(response).to have_http_status(:created)

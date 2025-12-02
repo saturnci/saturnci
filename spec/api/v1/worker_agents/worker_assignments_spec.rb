@@ -2,15 +2,15 @@ require "rails_helper"
 include APIAuthenticationHelper
 
 describe "Test runner assignments", type: :request do
-  describe "GET /api/v1/test_runner_agents/test_runners/:test_runner_id/test_runner_assignments" do
+  describe "GET /api/v1/worker_agents/test_runners/:test_runner_id/test_runner_assignments" do
     context "assignment exists" do
       let!(:test_runner_assignment) { create(:test_runner_assignment) }
       let!(:test_runner) { test_runner_assignment.worker }
 
       it "returns the assignment" do
         get(
-          api_v1_test_runner_agents_test_runner_test_runner_assignments_path(test_runner_id: test_runner.id, format: :json),
-          headers: test_runner_agents_api_authorization_headers(test_runner)
+          api_v1_worker_agents_test_runner_test_runner_assignments_path(test_runner_id: test_runner.id, format: :json),
+          headers: worker_agents_api_authorization_headers(test_runner)
         )
 
         response_body = JSON.parse(response.body)[0]
@@ -20,8 +20,8 @@ describe "Test runner assignments", type: :request do
       context "no project secrets exist" do
         it "assigns env_vars to an empty hash" do
           get(
-            api_v1_test_runner_agents_test_runner_test_runner_assignments_path(test_runner_id: test_runner.id, format: :json),
-            headers: test_runner_agents_api_authorization_headers(test_runner)
+            api_v1_worker_agents_test_runner_test_runner_assignments_path(test_runner_id: test_runner.id, format: :json),
+            headers: worker_agents_api_authorization_headers(test_runner)
           )
 
           response_body = JSON.parse(response.body)[0]
@@ -38,8 +38,8 @@ describe "Test runner assignments", type: :request do
       test_runner_assignment.run.test_suite_run.destroy
 
       get(
-        api_v1_test_runner_agents_test_runner_test_runner_assignments_path(test_runner_id: test_runner.id, format: :json),
-        headers: test_runner_agents_api_authorization_headers(test_runner)
+        api_v1_worker_agents_test_runner_test_runner_assignments_path(test_runner_id: test_runner.id, format: :json),
+        headers: worker_agents_api_authorization_headers(test_runner)
       )
 
       response_body = JSON.parse(response.body)
@@ -52,8 +52,8 @@ describe "Test runner assignments", type: :request do
       test_runner = create(:test_runner)
 
       get(
-        api_v1_test_runner_agents_test_runner_test_runner_assignments_path(test_runner_id: "nonexistent", format: :json),
-        headers: test_runner_agents_api_authorization_headers(test_runner)
+        api_v1_worker_agents_test_runner_test_runner_assignments_path(test_runner_id: "nonexistent", format: :json),
+        headers: worker_agents_api_authorization_headers(test_runner)
       )
 
       expect(response).to have_http_status(:bad_request)
