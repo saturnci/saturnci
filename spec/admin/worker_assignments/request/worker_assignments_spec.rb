@@ -13,6 +13,15 @@ describe "Test Runner Assignments", type: :request do
         get admin_test_runner_assignments_path
         expect(response).to have_http_status(200)
       end
+
+      context "with a worker assignment" do
+        let!(:worker_assignment) { create(:test_runner_assignment) }
+
+        it "returns a 200 response" do
+          get admin_test_runner_assignments_path
+          expect(response).to have_http_status(200)
+        end
+      end
     end
   end
 

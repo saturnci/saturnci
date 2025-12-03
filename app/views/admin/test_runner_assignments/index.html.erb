@@ -15,8 +15,8 @@
         <td>
           <%= l(assignment.created_at.in_time_zone(Rails.application.config.admin_time_zone)) %>
         </td>
-        <td><%= assignment.test_runner_id %></td>
-        <td><%= assignment.test_runner.name %></td>
+        <td><%= assignment.worker_id %></td>
+        <td><%= assignment.worker.name %></td>
         <td><%= assignment.run_id %></td>
         <td><%= assignment.run.repository.name %></td>
         <td><%= assignment.run.test_suite_run.commit_message %></td>
