@@ -31,7 +31,7 @@ describe "Show new test suite run", type: :system do
       )
 
       within ".test-suite-run-list" do
-        expect(page).to have_content("abc123")
+        expect(page).to have_content("THIS_WILL_NOT_BE_FOUND_307")
       end
     end
   end
