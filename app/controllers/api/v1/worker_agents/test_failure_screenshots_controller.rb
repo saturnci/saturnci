@@ -3,16 +3,21 @@ module API
     module WorkerAgents
       class TestFailureScreenshotsController < WorkerAgentsAPIController
         def create
-          run = Run.find(params[:run_id])
-          screenshot_file = ScreenshotFile.new(path: params[:file].original_filename)
-          test_case_run = screenshot_file.matching_test_case_run(run)
+          begin
+            run = Run.find(params[:run_id])
+            screenshot_file = ScreenshotFile.new(path: params[:file].original_filename)
+            test_case_run = screenshot_file.matching_test_case_run(run)
 
-          TestFailureScreenshot.create!(
-            test_case_run: test_case_run,
-            path: params[:file].original_filename
-          )
+            TestFailureScreenshot.create!(
+              test_case_run: test_case_run,
+              path: params[:file].original_filename
+            )
 
-          head :ok
+            head :ok
+          rescue StandardError => e
+            render(json: { error: e.message }, status: :bad_request)
+            return
+          end
         end
       end
     end
