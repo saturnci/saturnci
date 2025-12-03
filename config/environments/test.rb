@@ -68,4 +68,6 @@ Rails.application.configure do
   config.hosts.clear
 
   config.test_runner_availability_check_interval_in_seconds = 0
+
+  config.s3_ssl_verify_peer = true
 end

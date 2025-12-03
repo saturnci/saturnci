@@ -81,4 +81,6 @@ Rails.application.configure do
   if File.exist?(".github_private_key.pem")
     config.github_private_pem = File.read(".github_private_key.pem")
   end
+
+  config.s3_ssl_verify_peer = false
 end
