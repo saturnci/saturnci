@@ -83,6 +83,13 @@
   color: #00F !important;
 }
 
+.test-failure-screenshot {
+  max-width: 100%;
+  border: 10px solid #000;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
 .test-case-run-status-passed a {
   color: green;
 }

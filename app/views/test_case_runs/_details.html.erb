@@ -32,6 +32,17 @@
           <br>
           Duration: <%= number_with_precision(test_case_run.duration, precision: 2) %> seconds
         <% end %>
+
+        <% if test_case_run.test_failure_screenshots.any? %>
+          <div class="code-section">
+            <h3>Screenshot</h3>
+            <% test_case_run.test_failure_screenshots.each do |screenshot| %>
+              <a href="<%= screenshot.url %>" target="_blank">
+                <img src="<%= screenshot.url %>" class="test-failure-screenshot">
+              </a>
+            <% end %>
+          </div>
+        <% end %>
       </div>
 
 
