@@ -57,5 +57,25 @@ describe ScreenshotFile do
         expect(screenshot_file.matching_test_case_run(run)).to eq(test_case_run)
       end
     end
+
+    context "screenshot filename is truncated due to long description" do
+      let!(:screenshot_file) do
+        ScreenshotFile.new(
+          path: "failures_r_spec_example_groups_pto_classification_check_on_past_date_schedule_shift_changes_destroy_a_past_date_schedule_shift_that_has_hourly_pto_classification_able_to_destroy_successfully_upon_warning_pop_u_244.png"
+        )
+      end
+
+      let!(:test_case_run) do
+        create(
+          :test_case_run,
+          run: run,
+          description: "PTO Classification check on past date schedule shift changes Destroy a past date schedule shift that has hourly pto classification able to destroy successfully upon warning pop up"
+        )
+      end
+
+      it "returns the test case run" do
+        expect(screenshot_file.matching_test_case_run(run)).to eq(test_case_run)
+      end
+    end
   end
 end
