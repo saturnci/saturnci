@@ -5,7 +5,7 @@ module API
         def create
           begin
             run = Run.find(params[:run_id])
-            filename = request.headers["X-Filename"] || params[:file]&.original_filename
+            filename = request.headers["X-Filename"]
             request.body.rewind
 
             ActiveRecord::Base.transaction do

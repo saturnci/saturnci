@@ -8,11 +8,7 @@ describe "TestFailureScreenshots", type: :request do
 
   let!(:png_file) do
     path = Rails.root.join("spec", "support", "images", "screenshot.png")
-    Rack::Test::UploadedFile.new(
-      path,
-      "image/png",
-      original_filename: "failures_r_spec_example_test_case_307.png"
-    )
+    Rack::Test::UploadedFile.new(path, "image/png")
   end
 
   before do
@@ -25,7 +21,10 @@ describe "TestFailureScreenshots", type: :request do
       post(
         api_v1_worker_agents_run_test_failure_screenshots_path(run_id: run.id),
         params: { file: png_file },
-        headers: worker_agents_api_authorization_headers(test_runner)
+        headers: worker_agents_api_authorization_headers(test_runner).merge(
+          "Content-Type" => "image/png",
+          "X-Filename" => "failures_r_spec_example_test_case_307.png"
+        )
       )
     end
 
