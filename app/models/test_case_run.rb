@@ -1,5 +1,6 @@
 class TestCaseRun < ApplicationRecord
   belongs_to :run
+  has_many :test_failure_screenshots
   enum :status, %i[passed failed pending]
 
   def self.failed_first(test_case_runs)
