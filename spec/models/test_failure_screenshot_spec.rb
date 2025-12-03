@@ -7,6 +7,9 @@ describe TestFailureScreenshot do
     end
 
     before do
+      s3_client = instance_double(Aws::S3::Client)
+      allow(S3ClientFactory).to receive(:client).and_return(s3_client)
+
       presigner = instance_double(Aws::S3::Presigner)
       allow(Aws::S3::Presigner).to receive(:new).and_return(presigner)
       allow(presigner).to receive(:presigned_url).and_return(
