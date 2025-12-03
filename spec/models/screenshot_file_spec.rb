@@ -37,5 +37,25 @@ describe ScreenshotFile do
         expect(screenshot_file.matching_test_case_run(run)).to be_nil
       end
     end
+
+    context "test case run description contains special characters" do
+      let!(:screenshot_file) do
+        ScreenshotFile.new(
+          path: "failures_rspec_doesn_t_cause_a_problem_696.png"
+        )
+      end
+
+      let!(:test_case_run) do
+        create(
+          :test_case_run,
+          run: run,
+          description: "doesn't cause a problem"
+        )
+      end
+
+      it "returns the test case run" do
+        expect(screenshot_file.matching_test_case_run(run)).to eq(test_case_run)
+      end
+    end
   end
 end
