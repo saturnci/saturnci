@@ -7,11 +7,22 @@ module API
             run = Run.find(params[:run_id])
             screenshot_file = ScreenshotFile.new(path: params[:file].original_filename)
             test_case_run = screenshot_file.matching_test_case_run(run)
+            request.body.rewind
 
-            TestFailureScreenshot.create!(
-              test_case_run: test_case_run,
-              path: params[:file].original_filename
-            )
+            ActiveRecord::Base.transaction do
+              test_failure_screenshot = TestFailureScreenshot.create!(
+                test_case_run: test_case_run,
+                path: params[:file].original_filename
+              )
+
+              spaces_file_upload = SpacesFileUpload.new(
+                filename: test_failure_screenshot.path,
+                body: request.body.read,
+                content_type: request.headers["Content-Type"]
+              )
+
+              spaces_file_upload.put
+            end
 
             head :ok
           rescue StandardError => e
