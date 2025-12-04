@@ -6,11 +6,12 @@ class Worker < ApplicationRecord
   has_many :worker_events, inverse_of: :worker, dependent: :destroy
   has_one :run_worker
   has_one :worker_assignment, inverse_of: :worker, dependent: :destroy
-  has_one :run, through: :worker_assignment
+  has_one :task, through: :worker_assignment
+  alias_method :run, :task
   before_destroy :deprovision
 
   scope :unassigned, -> do
-    left_joins(:worker_assignment).where(worker_assignments: { run_id: nil })
+    left_joins(:worker_assignment).where(worker_assignments: { task_id: nil })
   end
 
   scope :available, -> do

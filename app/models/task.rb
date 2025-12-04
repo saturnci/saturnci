@@ -9,7 +9,7 @@ class Task < ApplicationRecord
   has_one :runner_system_log
   has_one :rsa_key, class_name: "Cloud::RSAKey", foreign_key: "run_id"
   has_one :run_worker
-  has_one :worker_assignment, foreign_key: "run_id", dependent: :destroy
+  has_one :worker_assignment, dependent: :destroy
   has_one :worker, through: :worker_assignment, source: :worker
   alias_attribute :started_at, :created_at
   delegate :project, to: :build
@@ -35,7 +35,7 @@ class Task < ApplicationRecord
   scope :unassigned, -> do
     not_finished
       .left_joins(:worker_assignment)
-      .where(worker_assignments: { run_id: nil })
+      .where(worker_assignments: { task_id: nil })
       .where(exit_code: nil)
   end
 

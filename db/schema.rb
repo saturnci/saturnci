@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_04_163016) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_04_163545) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -254,11 +254,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_04_163016) do
 
   create_table "worker_assignments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "worker_id", null: false
-    t.uuid "run_id", null: false
+    t.uuid "task_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["run_id"], name: "index_worker_assignments_on_run_id"
-    t.index ["run_id"], name: "unique_runs", unique: true
+    t.index ["task_id"], name: "index_worker_assignments_on_task_id"
+    t.index ["task_id"], name: "unique_runs", unique: true
     t.index ["worker_id"], name: "index_worker_assignments_on_worker_id"
     t.index ["worker_id"], name: "unique_test_runners", unique: true
   end
@@ -312,7 +312,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_04_163016) do
   add_foreign_key "test_suite_run_result_notifications", "sent_emails"
   add_foreign_key "test_suite_run_result_notifications", "test_suite_runs"
   add_foreign_key "test_suite_runs", "repositories"
-  add_foreign_key "worker_assignments", "tasks", column: "run_id"
+  add_foreign_key "worker_assignments", "tasks"
   add_foreign_key "worker_assignments", "workers"
   add_foreign_key "worker_events", "workers"
   add_foreign_key "workers", "rsa_keys"
