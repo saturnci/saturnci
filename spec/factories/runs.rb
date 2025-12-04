@@ -13,7 +13,11 @@ FactoryBot.define do
     end
 
     trait :with_test_runner do
-      test_runner
+      worker
+    end
+
+    trait :with_worker do
+      worker
     end
   end
 end

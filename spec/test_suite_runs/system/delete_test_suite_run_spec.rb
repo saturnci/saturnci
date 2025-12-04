@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "Delete test suite run", type: :system do
-  let!(:run) { create(:run, :with_test_runner) }
+  let!(:run) { create(:run, :with_worker) }
 
   before do
     allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
@@ -10,7 +10,7 @@ describe "Delete test suite run", type: :system do
 
   context "runner still exists on Digital Ocean" do
     before do
-      stub_request(:delete, "https://api.digitalocean.com/v2/droplets/#{run.test_runner.cloud_id}").to_return(status: 200)
+      stub_request(:delete, "https://api.digitalocean.com/v2/droplets/#{run.worker.cloud_id}").to_return(status: 200)
     end
 
     context "branch is only branch" do
@@ -56,7 +56,7 @@ describe "Delete test suite run", type: :system do
 
   context "runner does not still exist on Digital Ocean" do
     before do
-      stub_request(:delete, "https://api.digitalocean.com/v2/droplets/#{run.test_runner.cloud_id}").to_return(status: 404)
+      stub_request(:delete, "https://api.digitalocean.com/v2/droplets/#{run.worker.cloud_id}").to_return(status: 404)
     end
 
     it "removes the test suite run" do

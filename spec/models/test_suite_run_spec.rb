@@ -44,10 +44,10 @@ describe TestSuiteRun, type: :model do
   end
 
   describe "#cancel!" do
-    let!(:run) { create(:run, :with_test_runner) }
+    let!(:run) { create(:run, :with_worker) }
 
     before do
-      stub_request(:delete, "https://api.digitalocean.com/v2/droplets/#{run.test_runner.cloud_id}").to_return(status: 200)
+      stub_request(:delete, "https://api.digitalocean.com/v2/droplets/#{run.worker.cloud_id}").to_return(status: 200)
     end
 
     it "sets the status to 'Cancelled'" do

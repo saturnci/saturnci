@@ -6,8 +6,8 @@ describe "Start test suite run", type: :system do
   before do
     create(:user, super_admin: true)
 
-    test_runner = create(:test_runner)
-    allow(Worker).to receive(:available).and_return([test_runner])
+    worker = create(:worker)
+    allow(Worker).to receive(:available).and_return([worker])
     allow(Worker).to receive(:create_vm)
 
     allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)

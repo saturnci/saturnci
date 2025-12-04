@@ -2,8 +2,8 @@ require "rails_helper"
 include APIAuthenticationHelper
 
 describe "TestFailureScreenshots", type: :request do
-  let!(:run) { create(:run, :with_test_runner) }
-  let!(:test_runner) { run.test_runner }
+  let!(:run) { create(:run, :with_worker) }
+  let!(:worker) { run.worker }
   let!(:test_case_run) do
     create(:test_case_run, run: run, description: "User login shows error message")
   end
@@ -23,7 +23,7 @@ describe "TestFailureScreenshots", type: :request do
       post(
         api_v1_worker_agents_run_test_failure_screenshots_path(run_id: run.id),
         params: { file: png_file },
-        headers: worker_agents_api_authorization_headers(test_runner).merge(
+        headers: worker_agents_api_authorization_headers(worker).merge(
           "Content-Type" => "image/png",
           "X-Filename" => "failures_rspec_user_login_shows_error_message_123.png"
         )
