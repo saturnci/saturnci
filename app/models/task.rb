@@ -8,7 +8,7 @@ class Task < ApplicationRecord
   has_one :charge
   has_one :runner_system_log, foreign_key: "run_id"
   has_one :rsa_key, class_name: "Cloud::RSAKey", foreign_key: "run_id"
-  has_one :run_worker, foreign_key: "run_id"
+  has_one :run_worker
   has_one :worker_assignment, foreign_key: "run_id", dependent: :destroy
   has_one :worker, through: :worker_assignment, source: :worker
   alias_attribute :started_at, :created_at
