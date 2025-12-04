@@ -1,0 +1,30 @@
+module API
+  module V1
+    module WorkerAgents
+      module Tasks
+        class TaskFinishedEventsController < WorkerAgentsAPIController
+          def create
+            begin
+              task = Task.find(params[:task_id])
+              ActiveRecord::Base.transaction do
+                task.finish!
+                task.worker.worker_events.create!(type: :test_run_finished)
+
+                if task.build.tasks.all?(&:finished?)
+                  task.build.check_test_case_run_integrity!
+                  TestSuiteRunLinkComponent.refresh(task.build)
+                  GitHubCheckRun.find_by(test_suite_run: task.build)&.finish!
+                end
+              end
+            rescue StandardError => e
+              render(json: { error: e.message }, status: :bad_request)
+              return
+            end
+
+            head :ok
+          end
+        end
+      end
+    end
+  end
+end

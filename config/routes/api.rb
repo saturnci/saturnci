@@ -21,6 +21,16 @@ namespace :api do
         resource :runner, only: :destroy
       end
 
+      resources :tasks, only: [], module: "tasks" do
+        resources :task_finished_events, only: :create
+        resources :system_logs, only: :create
+        resource :test_output, only: :create
+        resource :json_output, only: :create
+        resources :test_failure_screenshots, only: :create
+        resources :task_events, only: :create
+        resource :runner, only: :destroy
+      end
+
       resources :workers, only: [] do
         resources :worker_events, only: :create
         resources :worker_assignments, only: :index
