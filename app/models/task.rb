@@ -3,7 +3,7 @@ class Task < ApplicationRecord
   self.table_name = "tasks"
   belongs_to :build, touch: true
   belongs_to :test_suite_run, class_name: "TestSuiteRun", foreign_key: "build_id", touch: true
-  has_many :test_case_runs, foreign_key: "run_id", dependent: :destroy
+  has_many :test_case_runs, dependent: :destroy
   has_many :run_events, dependent: :destroy
   has_one :charge
   has_one :runner_system_log

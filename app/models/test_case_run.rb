@@ -1,5 +1,7 @@
 class TestCaseRun < ApplicationRecord
-  belongs_to :run
+  belongs_to :task
+  alias_method :run, :task
+  alias_method :run=, :task=
   has_many :test_failure_screenshots
   enum :status, %i[passed failed pending]
 
