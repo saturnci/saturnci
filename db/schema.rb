@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_04_134608) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_04_151637) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -21,13 +21,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_04_134608) do
   end
 
   create_table "charges", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "run_id", null: false
+    t.uuid "task_id", null: false
     t.decimal "rate", null: false
     t.decimal "run_duration", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["run_id"], name: "index_charges_on_run_id"
-    t.index ["run_id"], name: "unique_index_on_charges_job_id", unique: true
+    t.index ["task_id"], name: "index_charges_on_task_id"
+    t.index ["task_id"], name: "unique_index_on_charges_job_id", unique: true
   end
 
   create_table "github_accounts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -293,7 +293,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_04_134608) do
     t.index ["rsa_key_id"], name: "index_workers_on_rsa_key_id"
   end
 
-  add_foreign_key "charges", "tasks", column: "run_id"
+  add_foreign_key "charges", "tasks"
   add_foreign_key "github_accounts", "users"
   add_foreign_key "github_check_runs", "test_suite_runs"
   add_foreign_key "github_events", "repositories"
