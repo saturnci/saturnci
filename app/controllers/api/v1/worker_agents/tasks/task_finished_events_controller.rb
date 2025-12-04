@@ -10,7 +10,7 @@ module API
                 task.finish!
                 task.worker.worker_events.create!(type: :test_run_finished)
 
-                if task.test_suite_run.runs.all?(&:finished?)
+                if task.test_suite_run.tasks.all?(&:finished?)
                   task.test_suite_run.check_test_case_run_integrity!
                   TestSuiteRunLinkComponent.refresh(task.test_suite_run)
                   GitHubCheckRun.find_by(test_suite_run: task.test_suite_run)&.finish!

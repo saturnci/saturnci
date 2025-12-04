@@ -5,6 +5,7 @@ class TestSuiteRun < ApplicationRecord
   belongs_to :repository
   belongs_to :project, foreign_key: "repository_id"
   has_many :runs, foreign_key: "build_id", dependent: :destroy
+  alias_method :tasks, :runs
   has_many :test_case_runs, through: :runs
   alias_attribute :project_id, :repository_id
   
