@@ -1,4 +1,4 @@
-module TestRunnerSnapshots
+module WorkerSnapshots
   class DropletRequest
     def initialize(client:, name:)
       @client = client
@@ -18,7 +18,7 @@ module TestRunnerSnapshots
       unless ssh_key.id.present?
         raise "SSH key creation not successful"
       end
-      
+
       droplet = DropletKit::Droplet.new(
         name: @name,
         region: DropletConfig::REGION,
@@ -27,7 +27,7 @@ module TestRunnerSnapshots
         user_data: user_data,
         ssh_keys: [ssh_key.id]
       )
-      
+
       @client.droplets.create(droplet)
     end
 
