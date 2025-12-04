@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_04_002254) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_04_134608) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -138,25 +138,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_04_002254) do
     t.index ["run_id"], name: "index_runner_system_logs_on_run_id"
   end
 
-  create_table "runs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "build_id", null: false
-    t.string "runner_id"
-    t.text "test_output"
-    t.text "test_report"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "order_index", null: false
-    t.string "runner_rsa_key_path"
-    t.integer "exit_code"
-    t.string "snapshot_image_id"
-    t.datetime "deleted_at"
-    t.boolean "terminate_on_completion", default: true, null: false
-    t.jsonb "json_output"
-    t.index ["build_id", "order_index"], name: "index_runs_on_build_id_and_order_index", unique: true
-    t.index ["build_id"], name: "index_runs_on_build_id"
-    t.index ["runner_id"], name: "index_runs_on_runner_id", unique: true
-  end
-
   create_table "sent_emails", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "to", null: false
     t.string "subject", null: false
@@ -173,6 +154,25 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_04_002254) do
     t.index ["channel"], name: "index_solid_cable_messages_on_channel"
     t.index ["channel_hash"], name: "index_solid_cable_messages_on_channel_hash"
     t.index ["created_at"], name: "index_solid_cable_messages_on_created_at"
+  end
+
+  create_table "tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "build_id", null: false
+    t.string "runner_id"
+    t.text "test_output"
+    t.text "test_report"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "order_index", null: false
+    t.string "runner_rsa_key_path"
+    t.integer "exit_code"
+    t.string "snapshot_image_id"
+    t.datetime "deleted_at"
+    t.boolean "terminate_on_completion", default: true, null: false
+    t.jsonb "json_output"
+    t.index ["build_id", "order_index"], name: "index_tasks_on_build_id_and_order_index", unique: true
+    t.index ["build_id"], name: "index_tasks_on_build_id"
+    t.index ["runner_id"], name: "index_tasks_on_runner_id", unique: true
   end
 
   create_table "test_case_runs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -293,7 +293,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_04_002254) do
     t.index ["rsa_key_id"], name: "index_workers_on_rsa_key_id"
   end
 
-  add_foreign_key "charges", "runs"
+  add_foreign_key "charges", "tasks", column: "run_id"
   add_foreign_key "github_accounts", "users"
   add_foreign_key "github_check_runs", "test_suite_runs"
   add_foreign_key "github_events", "repositories"
@@ -302,17 +302,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_04_002254) do
   add_foreign_key "personal_access_tokens", "users"
   add_foreign_key "project_secrets", "repositories", column: "project_id"
   add_foreign_key "repositories", "github_accounts"
-  add_foreign_key "run_events", "runs"
-  add_foreign_key "run_workers", "runs"
+  add_foreign_key "run_events", "tasks", column: "run_id"
+  add_foreign_key "run_workers", "tasks", column: "run_id"
   add_foreign_key "run_workers", "workers"
-  add_foreign_key "runner_system_logs", "runs"
-  add_foreign_key "runs", "test_suite_runs", column: "build_id"
-  add_foreign_key "test_case_runs", "runs"
+  add_foreign_key "runner_system_logs", "tasks", column: "run_id"
+  add_foreign_key "tasks", "test_suite_runs", column: "build_id"
+  add_foreign_key "test_case_runs", "tasks", column: "run_id"
   add_foreign_key "test_failure_screenshots", "test_case_runs"
   add_foreign_key "test_suite_run_result_notifications", "sent_emails"
   add_foreign_key "test_suite_run_result_notifications", "test_suite_runs"
   add_foreign_key "test_suite_runs", "repositories"
-  add_foreign_key "worker_assignments", "runs"
+  add_foreign_key "worker_assignments", "tasks", column: "run_id"
   add_foreign_key "worker_assignments", "workers"
   add_foreign_key "worker_events", "workers"
   add_foreign_key "workers", "rsa_keys"

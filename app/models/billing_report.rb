@@ -9,7 +9,7 @@ class BillingReport
     @repository.runs
       .joins(:charge)
       .where(created_at: start_date..end_date)
-      .order("runs.created_at desc")
+      .order("tasks.created_at desc")
   end
 
   def start_date

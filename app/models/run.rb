@@ -1,6 +1,6 @@
 class Run < ApplicationRecord
   acts_as_paranoid
-  self.table_name = "runs"
+  self.table_name = "tasks"
   belongs_to :build, touch: true
   belongs_to :test_suite_run, class_name: "TestSuiteRun", foreign_key: "build_id", touch: true
   has_many :test_case_runs, dependent: :destroy
@@ -17,7 +17,7 @@ class Run < ApplicationRecord
   after_save { test_suite_run.cache_status }
 
   scope :sorted, -> do
-    order("runs.order_index")
+    order("tasks.order_index")
   end
 
   scope :finished, -> do
@@ -29,7 +29,7 @@ class Run < ApplicationRecord
   end
 
   scope :running, -> do
-    not_finished.order("test_suite_runs.created_at desc, runs.order_index asc")
+    not_finished.order("test_suite_runs.created_at desc, tasks.order_index asc")
   end
 
   scope :unassigned, -> do

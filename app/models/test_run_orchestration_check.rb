@@ -12,7 +12,7 @@ class TestRunOrchestrationCheck
       @unassigned_workers = Worker.unassigned
     end
 
-    @unassigned_runs = Run.unassigned.where("runs.created_at > ?", 1.day.ago)
+    @unassigned_runs = Run.unassigned.where("tasks.created_at > ?", 1.day.ago)
   end
 
   def shift_available_worker

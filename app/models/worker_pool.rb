@@ -2,7 +2,7 @@ class WorkerPool
   include Singleton
 
   def self.target_size
-    if Run.where("runs.created_at > ?", 1.hour.ago).any?
+    if Run.where("tasks.created_at > ?", 1.hour.ago).any?
       ENV.fetch("WORKER_POOL_SIZE", "20").to_i
     else
       0

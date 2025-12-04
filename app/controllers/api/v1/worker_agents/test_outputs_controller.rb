@@ -12,7 +12,7 @@ module API
 
           Run.connection.execute(
             Run.sanitize_sql([
-              "UPDATE runs SET test_output = COALESCE(test_output, '') || ? WHERE id = ?",
+              "UPDATE tasks SET test_output = COALESCE(test_output, '') || ? WHERE id = ?",
               new_content,
               run.id
             ])
