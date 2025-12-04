@@ -16,7 +16,7 @@ module API
             end
 
             run = Run.find(params[:run_id])
-            runner_system_log = RunnerSystemLog.find_or_create_by(run:)
+            runner_system_log = RunnerSystemLog.find_or_create_by(task: run)
             runner_system_log.update!(content: runner_system_log.content + new_content)
 
             Streaming::RunOutputStream.new(run: run, tab_name: TAB_NAME).broadcast

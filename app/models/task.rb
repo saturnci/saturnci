@@ -6,7 +6,7 @@ class Task < ApplicationRecord
   has_many :test_case_runs, foreign_key: "run_id", dependent: :destroy
   has_many :run_events, dependent: :destroy
   has_one :charge
-  has_one :runner_system_log, foreign_key: "run_id"
+  has_one :runner_system_log
   has_one :rsa_key, class_name: "Cloud::RSAKey", foreign_key: "run_id"
   has_one :run_worker
   has_one :worker_assignment, foreign_key: "run_id", dependent: :destroy
