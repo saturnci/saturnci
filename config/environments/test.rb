@@ -67,7 +67,7 @@ Rails.application.configure do
   # Allow connection from any host
   config.hosts.clear
 
-  config.test_runner_availability_check_interval_in_seconds = 0
+  config.worker_availability_check_interval_in_seconds = 0
 
   config.s3_ssl_verify_peer = true
 end

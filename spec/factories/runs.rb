@@ -12,10 +12,6 @@ FactoryBot.define do
       exit_code { 1 }
     end
 
-    trait :with_test_runner do
-      worker
-    end
-
     trait :with_worker do
       worker
     end

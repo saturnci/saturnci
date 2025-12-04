@@ -5,6 +5,4 @@ FactoryBot.define do
     rsa_key
     access_token
   end
-
-  factory :test_runner, parent: :worker, class: "TestRunner"
 end
