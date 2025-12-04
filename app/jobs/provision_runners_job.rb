@@ -2,6 +2,6 @@ class ProvisionRunnersJob < ApplicationJob
   queue_as :default
 
   def perform(count)
-    count.times { TestRunner.provision }
+    count.times { Worker.provision }
   end
 end

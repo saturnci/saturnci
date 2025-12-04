@@ -4,7 +4,7 @@ module API
       class RunnersController < WorkerAgentsAPIController
         def destroy
           run = Run.find(params[:run_id])
-          run.delete_runner if run.test_runner.terminate_on_completion
+          run.delete_runner if run.worker.terminate_on_completion
 
           head :ok
         end

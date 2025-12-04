@@ -3,7 +3,7 @@ module API
     module WorkerAgents
       class WorkerEventsController < WorkerAgentsAPIController
         def create
-          worker = TestRunner.find(params[:worker_id])
+          worker = Worker.find(params[:worker_id])
           worker.worker_events.create!(type: params[:type])
           head :created
 

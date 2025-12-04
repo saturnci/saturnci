@@ -1,10 +1,10 @@
-json.array! @test_runner_assignments do |test_runner_assignment|
-  run = test_runner_assignment.run
+json.array! @worker_assignments do |worker_assignment|
+  run = worker_assignment.run
   test_suite_run = run.test_suite_run
   project = test_suite_run.project
   user = project.user
 
-  json.extract! test_runner_assignment, :id, :created_at, :updated_at
+  json.extract! worker_assignment, :id, :created_at, :updated_at
 
   json.run_id run.id
   json.run_order_index run.order_index

@@ -3,7 +3,7 @@ module API
     class TestRunnerCollectionsController < APIController
       def destroy
         authorize :test_runner_collection, :destroy?
-        TestRunner.all.select { |tr| tr.status != "Finished" && tr.status != "Running" }.each(&:destroy)
+        Worker.all.select { |worker| worker.status != "Finished" && worker.status != "Running" }.each(&:destroy)
         head :no_content
       end
     end
