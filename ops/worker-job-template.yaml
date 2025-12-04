@@ -27,6 +27,8 @@ spec:
               value: "${TEST_SUITE_RUN_ID}"
             - name: RUN_ID
               value: "${RUN_ID}"
+            - name: TASK_ID
+              value: "${TASK_ID}"
             - name: RUN_ORDER_INDEX
               value: "${RUN_ORDER_INDEX}"
             - name: PROJECT_NAME

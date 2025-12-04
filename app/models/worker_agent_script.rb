@@ -36,6 +36,7 @@ class WorkerAgentScript
       export PROJECT_NAME=#{@run.test_suite_run.repository.name}
       export BRANCH_NAME=#{@run.test_suite_run.branch_name}
       export RUN_ID=#{@run.id}
+      export TASK_ID=#{@run.id}
       export RUN_ORDER_INDEX=#{@run.order_index}
       export WORKER_ID=#{@run.worker.id}
       export WORKER_ACCESS_TOKEN=#{@run.worker.access_token.value}
