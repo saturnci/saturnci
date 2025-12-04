@@ -3,10 +3,10 @@ module API
     module WorkerAgents
       class WorkerAssignmentsController < WorkerAgentsAPIController
         def index
-          worker = TestRunner.find(params[:worker_id])
+          worker = Worker.find(params[:worker_id])
 
-          if worker.test_runner_assignment.present? && worker.run.test_suite_run.present?
-            @worker_assignments = [worker.test_runner_assignment]
+          if worker.worker_assignment.present? && worker.run.test_suite_run.present?
+            @worker_assignments = [worker.worker_assignment]
             render :index
           else
             render json: []

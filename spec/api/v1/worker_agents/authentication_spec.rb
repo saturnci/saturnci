@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe "Worker Agents Authentication", type: :request do
   describe "GET /api/v1/worker_agents/workers/:worker_id/worker_assignments" do
-    let!(:worker_assignment) { create(:test_runner_assignment) }
+    let!(:worker_assignment) { create(:worker_assignment) }
     let!(:worker) { worker_assignment.worker }
 
     context "with valid worker credentials" do

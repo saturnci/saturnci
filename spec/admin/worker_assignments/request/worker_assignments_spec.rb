@@ -15,7 +15,7 @@ describe "Test Runner Assignments", type: :request do
       end
 
       context "with a worker assignment" do
-        let!(:worker_assignment) { create(:test_runner_assignment) }
+        let!(:worker_assignment) { create(:worker_assignment) }
 
         it "returns a 200 response" do
           get admin_test_runner_assignments_path

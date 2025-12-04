@@ -14,24 +14,24 @@ describe Dispatcher do
       allow(WorkerPool).to receive(:target_size).and_return(4)
     end
 
-    context "there are 3 test runners" do
-      it "creates 1 test runner" do
-        create_list(:test_runner, 3)
+    context "there are 3 workers" do
+      it "creates 1 worker" do
+        create_list(:worker, 3)
         expect { Dispatcher.check(c) }.to change(Worker, :count).by(1)
       end
     end
 
-    context "there are 4 test runners" do
-      it "does not create a test runner" do
-        create_list(:test_runner, 4)
+    context "there are 4 workers" do
+      it "does not create a worker" do
+        create_list(:worker, 4)
         expect { Dispatcher.check(c) }.to_not change(Worker, :count)
       end
     end
 
-    context "there are 5 test runners but 4 of them are assigned" do
-      it "creates 4 - 1 = 3 test runners" do
-        create_list(:test_runner_assignment, 4)
-        create(:test_runner)
+    context "there are 5 workers but 4 of them are assigned" do
+      it "creates 4 - 1 = 3 workers" do
+        create_list(:worker_assignment, 4)
+        create(:worker)
         expect { Dispatcher.check(c) }.to change(Worker, :count).by(3)
       end
     end
@@ -41,28 +41,28 @@ describe Dispatcher do
     let!(:run) { create(:run, :passed) }
 
     before do
-      allow(Worker).to receive(:available).and_return([create(:test_runner)])
+      allow(Worker).to receive(:available).and_return([create(:worker)])
     end
 
     it "does not add an assignment" do
-      expect { Dispatcher.check }.to_not change(TestRunnerAssignment, :count)
+      expect { Dispatcher.check }.to_not change(WorkerAssignment, :count)
     end
   end
 
   context "an assigned test runner hasn't started running within 30 seconds" do
-    let!(:test_runner_assignment) { create(:test_runner_assignment) }
+    let!(:worker_assignment) { create(:worker_assignment) }
 
     it "deletes the assignment" do
       travel_to(60.seconds.from_now) do
         Dispatcher.check
-        expect(TestRunnerAssignment.exists?(test_runner_assignment.id)).to be false
+        expect(WorkerAssignment.exists?(worker_assignment.id)).to be false
       end
     end
 
     it "puts the test runner in error status" do
       travel_to(60.seconds.from_now) do
         Dispatcher.check
-        expect(test_runner_assignment.worker.status).to eq("Error")
+        expect(worker_assignment.worker.status).to eq("Error")
       end
     end
 
@@ -74,7 +74,7 @@ describe Dispatcher do
       it "does not delete the assignment" do
         travel_to(25.hours.from_now) do
           Dispatcher.check
-          expect(TestRunnerAssignment.exists?(test_runner_assignment.id)).to be true
+          expect(WorkerAssignment.exists?(worker_assignment.id)).to be true
         end
       end
     end
@@ -82,17 +82,17 @@ describe Dispatcher do
 
   context "an assigned test runner HAS started running within 30 seconds" do
     it "does not delete the assignment" do
-      test_runner_assignment = create(:test_runner_assignment)
+      worker_assignment = create(:worker_assignment)
 
       create(
         :worker_event,
-        worker: test_runner_assignment.worker,
+        worker: worker_assignment.worker,
         type: :assignment_acknowledged
       )
 
       travel_to(60.seconds.from_now) do
         Dispatcher.check
-        expect(TestRunnerAssignment.exists?(test_runner_assignment.id)).to be true
+        expect(WorkerAssignment.exists?(worker_assignment.id)).to be true
       end
     end
   end
@@ -101,13 +101,13 @@ describe Dispatcher do
     it "does not reassign the run" do
       completed_run = create(:run, :passed)
 
-      test_runner_assignment = create(:test_runner_assignment, run: completed_run)
-      test_runner_assignment.destroy
+      worker_assignment = create(:worker_assignment, run: completed_run)
+      worker_assignment.destroy
 
-      test_runner = create(:test_runner)
-      allow(Worker).to receive(:available).and_return([test_runner])
+      worker = create(:worker)
+      allow(Worker).to receive(:available).and_return([worker])
 
-      expect { Dispatcher.check }.to_not change(TestRunnerAssignment, :count)
+      expect { Dispatcher.check }.to_not change(WorkerAssignment, :count)
     end
   end
 end

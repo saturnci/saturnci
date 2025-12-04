@@ -4,7 +4,7 @@ include APIAuthenticationHelper
 describe "Worker assignments", type: :request do
   describe "GET /api/v1/worker_agents/workers/:worker_id/worker_assignments" do
     context "assignment exists" do
-      let!(:worker_assignment) { create(:test_runner_assignment) }
+      let!(:worker_assignment) { create(:worker_assignment) }
       let!(:worker) { worker_assignment.worker }
 
       it "returns the assignment" do
@@ -33,7 +33,7 @@ describe "Worker assignments", type: :request do
 
   describe "assignment is created, then test suite run is deleted" do
     it "does not show up in the list of assignments" do
-      worker_assignment = create(:test_runner_assignment)
+      worker_assignment = create(:worker_assignment)
       worker = worker_assignment.worker
       worker_assignment.run.test_suite_run.destroy
 
