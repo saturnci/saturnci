@@ -64,6 +64,48 @@ Task created
 - Secrets management via K8s Secrets
 - Deploy scripts in ops/
 
+## Architecture decision: separate clusters
+
+Workers will run in a **separate K8s cluster** from the web app. Reasons:
+
+- Workers can't starve web app of resources
+- Different scaling needs (web = consistent, workers = bursty)
+- Can use different node sizes optimized for each workload
+- Isolation limits blast radius if something goes wrong
+
 ## Migration steps
 
-TODO: Detail the incremental migration plan
+### Phase 1: Set up worker cluster
+
+1. Create new DOKS cluster for workers
+2. Configure kubectl context for new cluster
+3. Set up container registry access
+4. Add cluster config to Terraform
+
+### Phase 2: Build worker container image
+
+1. Containerize worker_agent
+2. Solve Docker-in-Docker (likely Kaniko)
+3. Push to registry
+4. Test locally with docker-compose
+
+### Phase 3: Create K8s Job template
+
+1. Define Job spec with worker container
+2. Pass assignment data via env vars
+3. Mount necessary secrets
+4. Test creating Jobs manually via kubectl
+
+### Phase 4: Rails integration
+
+1. Add kubernetes-client gem or use K8s API directly
+2. Create `KubernetesWorker` class to create Jobs
+3. Update Task creation to spawn K8s Job instead of assigning to Worker
+4. Keep Dispatcher path working as fallback
+
+### Phase 5: Cutover
+
+1. Run both paths in parallel, gradually shift traffic
+2. Monitor and compare
+3. Deprecate droplet-based Workers
+4. Remove Dispatcher, WorkerPool, droplet provisioning code
