@@ -1,4 +1,5 @@
 class RunEvent < ApplicationRecord
+  self.table_name = "task_events"
   self.inheritance_column = :_type_not_used
   belongs_to :task, touch: true
   alias_method :run, :task

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_04_163545) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_04_165149) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -110,15 +110,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_04_163545) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "run_events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "task_id", null: false
-    t.integer "type", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["task_id", "type"], name: "index_run_events_on_task_id_and_type", unique: true
-    t.index ["task_id"], name: "index_run_events_on_task_id"
-  end
-
   create_table "run_workers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "task_id", null: false
     t.uuid "worker_id", null: false
@@ -154,6 +145,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_04_163545) do
     t.index ["channel"], name: "index_solid_cable_messages_on_channel"
     t.index ["channel_hash"], name: "index_solid_cable_messages_on_channel_hash"
     t.index ["created_at"], name: "index_solid_cable_messages_on_created_at"
+  end
+
+  create_table "task_events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "task_id", null: false
+    t.integer "type", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id", "type"], name: "index_task_events_on_task_id_and_type", unique: true
+    t.index ["task_id"], name: "index_task_events_on_task_id"
   end
 
   create_table "tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -302,10 +302,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_04_163545) do
   add_foreign_key "personal_access_tokens", "users"
   add_foreign_key "project_secrets", "repositories", column: "project_id"
   add_foreign_key "repositories", "github_accounts"
-  add_foreign_key "run_events", "tasks"
   add_foreign_key "run_workers", "tasks"
   add_foreign_key "run_workers", "workers"
   add_foreign_key "runner_system_logs", "tasks"
+  add_foreign_key "task_events", "tasks"
   add_foreign_key "tasks", "test_suite_runs", column: "build_id"
   add_foreign_key "test_case_runs", "tasks"
   add_foreign_key "test_failure_screenshots", "test_case_runs"
