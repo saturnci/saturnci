@@ -5,12 +5,12 @@ class Worker < ApplicationRecord
   belongs_to :access_token
   has_many :worker_events, inverse_of: :worker, dependent: :destroy
   has_one :run_worker
-  has_one :test_runner_assignment, class_name: "WorkerAssignment", inverse_of: :worker, dependent: :destroy
-  has_one :run, through: :test_runner_assignment
+  has_one :worker_assignment, inverse_of: :worker, dependent: :destroy
+  has_one :run, through: :worker_assignment
   before_destroy :deprovision
 
   scope :unassigned, -> do
-    left_joins(:test_runner_assignment).where(worker_assignments: { run_id: nil })
+    left_joins(:worker_assignment).where(worker_assignments: { run_id: nil })
   end
 
   scope :available, -> do
@@ -33,7 +33,7 @@ class Worker < ApplicationRecord
   end
 
   scope :recently_assigned, -> do
-    joins(:test_runner_assignment)
+    joins(:worker_assignment)
       .where("worker_assignments.created_at > ?", 10.seconds.ago)
   end
 
@@ -64,7 +64,7 @@ class Worker < ApplicationRecord
   def deprovision(client = DropletKitClientFactory.client)
     client.droplets.delete(id: cloud_id)
   rescue DropletKit::Error => e
-    Rails.logger.error "Error deleting test runner: #{e.message}"
+    Rails.logger.error "Error deleting worker: #{e.message}"
   end
 
   def status
@@ -96,7 +96,7 @@ class Worker < ApplicationRecord
   def assign(run)
     transaction do
       worker_events.create!(type: :assignment_made)
-      TestRunnerAssignment.create!(worker: self, run:)
+      WorkerAssignment.create!(worker: self, run:)
     end
   end
 end

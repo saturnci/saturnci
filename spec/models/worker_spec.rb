@@ -14,7 +14,7 @@ describe Worker do
       run = create(:run)
 
       expect { test_runner.assign(run) }
-        .to change { test_runner.test_runner_assignment.present? }
+        .to change { test_runner.worker_assignment.present? }
         .from(false).to(true)
     end
   end
@@ -32,7 +32,7 @@ describe Worker do
       it "does not include the test runner" do
         test_runner = create(:test_runner)
         create(:worker_event, worker: test_runner, type: :ready_signal_received)
-        create(:test_runner_assignment, worker: test_runner)
+        create(:worker_assignment, worker: test_runner)
         expect(Worker.available).not_to include(test_runner)
       end
     end
@@ -108,7 +108,7 @@ describe Worker do
         r.test_suite_run.update!(commit_message: "Add stuff.")
       end
 
-      create(:test_runner_assignment, run:)
+      create(:worker_assignment, run:)
 
       expect(JSON.parse(run.test_runner.to_json)["commit_message"]).to eq("Add stuff.")
     end
