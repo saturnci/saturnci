@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_04_151637) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_04_155143) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -111,12 +111,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_04_151637) do
   end
 
   create_table "run_events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "run_id", null: false
+    t.uuid "task_id", null: false
     t.integer "type", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["run_id", "type"], name: "index_run_events_on_run_id_and_type", unique: true
-    t.index ["run_id"], name: "index_run_events_on_run_id"
+    t.index ["task_id", "type"], name: "index_run_events_on_task_id_and_type", unique: true
+    t.index ["task_id"], name: "index_run_events_on_task_id"
   end
 
   create_table "run_workers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -302,7 +302,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_04_151637) do
   add_foreign_key "personal_access_tokens", "users"
   add_foreign_key "project_secrets", "repositories", column: "project_id"
   add_foreign_key "repositories", "github_accounts"
-  add_foreign_key "run_events", "tasks", column: "run_id"
+  add_foreign_key "run_events", "tasks"
   add_foreign_key "run_workers", "tasks", column: "run_id"
   add_foreign_key "run_workers", "workers"
   add_foreign_key "runner_system_logs", "tasks", column: "run_id"

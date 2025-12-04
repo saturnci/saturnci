@@ -1,6 +1,8 @@
 class RunEvent < ApplicationRecord
   self.inheritance_column = :_type_not_used
-  belongs_to :run, touch: true
+  belongs_to :task, touch: true
+  alias_method :run, :task
+  alias_method :run=, :task=
 
   enum :type, [
     :image_build_started,
