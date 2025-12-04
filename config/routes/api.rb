@@ -6,9 +6,9 @@ namespace :api do
 
     # CLI endpoints
     resources :runs, only: %i[index show]
-    resources :test_runners, only: %i[index show update destroy]
+    resources :workers, only: %i[index show update destroy]
     resources :test_suite_runs, only: %i[index show create]
-    resource :test_runner_collection, only: :destroy
+    resource :worker_collection, only: :destroy
 
     namespace :worker_agents do
       resources :runs, only: [] do

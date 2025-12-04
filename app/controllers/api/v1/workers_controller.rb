@@ -1,6 +1,6 @@
 module API
   module V1
-    class TestRunnersController < APIController
+    class WorkersController < APIController
       def index
         workers = Worker.order("created_at desc").limit(100)
         authorize workers

@@ -1,2 +1,0 @@
-class TestRunnerSnapshot < WorkerSnapshot
-end

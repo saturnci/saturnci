@@ -1,2 +1,0 @@
-class TestRunner < Worker
-end

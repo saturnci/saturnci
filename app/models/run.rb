@@ -11,8 +11,6 @@ class Run < ApplicationRecord
   has_one :run_worker
   has_one :worker_assignment, dependent: :destroy
   has_one :worker, through: :worker_assignment, source: :worker
-  has_one :test_runner_assignment, class_name: "WorkerAssignment", dependent: :destroy
-  has_one :test_runner, through: :test_runner_assignment, source: :worker
   alias_attribute :started_at, :created_at
   delegate :project, to: :build
   delegate :repository, to: :test_suite_run
@@ -88,8 +86,6 @@ class Run < ApplicationRecord
     RunWorker.create!(worker:, run: self)
   end
 
-  alias_method :provision_test_runner, :provision_worker
-  alias_method :assign_test_runner, :provision_worker
   alias_method :assign_worker, :provision_worker
 
   def delete_runner

@@ -1,4 +1,4 @@
-class TestRunnerPolicy < ApplicationPolicy
+class WorkerPolicy < ApplicationPolicy
   def index?
     user.super_admin?
   end
