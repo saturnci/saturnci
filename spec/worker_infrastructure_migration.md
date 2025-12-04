@@ -50,8 +50,13 @@ Task created
 
 1. **Docker-in-Docker**: worker_agent builds Docker images. Options:
    - DinD sidecar container (works but security concerns)
-   - Kaniko (more secure, no daemon needed)
+   - Kaniko (no daemon, no privileged access — ideal for multi-tenant)
    - Host Docker socket mounting (security risk)
+
+   **Decision**: Kaniko via osscontainertools/kaniko fork (the original GoogleContainerTools
+   repo was archived June 2025). Kaniko is the only option that doesn't require relaxing
+   seccomp/AppArmor, which is critical since worker pods from different customers share
+   the same cluster.
 
 2. **Privileged operations**: Current agent uses sudo extensively
 
@@ -85,7 +90,7 @@ Workers will run in a **separate K8s cluster** from the web app. Reasons:
 ### Phase 2: Build worker container image
 
 1. Containerize worker_agent
-2. Solve Docker-in-Docker (likely Kaniko)
+2. Solve Docker-in-Docker (using Kaniko via osscontainertools fork)
 3. Push to registry
 4. Test locally with docker-compose
 
