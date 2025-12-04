@@ -9,10 +9,10 @@ module API
               run.finish!
               run.worker.worker_events.create!(type: :test_run_finished)
 
-              if run.build.runs.all?(&:finished?)
-                run.build.check_test_case_run_integrity!
-                TestSuiteRunLinkComponent.refresh(run.build)
-                GitHubCheckRun.find_by(test_suite_run: run.build)&.finish!
+              if run.test_suite_run.runs.all?(&:finished?)
+                run.test_suite_run.check_test_case_run_integrity!
+                TestSuiteRunLinkComponent.refresh(run.test_suite_run)
+                GitHubCheckRun.find_by(test_suite_run: run.test_suite_run)&.finish!
               end
             end
           rescue StandardError => e
