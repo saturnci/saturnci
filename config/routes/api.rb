@@ -16,7 +16,6 @@ namespace :api do
         resources :system_logs, only: :create
         resource :test_output, only: :create
         resource :json_output, only: :create
-        resources :screenshots, only: :create
         resources :test_failure_screenshots, only: :create
         resources :run_events, only: :create
         resource :runner, only: :destroy

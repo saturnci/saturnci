@@ -44,18 +44,6 @@
           </div>
         <% end %>
       </div>
-
-
-      <% if test_case_run.run.test_suite_run.runs.map(&:screenshot).compact.any? %>
-        <br>
-        <h3>Screenshots for this test suite run:</h3>
-
-        <% test_case_run.run.test_suite_run.runs.map(&:screenshot).compact.each do |screenshot| %>
-          <div>
-            <%= link_to screenshot.label, screenshot.url, target: "_blank", class: "screenshot-link" %>
-          </div>
-        <% end %>
-      <% end %>
     <% end %>
   <% end %>
 <% end %>

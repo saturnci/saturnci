@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_03_014354) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_04_002254) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -155,14 +155,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_03_014354) do
     t.index ["build_id", "order_index"], name: "index_runs_on_build_id_and_order_index", unique: true
     t.index ["build_id"], name: "index_runs_on_build_id"
     t.index ["runner_id"], name: "index_runs_on_runner_id", unique: true
-  end
-
-  create_table "screenshots", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "path"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.uuid "run_id", null: false
-    t.index ["run_id"], name: "index_screenshots_on_run_id"
   end
 
   create_table "sent_emails", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -315,7 +307,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_03_014354) do
   add_foreign_key "run_workers", "workers"
   add_foreign_key "runner_system_logs", "runs"
   add_foreign_key "runs", "test_suite_runs", column: "build_id"
-  add_foreign_key "screenshots", "runs"
   add_foreign_key "test_case_runs", "runs"
   add_foreign_key "test_failure_screenshots", "test_case_runs"
   add_foreign_key "test_suite_run_result_notifications", "sent_emails"
