@@ -36,7 +36,7 @@ class Run < ApplicationRecord
 
   scope :unassigned, -> do
     not_finished
-      .left_joins(:test_runner_assignment)
+      .left_joins(:worker_assignment)
       .where(worker_assignments: { run_id: nil })
       .where(exit_code: nil)
   end
@@ -77,22 +77,26 @@ class Run < ApplicationRecord
     run_events.run_cancelled.any?
   end
 
-  def provision_test_runner
+  def provision_worker
     worker_agent_script = WorkerAgentScript.new(self, test_suite_run.project.github_account.github_installation_id)
 
-    test_runner = TestRunner.provision(
+    worker = Worker.provision(
       client: DropletKitClientFactory.client,
       user_data: worker_agent_script.content,
     )
 
-    RunTestRunner.create!(test_runner:, run: self)
+    RunWorker.create!(worker:, run: self)
   end
 
+  alias_method :provision_test_runner, :provision_worker
+  alias_method :assign_test_runner, :provision_worker
+  alias_method :assign_worker, :provision_worker
+
   def delete_runner
-    return unless test_runner.present?
-    raise "cloud_id missing" unless test_runner.cloud_id.present?
+    return unless worker.present?
+    raise "cloud_id missing" unless worker.cloud_id.present?
     client = DropletKit::Client.new(access_token: ENV['DIGITALOCEAN_ACCESS_TOKEN'])
-    client.droplets.delete(id: test_runner.cloud_id)
+    client.droplets.delete(id: worker.cloud_id)
   rescue DropletKit::Error => e
     Rails.logger.error "Error deleting runner: #{e.message}"
   end

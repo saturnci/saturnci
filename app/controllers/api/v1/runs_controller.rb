@@ -35,7 +35,7 @@ module API
       private
 
       def rsa_key(run)
-        Base64.strict_encode64(run.test_runner.rsa_key.private_key_value)
+        Base64.strict_encode64(run.worker.rsa_key.private_key_value)
       end
     end
   end

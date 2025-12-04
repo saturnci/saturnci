@@ -9,14 +9,14 @@ class RunSpecificRunnerRequest
   end
 
   def execute!
-    test_runner = TestRunner.provision(
+    worker = Worker.provision(
       client: @client,
       ssh_key: @ssh_key,
       name: droplet_name(@run.project.name, @run.id),
       user_data:
     )
 
-    RunTestRunner.create!(test_runner:, run: @run)
+    RunWorker.create!(worker:, run: @run)
   end
 
   def droplet_name(project_name, run_id)

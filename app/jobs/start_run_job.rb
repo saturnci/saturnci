@@ -7,7 +7,7 @@ class StartRunJob < ApplicationJob
 
     ActiveRecord::Base.transaction do
       run.run_events.create!(type: :runner_requested)
-      run.assign_test_runner
+      run.assign_worker
     end
 
   rescue ActiveRecord::RecordNotFound

@@ -6,7 +6,7 @@ class Dispatcher
 
     delete_workers(c.old_unassigned_workers)
     delete_workers(c.very_old_workers.limit(MAX_NUMBER_OF_VERY_OLD_WORKERS_TO_DELETE_AT_ONE_TIME))
-    remove_orphaned_test_runner_assignments(c.orphaned_test_runner_assignments)
+    remove_orphaned_worker_assignments(c.orphaned_worker_assignments)
 
     worker_pool = WorkerPool.instance
     worker_pool.scale(WorkerPool.target_size)
@@ -29,15 +29,15 @@ class Dispatcher
     workers.destroy_all
   end
 
-  def self.remove_orphaned_test_runner_assignments(orphaned_test_runner_assignments)
-    log "Deleting #{orphaned_test_runner_assignments.count} orphaned workers"
+  def self.remove_orphaned_worker_assignments(orphaned_worker_assignments)
+    log "Deleting #{orphaned_worker_assignments.count} orphaned workers"
 
     ActiveRecord::Base.transaction do
-      orphaned_test_runner_assignments.each do |test_runner_assignment|
-        test_runner_assignment.worker.worker_events.create!(type: :error)
-        log "Deleting orphaned test runner assignment: #{test_runner_assignment.id}"
-        log "Worker: #{test_runner_assignment.worker.name}"
-        test_runner_assignment.destroy
+      orphaned_worker_assignments.each do |worker_assignment|
+        worker_assignment.worker.worker_events.create!(type: :error)
+        log "Deleting orphaned worker assignment: #{worker_assignment.id}"
+        log "Worker: #{worker_assignment.worker.name}"
+        worker_assignment.destroy
       end
     end
   end

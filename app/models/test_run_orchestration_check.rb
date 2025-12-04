@@ -27,10 +27,10 @@ class TestRunOrchestrationCheck
     Worker.where("workers.created_at < ?", VERY_OLD_WORKER_THRESHOLD.ago)
   end
 
-  def orphaned_test_runner_assignments
+  def orphaned_worker_assignments
     non_orphaned_workers = Worker.running + Worker.recently_assigned
 
-    TestRunnerAssignment
+    WorkerAssignment
       .where("worker_assignments.created_at > ?", 1.day.ago)
       .where.not(worker_id: non_orphaned_workers)
   end
