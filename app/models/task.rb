@@ -4,11 +4,13 @@ class Task < ApplicationRecord
   belongs_to :build, touch: true
   belongs_to :test_suite_run, class_name: "TestSuiteRun", foreign_key: "build_id", touch: true
   has_many :test_case_runs, dependent: :destroy
-  has_many :run_events, dependent: :destroy
+  has_many :task_events, dependent: :destroy
+  alias_method :run_events, :task_events
   has_one :charge
   has_one :runner_system_log
   has_one :rsa_key, class_name: "Cloud::RSAKey", foreign_key: "run_id"
-  has_one :run_worker
+  has_one :task_worker
+  alias_method :run_worker, :task_worker
   has_one :worker_assignment, dependent: :destroy
   has_one :worker, through: :worker_assignment, source: :worker
   alias_attribute :started_at, :created_at
