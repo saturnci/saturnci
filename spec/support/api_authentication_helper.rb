@@ -7,10 +7,10 @@ module APIAuthenticationHelper
     { "Authorization" => encoded_credentials }
   end
 
-  def worker_agents_api_authorization_headers(test_runner)
+  def worker_agents_api_authorization_headers(worker)
     encoded_credentials = ActionController::HttpAuthentication::Basic.encode_credentials(
-      test_runner.id,
-      test_runner.access_token.value
+      worker.id,
+      worker.access_token.value
     )
     { "Authorization" => encoded_credentials }
   end

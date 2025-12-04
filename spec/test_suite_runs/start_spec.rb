@@ -4,9 +4,9 @@ describe "Starting test suite run" do
   let!(:project) { create(:project, concurrency: 2) }
   let!(:test_suite_run) { create(:build, project:) }
 
-  context "there are available test runners" do
+  context "there are available workers" do
     before do
-      allow(Worker).to receive(:available).and_return(create_list(:test_runner, 2))
+      allow(Worker).to receive(:available).and_return(create_list(:worker, 2))
       allow(Worker).to receive(:create_vm)
     end
 
@@ -14,20 +14,20 @@ describe "Starting test suite run" do
       expect do
         test_suite_run.start!
         Dispatcher.check
-      end.to change(TestRunnerAssignment, :count).by(2)
+      end.to change(WorkerAssignment, :count).by(2)
     end
   end
 
-  context "there are available test runners" do
+  context "there are available workers" do
     before do
       2.times do
-        create(:test_runner) do |test_runner|
-          test_runner.worker_events.create!(type: :ready_signal_received)
+        create(:worker) do |worker|
+          worker.worker_events.create!(type: :ready_signal_received)
         end
       end
     end
 
-    it "does not add test runners" do
+    it "does not add workers" do
       expect { test_suite_run.start! }
         .not_to change(Worker, :count)
     end

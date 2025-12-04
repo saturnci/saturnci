@@ -2,8 +2,8 @@ require "rails_helper"
 include APIAuthenticationHelper
 
 RSpec.describe "test output encoding", type: :request do
-  let!(:run) { create(:run, :with_test_runner, test_output: "existing content 🚀") }
-  let!(:test_runner) { run.test_runner }
+  let!(:run) { create(:run, :with_worker, test_output: "existing content 🚀") }
+  let!(:worker) { run.worker }
 
   it "handles UTF-8 content with emojis correctly" do
     test_content = "new content with emoji 🎉"
@@ -12,7 +12,7 @@ RSpec.describe "test output encoding", type: :request do
     post(
       api_v1_worker_agents_run_test_output_path(run_id: run.id),
       params: encoded_content,
-      headers: worker_agents_api_authorization_headers(test_runner).merge({ "CONTENT_TYPE" => "text/plain" })
+      headers: worker_agents_api_authorization_headers(worker).merge({ "CONTENT_TYPE" => "text/plain" })
     )
 
     expect(response).to have_http_status(:ok)
@@ -31,7 +31,7 @@ RSpec.describe "test output encoding", type: :request do
     post(
       api_v1_worker_agents_run_test_output_path(run_id: run.id),
       params: encoded_content,
-      headers: worker_agents_api_authorization_headers(test_runner).merge({ "CONTENT_TYPE" => "text/plain" })
+      headers: worker_agents_api_authorization_headers(worker).merge({ "CONTENT_TYPE" => "text/plain" })
     )
 
     expect(response).to have_http_status(:ok)

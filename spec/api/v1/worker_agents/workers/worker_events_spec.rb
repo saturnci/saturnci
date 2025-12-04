@@ -3,7 +3,7 @@ include APIAuthenticationHelper
 
 describe "Worker events", type: :request do
   describe "POST /api/v1/worker_agents/workers/:worker_id/worker_events" do
-    let!(:worker) { create(:test_runner) }
+    let!(:worker) { create(:worker) }
 
     it "creates a worker event" do
       expect {

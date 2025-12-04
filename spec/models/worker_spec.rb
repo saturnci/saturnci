@@ -9,38 +9,38 @@ describe Worker do
   end
 
   describe "#assign" do
-    it "assigns a run to the test runner" do
-      test_runner = create(:test_runner)
+    it "assigns a run to the worker" do
+      worker = create(:worker)
       run = create(:run)
 
-      expect { test_runner.assign(run) }
-        .to change { test_runner.worker_assignment.present? }
+      expect { worker.assign(run) }
+        .to change { worker.worker_assignment.present? }
         .from(false).to(true)
     end
   end
 
   describe "scope available" do
-    context "when the test runner is available" do
-      it "includes the test runner" do
-        test_runner = create(:test_runner)
-        create(:worker_event, worker: test_runner, type: :ready_signal_received)
-        expect(Worker.available).to include(test_runner)
+    context "when the worker is available" do
+      it "includes the worker" do
+        worker = create(:worker)
+        create(:worker_event, worker: worker, type: :ready_signal_received)
+        expect(Worker.available).to include(worker)
       end
     end
 
-    context "when the test runner has an assignment" do
-      it "does not include the test runner" do
-        test_runner = create(:test_runner)
-        create(:worker_event, worker: test_runner, type: :ready_signal_received)
-        create(:worker_assignment, worker: test_runner)
-        expect(Worker.available).not_to include(test_runner)
+    context "when the worker has an assignment" do
+      it "does not include the worker" do
+        worker = create(:worker)
+        create(:worker_event, worker: worker, type: :ready_signal_received)
+        create(:worker_assignment, worker: worker)
+        expect(Worker.available).not_to include(worker)
       end
     end
 
-    context "when the test runner is not available" do
-      it "does not include the test runner" do
-        test_runner = create(:test_runner)
-        expect(Worker.available).not_to include(test_runner)
+    context "when the worker is not available" do
+      it "does not include the worker" do
+        worker = create(:worker)
+        expect(Worker.available).not_to include(worker)
       end
     end
   end
@@ -50,15 +50,15 @@ describe Worker do
       allow(Worker).to receive(:create_vm)
     end
 
-    it "creates a test runner" do
+    it "creates a worker" do
       expect { Worker.provision }
         .to change { Worker.count }
         .from(0).to(1)
     end
 
-    it "sets the test runner's status to Provisioning" do
-      test_runner = Worker.provision
-      expect(test_runner.status).to eq("Provisioning")
+    it "sets the worker's status to Provisioning" do
+      worker = Worker.provision
+      expect(worker.status).to eq("Provisioning")
     end
 
     it "creates an access token" do
@@ -67,50 +67,50 @@ describe Worker do
         .from(0).to(1)
     end
 
-    it "assigns the access token to the test runner" do
-      test_runner = Worker.provision
-      expect(test_runner.access_token).to be_present
+    it "assigns the access token to the worker" do
+      worker = Worker.provision
+      expect(worker.access_token).to be_present
     end
   end
 
   describe "status" do
     context "ready" do
       it "returns ready" do
-        test_runner = create(:test_runner)
-        test_runner.worker_events.create!(type: :ready_signal_received)
-        expect(test_runner.status).to eq("Available")
+        worker = create(:worker)
+        worker.worker_events.create!(type: :ready_signal_received)
+        expect(worker.status).to eq("Available")
       end
     end
   end
 
   describe "#unassigned" do
-    context "a test runner is not associated with a run" do
+    context "a worker is not associated with a run" do
       it "is included" do
-        test_runner = create(:test_runner)
-        expect(Worker.unassigned).to include(test_runner)
+        worker = create(:worker)
+        expect(Worker.unassigned).to include(worker)
       end
     end
 
-    context "a test runner is associated with a run" do
+    context "a worker is associated with a run" do
       it "is not included" do
-        test_runner = create(:test_runner)
+        worker = create(:worker)
         run = create(:run)
-        test_runner.assign(run)
+        worker.assign(run)
 
-        expect(Worker.unassigned).not_to include(test_runner)
+        expect(Worker.unassigned).not_to include(worker)
       end
     end
   end
 
   describe "#to_json" do
-    it "includes the test runner assignment's run's commit message" do
+    it "includes the worker assignment's run's commit message" do
       run = create(:run) do |r|
         r.test_suite_run.update!(commit_message: "Add stuff.")
       end
 
       create(:worker_assignment, run:)
 
-      expect(JSON.parse(run.test_runner.to_json)["commit_message"]).to eq("Add stuff.")
+      expect(JSON.parse(run.worker.to_json)["commit_message"]).to eq("Add stuff.")
     end
   end
 end

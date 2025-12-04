@@ -12,14 +12,14 @@ describe "run finished events", type: :request do
   end
 
   describe "POST /api/v1/worker_agents/runs/:id/run_finished_events" do
-    let!(:run) { create(:run, :with_test_runner) }
-    let!(:test_runner) { run.test_runner }
+    let!(:run) { create(:run, :with_worker) }
+    let!(:worker) { run.worker }
 
     it "increases the count of run events by 1" do
       expect {
         post(
           api_v1_worker_agents_run_run_finished_events_path(run),
-          headers: worker_agents_api_authorization_headers(test_runner)
+          headers: worker_agents_api_authorization_headers(worker)
         )
       }.to change(RunEvent, :count).by(1)
     end
@@ -27,7 +27,7 @@ describe "run finished events", type: :request do
     it "returns an empty 200 response" do
       post(
         api_v1_worker_agents_run_run_finished_events_path(run),
-        headers: worker_agents_api_authorization_headers(test_runner)
+        headers: worker_agents_api_authorization_headers(worker)
       )
       expect(response).to have_http_status(200)
       expect(response.body).to be_empty
@@ -37,7 +37,7 @@ describe "run finished events", type: :request do
       expect {
         post(
           api_v1_worker_agents_run_run_finished_events_path(run),
-          headers: worker_agents_api_authorization_headers(test_runner)
+          headers: worker_agents_api_authorization_headers(worker)
         )
       }.to change { run.reload.charge.present? }.from(false).to(true)
     end

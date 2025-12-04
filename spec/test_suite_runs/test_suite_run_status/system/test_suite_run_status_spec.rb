@@ -3,7 +3,7 @@ require "rails_helper"
 describe "Test suite run status", type: :system do
   include SaturnAPIHelper
 
-  let!(:run) { create(:run, :with_test_runner) }
+  let!(:run) { create(:run, :with_worker) }
   let!(:user) { run.test_suite_run.repository.user }
 
   before do
@@ -21,7 +21,7 @@ describe "Test suite run status", type: :system do
         run.update!(test_output: "COMMAND_EXIT_CODE=\"0\"")
 
         http_request(
-          api_authorization_headers: worker_agents_api_authorization_headers(run.test_runner),
+          api_authorization_headers: worker_agents_api_authorization_headers(run.worker),
           path: api_v1_worker_agents_run_run_finished_events_path(run)
         )
 
@@ -37,7 +37,7 @@ describe "Test suite run status", type: :system do
         run.update!(test_output: "COMMAND_EXIT_CODE=\"0\"")
 
         http_request(
-          api_authorization_headers: worker_agents_api_authorization_headers(run.test_runner),
+          api_authorization_headers: worker_agents_api_authorization_headers(run.worker),
           path: api_v1_worker_agents_run_run_finished_events_path(run)
         )
 
@@ -52,7 +52,7 @@ describe "Test suite run status", type: :system do
   describe "test suite run list links" do
     context "test suite run goes from running to finished" do
       let!(:other_test_suite_run) { create(:build, repository: run.test_suite_run.repository) }
-      let!(:other_run) { create(:run, :with_test_runner, build: other_test_suite_run) }
+      let!(:other_run) { create(:run, :with_worker, build: other_test_suite_run) }
 
       it "maintains the currently active build" do
         visit repository_build_path(id: run.test_suite_run.id, repository_id: run.test_suite_run.repository.id)
@@ -62,7 +62,7 @@ describe "Test suite run status", type: :system do
         end
 
         http_request(
-          api_authorization_headers: worker_agents_api_authorization_headers(other_run.test_runner),
+          api_authorization_headers: worker_agents_api_authorization_headers(other_run.worker),
           path: api_v1_worker_agents_run_run_finished_events_path(other_run)
         )
 
@@ -100,7 +100,7 @@ describe "Test suite run status", type: :system do
         expect(page).not_to have_content("3m 40s")
 
         http_request(
-          api_authorization_headers: worker_agents_api_authorization_headers(run.test_runner),
+          api_authorization_headers: worker_agents_api_authorization_headers(run.worker),
           path: api_v1_worker_agents_run_run_finished_events_path(run)
         )
 

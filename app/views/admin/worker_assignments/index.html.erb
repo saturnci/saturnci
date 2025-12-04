@@ -1,16 +1,16 @@
 <div class="container">
-  <h2>Test Runner Assignments (<%= @test_runner_assignments.count %>)</h2>
+  <h2>Worker Assignments (<%= @worker_assignments.count %>)</h2>
 
   <table border>
     <tr>
       <th>Created</th>
-      <th>Test Runner ID</th>
-      <th>Test Runner Name</th>
+      <th>Worker ID</th>
+      <th>Worker Name</th>
       <th>Run ID</th>
       <th>Repository</th>
       <th>Commit Message</th>
     </tr>
-    <% @test_runner_assignments.each do |assignment| %>
+    <% @worker_assignments.each do |assignment| %>
       <tr>
         <td>
           <%= l(assignment.created_at.in_time_zone(Rails.application.config.admin_time_zone)) %>

@@ -49,7 +49,7 @@ describe "Worker assignments", type: :request do
 
   describe "when worker does not exist" do
     it "returns bad request with error message" do
-      worker = create(:test_runner)
+      worker = create(:worker)
 
       get(
         api_v1_worker_agents_worker_worker_assignments_path(worker_id: "nonexistent", format: :json),
