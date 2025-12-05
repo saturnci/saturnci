@@ -12,7 +12,10 @@ class TestRunOrchestrationCheck
       @unassigned_workers = Worker.unassigned
     end
 
-    @unassigned_runs = Run.unassigned.where("tasks.created_at > ?", 1.day.ago)
+    @unassigned_runs = Run.unassigned
+      .joins(test_suite_run: { repository: :worker_architecture })
+      .where(worker_architectures: { slug: WorkerArchitecture::TERRA_SLUG })
+      .where("tasks.created_at > ?", 1.day.ago)
   end
 
   def shift_available_worker
