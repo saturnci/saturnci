@@ -135,6 +135,16 @@ spec:
             secretKeyRef:
               name: saturn-secrets
               key: DIGITALOCEAN_ACCESS_TOKEN
+        - name: NOVA_K8S_API_URL
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: NOVA_K8S_API_URL
+        - name: NOVA_K8S_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: NOVA_K8S_TOKEN
         - name: ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY
           valueFrom:
             secretKeyRef:
@@ -312,6 +322,16 @@ spec:
             secretKeyRef:
               name: saturn-secrets
               key: DIGITALOCEAN_ACCESS_TOKEN
+        - name: NOVA_K8S_API_URL
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: NOVA_K8S_API_URL
+        - name: NOVA_K8S_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: NOVA_K8S_TOKEN
         - name: ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY
           valueFrom:
             secretKeyRef:
