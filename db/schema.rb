@@ -100,7 +100,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_05_114850) do
     t.datetime "deleted_at"
     t.integer "concurrency", default: 2, null: false
     t.boolean "create_github_checks_automatically_upon_pull_request_creation", default: false, null: false
-    t.uuid "worker_architecture_id"
+    t.uuid "worker_architecture_id", null: false
     t.index ["github_account_id"], name: "index_repositories_on_github_account_id"
     t.index ["worker_architecture_id"], name: "index_repositories_on_worker_architecture_id"
   end
