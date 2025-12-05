@@ -26,6 +26,17 @@
         </div>
 
         <br>
+        <div>
+          <span>Worker architecture</span>
+          <br>
+          <%= form.radio_button :worker_architecture_id, WorkerArchitecture.terra.id %>
+          <%= form.label :worker_architecture_id, "Terra", value: WorkerArchitecture.terra.id %>
+          <br>
+          <%= form.radio_button :worker_architecture_id, WorkerArchitecture.nova.id %>
+          <%= form.label :worker_architecture_id, "Nova", value: WorkerArchitecture.nova.id %>
+        </div>
+
+        <br>
         <%= form.submit "Save", class: "button" %>
       <% end %>
     </div>

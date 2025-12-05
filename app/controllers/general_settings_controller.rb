@@ -23,7 +23,8 @@ class GeneralSettingsController < ApplicationController
     params.require(:repository).permit(
       :start_test_suite_runs_automatically_on_git_push,
       :create_github_checks_automatically_upon_pull_request_creation,
-      :concurrency
+      :concurrency,
+      :worker_architecture_id
     )
   end
 end
