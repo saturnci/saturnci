@@ -2,20 +2,20 @@
   <%= render "test_suite_runs/header", build: %>
 
   <%= turbo_frame_tag "test_suite_run_body", class: "test-suite-run-body", data: { turbo_action: "advance" } do %>
-    <% cache test_suite_run do %>
+    <% cache build do %>
       <%= render "builds/menu",
-        test_suite_run:,
+        test_suite_run: build,
         run: nil,
         current_tab_name: "overview",
         target_tab_name: "test_output" %>
     <% end %>
 
     <div class="test-suite-run-overview">
-      <% if test_suite_run.finished? %>
+      <% if build.finished? %>
         <%= render "test_case_runs/details", test_case_run: test_case_run %>
         <%= render "test_case_runs/list", build:, active_test_case_run: test_case_run %>
       <% else %>
-        <%= render "test_suite_runs/overview_not_finished", test_suite_run: %>
+        <%= render "test_suite_runs/overview_not_finished", test_suite_run: build %>
       <% end %>
     </div>
   <% end %>
