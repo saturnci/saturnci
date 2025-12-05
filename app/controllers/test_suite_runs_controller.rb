@@ -16,7 +16,9 @@ class TestSuiteRunsController < ApplicationController
           partial: "test_suite_runs/list_items",
           locals: {
             builds: test_suite_run_list_query.test_suite_runs.offset(params[:offset]).limit(TestSuiteRunListQuery::CHUNK_SIZE),
+            test_suite_runs: test_suite_run_list_query.test_suite_runs.offset(params[:offset]).limit(TestSuiteRunListQuery::CHUNK_SIZE),
             active_build: nil
+            active_test_suite_run: nil
           }
         )
       end
