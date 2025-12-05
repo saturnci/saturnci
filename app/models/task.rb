@@ -23,11 +23,11 @@ class Task < ApplicationRecord
   end
 
   scope :finished, -> do
-    joins(:build).where.not(exit_code: nil)
+    joins(:test_suite_run).where.not(exit_code: nil)
   end
 
   scope :not_finished, -> do
-    joins(:build).where(exit_code: nil)
+    joins(:test_suite_run).where(exit_code: nil)
   end
 
   scope :running, -> do
