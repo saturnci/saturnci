@@ -1,5 +1,5 @@
 <%= render @test_suite_run_component do |component| %>
   <%= component.with_body do %>
-    <%= render "test_suite_runs/overview", build: @build, test_case_run: nil %>
+    <%= render "test_suite_runs/overview", test_suite_run: @build, test_case_run: nil %>
   <% end %>
 <% end %>

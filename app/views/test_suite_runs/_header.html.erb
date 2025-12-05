@@ -1,38 +1,38 @@
 <div class="test-suite-run-header">
   <div>
-    <h2><%= build.commit_message.truncate(80) %></h2>
+    <h2><%= test_suite_run.commit_message.truncate(80) %></h2>
 
     <h3>
-      Branch: <code><%= build.branch_name %></code>
-      Commit: <code><%= abbreviated_hash(build.commit_hash) %></code>
+      Branch: <code><%= test_suite_run.branch_name %></code>
+      Commit: <code><%= abbreviated_hash(test_suite_run.commit_hash) %></code>
     </h3>
   </div>
 
   <div class="test-suite-run-action-buttons">
-    <% if build.status == "Not Started" %>
+    <% if test_suite_run.status == "Not Started" %>
       <%= button_to "Start",
-        test_suite_runs_path(test_suite_run_id: build.id),
+        test_suite_runs_path(test_suite_run_id: test_suite_run.id),
         method: :post,
         data: { turbo: false },
         class: "button" %>
     <% else %>
       <%= button_to "Rerun",
-        test_suite_reruns_path(test_suite_run_id: build.id),
+        test_suite_reruns_path(test_suite_run_id: test_suite_run.id),
         method: :post,
         data: { turbo: false },
         class: "button" %>
     <% end %>
 
-    <% if build.status == "Running" %>
+    <% if test_suite_run.status == "Running" %>
       <%= button_to "Cancel",
-        test_suite_run_cancellations_path(test_suite_run_id: build.id),
+        test_suite_run_cancellations_path(test_suite_run_id: test_suite_run.id),
         method: :post,
         data: { turbo: false },
         class: "button" %>
     <% end %>
 
     <%= button_to "Delete",
-      repository_test_suite_run_path(build.repository, build),
+      repository_test_suite_run_path(test_suite_run.repository, test_suite_run),
       method: :delete,
       data: { turbo: false },
       class: "button" %>
