@@ -28,6 +28,7 @@ module Nova
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
     http.cert_store = OpenSSL::X509::Store.new.tap do |store|
+      store.set_default_paths
       store.add_cert(OpenSSL::X509::Certificate.new(ca_cert))
     end
 
