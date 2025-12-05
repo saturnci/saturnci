@@ -62,12 +62,13 @@ module Nova
         containers: [
           {
             name: "worker",
-            image: "registry.digitalocean.com/saturnci/worker-agent:latest",
+            image: "registry.digitalocean.com/saturnci/nova-worker-agent:latest",
             env: [
               { name: "SATURNCI_API_HOST", value: "https://app.saturnci.com" },
               { name: "WORKER_ID", value: worker.id },
               { name: "WORKER_ACCESS_TOKEN", value: worker.access_token.value },
-              { name: "TASK_ID", value: task.id }
+              { name: "TASK_ID", value: task.id },
+              { name: "WORKER_NAME", valueFrom: { fieldRef: { fieldPath: "metadata.name" } } }
             ]
           }
         ]
