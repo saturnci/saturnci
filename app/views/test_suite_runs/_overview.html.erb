@@ -1,5 +1,5 @@
 <%= turbo_frame_tag "build", class: "test-suite-run", data: { turbo_action: "advance" } do %>
-  <%= render "test_suite_runs/header", build: %>
+  <%= render "test_suite_runs/header", test_suite_run: %>
 
   <%= turbo_frame_tag "test_suite_run_body", class: "test-suite-run-body", data: { turbo_action: "advance" } do %>
     <% cache test_suite_run do %>
