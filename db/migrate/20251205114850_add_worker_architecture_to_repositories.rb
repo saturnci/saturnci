@@ -1,5 +1,9 @@
 class AddWorkerArchitectureToRepositories < ActiveRecord::Migration[8.0]
   def up
+    if column_exists?(:repositories, :worker_architecture_id)
+      remove_reference :repositories, :worker_architecture
+    end
+
     add_reference :repositories, :worker_architecture, foreign_key: true, type: :uuid, null: true
 
     terra = WorkerArchitecture.find_by!(slug: "terra")
