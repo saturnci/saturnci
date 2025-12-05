@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_05_100114) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_05_112551) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -100,7 +100,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_05_100114) do
     t.datetime "deleted_at"
     t.integer "concurrency", default: 2, null: false
     t.boolean "create_github_checks_automatically_upon_pull_request_creation", default: false, null: false
+    t.uuid "worker_architecture_id", default: "d5aeb5bf-7131-42e2-a4a3-ac2762e6ca6a"
     t.index ["github_account_id"], name: "index_repositories_on_github_account_id"
+    t.index ["worker_architecture_id"], name: "index_repositories_on_worker_architecture_id"
   end
 
   create_table "rsa_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -309,6 +311,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_05_100114) do
   add_foreign_key "personal_access_tokens", "users"
   add_foreign_key "project_secrets", "repositories", column: "project_id"
   add_foreign_key "repositories", "github_accounts"
+  add_foreign_key "repositories", "worker_architectures"
   add_foreign_key "runner_system_logs", "tasks"
   add_foreign_key "task_events", "tasks"
   add_foreign_key "task_workers", "tasks"
