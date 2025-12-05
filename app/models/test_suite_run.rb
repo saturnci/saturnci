@@ -29,15 +29,7 @@ class TestSuiteRun < ApplicationRecord
 
   def start!
     return unless repository.active
-    client = DropletKitClientFactory.client
-
-    transaction do
-      save!
-
-      repository.concurrency.times.map do |i|
-        Task.create!(test_suite_run: self, order_index: i + 1)
-      end
-    end
+    Terra.start_test_suite_run(self)
   end
 
   def cancel!
