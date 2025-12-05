@@ -46,6 +46,7 @@ class TestSuiteRunsController < ApplicationController
         partial: "test_suite_runs/overview",
         locals: {
           build: @test_suite_run,
+          test_suite_run: @test_suite_run,
           test_case_run: test_case_run
         }
       )
