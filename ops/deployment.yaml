@@ -145,6 +145,11 @@ spec:
             secretKeyRef:
               name: saturn-secrets
               key: NOVA_K8S_TOKEN
+        - name: NOVA_K8S_CA_CERT
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: NOVA_K8S_CA_CERT
         - name: ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY
           valueFrom:
             secretKeyRef:
@@ -332,6 +337,11 @@ spec:
             secretKeyRef:
               name: saturn-secrets
               key: NOVA_K8S_TOKEN
+        - name: NOVA_K8S_CA_CERT
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: NOVA_K8S_CA_CERT
         - name: ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY
           valueFrom:
             secretKeyRef:

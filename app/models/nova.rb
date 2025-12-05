@@ -22,10 +22,14 @@ module Nova
   def self.create_k8s_pod(worker, task)
     api_url = ENV.fetch("NOVA_K8S_API_URL")
     token = ENV.fetch("NOVA_K8S_TOKEN")
+    ca_cert = ENV.fetch("NOVA_K8S_CA_CERT")
 
     uri = URI("#{api_url}/api/v1/namespaces/default/pods")
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
+    http.cert_store = OpenSSL::X509::Store.new.tap do |store|
+      store.add_cert(OpenSSL::X509::Certificate.new(ca_cert))
+    end
 
     req = Net::HTTP::Post.new(uri)
     req["Authorization"] = "Bearer #{token}"
