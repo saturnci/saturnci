@@ -1,0 +1,12 @@
+class AddWorkerArchitectureToRepositories < ActiveRecord::Migration[8.0]
+  def up
+    add_reference :repositories, :worker_architecture, foreign_key: true, type: :uuid, null: true
+
+    terra = WorkerArchitecture.find_by!(slug: "terra")
+    Repository.update_all(worker_architecture_id: terra.id)
+  end
+
+  def down
+    remove_reference :repositories, :worker_architecture
+  end
+end
