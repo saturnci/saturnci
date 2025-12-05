@@ -6,7 +6,7 @@ class AddWorkerArchitectureToRepositories < ActiveRecord::Migration[8.0]
 
     add_reference :repositories, :worker_architecture, foreign_key: true, type: :uuid, null: true
 
-    terra = WorkerArchitecture.find_by!(slug: "terra")
+    terra = WorkerArchitecture.terra
     Repository.unscoped.update_all(worker_architecture_id: terra.id)
 
     change_column_null :repositories, :worker_architecture_id, false
