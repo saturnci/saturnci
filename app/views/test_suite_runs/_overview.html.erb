@@ -15,7 +15,7 @@
         <%= render "test_case_runs/details", test_case_run: test_case_run %>
         <%= render "test_case_runs/list", build:, active_test_case_run: test_case_run %>
       <% else %>
-        <%= render "test_suite_runs/overview_not_finished", build: %>
+        <%= render "test_suite_runs/overview_not_finished", test_suite_run: %>
       <% end %>
     </div>
   <% end %>
