@@ -29,7 +29,13 @@ class TestSuiteRun < ApplicationRecord
 
   def start!
     return unless repository.active
-    Terra.start_test_suite_run(self)
+
+    case repository.worker_architecture.slug
+    when WorkerArchitecture::TERRA_SLUG
+      Terra.start_test_suite_run(self)
+    when WorkerArchitecture::NOVA_SLUG
+      Nova.start_test_suite_run(self)
+    end
   end
 
   def cancel!
