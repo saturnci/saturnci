@@ -4,6 +4,7 @@ describe "Repository caching", type: :request do
   let!(:user) { create(:user) }
   let!(:github_account) { create(:github_account, user:) }
   let!(:github_client) { GitHubClient.new(user) }
+  let!(:terra) { WorkerArchitecture.create!(slug: "terra") }
 
   before do
     login_as(user)

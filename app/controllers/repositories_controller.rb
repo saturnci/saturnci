@@ -43,7 +43,8 @@ class RepositoriesController < ApplicationController
     repository = Repository.create!(
       github_account:,
       name: repo_full_name,
-      github_repo_full_name: repo_full_name
+      github_repo_full_name: repo_full_name,
+      worker_architecture: WorkerArchitecture.find_by!(slug: "terra")
     )
     authorize repository
 
