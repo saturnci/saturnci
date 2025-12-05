@@ -63,36 +63,15 @@ module Nova
           {
             name: "worker",
             image: "registry.digitalocean.com/saturnci/worker-agent:latest",
-            command: ["ruby", "-e"],
-            args: [worker_script],
             env: [
               { name: "SATURNCI_API_HOST", value: "https://app.saturnci.com" },
               { name: "WORKER_ID", value: worker.id },
-              { name: "WORKER_ACCESS_TOKEN", value: worker.access_token.value }
+              { name: "WORKER_ACCESS_TOKEN", value: worker.access_token.value },
+              { name: "TASK_ID", value: task.id }
             ]
           }
         ]
       }
     }
-  end
-
-  def self.worker_script
-    <<~RUBY
-      require "net/http"
-      require "uri"
-      require "json"
-
-      uri = URI("\#{ENV["SATURNCI_API_HOST"]}/api/v1/worker_agents/workers/\#{ENV["WORKER_ID"]}/worker_events")
-      http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl = true
-
-      req = Net::HTTP::Post.new(uri)
-      req.basic_auth(ENV["WORKER_ID"], ENV["WORKER_ACCESS_TOKEN"])
-      req["Content-Type"] = "application/json"
-      req.body = {type: "assignment_acknowledged"}.to_json
-
-      res = http.request(req)
-      puts "Response: \#{res.code}"
-    RUBY
   end
 end
