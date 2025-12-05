@@ -86,6 +86,8 @@ RSpec.configure do |config|
 
   config.before :suite do
     Warden.test_mode!
+    WorkerArchitecture.find_or_create_by!(slug: WorkerArchitecture::TERRA_SLUG)
+    WorkerArchitecture.find_or_create_by!(slug: WorkerArchitecture::NOVA_SLUG)
   end
 
   config.after :each do
