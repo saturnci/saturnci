@@ -15,9 +15,7 @@ module Nova
     access_token = AccessToken.create!
     worker = Worker.create!(name: "nova-#{SecureRandom.hex(4)}", access_token: access_token)
     WorkerAssignment.create!(worker: worker, task: task)
-
     create_k8s_pod(worker, task)
-
     worker
   end
 
