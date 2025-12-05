@@ -28,14 +28,14 @@ class TestSuiteRun < ApplicationRecord
   end
 
   def start!
-    return unless project.active
+    return unless repository.active
     client = DropletKitClientFactory.client
 
     transaction do
       save!
 
-      runs = project.concurrency.times.map do |i|
-        Run.create!(test_suite_run: self, order_index: i + 1)
+      repository.concurrency.times.map do |i|
+        Task.create!(test_suite_run: self, order_index: i + 1)
       end
     end
   end
