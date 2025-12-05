@@ -26,6 +26,7 @@ module Nova
     uri = URI("#{api_url}/api/v1/namespaces/default/pods")
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
     req = Net::HTTP::Post.new(uri)
     req["Authorization"] = "Bearer #{token}"
