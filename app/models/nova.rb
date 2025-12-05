@@ -4,9 +4,80 @@ module Nova
     worker = Worker.create!(name: "nova-#{SecureRandom.hex(4)}", access_token: access_token)
     WorkerAssignment.create!(worker: worker, task: task)
 
-    puts "Worker created. Run locally:"
-    puts "  ./ops/nova_run.sh #{worker.id} #{access_token.value} #{task.id}"
+    create_k8s_pod(worker, task)
 
     worker
+  end
+
+  def self.create_k8s_pod(worker, task)
+    api_url = ENV.fetch("NOVA_K8S_API_URL")
+    token = ENV.fetch("NOVA_K8S_TOKEN")
+
+    uri = URI("#{api_url}/api/v1/namespaces/default/pods")
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+
+    req = Net::HTTP::Post.new(uri)
+    req["Authorization"] = "Bearer #{token}"
+    req["Content-Type"] = "application/json"
+    req.body = pod_spec(worker, task).to_json
+
+    response = http.request(req)
+
+    unless response.code.start_with?("2")
+      raise "Failed to create K8s pod: #{response.code} #{response.body}"
+    end
+
+    response
+  end
+
+  def self.pod_spec(worker, task)
+    {
+      apiVersion: "v1",
+      kind: "Pod",
+      metadata: {
+        name: "nova-#{task.id}",
+        labels: {
+          app: "nova-worker",
+          task_id: task.id
+        }
+      },
+      spec: {
+        restartPolicy: "Never",
+        containers: [
+          {
+            name: "worker",
+            image: "registry.digitalocean.com/saturnci/worker-agent:latest",
+            command: ["ruby", "-e"],
+            args: [worker_script],
+            env: [
+              { name: "SATURNCI_API_HOST", value: "https://app.saturnci.com" },
+              { name: "WORKER_ID", value: worker.id },
+              { name: "WORKER_ACCESS_TOKEN", value: worker.access_token.value }
+            ]
+          }
+        ]
+      }
+    }
+  end
+
+  def self.worker_script
+    <<~RUBY
+      require "net/http"
+      require "uri"
+      require "json"
+
+      uri = URI("\#{ENV["SATURNCI_API_HOST"]}/api/v1/worker_agents/workers/\#{ENV["WORKER_ID"]}/worker_events")
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+
+      req = Net::HTTP::Post.new(uri)
+      req.basic_auth(ENV["WORKER_ID"], ENV["WORKER_ACCESS_TOKEN"])
+      req["Content-Type"] = "application/json"
+      req.body = {type: "assignment_acknowledged"}.to_json
+
+      res = http.request(req)
+      puts "Response: \#{res.code}"
+    RUBY
   end
 end
