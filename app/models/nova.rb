@@ -27,10 +27,10 @@ module Nova
     uri = URI("#{api_url}/api/v1/namespaces/default/pods")
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
-    ca_file = Tempfile.new("k8s_ca")
-    ca_file.write(ca_cert)
-    ca_file.close
-    http.ca_file = ca_file.path
+    http.cert_store = OpenSSL::X509::Store.new.tap do |store|
+      store.set_default_paths
+      store.add_cert(OpenSSL::X509::Certificate.new(ca_cert))
+    end
 
     req = Net::HTTP::Post.new(uri)
     req["Authorization"] = "Bearer #{token}"
