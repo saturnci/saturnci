@@ -11,6 +11,8 @@ namespace :api do
     resource :worker_collection, only: :destroy
 
     namespace :worker_agents do
+      resources :tasks, only: [:show]
+
       resources :runs, only: [] do
         resources :run_finished_events, only: :create
         resources :system_logs, only: :create
