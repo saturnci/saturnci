@@ -8,7 +8,7 @@ module API
               task = Task.find(params[:task_id])
               ActiveRecord::Base.transaction do
                 task.finish!
-                task.worker&.worker_events&.create!(type: :test_run_finished)
+                task.worker.worker_events.create!(type: :test_run_finished)
 
                 if task.test_suite_run.tasks.all?(&:finished?)
                   task.test_suite_run.check_test_case_run_integrity!
