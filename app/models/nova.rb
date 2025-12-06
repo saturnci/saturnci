@@ -4,19 +4,15 @@ module Nova
       test_suite_run.repository.concurrency.times do |i|
         task = Task.create!(test_suite_run: test_suite_run, order_index: i + 1)
         task.task_events.create!(type: :runner_requested)
-        provision_worker(task)
+
+        access_token = AccessToken.create!
+        worker = Worker.create!(name: "nova-#{SecureRandom.hex(4)}", access_token:)
+        WorkerAssignment.create!(worker:, task:)
+        create_k8s_pod(worker, task)
       end
     end
 
     test_suite_run
-  end
-
-  def self.provision_worker(task)
-    access_token = AccessToken.create!
-    worker = Worker.create!(name: "nova-#{SecureRandom.hex(4)}", access_token: access_token)
-    WorkerAssignment.create!(worker: worker, task: task)
-    create_k8s_pod(worker, task)
-    worker
   end
 
   def self.create_k8s_pod(worker, task)
