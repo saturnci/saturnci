@@ -59,6 +59,7 @@ module Nova
         template: {
           spec: {
             restartPolicy: "Never",
+            shareProcessNamespace: true,
             containers: [
               {
                 name: "worker",
