@@ -2,14 +2,7 @@ module Nova
   def self.start_test_suite_run(test_suite_run)
     ActiveRecord::Base.transaction do
       test_suite_run.repository.concurrency.times do |i|
-        task = Task.create!(test_suite_run: test_suite_run, order_index: i + 1)
-        task.task_events.create!(type: :runner_requested)
-
-        access_token = AccessToken.create!
-        silly_name = SillyName.random.gsub(" ", "-")
-        worker_name = "#{test_suite_run.repository.name}-#{task.id[0..7]}-#{silly_name}".downcase
-        worker = Worker.create!(name: worker_name, access_token:)
-        WorkerAssignment.create!(worker:, task:)
+        create_task_with_worker(test_suite_run:, order_index: i + 1)
       end
     end
 
@@ -18,6 +11,19 @@ module Nova
     end
 
     test_suite_run
+  end
+
+  def self.create_task_with_worker(test_suite_run:, order_index:)
+    task = Task.create!(test_suite_run:, order_index:)
+    task.task_events.create!(type: :runner_requested)
+
+    access_token = AccessToken.create!
+    silly_name = SillyName.random.gsub(" ", "-")
+    worker_name = "#{test_suite_run.repository.name}-#{task.id[0..7]}-#{silly_name}".downcase
+    worker = Worker.create!(name: worker_name, access_token:)
+    WorkerAssignment.create!(worker:, task:)
+
+    task
   end
 
   def self.create_k8s_job(worker, task)

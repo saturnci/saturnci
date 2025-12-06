@@ -1,6 +1,40 @@
 require "rails_helper"
 
 describe Nova do
+  describe ".create_task_with_worker" do
+    let!(:test_suite_run) { create(:test_suite_run) }
+
+    it "creates a task with the given order_index" do
+      task = Nova.create_task_with_worker(test_suite_run:, order_index: 3)
+      expect(task.order_index).to eq(3)
+    end
+
+    it "creates a runner_requested event for the task" do
+      task = Nova.create_task_with_worker(test_suite_run:, order_index: 1)
+      expect(task.task_events.runner_requested.count).to eq(1)
+    end
+
+    it "creates a worker with an access token" do
+      task = Nova.create_task_with_worker(test_suite_run:, order_index: 1)
+      expect(task.worker.access_token).to be_present
+    end
+
+    it "creates a worker with a name containing the repo name" do
+      task = Nova.create_task_with_worker(test_suite_run:, order_index: 1)
+      expect(task.worker.name).to include(test_suite_run.repository.name.downcase)
+    end
+
+    it "creates a worker with a name containing the short task id" do
+      task = Nova.create_task_with_worker(test_suite_run:, order_index: 1)
+      expect(task.worker.name).to include(task.id[0..7])
+    end
+
+    it "creates a WorkerAssignment linking the task and worker" do
+      task = Nova.create_task_with_worker(test_suite_run:, order_index: 1)
+      expect(task.worker_assignment.worker).to eq(task.worker)
+    end
+  end
+
   describe ".start_test_suite_run" do
     let!(:test_suite_run) { create(:test_suite_run) }
 
