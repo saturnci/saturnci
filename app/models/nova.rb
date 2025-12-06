@@ -6,7 +6,9 @@ module Nova
         task.task_events.create!(type: :runner_requested)
 
         access_token = AccessToken.create!
-        worker = Worker.create!(name: "nova-#{SecureRandom.hex(4)}", access_token:)
+        silly_name = SillyName.random.gsub(" ", "-")
+        worker_name = "#{test_suite_run.repository.name}-#{task.id[0..7]}-#{silly_name}".downcase
+        worker = Worker.create!(name: worker_name, access_token:)
         WorkerAssignment.create!(worker:, task:)
       end
     end
@@ -50,7 +52,7 @@ module Nova
       apiVersion: "batch/v1",
       kind: "Job",
       metadata: {
-        name: "nova-#{task.id}",
+        name: worker.name,
         labels: {
           app: "nova-worker",
           task_id: task.id
