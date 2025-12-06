@@ -18,7 +18,7 @@ describe "Test suite run status", type: :system do
         visit repository_build_path(id: run.test_suite_run.id, repository_id: run.test_suite_run.repository.id)
         expect(page).to have_content("Running")
 
-        run.update!(test_output: "COMMAND_EXIT_CODE=\"0\"")
+        run.update!(json_output: { "summary" => { "failure_count" => 0 } }.to_json)
 
         http_request(
           api_authorization_headers: worker_agents_api_authorization_headers(run.worker),
@@ -34,7 +34,7 @@ describe "Test suite run status", type: :system do
         visit repository_build_path(id: run.test_suite_run.id, repository_id: run.test_suite_run.repository.id)
         expect(page).to have_content("Running")
 
-        run.update!(test_output: "COMMAND_EXIT_CODE=\"0\"")
+        run.update!(json_output: { "summary" => { "failure_count" => 0 } }.to_json)
 
         http_request(
           api_authorization_headers: worker_agents_api_authorization_headers(run.worker),

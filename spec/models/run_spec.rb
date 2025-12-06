@@ -73,27 +73,31 @@ describe Run, type: :model do
   end
 
   describe "#exit_code" do
-    context "test_output contains COMMAND_EXIT_CODE" do
+    context "json_output has failure_count of 0" do
+      let!(:json_output) { { "summary" => { "failure_count" => 0 } }.to_json }
+
       before do
-        run.update!(test_output: "Script done on 2024-10-20 13:41:25+00:00 [COMMAND_EXIT_CODE=\"0\"]")
+        run.update!(json_output: json_output)
       end
 
-      it "gets saved upon finish" do
+      it "sets exit code to 0" do
         expect { run.finish! }.to change { run.reload.exit_code }.from(nil).to(0)
       end
     end
 
-    context "test_output contains COMMAND_EXIT_CODE with no quotes" do
+    context "json_output has failure_count greater than 0" do
+      let!(:json_output) { { "summary" => { "failure_count" => 3 } }.to_json }
+
       before do
-        run.update!(test_output: "Script done on 2023-11-05 14:10:32+00:00 [COMMAND_EXIT_CODE=0]\n")
+        run.update!(json_output: json_output)
       end
 
-      it "gets saved upon finish" do
-        expect { run.finish! }.to change { run.reload.exit_code }.from(nil).to(0)
+      it "sets exit code to 1" do
+        expect { run.finish! }.to change { run.reload.exit_code }.from(nil).to(1)
       end
     end
 
-    context "test_output does not contain COMMAND_EXIT_CODE" do
+    context "json_output is nil" do
       it "defaults to 1" do
         expect { run.finish! }.to change { run.reload.exit_code }.from(nil).to(1)
       end

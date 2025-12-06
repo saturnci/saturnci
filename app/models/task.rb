@@ -125,9 +125,14 @@ class Task < ApplicationRecord
   private
 
   def parsed_exit_code
-    return nil unless test_output.present?
-    match = test_output.match(/COMMAND_EXIT_CODE="?(\d+)"?/)
-    match ? match[1].to_i : nil
+    return nil unless json_output.present?
+
+    summary = JSON.parse(json_output)["summary"]
+    return nil unless summary
+
+    summary["failure_count"].to_i.zero? ? 0 : 1
+  rescue JSON::ParserError
+    nil
   end
 
   def ended_at
