@@ -184,3 +184,18 @@ spec:
             secretKeyRef:
               name: saturn-secrets
               key: POSTMARK_API_TOKEN
+        - name: NOVA_K8S_API_URL
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: NOVA_K8S_API_URL
+        - name: NOVA_K8S_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: NOVA_K8S_TOKEN
+        - name: NOVA_K8S_CA_CERT
+          valueFrom:
+            secretKeyRef:
+              name: saturn-secrets
+              key: NOVA_K8S_CA_CERT
