@@ -19,7 +19,8 @@ module Nova
 
     access_token = AccessToken.create!
     silly_name = SillyName.random.gsub(" ", "-")
-    worker_name = "#{test_suite_run.repository.name}-#{task.id[0..7]}-#{silly_name}".downcase
+    repo_name = test_suite_run.repository.name.gsub("/", "-")
+    worker_name = "#{repo_name}-#{task.id[0..7]}-#{silly_name}".downcase
     worker = Worker.create!(name: worker_name, access_token:)
     WorkerAssignment.create!(worker:, task:)
 
