@@ -67,9 +67,24 @@ module Nova
               { name: "SATURNCI_API_HOST", value: "https://app.saturnci.com" },
               { name: "WORKER_ID", value: worker.id },
               { name: "WORKER_ACCESS_TOKEN", value: worker.access_token.value },
-              { name: "TASK_ID", value: task.id }
+              { name: "TASK_ID", value: task.id },
+              { name: "DOCKER_HOST", value: "tcp://localhost:2375" }
+            ]
+          },
+          {
+            name: "dind",
+            image: "docker:24-dind",
+            securityContext: { privileged: true },
+            env: [
+              { name: "DOCKER_TLS_CERTDIR", value: "" }
+            ],
+            volumeMounts: [
+              { name: "dind-storage", mountPath: "/var/lib/docker" }
             ]
           }
+        ],
+        volumes: [
+          { name: "dind-storage", emptyDir: {} }
         ]
       }
     }
