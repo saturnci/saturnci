@@ -15,12 +15,12 @@ module Nova
     test_suite_run
   end
 
-  def self.create_k8s_pod(worker, task)
+  def self.create_k8s_job(worker, task)
     api_url = ENV.fetch("NOVA_K8S_API_URL")
     token = ENV.fetch("NOVA_K8S_TOKEN")
     ca_cert = ENV.fetch("NOVA_K8S_CA_CERT")
 
-    uri = URI("#{api_url}/api/v1/namespaces/default/pods")
+    uri = URI("#{api_url}/apis/batch/v1/namespaces/default/jobs")
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
     http.cert_store = OpenSSL::X509::Store.new.tap do |store|
@@ -31,21 +31,21 @@ module Nova
     req = Net::HTTP::Post.new(uri)
     req["Authorization"] = "Bearer #{token}"
     req["Content-Type"] = "application/json"
-    req.body = pod_spec(worker, task).to_json
+    req.body = job_spec(worker, task).to_json
 
     response = http.request(req)
 
     unless response.code.start_with?("2")
-      raise "Failed to create K8s pod: #{response.code} #{response.body}"
+      raise "Failed to create K8s job: #{response.code} #{response.body}"
     end
 
     response
   end
 
-  def self.pod_spec(worker, task)
+  def self.job_spec(worker, task)
     {
-      apiVersion: "v1",
-      kind: "Pod",
+      apiVersion: "batch/v1",
+      kind: "Job",
       metadata: {
         name: "nova-#{task.id}",
         labels: {
@@ -54,39 +54,45 @@ module Nova
         }
       },
       spec: {
-        restartPolicy: "Never",
-        containers: [
-          {
-            name: "worker",
-            image: "registry.digitalocean.com/saturnci/nova-worker-agent:latest",
-            env: [
-              { name: "SATURNCI_API_HOST", value: "https://app.saturnci.com" },
-              { name: "WORKER_ID", value: worker.id },
-              { name: "WORKER_ACCESS_TOKEN", value: worker.access_token.value },
-              { name: "TASK_ID", value: task.id },
-              { name: "DOCKER_HOST", value: "tcp://localhost:2375" }
+        ttlSecondsAfterFinished: 10,
+        backoffLimit: 0,
+        template: {
+          spec: {
+            restartPolicy: "Never",
+            containers: [
+              {
+                name: "worker",
+                image: "registry.digitalocean.com/saturnci/nova-worker-agent:latest",
+                env: [
+                  { name: "SATURNCI_API_HOST", value: "https://app.saturnci.com" },
+                  { name: "WORKER_ID", value: worker.id },
+                  { name: "WORKER_ACCESS_TOKEN", value: worker.access_token.value },
+                  { name: "TASK_ID", value: task.id },
+                  { name: "DOCKER_HOST", value: "tcp://localhost:2375" }
+                ],
+                volumeMounts: [
+                  { name: "repository", mountPath: "/repository" }
+                ]
+              },
+              {
+                name: "dind",
+                image: "docker:24-dind",
+                securityContext: { privileged: true },
+                env: [
+                  { name: "DOCKER_TLS_CERTDIR", value: "" }
+                ],
+                volumeMounts: [
+                  { name: "dind-storage", mountPath: "/var/lib/docker" },
+                  { name: "repository", mountPath: "/repository" }
+                ]
+              }
             ],
-            volumeMounts: [
-              { name: "repository", mountPath: "/repository" }
-            ]
-          },
-          {
-            name: "dind",
-            image: "docker:24-dind",
-            securityContext: { privileged: true },
-            env: [
-              { name: "DOCKER_TLS_CERTDIR", value: "" }
-            ],
-            volumeMounts: [
-              { name: "dind-storage", mountPath: "/var/lib/docker" },
-              { name: "repository", mountPath: "/repository" }
+            volumes: [
+              { name: "dind-storage", emptyDir: {} },
+              { name: "repository", emptyDir: {} }
             ]
           }
-        ],
-        volumes: [
-          { name: "dind-storage", emptyDir: {} },
-          { name: "repository", emptyDir: {} }
-        ]
+        }
       }
     }
   end
