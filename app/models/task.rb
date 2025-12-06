@@ -92,7 +92,7 @@ class Task < ApplicationRecord
 
   def delete_runner
     return unless worker.present?
-    raise "cloud_id missing" unless worker.cloud_id.present?
+    return unless worker.cloud_id.present?
     client = DropletKit::Client.new(access_token: ENV['DIGITALOCEAN_ACCESS_TOKEN'])
     client.droplets.delete(id: worker.cloud_id)
   rescue DropletKit::Error => e
