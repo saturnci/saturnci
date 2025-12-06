@@ -65,6 +65,9 @@ module Nova
               { name: "WORKER_ACCESS_TOKEN", value: worker.access_token.value },
               { name: "TASK_ID", value: task.id },
               { name: "DOCKER_HOST", value: "tcp://localhost:2375" }
+            ],
+            volumeMounts: [
+              { name: "repository", mountPath: "/repository" }
             ]
           },
           {
@@ -75,12 +78,14 @@ module Nova
               { name: "DOCKER_TLS_CERTDIR", value: "" }
             ],
             volumeMounts: [
-              { name: "dind-storage", mountPath: "/var/lib/docker" }
+              { name: "dind-storage", mountPath: "/var/lib/docker" },
+              { name: "repository", mountPath: "/repository" }
             ]
           }
         ],
         volumes: [
-          { name: "dind-storage", emptyDir: {} }
+          { name: "dind-storage", emptyDir: {} },
+          { name: "repository", emptyDir: {} }
         ]
       }
     }
