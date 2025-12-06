@@ -1,6 +1,7 @@
 test_suite_run = @task.test_suite_run
 repository = test_suite_run.repository
 
+json.test_suite_run_id test_suite_run.id
 json.github_repo_full_name repository.github_repo_full_name
 json.branch_name test_suite_run.branch_name
 json.commit_hash test_suite_run.commit_hash
