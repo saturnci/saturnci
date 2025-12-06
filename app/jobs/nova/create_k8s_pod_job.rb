@@ -1,0 +1,11 @@
+module Nova
+  class CreateK8sPodJob < ApplicationJob
+    queue_as :default
+
+    def perform(worker_id, task_id)
+      worker = Worker.find(worker_id)
+      task = Task.find(task_id)
+      Nova.create_k8s_pod(worker, task)
+    end
+  end
+end

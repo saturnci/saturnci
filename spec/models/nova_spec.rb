@@ -1,10 +1,6 @@
 require "rails_helper"
 
 describe Nova do
-  before do
-    allow(Nova).to receive(:create_k8s_pod)
-  end
-
   describe ".start_test_suite_run" do
     let!(:test_suite_run) { create(:test_suite_run) }
 
@@ -55,12 +51,11 @@ describe Nova do
       end
     end
 
-    it "calls create_k8s_pod for each worker/task pair" do
+    it "enqueues a CreateK8sPodJob for each worker/task pair" do
       test_suite_run.repository.update!(concurrency: 2)
 
-      expect(Nova).to receive(:create_k8s_pod).twice
-
-      Nova.start_test_suite_run(test_suite_run)
+      expect { Nova.start_test_suite_run(test_suite_run) }
+        .to have_enqueued_job(Nova::CreateK8sPodJob).exactly(2).times
     end
   end
 end

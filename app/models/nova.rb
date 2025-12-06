@@ -8,7 +8,7 @@ module Nova
         access_token = AccessToken.create!
         worker = Worker.create!(name: "nova-#{SecureRandom.hex(4)}", access_token:)
         WorkerAssignment.create!(worker:, task:)
-        create_k8s_pod(worker, task)
+        Nova::CreateK8sPodJob.perform_later(worker.id, task.id)
       end
     end
 
