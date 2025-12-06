@@ -31,6 +31,8 @@ services:
       dockerfile: .saturnci/Dockerfile
     volumes:
       - ../:/app
+
+      # Overwrite the Rails app's database.yml with SaturnCI's database.yml.
       - ./database.yml:/app/config/database.yml:ro
     depends_on:
       - postgres
