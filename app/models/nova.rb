@@ -55,6 +55,7 @@ module Nova
       },
       spec: {
         ttlSecondsAfterFinished: 10,
+        activeDeadlineSeconds: 3600,
         backoffLimit: 0,
         template: {
           spec: {
