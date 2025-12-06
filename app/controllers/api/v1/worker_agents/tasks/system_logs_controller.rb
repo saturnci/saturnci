@@ -7,6 +7,13 @@ module API
         class SystemLogsController < WorkerAgentsAPIController
           TAB_NAME = "system_logs"
 
+          def index
+            task = Task.find(params[:task_id])
+            runner_system_log = RunnerSystemLog.find_by(task: task)
+            content = runner_system_log&.content || ""
+            render json: { content: content }
+          end
+
           def create
             begin
               new_content = Base64.decode64(request.body.read).force_encoding('UTF-8')

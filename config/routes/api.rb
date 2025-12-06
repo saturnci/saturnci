@@ -25,7 +25,7 @@ namespace :api do
 
       resources :tasks, only: [], module: "tasks" do
         resources :task_finished_events, only: :create
-        resources :system_logs, only: :create
+        resources :system_logs, only: [:create, :index]
         resource :test_output, only: :create
         resource :json_output, only: :create
         resources :test_failure_screenshots, only: :create
