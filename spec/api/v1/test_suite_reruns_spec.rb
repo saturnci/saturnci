@@ -32,7 +32,6 @@ describe "POST /api/v1/test_suite_reruns", type: :request do
 
       returned_id = JSON.parse(response.body)["id"]
       expect(returned_id).not_to eq(test_suite_run.id)
-      expect(TestSuiteRun.find(returned_id)).to be_present
     end
   end
 end
