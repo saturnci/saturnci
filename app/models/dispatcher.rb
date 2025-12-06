@@ -6,7 +6,6 @@ class Dispatcher
 
     delete_workers(c.old_unassigned_workers)
     delete_workers(c.very_old_workers.limit(MAX_NUMBER_OF_VERY_OLD_WORKERS_TO_DELETE_AT_ONE_TIME))
-    remove_orphaned_worker_assignments(c.orphaned_worker_assignments)
 
     worker_pool = WorkerPool.instance
     worker_pool.scale(WorkerPool.target_size)
@@ -27,19 +26,6 @@ class Dispatcher
   def self.delete_workers(workers)
     log "Deleting #{workers.count} old workers"
     workers.destroy_all
-  end
-
-  def self.remove_orphaned_worker_assignments(orphaned_worker_assignments)
-    log "Deleting #{orphaned_worker_assignments.count} orphaned workers"
-
-    ActiveRecord::Base.transaction do
-      orphaned_worker_assignments.each do |worker_assignment|
-        worker_assignment.worker.worker_events.create!(type: :error)
-        log "Deleting orphaned worker assignment: #{worker_assignment.id}"
-        log "Worker: #{worker_assignment.worker.name}"
-        worker_assignment.destroy
-      end
-    end
   end
 
   def self.log(message)
