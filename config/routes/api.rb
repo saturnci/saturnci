@@ -8,6 +8,7 @@ namespace :api do
     resources :runs, only: %i[index show]
     resources :workers, only: %i[index show update destroy]
     resources :test_suite_runs, only: %i[index show create]
+    resources :test_suite_reruns, only: :create
     resource :worker_collection, only: :destroy
 
     namespace :worker_agents do
