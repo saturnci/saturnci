@@ -50,6 +50,17 @@ class TestSuiteRun < ApplicationRecord
     end
   end
 
+  def status_with_counts
+    case status
+    when "Passed"
+      "Passed (#{dry_run_example_count})"
+    when "Failed"
+      "Failed (#{test_case_runs.failed.count}/#{dry_run_example_count})"
+    else
+      status
+    end
+  end
+
   def calculated_status
     run_statuses = runs.reload.map(&:status)
 

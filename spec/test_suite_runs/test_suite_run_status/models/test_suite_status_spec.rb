@@ -1,5 +1,48 @@
 require "rails_helper"
 
+describe "test suite run status_with_counts", type: :model do
+  let!(:test_suite_run) { create(:build, dry_run_example_count: 100) }
+
+  context "status is Passed" do
+    before do
+      create(:run, :passed, build: test_suite_run, order_index: 1)
+    end
+
+    it "displays Passed with total count" do
+      expect(test_suite_run.status_with_counts).to eq("Passed (100)")
+    end
+  end
+
+  context "status is Failed" do
+    before do
+      run = create(:run, :failed, build: test_suite_run, order_index: 1)
+      create(:test_case_run, task: run, status: :passed)
+      create(:test_case_run, task: run, status: :failed)
+      create(:test_case_run, task: run, status: :failed)
+    end
+
+    it "displays Failed with failure count and total count" do
+      expect(test_suite_run.status_with_counts).to eq("Failed (2/100)")
+    end
+  end
+
+  context "status is Running" do
+    before do
+      create(:run, build: test_suite_run, order_index: 1)
+    end
+
+    it "displays Running without counts" do
+      expect(test_suite_run.status_with_counts).to eq("Running")
+    end
+  end
+
+  context "status is Not Started" do
+    it "displays Not Started without counts" do
+      expect(test_suite_run.status_with_counts).to eq("Not Started")
+    end
+  end
+end
+
 describe "test suite run status", type: :model do
   before { Rails.cache.clear }
 
