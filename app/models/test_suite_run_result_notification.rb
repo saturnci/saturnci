@@ -14,24 +14,27 @@ class TestSuiteRunResultNotification < ApplicationRecord
 
   def self.send_notifications
     test_suite_runs_needing_notification.each do |test_suite_run|
-      recipient_email = test_suite_run.repository.user.email
-      message = ::TestSuiteRunMailer.completion_notification(test_suite_run, recipient_email)
+      message = ::TestSuiteRunMailer.completion_notification(test_suite_run, interested_user(test_suite_run).email)
 
       ActiveRecord::Base.transaction do
         message.deliver_now
 
         sent_email = SentEmail.create!(
-          to: recipient_email,
+          to: interested_user(test_suite_run).email,
           subject: message.subject,
           body: message.body.to_s
         )
 
         TestSuiteRunResultNotification.create!(
           test_suite_run: test_suite_run,
-          email: recipient_email,
+          email: interested_user(test_suite_run).email,
           sent_email: sent_email
         )
       end
     end
+  end
+
+  def self.interested_user(test_suite_run)
+    test_suite_run.started_by_user || test_suite_run.repository.user
   end
 end
