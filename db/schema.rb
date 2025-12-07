@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_05_114850) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_07_160802) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -228,7 +228,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_05_114850) do
     t.datetime "deleted_at"
     t.string "api_token"
     t.integer "dry_run_example_count"
+    t.uuid "started_by_user_id"
     t.index ["repository_id"], name: "index_test_suite_runs_on_repository_id"
+    t.index ["started_by_user_id"], name: "index_test_suite_runs_on_started_by_user_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -322,6 +324,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_05_114850) do
   add_foreign_key "test_suite_run_result_notifications", "sent_emails"
   add_foreign_key "test_suite_run_result_notifications", "test_suite_runs"
   add_foreign_key "test_suite_runs", "repositories"
+  add_foreign_key "test_suite_runs", "users", column: "started_by_user_id"
   add_foreign_key "worker_assignments", "tasks"
   add_foreign_key "worker_assignments", "workers"
   add_foreign_key "worker_events", "workers"
