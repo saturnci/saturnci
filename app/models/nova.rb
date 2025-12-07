@@ -1,5 +1,7 @@
 module Nova
   def self.start_test_suite_run(test_suite_run)
+    test_suite_run.save!
+
     ActiveRecord::Base.transaction do
       test_suite_run.repository.concurrency.times do |i|
         create_task_with_worker(test_suite_run:, order_index: i + 1)
