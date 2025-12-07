@@ -341,7 +341,6 @@ class SillyName
     frog
     fungus
     garden
-    gardener
     gazebo
     ghost
     glove
@@ -362,7 +361,6 @@ class SillyName
     kitchen
     knife
     lamp
-    lawyer
     leg
     lemon
     liver
@@ -437,7 +435,6 @@ class SillyName
     snail
     snowplow
     sofa
-    soldier
     soul
     sow
     spatula
