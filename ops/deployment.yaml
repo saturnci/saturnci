@@ -17,6 +17,12 @@ spec:
         image: registry.digitalocean.com/saturnci/saturnci:$TAG
         ports:
         - containerPort: 8080
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "100m"
+          limits:
+            memory: "1536Mi"
         env:
         - name: DATABASE_NAME
           valueFrom:

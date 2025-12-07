@@ -16,6 +16,12 @@ spec:
       - name: saturnci-worker
         image: registry.digitalocean.com/saturnci/saturnci:$TAG
         command: ["bin/jobs"]
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "100m"
+          limits:
+            memory: "1536Mi"
         env:
         - name: DATABASE_NAME
           valueFrom:
