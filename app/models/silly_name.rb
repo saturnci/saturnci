@@ -333,7 +333,6 @@ class SillyName
     elf
     eyeball
     fairy
-    farmer
     father
     feather
     fish
