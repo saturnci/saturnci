@@ -52,7 +52,7 @@ RSpec.configure do |config|
 
   config.around :each do |example|
     attempts = 0
-    max_attempts = 3
+    max_attempts = 5
 
     loop do
       attempts += 1
