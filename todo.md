@@ -1,43 +1,37 @@
 ## Bugs
+- K8s jobs don't get deleted when a test suite run is deleted
 - New commits don't always show up at the top of the list
 - Can't cancel test suite runs
 - Flash message shows up in Settings even when it has nothing to do with settings
 - Don't allow adding same repo twice
 - If you're on the Overview tab when the test suite run finishes, the Overview tab doesn't update
-- Sometimes, when a test suite run finishes, the status doesn't get updated from "Running" to "Passed" (or "Failed")
 - Newer test suite runs sometimes show up behind older ones
 - Sometimes, in the system logs, autoscrolling mysteriously stops working
 - Each deploy causes a 503 blip
 
 ## Defects
-- Fix data model that connects GitHub accounts and users
 - Precompile happens for every deployment
 - In the beginning of a test suite, the horizontal scroll bar gets pushed down in an ugly way
 - Raw errors don't show up on the Overview tab
 
 ## Missing features
-- Need a way to easily inspect errored test runners
 - User that triggered a test suite run should get an email once it finishes
 - Put repository name in HTML title
 - Flash message after settings change
 - Tab with concatenated system logs and test output
 - Some sort of immediate feedback when a test suite run is started
 - Typeahead for branch filtering
-- On each runner's tab, show an icon for whether it's running or finished
+- On each tasks's tab, show an icon for whether it's running or finished
 - Test suite runs should link to the GitHub page for that commit so the changes can easily be seen
 - When a test suite run says "Failed" it should say e.g. "Failed (2)"
 - When on a list (such as test suite runs or test cases), up and down keys should move the cursor to the next/previous item
-- On each runner tab, list somewhere how many test cases it has
-- When a runner has finished running, show the elapsed time
-
-## Refactoring
-- TestRunOrchestrationCheck is stupid
+- On each task tab, list somewhere how many test cases it has
+- When a task has finished running, show the elapsed time
 
 ## Infrastructure
-- Monitoring and alerts for test runner fleet
+- Monitoring and alerts for worker fleet
 - Monitoring for registry disk space
 - Replace "saturn" with "saturnci" in Kubernetes deployment files (deployment.yaml, secrets.yaml, service.yaml, etc.)
-- e2e tests (see spec/e2e/rails_app.txt)
 
 ## Administration
 - Send email when a new user signs up

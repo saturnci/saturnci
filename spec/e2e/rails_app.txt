@@ -11,4 +11,3 @@
 Details:
 
 # Create a repository for the app (or overwrite an existing one)
-
