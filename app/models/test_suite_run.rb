@@ -83,7 +83,7 @@ class TestSuiteRun < ApplicationRecord
   end
 
   def delete_runners
-    runs.each(&:delete_runner)
+    runs.each { |task| Nova::DeleteTaskWorkerJob.perform_later(task.id) }
   end
 
   def broadcast
