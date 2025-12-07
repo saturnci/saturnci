@@ -1,6 +1,4 @@
 class TestSuiteRun < ApplicationRecord
-  NOTIFICATION_FEATURE_LAUNCH_DATETIME = "2025-08-11 22:00:00 UTC"
-  
   acts_as_paranoid
   belongs_to :repository
   belongs_to :project, foreign_key: "repository_id"
@@ -9,14 +7,7 @@ class TestSuiteRun < ApplicationRecord
   alias_method :tasks, :runs
   has_many :test_case_runs, through: :runs
   alias_attribute :project_id, :repository_id
-  
   has_many :test_suite_run_result_notifications, dependent: :destroy
-  scope :needing_notification, -> do
-    left_joins(:test_suite_run_result_notifications)
-      .where(test_suite_run_result_notifications: { id: nil })
-      .where("test_suite_runs.created_at > ?", NOTIFICATION_FEATURE_LAUNCH_DATETIME)
-      .where.not(cached_status: ["Running", "Not Started"])
-  end
 
   after_initialize do
     self.seed ||= rand(10000)
