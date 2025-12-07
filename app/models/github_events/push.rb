@@ -1,8 +1,5 @@
 module GitHubEvents
   class Push
-    NUMBER_IF_TIMES_TO_REPEAT_BROADCAST = 20
-    BROADCAST_INTERVAL_IN_SECONDS = 1
-
     def initialize(payload, github_repo_full_name)
       @payload = payload
       @github_repo_full_name = github_repo_full_name
