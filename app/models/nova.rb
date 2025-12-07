@@ -114,7 +114,7 @@ module Nova
                 image: "docker:24-dind",
                 securityContext: { privileged: true },
                 resources: {
-                  requests: { cpu: "1250m", memory: "2048Mi" }
+                  requests: { cpu: "1250m", memory: "3072Mi" }
                 },
                 env: [
                   { name: "DOCKER_TLS_CERTDIR", value: "" }
