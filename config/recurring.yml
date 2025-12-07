@@ -1,7 +1,4 @@
 production:
-  dispatch_task:
-    command: "Dispatcher.check"
-    schedule: "1 * * * * *"
   send_test_suite_run_result_notifications:
     command: "SendTestSuiteRunResultNotificationsJob.perform_now"
     schedule: "*/10 * * * * *"
