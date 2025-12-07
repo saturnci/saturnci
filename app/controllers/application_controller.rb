@@ -31,4 +31,12 @@ class ApplicationController < ActionController::Base
   def set_current_user_impersonating
     current_user.impersonating = session[:impersonating]
   end
+
+  def acting_user
+    if session[:acting_user_id]
+      User.find(session[:acting_user_id])
+    else
+      current_user
+    end
+  end
 end

@@ -4,7 +4,7 @@ class TestSuiteRerunsController < ApplicationController
 
     test_suite_run = TestSuiteRerun.create!(
       original_test_suite_run,
-      started_by_user: current_user
+      started_by_user: acting_user
     )
 
     authorize test_suite_run, :create?
