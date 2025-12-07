@@ -406,7 +406,6 @@ class SillyName
     pretzel
     prince
     princess
-    printer
     puppet
     queen
     rabbit
@@ -432,12 +431,10 @@ class SillyName
     skull
     slug
     snail
-    snowplow
     sofa
     soul
     sow
     spatula
-    spectacle
     squid
     squirrel
     stapler
@@ -461,7 +458,6 @@ class SillyName
     weasel
     whale
     wheel
-    whiteboard
     wire
     witch
     wizard
