@@ -97,6 +97,7 @@ module Nova
               {
                 name: "worker",
                 image: "registry.digitalocean.com/saturnci/nova-worker-agent:latest",
+                imagePullPolicy: "Always",
                 resources: {
                   requests: { cpu: "250m", memory: "256Mi" }
                 },
