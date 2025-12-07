@@ -115,8 +115,7 @@ module Nova
                 name: "dind",
                 image: "docker:24-dind",
                 securityContext: { privileged: true },
-                command: [
-                  "dockerd",
+                args: [
                   "--host=tcp://0.0.0.0:2375",
                   "--registry-mirror=https://registrycache.saturnci.com:5000"
                 ],
