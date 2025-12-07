@@ -37,6 +37,8 @@ spec:
           value: "Registry Realm"
         - name: REGISTRY_AUTH_HTPASSWD_PATH
           value: "/auth/htpasswd"
+        - name: REGISTRY_PROXY_REMOTEURL
+          value: "https://registry-1.docker.io"
         volumeMounts:
         - name: registry-data
           mountPath: /var/lib/registry
