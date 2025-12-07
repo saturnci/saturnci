@@ -14,7 +14,7 @@ describe TestSuiteRunMailer, type: :mailer do
 
     it "has a subject which includes status, commit message, and repository name" do
       allow(test_suite_run).to receive(:status).and_return("Passed")
-      mail = TestSuiteRunMailer.completion_notification(test_suite_run)
+      mail = TestSuiteRunMailer.completion_notification(test_suite_run, "user@example.com")
       expect(mail.subject).to eq("Passed: \"Enhance test...\" (2a5b5d8) on acmecorp/billing-system")
     end
   end
