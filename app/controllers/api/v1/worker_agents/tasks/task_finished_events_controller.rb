@@ -17,7 +17,7 @@ module API
                 end
               end
 
-              Nova::DeleteK8sJobJob.perform_later(task.worker.name)
+              Nova::DeleteTaskWorkerJob.perform_later(task.id)
             rescue StandardError => e
               render(json: { error: e.message }, status: :bad_request)
               return
