@@ -108,7 +108,8 @@ module Nova
                   { name: "DOCKER_HOST", value: "tcp://localhost:2375" }
                 ],
                 volumeMounts: [
-                  { name: "repository", mountPath: "/repository" }
+                  { name: "repository", mountPath: "/repository" },
+                  { name: "docker-config", mountPath: "/root/.docker" }
                 ]
               },
               {
@@ -127,13 +128,15 @@ module Nova
                 ],
                 volumeMounts: [
                   { name: "dind-storage", mountPath: "/var/lib/docker" },
-                  { name: "repository", mountPath: "/repository" }
+                  { name: "repository", mountPath: "/repository" },
+                  { name: "docker-config", mountPath: "/root/.docker" }
                 ]
               }
             ],
             volumes: [
               { name: "dind-storage", emptyDir: {} },
-              { name: "repository", emptyDir: {} }
+              { name: "repository", emptyDir: {} },
+              { name: "docker-config", emptyDir: {} }
             ]
           }
         }
