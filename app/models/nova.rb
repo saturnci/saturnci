@@ -95,6 +95,9 @@ module Nova
               {
                 name: "worker",
                 image: "registry.digitalocean.com/saturnci/nova-worker-agent:latest",
+                resources: {
+                  requests: { cpu: "500m", memory: "512Mi" }
+                },
                 env: [
                   { name: "SATURNCI_API_HOST", value: "https://app.saturnci.com" },
                   { name: "WORKER_ID", value: worker.id },
@@ -110,6 +113,9 @@ module Nova
                 name: "dind",
                 image: "docker:24-dind",
                 securityContext: { privileged: true },
+                resources: {
+                  requests: { cpu: "1500m", memory: "2560Mi" }
+                },
                 env: [
                   { name: "DOCKER_TLS_CERTDIR", value: "" }
                 ],
