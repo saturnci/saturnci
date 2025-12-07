@@ -119,7 +119,7 @@ module Nova
                 securityContext: { privileged: true },
                 args: [
                   "--host=tcp://0.0.0.0:2375",
-                  "--registry-mirror=https://registrycache.saturnci.com:5000"
+                  "--registry-mirror=https://dockerhub-proxy.saturnci.com:5000"
                 ],
                 resources: {
                   requests: { cpu: "1250m", memory: "3072Mi" }

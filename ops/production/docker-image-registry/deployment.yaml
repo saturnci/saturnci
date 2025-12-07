@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: registry-deployment
+  name: docker-image-registry-deployment
 spec:
   replicas: 1
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxSurge: 0       # Don't create new pods before old ones terminate
-      maxUnavailable: 1 # Allow one pod to be unavailable during update
+      maxSurge: 0
+      maxUnavailable: 1
   selector:
     matchLabels:
-      app: registry
+      app: docker-image-registry
   template:
     metadata:
       labels:
-        app: registry
+        app: docker-image-registry
     spec:
       containers:
       - name: registry
@@ -26,11 +26,11 @@ spec:
         - name: REGISTRY_STORAGE_DELETE_ENABLED
           value: "true"
         - name: REGISTRY_HTTP_CLIENT_TIMEOUT
-          value: "600s"  # 10 minutes
+          value: "600s"
         - name: REGISTRY_HTTP_REQUESTTIMEOUT
-          value: "600s"  # 10 minutes
+          value: "600s"
         - name: REGISTRY_HTTP_RESPONSEHEADER_TIMEOUT
-          value: "600s"  # 10 minutes
+          value: "600s"
         - name: REGISTRY_AUTH
           value: "htpasswd"
         - name: REGISTRY_AUTH_HTPASSWD_REALM
@@ -44,15 +44,15 @@ spec:
           mountPath: /auth
         resources:
           requests:
-            memory: "2Gi"
-            cpu: "1000m"
+            memory: "512Mi"
+            cpu: "250m"
           limits:
-            memory: "4Gi"
-            cpu: "2000m"
+            memory: "1Gi"
+            cpu: "500m"
       volumes:
       - name: registry-data
         persistentVolumeClaim:
-          claimName: registry-pvc
+          claimName: docker-image-registry-pvc
       - name: auth-volume
         secret:
-          secretName: registry-secrets
+          secretName: docker-image-registry-secrets

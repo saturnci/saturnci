@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dockerhub-proxy-deployment
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: dockerhub-proxy
+  template:
+    metadata:
+      labels:
+        app: dockerhub-proxy
+    spec:
+      containers:
+      - name: registry
+        image: registry:2
+        ports:
+        - containerPort: 5000
+        env:
+        - name: REGISTRY_STORAGE_DELETE_ENABLED
+          value: "true"
+        - name: REGISTRY_HTTP_CLIENT_TIMEOUT
+          value: "600s"
+        - name: REGISTRY_HTTP_REQUESTTIMEOUT
+          value: "600s"
+        - name: REGISTRY_HTTP_RESPONSEHEADER_TIMEOUT
+          value: "600s"
+        - name: REGISTRY_PROXY_REMOTEURL
+          value: "https://registry-1.docker.io"
+        volumeMounts:
+        - name: registry-data
+          mountPath: /var/lib/registry
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+      volumes:
+      - name: registry-data
+        persistentVolumeClaim:
+          claimName: dockerhub-proxy-pvc
