@@ -4,6 +4,7 @@ module Admin
       authorize :user_impersonation
 
       user = User.find(params[:user_id])
+      session[:acting_user_id] = current_user.id
       sign_in(:user, user)
       session[:impersonating] = true
 

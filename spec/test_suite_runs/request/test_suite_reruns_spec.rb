@@ -38,5 +38,21 @@ describe "test suite reruns", type: :request do
       new_test_suite_run = TestSuiteRun.find(new_test_suite_run_id)
       expect(new_test_suite_run.started_by_user).to eq(test_suite_run.project.user)
     end
+
+    context "when admin is impersonating a user" do
+      let!(:admin_user) { create(:user, super_admin: true) }
+
+      before do
+        login_as(admin_user, scope: :user)
+        post admin_user_impersonations_path(user_id: test_suite_run.project.user.id)
+      end
+
+      it "saves the admin as started_by_user, not the impersonated user" do
+        post(test_suite_reruns_path(test_suite_run_id: test_suite_run.id))
+        new_test_suite_run_id = response.location.split("/").last
+        new_test_suite_run = TestSuiteRun.find(new_test_suite_run_id)
+        expect(new_test_suite_run.started_by_user).to eq(admin_user)
+      end
+    end
   end
 end
