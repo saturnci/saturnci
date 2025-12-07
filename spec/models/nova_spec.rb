@@ -38,6 +38,12 @@ describe Nova do
   describe ".start_test_suite_run" do
     let!(:test_suite_run) { create(:test_suite_run) }
 
+    it "saves an unsaved test_suite_run" do
+      unsaved_test_suite_run = build(:test_suite_run, repository: create(:repository))
+      Nova.start_test_suite_run(unsaved_test_suite_run)
+      expect(unsaved_test_suite_run).to be_persisted
+    end
+
     it "creates a task for each concurrent run" do
       test_suite_run.repository.update!(concurrency: 3)
 
