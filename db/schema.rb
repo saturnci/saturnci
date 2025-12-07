@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_07_160802) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_07_173046) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -159,7 +159,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_07_160802) do
   end
 
   create_table "tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "build_id", null: false
+    t.uuid "test_suite_run_id", null: false
     t.string "runner_id"
     t.text "test_output"
     t.text "test_report"
@@ -172,9 +172,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_07_160802) do
     t.datetime "deleted_at"
     t.boolean "terminate_on_completion", default: true, null: false
     t.jsonb "json_output"
-    t.index ["build_id", "order_index"], name: "index_tasks_on_build_id_and_order_index", unique: true
-    t.index ["build_id"], name: "index_tasks_on_build_id"
     t.index ["runner_id"], name: "index_tasks_on_runner_id", unique: true
+    t.index ["test_suite_run_id", "order_index"], name: "index_tasks_on_test_suite_run_id_and_order_index", unique: true
+    t.index ["test_suite_run_id"], name: "index_tasks_on_test_suite_run_id"
   end
 
   create_table "test_case_runs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -318,7 +318,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_07_160802) do
   add_foreign_key "task_events", "tasks"
   add_foreign_key "task_workers", "tasks"
   add_foreign_key "task_workers", "workers"
-  add_foreign_key "tasks", "test_suite_runs", column: "build_id"
+  add_foreign_key "tasks", "test_suite_runs"
   add_foreign_key "test_case_runs", "tasks"
   add_foreign_key "test_failure_screenshots", "test_case_runs"
   add_foreign_key "test_suite_run_result_notifications", "sent_emails"

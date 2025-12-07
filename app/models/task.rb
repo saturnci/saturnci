@@ -1,8 +1,9 @@
 class Task < ApplicationRecord
   acts_as_paranoid
   self.table_name = "tasks"
-  belongs_to :build, touch: true
-  belongs_to :test_suite_run, class_name: "TestSuiteRun", foreign_key: "build_id", touch: true
+  alias_attribute :build_id, :test_suite_run_id
+  belongs_to :build, foreign_key: "test_suite_run_id", touch: true
+  belongs_to :test_suite_run, touch: true
   has_many :test_case_runs, dependent: :destroy
   has_many :task_events, dependent: :destroy
   alias_method :run_events, :task_events
