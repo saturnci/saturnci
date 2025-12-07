@@ -83,12 +83,7 @@ class TestSuiteRun < ApplicationRecord
   end
 
   def delete_runners
-    case repository.worker_architecture.slug
-    when WorkerArchitecture::TERRA_SLUG
-      runs.each(&:delete_runner)
-    when WorkerArchitecture::NOVA_SLUG
-      runs.each { |task| Nova::DeleteTaskWorkerJob.perform_later(task.id) }
-    end
+    runs.each(&:delete_runner)
   end
 
   def broadcast
