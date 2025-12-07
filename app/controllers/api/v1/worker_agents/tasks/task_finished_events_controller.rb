@@ -16,6 +16,8 @@ module API
                   GitHubCheckRun.find_by(test_suite_run: task.test_suite_run)&.finish!
                 end
               end
+
+              Nova::DeleteK8sJobJob.perform_later(task.worker.name)
             rescue StandardError => e
               render(json: { error: e.message }, status: :bad_request)
               return

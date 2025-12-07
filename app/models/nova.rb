@@ -54,6 +54,25 @@ module Nova
     response
   end
 
+  def self.delete_k8s_job(job_name)
+    api_url = ENV.fetch("NOVA_K8S_API_URL")
+    token = ENV.fetch("NOVA_K8S_TOKEN")
+    ca_cert = ENV.fetch("NOVA_K8S_CA_CERT")
+
+    uri = URI("#{api_url}/apis/batch/v1/namespaces/default/jobs/#{job_name}?propagationPolicy=Background")
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    http.cert_store = OpenSSL::X509::Store.new.tap do |store|
+      store.set_default_paths
+      store.add_cert(OpenSSL::X509::Certificate.new(ca_cert))
+    end
+
+    req = Net::HTTP::Delete.new(uri)
+    req["Authorization"] = "Bearer #{token}"
+
+    http.request(req)
+  end
+
   def self.job_spec(worker, task)
     {
       apiVersion: "batch/v1",
