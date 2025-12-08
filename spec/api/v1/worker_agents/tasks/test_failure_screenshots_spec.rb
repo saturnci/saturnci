@@ -2,10 +2,10 @@ require "rails_helper"
 include APIAuthenticationHelper
 
 describe "TestFailureScreenshots", type: :request do
-  let!(:run) { create(:run, :with_worker) }
-  let!(:worker) { run.worker }
+  let!(:task) { create(:run, :with_worker) }
+  let!(:worker) { task.worker }
   let!(:test_case_run) do
-    create(:test_case_run, run: run, description: "User login shows error message")
+    create(:test_case_run, task: task, description: "User login shows error message")
   end
 
   let!(:png_file) do
@@ -18,10 +18,10 @@ describe "TestFailureScreenshots", type: :request do
     allow(SpacesFileUpload).to receive(:new).and_return(spaces_file_upload)
   end
 
-  describe "POST /api/v1/worker_agents/runs/:run_id/test_failure_screenshots" do
+  describe "POST /api/v1/worker_agents/tasks/:task_id/test_failure_screenshots" do
     def post_request
       post(
-        api_v1_worker_agents_run_test_failure_screenshots_path(run_id: run.id),
+        api_v1_worker_agents_task_test_failure_screenshots_path(task_id: task.id),
         params: { file: png_file },
         headers: worker_agents_api_authorization_headers(worker).merge(
           "Content-Type" => "image/png",

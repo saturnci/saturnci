@@ -1,24 +1,24 @@
 require "rails_helper"
 include APIAuthenticationHelper
 
-RSpec.describe "run events", type: :request do
-  describe "POST /api/v1/worker_agents/runs/:id/run_events" do
-    let!(:run) { create(:run, :with_worker) }
-    let!(:worker) { run.worker }
+RSpec.describe "task events", type: :request do
+  describe "POST /api/v1/worker_agents/tasks/:task_id/task_events" do
+    let!(:task) { create(:run, :with_worker) }
+    let!(:worker) { task.worker }
 
-    it "increases the count of run events by 1" do
+    it "increases the count of task events by 1" do
       expect {
         post(
-          api_v1_worker_agents_run_run_events_path(run),
+          api_v1_worker_agents_task_task_events_path(task),
           params: { type: "runner_ready" },
           headers: worker_agents_api_authorization_headers(worker)
         )
-      }.to change(RunEvent, :count).by(1)
+      }.to change(TaskEvent, :count).by(1)
     end
 
     it "returns an empty 200 response" do
       post(
-        api_v1_worker_agents_run_run_events_path(run),
+        api_v1_worker_agents_task_task_events_path(task),
         params: { type: "runner_ready" },
         headers: worker_agents_api_authorization_headers(worker)
       )

@@ -1,7 +1,7 @@
 require "rails_helper"
 include APIAuthenticationHelper
 
-describe "run finished events", type: :request do
+describe "task finished events", type: :request do
   before do
     github_check_run_stub = instance_double("GitHubCheckRun").tap do |stub|
       allow(stub).to receive(:finish!)
@@ -11,35 +11,35 @@ describe "run finished events", type: :request do
     allow_any_instance_of(TestSuiteRun).to receive(:check_test_case_run_integrity!)
   end
 
-  describe "POST /api/v1/worker_agents/runs/:id/run_finished_events" do
-    let!(:run) { create(:run, :with_worker) }
-    let!(:worker) { run.worker }
+  describe "POST /api/v1/worker_agents/tasks/:task_id/task_finished_events" do
+    let!(:task) { create(:run, :with_worker) }
+    let!(:worker) { task.worker }
 
-    it "increases the count of run events by 1" do
+    it "increases the count of task events by 1" do
       expect {
         post(
-          api_v1_worker_agents_run_run_finished_events_path(run),
+          api_v1_worker_agents_task_task_finished_events_path(task),
           headers: worker_agents_api_authorization_headers(worker)
         )
-      }.to change(RunEvent, :count).by(1)
+      }.to change(TaskEvent, :count).by(1)
     end
 
     it "returns an empty 200 response" do
       post(
-        api_v1_worker_agents_run_run_finished_events_path(run),
+        api_v1_worker_agents_task_task_finished_events_path(task),
         headers: worker_agents_api_authorization_headers(worker)
       )
       expect(response).to have_http_status(200)
       expect(response.body).to be_empty
     end
 
-    it "creates a charge for the run" do
+    it "creates a charge for the task" do
       expect {
         post(
-          api_v1_worker_agents_run_run_finished_events_path(run),
+          api_v1_worker_agents_task_task_finished_events_path(task),
           headers: worker_agents_api_authorization_headers(worker)
         )
-      }.to change { run.reload.charge.present? }.from(false).to(true)
+      }.to change { task.reload.charge.present? }.from(false).to(true)
     end
   end
 end

@@ -25,7 +25,7 @@ describe "Test suite run navigation", type: :system do
 
         http_request(
           api_authorization_headers: worker_agents_api_authorization_headers(run.worker),
-          path: api_v1_worker_agents_run_run_finished_events_path(run_id: run.id, format: :json)
+          path: api_v1_worker_agents_task_task_finished_events_path(task_id: run.id, format: :json)
         )
         expect(page).to have_content("Failed") # to prevent race condition
 

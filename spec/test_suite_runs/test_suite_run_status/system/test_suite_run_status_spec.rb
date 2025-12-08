@@ -22,7 +22,7 @@ describe "Test suite run status", type: :system do
 
         http_request(
           api_authorization_headers: worker_agents_api_authorization_headers(run.worker),
-          path: api_v1_worker_agents_run_run_finished_events_path(run)
+          path: api_v1_worker_agents_task_task_finished_events_path(task_id: run.id)
         )
 
         expect(page).to have_content("Passed")
@@ -38,7 +38,7 @@ describe "Test suite run status", type: :system do
 
         http_request(
           api_authorization_headers: worker_agents_api_authorization_headers(run.worker),
-          path: api_v1_worker_agents_run_run_finished_events_path(run)
+          path: api_v1_worker_agents_task_task_finished_events_path(task_id: run.id)
         )
 
         expect(page).to have_content("Passed") # to prevent race condition
@@ -63,7 +63,7 @@ describe "Test suite run status", type: :system do
 
         http_request(
           api_authorization_headers: worker_agents_api_authorization_headers(other_run.worker),
-          path: api_v1_worker_agents_run_run_finished_events_path(other_run)
+          path: api_v1_worker_agents_task_task_finished_events_path(task_id: other_run.id)
         )
 
         other_run_test_suite_run_link = PageObjects::TestSuiteRunLink.new(page, other_test_suite_run)
@@ -101,7 +101,7 @@ describe "Test suite run status", type: :system do
 
         http_request(
           api_authorization_headers: worker_agents_api_authorization_headers(run.worker),
-          path: api_v1_worker_agents_run_run_finished_events_path(run)
+          path: api_v1_worker_agents_task_task_finished_events_path(task_id: run.id)
         )
 
         # After the test suite run finishes, the counter will have
