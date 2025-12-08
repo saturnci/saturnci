@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_07_173046) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_08_165220) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -28,6 +28,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_07_173046) do
     t.datetime "updated_at", null: false
     t.index ["task_id"], name: "index_charges_on_task_id"
     t.index ["task_id"], name: "unique_index_on_charges_job_id", unique: true
+  end
+
+  create_table "failure_reruns", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "original_test_suite_run_id", null: false
+    t.uuid "test_suite_run_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["original_test_suite_run_id", "test_suite_run_id"], name: "idx_on_original_test_suite_run_id_test_suite_run_id_d4e9789963", unique: true
+    t.index ["original_test_suite_run_id"], name: "index_failure_reruns_on_original_test_suite_run_id"
+    t.index ["test_suite_run_id"], name: "index_failure_reruns_on_test_suite_run_id"
   end
 
   create_table "github_accounts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -305,6 +315,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_07_173046) do
   end
 
   add_foreign_key "charges", "tasks"
+  add_foreign_key "failure_reruns", "test_suite_runs"
+  add_foreign_key "failure_reruns", "test_suite_runs", column: "original_test_suite_run_id"
   add_foreign_key "github_accounts", "users"
   add_foreign_key "github_check_runs", "test_suite_runs"
   add_foreign_key "github_events", "repositories"
