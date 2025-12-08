@@ -14,16 +14,6 @@ namespace :api do
     namespace :worker_agents do
       resources :tasks, only: [:show]
 
-      resources :runs, only: [] do
-        resources :run_finished_events, only: :create
-        resources :system_logs, only: :create
-        resource :test_output, only: :create
-        resource :json_output, only: :create
-        resources :test_failure_screenshots, only: :create
-        resources :run_events, only: :create
-        resource :runner, only: :destroy
-      end
-
       resources :tasks, only: [], module: "tasks" do
         resources :task_finished_events, only: :create
         resources :system_logs, only: [:create, :index]
