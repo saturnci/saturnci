@@ -8,8 +8,12 @@ class TestSuiteRunFinish
     TestSuiteRunLinkComponent.refresh(@test_suite_run)
     GitHubCheckRun.find_by(test_suite_run: @test_suite_run)&.finish!
 
-    return unless @test_suite_run.test_case_runs.failed.any?
+    start_rerun if @test_suite_run.test_case_runs.failed.any?
+  end
 
+  private
+
+  def start_rerun
     rerun_test_suite_run = TestSuiteRun.create!(
       repository: @test_suite_run.repository,
       branch_name: @test_suite_run.branch_name,
@@ -24,6 +28,7 @@ class TestSuiteRunFinish
     )
 
     rerun_test_suite_run.start!
+    rerun_test_suite_run.broadcast
     rerun_test_suite_run
   end
 end
