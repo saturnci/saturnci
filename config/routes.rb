@@ -79,6 +79,7 @@ Rails.application.routes.draw do
   resources :github_accounts
 
   resources :test_suite_reruns, only: :create
+  resources :failure_reruns, only: :create
   resources :test_suite_run_cancellations, only: :create
   resources :user_emails, only: %i(new create)
 
