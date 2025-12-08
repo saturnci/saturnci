@@ -1,4 +1,6 @@
 class TestSuiteRunFinish
+  RETRY_LIMIT = 3
+
   def initialize(test_suite_run)
     @test_suite_run = test_suite_run
   end
@@ -14,6 +16,7 @@ class TestSuiteRunFinish
   private
 
   def start_rerun
+    return if retry_depth >= RETRY_LIMIT
     rerun_test_suite_run = TestSuiteRun.create!(
       repository: @test_suite_run.repository,
       branch_name: @test_suite_run.branch_name,
@@ -30,5 +33,17 @@ class TestSuiteRunFinish
     rerun_test_suite_run.start!
     rerun_test_suite_run.broadcast
     rerun_test_suite_run
+  end
+
+  def retry_depth
+    depth = 0
+    current = @test_suite_run
+
+    while (failure_rerun = FailureRerun.find_by(test_suite_run: current))
+      depth += 1
+      current = failure_rerun.original_test_suite_run
+    end
+
+    depth
   end
 end
