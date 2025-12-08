@@ -102,7 +102,7 @@ module Nova
                   requests: { cpu: "250m", memory: "256Mi" }
                 },
                 env: [
-                  { name: "SATURNCI_API_HOST", value: "https://app.saturnci.com" },
+                  { name: "SATURNCI_API_HOST", value: ENV.fetch("SATURNCI_HOST") },
                   { name: "WORKER_ID", value: worker.id },
                   { name: "WORKER_ACCESS_TOKEN", value: worker.access_token.value },
                   { name: "TASK_ID", value: task.id },
