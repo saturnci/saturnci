@@ -42,6 +42,11 @@ describe TestSuiteRunFinish do
         expect(Nova).to receive(:start_test_suite_run)
         TestSuiteRunFinish.new(test_suite_run).process
       end
+
+      it "broadcasts the rerun test suite run" do
+        expect_any_instance_of(TestSuiteRun).to receive(:broadcast)
+        TestSuiteRunFinish.new(test_suite_run).process
+      end
     end
   end
 end

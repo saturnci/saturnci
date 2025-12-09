@@ -14,7 +14,7 @@ class TestSuiteRunFinish
       repository: @test_suite_run.repository,
       branch_name: @test_suite_run.branch_name,
       commit_hash: @test_suite_run.commit_hash,
-      commit_message: @test_suite_run.commit_message,
+      commit_message: @test_suite_run.commit_message + " #{SecureRandom.hex}",
       author_name: @test_suite_run.author_name
     )
 
@@ -25,6 +25,7 @@ class TestSuiteRunFinish
 
     task = Task.create!(test_suite_run: rerun_test_suite_run, order_index: 1)
     Nova.start_test_suite_run(rerun_test_suite_run, [task])
+    rerun_test_suite_run.broadcast
     rerun_test_suite_run
   end
 end
