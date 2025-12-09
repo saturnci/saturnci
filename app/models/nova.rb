@@ -4,7 +4,7 @@ module Nova
       tasks.each { |task| create_worker(task) }
     end
 
-    test_suite_run.tasks.each do |task|
+    tasks.each do |task|
       Nova::CreateK8sPodJob.perform_later(task.worker.id, task.id)
     end
 
