@@ -30,7 +30,9 @@ namespace :api do
       end
 
       resources :github_tokens, only: :create
-      resources :test_suite_runs, only: :update
+      resources :test_suite_runs, only: :update do
+        resource :targeted_test_cases, only: :create, module: "test_suite_runs"
+      end
     end
   end
 end
