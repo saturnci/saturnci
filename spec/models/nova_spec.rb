@@ -28,30 +28,22 @@ describe Nova do
 
   describe ".start_test_suite_run" do
     let!(:test_suite_run) { create(:test_suite_run) }
-
-    it "creates a task for each concurrent run" do
-      test_suite_run.repository.update!(concurrency: 3)
-
-      expect { Nova.start_test_suite_run(test_suite_run) }
-        .to change { Task.count }.by(3)
-    end
+    let!(:task_1) { create(:run, test_suite_run:, order_index: 1) }
+    let!(:task_2) { create(:run, test_suite_run:, order_index: 2) }
+    let!(:tasks) { [task_1, task_2] }
 
     it "creates a worker for each task" do
-      test_suite_run.repository.update!(concurrency: 2)
-
-      expect { Nova.start_test_suite_run(test_suite_run) }
+      expect { Nova.start_test_suite_run(test_suite_run, tasks) }
         .to change { Worker.count }.by(2)
     end
 
     it "creates a WorkerAssignment for each task" do
-      test_suite_run.repository.update!(concurrency: 2)
-
-      expect { Nova.start_test_suite_run(test_suite_run) }
+      expect { Nova.start_test_suite_run(test_suite_run, tasks) }
         .to change { WorkerAssignment.count }.by(2)
     end
 
     it "associates tasks with workers via WorkerAssignment" do
-      Nova.start_test_suite_run(test_suite_run)
+      Nova.start_test_suite_run(test_suite_run, tasks)
 
       task = test_suite_run.tasks.first
       expect(task.worker_assignment).to be_present
@@ -59,7 +51,7 @@ describe Nova do
     end
 
     it "associates workers with tasks via WorkerAssignment" do
-      Nova.start_test_suite_run(test_suite_run)
+      Nova.start_test_suite_run(test_suite_run, tasks)
 
       task = test_suite_run.tasks.first
       worker = task.worker
@@ -68,9 +60,7 @@ describe Nova do
     end
 
     it "enqueues a CreateK8sPodJob for each worker/task pair" do
-      test_suite_run.repository.update!(concurrency: 2)
-
-      expect { Nova.start_test_suite_run(test_suite_run) }
+      expect { Nova.start_test_suite_run(test_suite_run, tasks) }
         .to have_enqueued_job(Nova::CreateK8sPodJob).exactly(2).times
     end
   end
