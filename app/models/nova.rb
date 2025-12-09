@@ -23,8 +23,6 @@ module Nova
     worker_name = "#{repo_name}-#{task.id[0..7]}-#{silly_name}".downcase
     worker = Worker.create!(name: worker_name, access_token:)
     WorkerAssignment.create!(worker:, task:)
-
-    task
   end
 
   def self.create_k8s_job(worker, task)
