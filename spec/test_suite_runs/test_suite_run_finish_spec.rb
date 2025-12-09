@@ -37,6 +37,11 @@ describe TestSuiteRunFinish do
         failure_rerun = FailureRerun.find_by(test_suite_run: new_test_suite_run)
         expect(failure_rerun.original_test_suite_run).to eq(test_suite_run)
       end
+
+      it "starts the rerun test suite run" do
+        expect_any_instance_of(TestSuiteRun).to receive(:start!)
+        TestSuiteRunFinish.new(test_suite_run).process
+      end
     end
   end
 end

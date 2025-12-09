@@ -23,6 +23,7 @@ class TestSuiteRunFinish
       test_suite_run: rerun_test_suite_run
     )
 
+    rerun_test_suite_run.start!
     rerun_test_suite_run
   end
 end
