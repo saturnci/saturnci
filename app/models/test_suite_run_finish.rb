@@ -23,7 +23,8 @@ class TestSuiteRunFinish
       test_suite_run: rerun_test_suite_run
     )
 
-    rerun_test_suite_run.start!
+    task = Task.create!(test_suite_run: rerun_test_suite_run, order_index: 1)
+    Nova.start_test_suite_run(rerun_test_suite_run, [task])
     rerun_test_suite_run
   end
 end
