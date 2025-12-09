@@ -1,11 +1,9 @@
 module Nova
   def self.start_test_suite_run(test_suite_run, tasks)
-    ActiveRecord::Base.transaction do
-      tasks.each { |task| create_worker(task) }
-    end
-
-    test_suite_run.tasks.each do |task|
-      Nova::CreateK8sPodJob.perform_later(task.worker.id, task.id)
+    tasks.each do |task|
+      worker = create_worker(task)
+      task.task_events.create!(type: :runner_requested)
+      create_k8s_job(worker, task)
     end
 
     test_suite_run
@@ -14,6 +12,7 @@ module Nova
   def self.create_worker(task)
     worker = Worker.create!(name: worker_name(task), access_token: AccessToken.create!)
     WorkerAssignment.create!(worker:, task:)
+    worker
   end
 
   def self.worker_name(task)
