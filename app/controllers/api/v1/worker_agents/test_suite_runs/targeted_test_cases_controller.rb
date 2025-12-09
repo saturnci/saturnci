@@ -5,11 +5,8 @@ module API
         class TargetedTestCasesController < WorkerAgentsAPIController
           def create
             test_suite_run = TestSuiteRun.find(params[:test_suite_run_id])
-            divider = TestFileDivider.new(
-              test_files: params[:test_files],
-              task_count: test_suite_run.tasks.count
-            )
-            render json: divider.divide
+            test_set = TestSet.new(params[:test_files])
+            render json: test_set.grouped(test_suite_run.tasks.count)
           end
         end
       end
