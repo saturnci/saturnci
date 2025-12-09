@@ -4,7 +4,8 @@ module Nova
 
     ActiveRecord::Base.transaction do
       test_suite_run.repository.concurrency.times do |i|
-        create_task_with_worker(test_suite_run:, order_index: i + 1)
+        task = Task.create!(test_suite_run:, order_index: i + 1)
+        create_worker(test_suite_run:, task:)
       end
     end
 
@@ -15,8 +16,7 @@ module Nova
     test_suite_run
   end
 
-  def self.create_task_with_worker(test_suite_run:, order_index:)
-    task = Task.create!(test_suite_run:, order_index:)
+  def self.create_worker(test_suite_run:, task:)
     task.task_events.create!(type: :runner_requested)
 
     access_token = AccessToken.create!
