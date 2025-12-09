@@ -9,10 +9,10 @@ module API
             ActiveRecord::Base.transaction do
               task.finish!
               task.worker.worker_events.create!(type: :test_run_finished)
+            end
 
-              if task.test_suite_run.tasks.all?(&:finished?)
-                TestSuiteRunFinish.new(task.test_suite_run).process
-              end
+            if task.test_suite_run.tasks.all?(&:finished?)
+              TestSuiteRunFinishJob.perform_later(task.test_suite_run.id)
             end
 
             Nova::DeleteK8sJobJob.perform_later(task.worker.name)

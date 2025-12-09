@@ -25,6 +25,7 @@ describe TestSuiteRunFinish do
 
       before do
         allow(test_suite_run).to receive(:check_test_case_run_integrity!)
+        allow(Nova).to receive(:create_k8s_job)
       end
 
       it "creates a new test suite run" do
@@ -38,9 +39,9 @@ describe TestSuiteRunFinish do
         expect(failure_rerun.original_test_suite_run).to eq(test_suite_run)
       end
 
-      it "enqueues a CreateWorkerJob for the rerun task" do
+      it "creates a worker for the rerun task" do
         expect { TestSuiteRunFinish.new(test_suite_run).process }
-          .to have_enqueued_job(Nova::CreateWorkerJob)
+          .to change { Worker.count }.by(1)
       end
 
       it "broadcasts the rerun test suite run" do
