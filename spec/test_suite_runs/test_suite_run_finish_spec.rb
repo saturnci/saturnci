@@ -38,9 +38,9 @@ describe TestSuiteRunFinish do
         expect(failure_rerun.original_test_suite_run).to eq(test_suite_run)
       end
 
-      it "starts the rerun test suite run via Nova" do
-        expect(Nova).to receive(:start_test_suite_run)
-        TestSuiteRunFinish.new(test_suite_run).process
+      it "enqueues a CreateWorkerJob for the rerun task" do
+        expect { TestSuiteRunFinish.new(test_suite_run).process }
+          .to have_enqueued_job(Nova::CreateWorkerJob)
       end
 
       it "broadcasts the rerun test suite run" do
