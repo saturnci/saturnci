@@ -6,22 +6,22 @@ describe Nova do
     let!(:task) { create(:run, test_suite_run:) }
 
     it "creates a worker with an access token" do
-      Nova.create_worker(test_suite_run:, task:)
+      Nova.create_worker(task)
       expect(task.worker.access_token).to be_present
     end
 
     it "creates a worker with a name containing the repo name" do
-      Nova.create_worker(test_suite_run:, task:)
+      Nova.create_worker(task)
       expect(task.worker.name).to include(test_suite_run.repository.name.downcase)
     end
 
     it "creates a worker with a name containing the short task id" do
-      Nova.create_worker(test_suite_run:, task:)
+      Nova.create_worker(task)
       expect(task.worker.name).to include(task.id[0..7])
     end
 
     it "creates a WorkerAssignment linking the task and worker" do
-      Nova.create_worker(test_suite_run:, task:)
+      Nova.create_worker(task)
       expect(task.worker_assignment.worker).to eq(task.worker)
     end
   end

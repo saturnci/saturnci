@@ -5,7 +5,7 @@ module Nova
     ActiveRecord::Base.transaction do
       test_suite_run.repository.concurrency.times do |i|
         task = Task.create!(test_suite_run:, order_index: i + 1)
-        create_worker(test_suite_run:, task:)
+        create_worker(task)
       end
     end
 
@@ -16,10 +16,10 @@ module Nova
     test_suite_run
   end
 
-  def self.create_worker(test_suite_run:, task:)
+  def self.create_worker(task)
     access_token = AccessToken.create!
     silly_name = SillyName.random.gsub(" ", "-")
-    repo_name = test_suite_run.repository.name.gsub("/", "-")
+    repo_name = task.test_suite_run.repository.name.gsub("/", "-")
     worker_name = "#{repo_name}-#{task.id[0..7]}-#{silly_name}".downcase
     worker = Worker.create!(name: worker_name, access_token:)
     WorkerAssignment.create!(worker:, task:)
