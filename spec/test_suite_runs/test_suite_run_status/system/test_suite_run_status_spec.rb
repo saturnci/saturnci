@@ -7,6 +7,7 @@ describe "Test suite run status", type: :system do
   let!(:user) { run.test_suite_run.repository.user }
 
   before do
+    allow(Nova).to receive(:delete_k8s_job)
     allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
     allow_any_instance_of(TestSuiteRun).to receive(:check_test_case_run_integrity!)
     login_as(user)
@@ -20,10 +21,12 @@ describe "Test suite run status", type: :system do
 
         run.update!(json_output: { "summary" => { "failure_count" => 0 } }.to_json)
 
-        http_request(
-          api_authorization_headers: worker_agents_api_authorization_headers(run.worker),
-          path: api_v1_worker_agents_task_task_finished_events_path(task_id: run.id)
-        )
+        perform_enqueued_jobs do
+          http_request(
+            api_authorization_headers: worker_agents_api_authorization_headers(run.worker),
+            path: api_v1_worker_agents_task_task_finished_events_path(task_id: run.id)
+          )
+        end
 
         expect(page).to have_content("Passed")
       end
@@ -36,10 +39,12 @@ describe "Test suite run status", type: :system do
 
         run.update!(json_output: { "summary" => { "failure_count" => 0 } }.to_json)
 
-        http_request(
-          api_authorization_headers: worker_agents_api_authorization_headers(run.worker),
-          path: api_v1_worker_agents_task_task_finished_events_path(task_id: run.id)
-        )
+        perform_enqueued_jobs do
+          http_request(
+            api_authorization_headers: worker_agents_api_authorization_headers(run.worker),
+            path: api_v1_worker_agents_task_task_finished_events_path(task_id: run.id)
+          )
+        end
 
         expect(page).to have_content("Passed") # to prevent race condition
 
@@ -61,10 +66,12 @@ describe "Test suite run status", type: :system do
           expect(page).to have_content("Running", count: 2)
         end
 
-        http_request(
-          api_authorization_headers: worker_agents_api_authorization_headers(other_run.worker),
-          path: api_v1_worker_agents_task_task_finished_events_path(task_id: other_run.id)
-        )
+        perform_enqueued_jobs do
+          http_request(
+            api_authorization_headers: worker_agents_api_authorization_headers(other_run.worker),
+            path: api_v1_worker_agents_task_task_finished_events_path(task_id: other_run.id)
+          )
+        end
 
         other_run_test_suite_run_link = PageObjects::TestSuiteRunLink.new(page, other_test_suite_run)
         expect(other_run_test_suite_run_link).not_to be_active
@@ -99,10 +106,12 @@ describe "Test suite run status", type: :system do
         # before the test suite run finishes, the counter will be counting
         expect(page).not_to have_content("3m 40s")
 
-        http_request(
-          api_authorization_headers: worker_agents_api_authorization_headers(run.worker),
-          path: api_v1_worker_agents_task_task_finished_events_path(task_id: run.id)
-        )
+        perform_enqueued_jobs do
+          http_request(
+            api_authorization_headers: worker_agents_api_authorization_headers(run.worker),
+            path: api_v1_worker_agents_task_task_finished_events_path(task_id: run.id)
+          )
+        end
 
         # After the test suite run finishes, the counter will have
         # stopped counting and we just see the static duration

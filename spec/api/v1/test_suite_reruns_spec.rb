@@ -1,6 +1,8 @@
 require "rails_helper"
 
 describe "POST /api/v1/test_suite_reruns", type: :request do
+  before { allow(Nova).to receive(:create_k8s_job) }
+
   let!(:user) { create(:user, super_admin: true) }
   let!(:personal_access_token) { create(:personal_access_token, user:) }
   let!(:test_suite_run) { create(:build) }

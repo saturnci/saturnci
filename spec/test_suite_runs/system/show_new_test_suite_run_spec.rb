@@ -3,6 +3,8 @@ require "rails_helper"
 describe "Show new test suite run", type: :system do
   include SaturnAPIHelper
 
+  before { allow(Nova).to receive(:create_k8s_job) }
+
   context "test suite run created via API" do
     let!(:repository) { create(:repository, github_repo_full_name: "jasonswett/panda") }
     let!(:test_suite_run) { create(:test_suite_run, repository: repository) }

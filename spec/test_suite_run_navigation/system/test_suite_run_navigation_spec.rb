@@ -2,6 +2,7 @@ require "rails_helper"
 
 describe "Test suite run navigation", type: :system do
   before do
+    allow(Nova).to receive(:delete_k8s_job)
     allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
     allow_any_instance_of(TestSuiteRun).to receive(:check_test_case_run_integrity!)
   end
@@ -23,10 +24,12 @@ describe "Test suite run navigation", type: :system do
 
         test_suite_run_link.click
 
-        http_request(
-          api_authorization_headers: worker_agents_api_authorization_headers(run.worker),
-          path: api_v1_worker_agents_task_task_finished_events_path(task_id: run.id, format: :json)
-        )
+        perform_enqueued_jobs do
+          http_request(
+            api_authorization_headers: worker_agents_api_authorization_headers(run.worker),
+            path: api_v1_worker_agents_task_task_finished_events_path(task_id: run.id, format: :json)
+          )
+        end
         expect(page).to have_content("Failed") # to prevent race condition
 
         test_suite_run_link.click
