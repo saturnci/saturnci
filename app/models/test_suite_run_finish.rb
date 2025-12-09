@@ -15,7 +15,7 @@ class TestSuiteRunFinish
       repository: @test_suite_run.repository,
       branch_name: @test_suite_run.branch_name,
       commit_hash: @test_suite_run.commit_hash,
-      commit_message: @test_suite_run.commit_message + " #{SecureRandom.hex}",
+      commit_message: @test_suite_run.commit_message,
       author_name: @test_suite_run.author_name,
       dry_run_example_count: failed_test_case_runs.count
     )
