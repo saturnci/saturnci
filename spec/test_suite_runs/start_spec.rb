@@ -1,8 +1,8 @@
 require "rails_helper"
 
 describe "Starting test suite run" do
-  let!(:project) { create(:project, concurrency: 2) }
-  let!(:test_suite_run) { create(:build, project:) }
+  let!(:repository) { create(:repository, concurrency: 2) }
+  let!(:test_suite_run) { create(:test_suite_run, repository:) }
 
   before do
     allow(Nova).to receive(:create_k8s_job)

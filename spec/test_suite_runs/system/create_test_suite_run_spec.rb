@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "Start test suite run", type: :system do
-  let!(:test_suite_run) { create(:build) }
+  let!(:test_suite_run) { create(:test_suite_run) }
 
   before do
     create(:user, super_admin: true)
@@ -13,7 +13,7 @@ describe "Start test suite run", type: :system do
 
   it "starts the test suite run" do
     perform_enqueued_jobs do
-      visit repository_build_path(id: test_suite_run.id, repository_id: test_suite_run.repository.id)
+      visit repository_test_suite_run_path(id: test_suite_run.id, repository_id: test_suite_run.repository.id)
       expect(page).to have_content("Not Started")
 
       click_on "Start"

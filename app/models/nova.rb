@@ -1,7 +1,5 @@
 module Nova
   def self.start_test_suite_run(test_suite_run, tasks)
-    test_suite_run.save!
-
     ActiveRecord::Base.transaction do
       tasks.each { |task| create_worker(task) }
     end

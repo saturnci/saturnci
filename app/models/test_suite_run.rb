@@ -22,8 +22,10 @@ class TestSuiteRun < ApplicationRecord
   def start!
     return unless repository.active
 
-    tasks = test_suite_run.repository.concurrency.times do |i|
-      tasks.create!(test_suite_run:, order_index: i + 1)
+    save!
+
+    tasks = repository.concurrency.times.map do |i|
+      Task.create!(test_suite_run: self, order_index: i + 1)
     end
 
     Nova.start_test_suite_run(self, tasks)
