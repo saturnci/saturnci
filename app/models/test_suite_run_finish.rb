@@ -8,14 +8,16 @@ class TestSuiteRunFinish
     TestSuiteRunLinkComponent.refresh(@test_suite_run)
     GitHubCheckRun.find_by(test_suite_run: @test_suite_run)&.finish!
 
-    return unless @test_suite_run.test_case_runs.failed.any?
+    failed_test_case_runs = @test_suite_run.test_case_runs.failed
+    return unless failed_test_case_runs.any?
 
     rerun_test_suite_run = TestSuiteRun.create!(
       repository: @test_suite_run.repository,
       branch_name: @test_suite_run.branch_name,
       commit_hash: @test_suite_run.commit_hash,
       commit_message: @test_suite_run.commit_message + " #{SecureRandom.hex}",
-      author_name: @test_suite_run.author_name
+      author_name: @test_suite_run.author_name,
+      dry_run_example_count: failed_test_case_runs.count
     )
 
     FailureRerun.create!(

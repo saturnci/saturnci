@@ -47,6 +47,11 @@ describe TestSuiteRunFinish do
         expect_any_instance_of(TestSuiteRun).to receive(:broadcast)
         TestSuiteRunFinish.new(test_suite_run).process
       end
+
+      it "sets dry_run_example_count to the number of failed test cases" do
+        rerun_test_suite_run = TestSuiteRunFinish.new(test_suite_run).process
+        expect(rerun_test_suite_run.dry_run_example_count).to eq(1)
+      end
     end
   end
 end
