@@ -5,11 +5,6 @@ describe Nova do
     let!(:test_suite_run) { create(:test_suite_run) }
     let!(:task) { create(:run, test_suite_run:) }
 
-    it "creates a runner_requested event for the task" do
-      Nova.create_worker(test_suite_run:, task:)
-      expect(task.task_events.runner_requested.count).to eq(1)
-    end
-
     it "creates a worker with an access token" do
       Nova.create_worker(test_suite_run:, task:)
       expect(task.worker.access_token).to be_present
@@ -70,15 +65,6 @@ describe Nova do
       worker = task.worker
       expect(worker.worker_assignment).to be_present
       expect(worker.task.id).to eq(task.id)
-    end
-
-    it "creates a runner_requested event for each task" do
-      test_suite_run.repository.update!(concurrency: 2)
-      Nova.start_test_suite_run(test_suite_run)
-
-      test_suite_run.tasks.each do |task|
-        expect(task.task_events.runner_requested.count).to eq(1)
-      end
     end
 
     it "enqueues a CreateK8sPodJob for each worker/task pair" do

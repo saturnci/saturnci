@@ -17,8 +17,6 @@ module Nova
   end
 
   def self.create_worker(test_suite_run:, task:)
-    task.task_events.create!(type: :runner_requested)
-
     access_token = AccessToken.create!
     silly_name = SillyName.random.gsub(" ", "-")
     repo_name = test_suite_run.repository.name.gsub("/", "-")
