@@ -1,33 +1,29 @@
 class TestSuiteRunLinkComponent < ViewComponent::Base
-  attr_reader :build
+  attr_reader :test_suite_run
 
-  def initialize(build, active_build: nil)
-    @build = build
-    @active_build = active_build
+  def initialize(test_suite_run, active_test_suite_run: nil)
+    @test_suite_run = test_suite_run
+    @active_test_suite_run = active_test_suite_run
   end
 
-  def self.refresh(build)
+  def self.refresh(test_suite_run)
     Turbo::StreamsChannel.broadcast_replace_to(
-      "test_suite_run_link_#{build.id}",
-      target: "test_suite_run_link_#{build.id}",
+      "test_suite_run_link_#{test_suite_run.id}",
+      target: "test_suite_run_link_#{test_suite_run.id}",
       html: ApplicationController.render(
-        TestSuiteRunLinkComponent.new(build),
+        TestSuiteRunLinkComponent.new(test_suite_run),
         layout: false
       )
     )
   end
 
   def path
-    TestSuiteRunLinkPath.new(@build).value
-  end
-
-  def test_suite_run
-    build
+    TestSuiteRunLinkPath.new(@test_suite_run).value
   end
 
   def data
     {
-      turbo_frame: "build",
+      turbo_frame: "test_suite_run",
       action: "click->test-suite-run-list#makeActive",
       test_suite_run_list_target: "link"
     }
