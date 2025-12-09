@@ -7,8 +7,7 @@ describe "Pull Request", type: :request do
   end
 
   before do
-    allow(Worker).to receive(:create_vm)
-    allow(Worker).to receive(:available).and_return([create(:worker)])
+    allow(Nova).to receive(:create_k8s_job)
   end
 
   let!(:repository) do

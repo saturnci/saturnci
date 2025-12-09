@@ -16,8 +16,7 @@ describe "test suite reruns", type: :request do
 
     before do
       allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
-      allow(Worker).to receive(:create_vm)
-      allow(Worker).to receive(:available).and_return([create(:worker)])
+      allow(Nova).to receive(:create_k8s_job)
       login_as(test_suite_run.project.user, scope: :user)
     end
 

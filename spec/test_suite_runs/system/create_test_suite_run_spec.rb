@@ -6,10 +6,7 @@ describe "Start test suite run", type: :system do
   before do
     create(:user, super_admin: true)
 
-    worker = create(:worker)
-    allow(Worker).to receive(:available).and_return([worker])
-    allow(Worker).to receive(:create_vm)
-
+    allow(Nova).to receive(:create_k8s_job)
     allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
     login_as(test_suite_run.repository.user)
   end
