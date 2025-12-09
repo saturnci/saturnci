@@ -23,6 +23,16 @@ describe "worker agents test sets", type: :request do
       expect(body["2"].size).to eq(1)
     end
 
+    it "sets dry_run_example_count to the number of test files" do
+      post(
+        api_v1_worker_agents_test_suite_run_test_set_path(test_suite_run_id: test_suite_run.id),
+        params: { test_files: test_files },
+        headers: worker_agents_api_authorization_headers(worker)
+      )
+
+      expect(test_suite_run.reload.dry_run_example_count).to eq(3)
+    end
+
     context "when the test suite run is a failure rerun" do
       let!(:original_test_suite_run) { create(:test_suite_run) }
       let!(:original_task) { create(:run, test_suite_run: original_test_suite_run) }

@@ -8,4 +8,8 @@ class TestSet
       .each_with_index
       .to_h { |group, index| [(index + 1).to_s, group] }
   end
+
+  def count
+    @test_files.count
+  end
 end

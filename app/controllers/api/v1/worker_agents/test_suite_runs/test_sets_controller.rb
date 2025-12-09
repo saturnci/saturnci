@@ -15,6 +15,8 @@ module API
               test_set = TestSet.new(params[:test_files])
             end
 
+            test_suite_run.update!(dry_run_example_count: test_set.count)
+
             render json: test_set.grouped(test_suite_run.tasks.count)
           end
         end
