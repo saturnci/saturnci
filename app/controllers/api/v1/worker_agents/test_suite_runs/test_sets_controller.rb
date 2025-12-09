@@ -3,7 +3,7 @@ module API
     module WorkerAgents
       module TestSuiteRuns
         class TestSetsController < WorkerAgentsAPIController
-          def update
+          def create
             test_suite_run = TestSuiteRun.find(params[:test_suite_run_id])
             failure_rerun = FailureRerun.find_by(test_suite_run: test_suite_run)
 
