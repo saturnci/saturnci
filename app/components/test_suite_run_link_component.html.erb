@@ -1,39 +1,37 @@
 <%= link_to path, data:, class: "test-suite-run-link", id: "test_suite_run_link_#{test_suite_run.id}" do %>
-  <% cache [test_suite_run, test_suite_run.updated_at] do %>
-    <div style="display: flex; justify-content: space-between">
+  <div style="display: flex; justify-content: space-between">
+    <div>
       <div>
-        <div>
-          <div style="line-height: 1.3; max-width: 300px;">
-            <%= test_suite_run.commit_message.truncate(60) %>
-          </div>
-
-          <div class="test-suite-run-author">
-            <%= test_suite_run.author_name %>
-            <%= test_suite_run.created_at.in_time_zone.strftime("%-m/%-d/%Y %H:%M %Z") %>
-          </div>
-
-          <span class="test-suite-run-commit">
-            <code><%= test_suite_run.branch_name.truncate(20) %></code>
-            <code><%= helpers.abbreviated_hash(test_suite_run.commit_hash) %></code>
-          </span>
+        <div style="line-height: 1.3; max-width: 300px;">
+          <%= test_suite_run.commit_message.truncate(60) %>
         </div>
-      </div>
 
-      <div style="width: 90px; text-align: center">
-        <%= render TestSuiteRunStatusComponent.new(test_suite_run:) %>
+        <div class="test-suite-run-author">
+          <%= test_suite_run.author_name %>
+          <%= test_suite_run.created_at.in_time_zone.strftime("%-m/%-d/%Y %H:%M %Z") %>
+        </div>
 
-        <span style="color: #999" data-controller="elapsed-test-suite-run-time" data-elapsed-test-suite-run-time-test-suite-run-started-at-datetime-value="<%= test_suite_run.started_at %>">
-          <% if test_suite_run.status == "Running" %>
-            <div data-elapsed-test-suite-run-time-target="value"></div>
-          <% else %>
-            <span class="test-suite-run-duration">
-              <%= test_suite_run.duration_formatted %>
-            </span>
-          <% end %>
+        <span class="test-suite-run-commit">
+          <code><%= test_suite_run.branch_name.truncate(20) %></code>
+          <code><%= helpers.abbreviated_hash(test_suite_run.commit_hash) %></code>
         </span>
       </div>
     </div>
-  <% end %>
+
+    <div style="width: 90px; text-align: center">
+      <%= render TestSuiteRunStatusComponent.new(test_suite_run:) %>
+
+      <span style="color: #999" data-controller="elapsed-test-suite-run-time" data-elapsed-test-suite-run-time-test-suite-run-started-at-datetime-value="<%= test_suite_run.started_at %>">
+        <% if test_suite_run.status == "Running" %>
+          <div data-elapsed-test-suite-run-time-target="value"></div>
+        <% else %>
+          <span class="test-suite-run-duration">
+            <%= test_suite_run.duration_formatted %>
+          </span>
+        <% end %>
+      </span>
+    </div>
+  </div>
 <% end %>
 
 <%= helpers.turbo_stream_from "test_suite_run_link_#{test_suite_run.id}" %>
