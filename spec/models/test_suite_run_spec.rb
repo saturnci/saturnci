@@ -44,15 +44,22 @@ describe TestSuiteRun, type: :model do
   end
 
   describe "#cancel!" do
-    let!(:run) { create(:run, :with_worker) }
+    let!(:task) { create(:task) }
+    let!(:worker) { create(:worker) }
+    let!(:worker_assignment) { create(:worker_assignment, task:, worker:) }
 
     before do
-      stub_request(:delete, "https://api.digitalocean.com/v2/droplets/#{run.worker.cloud_id}").to_return(status: 200)
+      allow(Nova).to receive(:delete_k8s_job)
     end
 
     it "sets the status to 'Cancelled'" do
-      run.build.cancel!
-      expect(run.build.reload.status).to eq("Cancelled")
+      task.test_suite_run.cancel!
+      expect(task.test_suite_run.reload.status).to eq("Cancelled")
+    end
+
+    it "deletes the K8s job" do
+      task.test_suite_run.cancel!
+      expect(Nova).to have_received(:delete_k8s_job).with(worker.name)
     end
   end
 

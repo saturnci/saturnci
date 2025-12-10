@@ -93,10 +93,8 @@ class Task < ApplicationRecord
 
   def delete_runner
     return unless worker.present?
-    return unless worker.cloud_id.present?
-    client = DropletKit::Client.new(access_token: ENV['DIGITALOCEAN_ACCESS_TOKEN'])
-    client.droplets.delete(id: worker.cloud_id)
-  rescue DropletKit::Error => e
+    Nova.delete_k8s_job(worker.name)
+  rescue StandardError => e
     Rails.logger.error "Error deleting runner: #{e.message}"
   end
 
