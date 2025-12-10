@@ -65,6 +65,35 @@ describe "worker agents test sets", type: :request do
         all_tests = grouped_tests.values.flatten
         expect(all_tests).to eq(["spec/models/post_spec.rb[1]"])
       end
+
+      context "when the original run has duplicate failed test identifiers" do
+        let!(:duplicate_failed_test_case_run) do
+          create(:test_case_run, run: original_task, status: "failed", identifier: "spec/models/post_spec.rb[1]")
+        end
+
+        it "deduplicates the failed test identifiers" do
+          post(
+            api_v1_worker_agents_test_suite_run_test_set_path(test_suite_run_id: test_suite_run.id),
+            params: { test_files: test_files },
+            headers: worker_agents_api_authorization_headers(worker)
+          )
+
+          body = JSON.parse(response.body)
+          grouped_tests = body["grouped_tests"]
+          all_tests = grouped_tests.values.flatten
+          expect(all_tests).to eq(["spec/models/post_spec.rb[1]"])
+        end
+
+        it "sets dry_run_example_count to the unique count" do
+          post(
+            api_v1_worker_agents_test_suite_run_test_set_path(test_suite_run_id: test_suite_run.id),
+            params: { test_files: test_files },
+            headers: worker_agents_api_authorization_headers(worker)
+          )
+
+          expect(test_suite_run.reload.dry_run_example_count).to eq(1)
+        end
+      end
     end
   end
 end

@@ -9,7 +9,7 @@ module API
 
             if failure_rerun
               failed_identifiers = failure_rerun.original_test_suite_run
-                .test_case_runs.failed.pluck(:identifier)
+                .test_case_runs.failed.pluck(:identifier).uniq
               test_set = TestSet.new(failed_identifiers)
             else
               test_set = TestSet.new(params[:test_files])
