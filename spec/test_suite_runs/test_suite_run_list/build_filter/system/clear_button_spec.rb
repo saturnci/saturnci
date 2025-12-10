@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "Clearing filter selections", type: :system do
-  let!(:project) { create(:project) }
+  let!(:repository) { create(:repository) }
 
   before do
     allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
@@ -10,26 +10,26 @@ describe "Clearing filter selections", type: :system do
   context "branch selection" do
     before do
       create(
-        :build,
+        :test_suite_run,
         :with_passed_run,
-        project: project,
+        repository: repository,
         branch_name: "main",
         commit_message: "Commit from 'main' branch"
       )
 
       create(
-        :build,
+        :test_suite_run,
         :with_passed_run,
-        project: project,
+        repository: repository,
         branch_name: "filters",
         commit_message: "Commit from 'filter' branch"
       )
 
-      login_as(project.user)
+      login_as(repository.user)
     end
 
     it "clears branch selection" do
-      visit project_path(project)
+      visit repository_path(repository)
 
       click_on "Filters"
       select "main", from: "branch_name"
@@ -50,31 +50,31 @@ describe "Clearing filter selections", type: :system do
   end
 
   context "status selection" do
-    let!(:failed_build) do
+    let!(:failed_test_suite_run) do
       create(
-        :build,
+        :test_suite_run,
         :with_failed_run,
         cached_status: "Failed",
         commit_message: "This branch failed"
       )
     end
 
-    let!(:passed_build) do
+    let!(:passed_test_suite_run) do
       create(
-        :build,
+        :test_suite_run,
         :with_passed_run,
         cached_status: "Passed",
-        project: failed_build.project,
+        repository: failed_test_suite_run.repository,
         commit_message: "This branch passed"
       )
     end
 
     before do
-      login_as(failed_build.project.user)
+      login_as(failed_test_suite_run.repository.user)
     end
 
     it "clears status selection" do
-      visit project_path(failed_build.project)
+      visit repository_path(failed_test_suite_run.repository)
 
       click_on "Filters"
       check "Passed"

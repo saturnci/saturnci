@@ -1,12 +1,12 @@
 require "rails_helper"
 
 describe "Showing and hiding filters", type: :system do
-  let!(:build) { create(:build) }
+  let!(:test_suite_run) { create(:test_suite_run) }
 
   before do
     allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
-    login_as(build.repository.user)
-    visit repository_build_path(id: build.id, repository_id: build.repository.id)
+    login_as(test_suite_run.repository.user)
+    visit repository_build_path(id: test_suite_run.id, repository_id: test_suite_run.repository.id)
   end
 
   describe "Hiding filters" do

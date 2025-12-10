@@ -1,64 +1,64 @@
 require "rails_helper"
 
 describe "Status filtering", type: :system do
-  let!(:passed_run) { create(:run, :passed) }
+  let!(:passed_task) { create(:task, :passed) }
 
-  let!(:failed_run) do
+  let!(:failed_task) do
     create(
-      :run,
+      :task,
       :failed,
-      build: create(:build, repository: passed_run.build.repository)
+      test_suite_run: create(:test_suite_run, repository: passed_task.test_suite_run.repository)
     ).finish!
   end
 
   before do
     allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
-    login_as(passed_run.build.repository.user)
-    visit run_path(passed_run, "test_output")
+    login_as(passed_task.test_suite_run.repository.user)
+    visit run_path(passed_task, "test_output")
     click_on "Filters"
   end
 
-  context "passed builds only" do
+  context "passed test suite runs only" do
     before do
       check "Passed"
       click_on "Apply"
       click_on "Filters"
     end
 
-    it "includes the passed build" do
+    it "includes the passed test suite run" do
       within ".test-suite-run-list" do
-        expect(page).to have_content(passed_run.build.commit_hash)
+        expect(page).to have_content(passed_task.test_suite_run.commit_hash)
       end
     end
 
-    it "does not include the failed build" do
+    it "does not include the failed test suite run" do
       within ".test-suite-run-list" do
-        expect(page).not_to have_content(failed_run.build.commit_hash)
+        expect(page).not_to have_content(failed_task.test_suite_run.commit_hash)
       end
     end
   end
 
-  context "failed builds only" do
+  context "failed test suite runs only" do
     before do
       check "Failed"
       click_on "Apply"
       click_on "Filters"
     end
 
-    it "includes the failed build" do
+    it "includes the failed test suite run" do
       within ".test-suite-run-list" do
-        expect(page).to have_content(failed_run.build.commit_hash)
+        expect(page).to have_content(failed_task.test_suite_run.commit_hash)
       end
     end
 
-    it "does not include the passed build" do
+    it "does not include the passed test suite run" do
       within ".test-suite-run-list" do
-        expect(page).not_to have_content(passed_run.build.commit_hash)
+        expect(page).not_to have_content(passed_task.test_suite_run.commit_hash)
       end
     end
   end
 
-  context "passed and failed builds" do
+  context "passed and failed test suite runs" do
     before do
       check "Passed"
       check "Failed"
@@ -66,15 +66,15 @@ describe "Status filtering", type: :system do
       click_on "Filters"
     end
 
-    it "includes the failed build" do
+    it "includes the failed test suite run" do
       within ".test-suite-run-list" do
-        expect(page).to have_content(failed_run.build.commit_hash)
+        expect(page).to have_content(failed_task.test_suite_run.commit_hash)
       end
     end
 
-    it "includes the passed build" do
+    it "includes the passed test suite run" do
       within ".test-suite-run-list" do
-        expect(page).to have_content(passed_run.build.commit_hash)
+        expect(page).to have_content(passed_task.test_suite_run.commit_hash)
       end
     end
   end
@@ -87,7 +87,7 @@ describe "Status filtering", type: :system do
 
       # to prevent race condition
       within ".test-suite-run-list" do
-        expect(page).not_to have_content(failed_run.build.commit_hash)
+        expect(page).not_to have_content(failed_task.test_suite_run.commit_hash)
       end
 
       expect(page).to have_checked_field("Passed")
@@ -100,35 +100,35 @@ describe "Status filtering", type: :system do
 
       # to prevent race condition
       within ".test-suite-run-list" do
-        expect(page).not_to have_content(passed_run.build.commit_hash)
+        expect(page).not_to have_content(passed_task.test_suite_run.commit_hash)
       end
 
       expect(page).to have_checked_field("Failed")
     end
   end
 
-  context "starting from build overview page" do
+  context "starting from test suite run overview page" do
     let!(:test_case_run) do
-      create(:test_case_run, run: failed_run)
+      create(:test_case_run, run: failed_task)
     end
 
     before do
-      visit repository_build_path(failed_run.build.repository, failed_run.build)
+      visit repository_test_suite_run_path(failed_task.test_suite_run.repository, failed_task.test_suite_run)
       click_on "Filters"
       check "Passed"
       click_on "Apply"
       click_on "Filters"
     end
 
-    it "includes the passed build" do
+    it "includes the passed test suite run" do
       within ".test-suite-run-list" do
-        expect(page).to have_content(passed_run.build.commit_hash)
+        expect(page).to have_content(passed_task.test_suite_run.commit_hash)
       end
     end
 
-    it "does not include the failed build" do
+    it "does not include the failed test suite run" do
       within ".test-suite-run-list" do
-        expect(page).not_to have_content(failed_run.build.commit_hash)
+        expect(page).not_to have_content(failed_task.test_suite_run.commit_hash)
       end
     end
   end

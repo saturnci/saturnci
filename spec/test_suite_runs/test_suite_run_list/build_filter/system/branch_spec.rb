@@ -1,32 +1,32 @@
 require "rails_helper"
 
 describe "Branch filtering", type: :system do
-  let!(:project) { create(:project) }
+  let!(:repository) { create(:repository) }
 
   before do
     create(
-      :build,
+      :test_suite_run,
       :with_run,
-      project: project,
+      repository: repository,
       branch_name: "main",
       commit_message: "Commit from 'main' branch"
     )
 
     create(
-      :build,
+      :test_suite_run,
       :with_run,
-      project: project,
+      repository: repository,
       branch_name: "filters",
       commit_message: "Commit from 'filter' branch"
     )
 
     allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
-    login_as(project.user)
+    login_as(repository.user)
   end
 
   context "main branch is selected" do
     before do
-      visit project_path(project)
+      visit repository_path(repository)
       click_on "Filters"
 
       select "main", from: "branch_name"
@@ -34,7 +34,7 @@ describe "Branch filtering", type: :system do
       click_on "Filters"
     end
 
-    it "only shows builds from the main branch" do
+    it "only shows test suite runs from the main branch" do
       within ".test-suite-run-list" do
         expect(page).not_to have_content("Commit from 'filter' branch")
       end
@@ -59,8 +59,8 @@ describe "Branch filtering", type: :system do
   end
 
   context "filters branch is selected" do
-    it "only shows builds from the filters branch" do
-      visit project_path(project)
+    it "only shows test suite runs from the filters branch" do
+      visit repository_path(repository)
 
       click_on "Filters"
       select "filters", from: "branch_name"
