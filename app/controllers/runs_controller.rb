@@ -7,7 +7,7 @@ class RunsController < ApplicationController
     @build = @run.build
     @project = @build.project
 
-    @run_output_stream = Streaming::RunOutputStream.new(
+    @worker_output_stream = Streaming::WorkerOutputStream.new(
       task: @run,
       tab_name: @current_tab_name
     )
@@ -17,7 +17,7 @@ class RunsController < ApplicationController
         run: @run,
         partial: @current_tab_name,
         current_tab_name: @current_tab_name,
-        run_output_stream: @run_output_stream
+        worker_output_stream: @worker_output_stream
       }
 
       return

@@ -1,5 +1,5 @@
 module Streaming
-  class RunOutputStream
+  class WorkerOutputStream
     def initialize(task:, tab_name:)
       @task = task
       @tab_name = tab_name
