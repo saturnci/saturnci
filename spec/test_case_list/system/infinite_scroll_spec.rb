@@ -3,24 +3,24 @@ require "rails_helper"
 describe "Infinite scroll", type: :system do
   include ScrollingHelper
 
-  let!(:run) { create(:run, :failed) }
-  let!(:build) { run.build }
+  let!(:task) { create(:task, :failed) }
+  let!(:test_suite_run) { task.test_suite_run }
 
   let!(:last_test_case_run) do
     create(
       :test_case_run,
       path: "spec/models/zebra_spec.rb",
-      run:
+      task:
     )
   end
 
   before do
     allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
 
-    create_list(:test_case_run, 100, run:, path: "spec/models/apple_spec.rb")
+    create_list(:test_case_run, 100, task:, path: "spec/models/apple_spec.rb")
 
-    login_as(build.repository.user)
-    visit repository_build_path(id: build.id, repository_id: build.repository.id)
+    login_as(test_suite_run.repository.user)
+    visit repository_build_path(id: test_suite_run.id, repository_id: test_suite_run.repository.id)
   end
 
   it "initially shows only the first 100 test case runs" do
