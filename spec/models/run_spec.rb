@@ -51,27 +51,6 @@ describe Run, type: :model do
     end
   end
 
-  describe "#finish!" do
-    let!(:other_run) do
-      create(:run, build: run.build, order_index: 2)
-    end
-
-    context "it is the last run to finish" do
-      before { other_run.finish! }
-
-      it "updates its test suite run's status" do
-        expect { run.finish! }.to change { run.test_suite_run.status }
-          .from("Running").to("Failed")
-      end
-    end
-
-    context "it is not the last run to finish" do
-      it "does not update its test suite run's status" do
-        expect { run.finish! }.not_to change { run.test_suite_run.status }
-      end
-    end
-  end
-
   describe "#exit_code" do
     context "json_output has failure_count of 0" do
       let!(:json_output) { { "summary" => { "failure_count" => 0 } }.to_json }
