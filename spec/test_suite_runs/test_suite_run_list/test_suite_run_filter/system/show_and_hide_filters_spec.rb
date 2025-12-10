@@ -6,7 +6,7 @@ describe "Showing and hiding filters", type: :system do
   before do
     allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
     login_as(test_suite_run.repository.user)
-    visit repository_build_path(id: test_suite_run.id, repository_id: test_suite_run.repository.id)
+    visit repository_test_suite_run_path(id: test_suite_run.id, repository_id: test_suite_run.repository.id)
   end
 
   describe "Hiding filters" do
