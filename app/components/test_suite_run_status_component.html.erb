@@ -2,8 +2,8 @@
   <%= test_suite_run.status %>
 
   <% if test_suite_run.status == "Passed" %>
-    (<%= test_suite_run.test_case_runs.passed.count %>)
+    (<%= passed_count %>)
   <% elsif test_suite_run.status == "Failed" %>
-    (<%= test_suite_run.test_case_runs.failed.count %>/<%= test_suite_run.test_case_runs.count %>)
+    (<%= failed_count %>/<%= total_count %>)
   <% end %>
 </div>
