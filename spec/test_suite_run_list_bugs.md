@@ -6,6 +6,6 @@ Facts:
    the just-deleted test suite run reappears in the list. The
    reappeared test suite run will only disappear permanently after
    multiple refreshes.
-2. Upon refresh, a recently-finish test suite run's status will
+2. Upon refresh, a recently-finished test suite run's status will
    sometimes briefly switch back to "Running" and then back to
    "Passed". The "Passed" status only sticks after 2+ refreshes.
