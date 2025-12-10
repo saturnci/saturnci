@@ -8,7 +8,7 @@ class WorkerEvent < ApplicationRecord
     :ready_signal_received,
     :assignment_acknowledged,
     :error,
-    :test_run_finished,
+    :task_finished,
     :assignment_made,
   ]
 end

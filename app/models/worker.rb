@@ -77,7 +77,7 @@ class Worker < ApplicationRecord
       "assignment_made" => "Assigned",
       "assignment_acknowledged" => "Running",
       "error" => "Error",
-      "test_run_finished" => "Finished",
+      "task_finished" => "Finished",
     }[most_recent_event.type]
   end
 
