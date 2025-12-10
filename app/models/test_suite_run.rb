@@ -13,12 +13,6 @@ class TestSuiteRun < ApplicationRecord
     self.seed ||= rand(10000)
   end
 
-  def cache_status
-    status = calculated_status
-    Rails.cache.write(status_cache_key, status)
-    update!(cached_status: status)
-  end
-
   def start!
     return unless repository.active
 
@@ -28,13 +22,21 @@ class TestSuiteRun < ApplicationRecord
       Task.create!(test_suite_run: self, order_index: i + 1)
     end
 
+    cache_status
     Nova.start_test_suite_run(self, tasks)
+  end
+
+  def cache_status
+    status = calculated_status
+    Rails.cache.write(status_cache_key, status)
+    update!(cached_status: status)
   end
 
   def cancel!
     transaction do
       runs.each(&:cancel!)
     end
+    cache_status
   end
 
   def status

@@ -17,7 +17,6 @@ class Task < ApplicationRecord
   alias_attribute :started_at, :created_at
   delegate :project, to: :build
   delegate :repository, to: :test_suite_run
-  after_save { test_suite_run.cache_status }
 
   scope :sorted, -> do
     order("tasks.order_index")

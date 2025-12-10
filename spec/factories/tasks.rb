@@ -6,10 +6,18 @@ FactoryBot.define do
 
     trait :passed do
       exit_code { 0 }
+
+      after(:create) do |task|
+        task.test_suite_run.cache_status
+      end
     end
 
     trait :failed do
       exit_code { 1 }
+
+      after(:create) do |task|
+        task.test_suite_run.cache_status
+      end
     end
 
     trait :with_worker do
