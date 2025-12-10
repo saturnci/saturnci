@@ -23,7 +23,7 @@ class TestSuiteRunLinkComponent < ViewComponent::Base
 
   def data
     {
-      turbo_frame: "test_suite_run_body",
+      turbo_frame: "test_suite_run",
       action: "click->test-suite-run-list#makeActive",
       test_suite_run_list_target: "link"
     }
