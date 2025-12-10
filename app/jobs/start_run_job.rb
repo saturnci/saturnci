@@ -6,7 +6,7 @@ class StartRunJob < ApplicationJob
     run = Run.find(run_id)
 
     ActiveRecord::Base.transaction do
-      run.run_events.create!(type: :runner_requested)
+      run.run_events.create!(type: :worker_requested)
       run.assign_worker
     end
 

@@ -2,7 +2,7 @@ module Nova
   def self.start_test_suite_run(test_suite_run, tasks)
     tasks.each do |task|
       worker = create_worker(task)
-      task.task_events.create!(type: :runner_requested)
+      task.task_events.create!(type: :worker_requested)
       create_k8s_job(worker, task)
     end
 

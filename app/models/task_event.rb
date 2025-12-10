@@ -8,7 +8,7 @@ class TaskEvent < ApplicationRecord
   enum :type, [
     :image_build_started,
     :image_build_finished,
-    :runner_requested,
+    :worker_requested,
     :runner_ready,
     :run_started,
     :run_finished,
