@@ -1,0 +1,7 @@
+<div class="test-suite-run-status test-suite-run-status-<%= test_suite_run.status.parameterize %>">
+  <%= test_suite_run.status %>
+
+  <% if test_suite_run.status == "Passed" %>
+    (<%= test_suite_run.test_case_runs.passed.count %>)
+  <% end %>
+</div>

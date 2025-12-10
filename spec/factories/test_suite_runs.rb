@@ -6,6 +6,12 @@ FactoryBot.define do
     commit_hash { Faker::Alphanumeric.alphanumeric(number: 7) }
     commit_message { "Make change." }
 
+    trait :with_task do
+      after(:create) do |test_suite_run|
+        create(:task, test_suite_run:)
+      end
+    end
+
     trait :with_run do
       after(:create) do |test_suite_run|
         create(:run, test_suite_run: test_suite_run)
