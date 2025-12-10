@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_08_165220) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_10_223830) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -120,14 +120,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_08_165220) do
     t.text "private_key_value", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "runner_system_logs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "task_id", null: false
-    t.text "content", default: "", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["task_id"], name: "index_runner_system_logs_on_task_id"
   end
 
   create_table "sent_emails", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -301,6 +293,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_08_165220) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "worker_system_logs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "task_id", null: false
+    t.text "content", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_worker_system_logs_on_task_id"
+  end
+
   create_table "workers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.string "cloud_id"
@@ -326,7 +326,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_08_165220) do
   add_foreign_key "project_secrets", "repositories", column: "project_id"
   add_foreign_key "repositories", "github_accounts"
   add_foreign_key "repositories", "worker_architectures"
-  add_foreign_key "runner_system_logs", "tasks"
   add_foreign_key "task_events", "tasks"
   add_foreign_key "task_workers", "tasks"
   add_foreign_key "task_workers", "workers"
@@ -340,5 +339,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_08_165220) do
   add_foreign_key "worker_assignments", "tasks"
   add_foreign_key "worker_assignments", "workers"
   add_foreign_key "worker_events", "workers"
+  add_foreign_key "worker_system_logs", "tasks"
   add_foreign_key "workers", "rsa_keys"
 end
