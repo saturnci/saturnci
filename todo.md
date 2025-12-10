@@ -6,6 +6,7 @@
 - Newer test suite runs sometimes show up behind older ones
 - Sometimes, in the system logs, autoscrolling mysteriously stops working
 - Each deploy causes a 503 blip
+- When restarting a retry, it should only run the retry's tests, but instead it runs all the tests
 
 ## Defects
 - Precompile happens for every deployment
