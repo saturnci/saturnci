@@ -21,9 +21,9 @@ describe Nova do
         .to change { WorkerAssignment.count }.by(2)
     end
 
-    it "creates a runner_requested task event for each task" do
+    it "creates a worker_requested task event for each task" do
       expect { Nova.start_test_suite_run(test_suite_run, tasks) }
-        .to change { TaskEvent.where(type: "runner_requested").count }.by(2)
+        .to change { TaskEvent.where(type: "worker_requested").count }.by(2)
     end
 
     it "calls create_k8s_job for each task" do

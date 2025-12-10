@@ -190,7 +190,6 @@ docker build -f Dockerfile.production -t saturnci:latest .
 
 ### Key Service Patterns
 1. **Background Jobs**: Uses Solid Queue for async processing
-   - `StartRunJob`: Initiates test suite runs
    - `ProvisionRunnersJob`: Creates cloud infrastructure
    
 2. **Authorization**: Pundit policies in `app/policies/`
