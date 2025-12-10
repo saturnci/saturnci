@@ -10,7 +10,7 @@ class TaskEvent < ApplicationRecord
     :image_build_finished,
     :worker_requested,
     :worker_ready,
-    :run_started,
+    :task_started,
     :run_finished,
     :pre_script_started,
     :pre_script_finished,
