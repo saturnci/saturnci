@@ -8,7 +8,7 @@ class RunsController < ApplicationController
     @project = @build.project
 
     @run_output_stream = Streaming::RunOutputStream.new(
-      run: @run,
+      task: @run,
       tab_name: @current_tab_name
     )
 
