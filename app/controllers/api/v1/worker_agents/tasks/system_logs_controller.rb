@@ -27,7 +27,7 @@ module API
               runner_system_log = RunnerSystemLog.find_or_create_by(task: task)
               runner_system_log.update!(content: runner_system_log.content + new_content)
 
-              Streaming::RunOutputStream.new(run: task, tab_name: TAB_NAME).broadcast
+              Streaming::RunOutputStream.new(task: task, tab_name: TAB_NAME).broadcast
             rescue StandardError => e
               render(json: { error: e.message }, status: :bad_request)
               return

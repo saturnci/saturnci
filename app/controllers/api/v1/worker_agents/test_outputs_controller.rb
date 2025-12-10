@@ -18,7 +18,7 @@ module API
             ])
           )
 
-          Streaming::RunOutputStream.new(run: run.reload, tab_name: TAB_NAME).broadcast
+          Streaming::RunOutputStream.new(task: run.reload, tab_name: TAB_NAME).broadcast
           head :ok
         end
       end
