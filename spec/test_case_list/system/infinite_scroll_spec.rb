@@ -17,10 +17,19 @@ describe "Infinite scroll", type: :system do
   before do
     allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
 
-    create_list(:test_case_run, 100, task:, path: "spec/models/apple_spec.rb")
+    create_list(
+      :test_case_run,
+      100,
+      task:,
+      path: "spec/models/apple_spec.rb"
+    )
 
     login_as(test_suite_run.repository.user)
-    visit repository_build_path(id: test_suite_run.id, repository_id: test_suite_run.repository.id)
+
+    visit repository_test_suite_run_path(
+      id: test_suite_run.id,
+      repository_id: test_suite_run.repository.id
+    )
   end
 
   it "initially shows only the first 100 test case runs" do
