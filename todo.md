@@ -7,6 +7,7 @@
 - Sometimes, in the system logs, autoscrolling mysteriously stops working
 - Each deploy causes a 503 blip
 - When restarting a retry, it should only run the retry's tests, but instead it runs all the tests
+- Retry limit missing or not working
 
 ## Defects
 - Precompile happens for every deployment
