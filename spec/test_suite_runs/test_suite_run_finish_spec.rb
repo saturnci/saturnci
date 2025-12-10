@@ -53,6 +53,19 @@ describe TestSuiteRunFinish do
         rerun_test_suite_run = TestSuiteRunFinish.new(test_suite_run).process
         expect(rerun_test_suite_run.dry_run_example_count).to eq(1)
       end
+
+      context "when the original test suite run has a started_by_user" do
+        let!(:user) { create(:user) }
+
+        before do
+          test_suite_run.update!(started_by_user: user)
+        end
+
+        it "copies the started_by_user to the rerun" do
+          rerun_test_suite_run = TestSuiteRunFinish.new(test_suite_run).process
+          expect(rerun_test_suite_run.started_by_user).to eq(user)
+        end
+      end
     end
   end
 end

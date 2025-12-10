@@ -17,7 +17,8 @@ class TestSuiteRunFinish
       commit_hash: @test_suite_run.commit_hash,
       commit_message: @test_suite_run.commit_message,
       author_name: @test_suite_run.author_name,
-      dry_run_example_count: failed_test_case_runs.count
+      dry_run_example_count: failed_test_case_runs.count,
+      started_by_user: @test_suite_run.started_by_user
     )
 
     FailureRerun.create!(
