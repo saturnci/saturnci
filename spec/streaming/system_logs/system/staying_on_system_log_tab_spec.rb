@@ -5,7 +5,7 @@ describe "Staying on system log tab", type: :system do
 
   let!(:run) do
     create(:run, :with_worker) do |run|
-      create(:runner_system_log, run:, content: "original system log content")
+      create(:runner_system_log, task: run, content: "original system log content")
     end
   end
 

@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :runner_system_log do
-    run
+    task
     content { "" }
   end
 end

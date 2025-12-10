@@ -7,7 +7,7 @@ describe "Visiting different build", type: :system do
 
   let!(:original_run) do
     create(:run, :with_worker) do |run|
-      create(:runner_system_log, run:, content: "original system log content")
+      create(:runner_system_log, task: run, content: "original system log content")
     end
   end
 
@@ -19,7 +19,7 @@ describe "Visiting different build", type: :system do
   context "visiting a different build" do
     let!(:other_run) do
       create(:run) do |j|
-        create(:runner_system_log, run: j, content: "other run system logs")
+        create(:runner_system_log, task: j, content: "other run system logs")
 
         j.build.update!(
           project: original_run.build.project,

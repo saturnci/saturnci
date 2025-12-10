@@ -1,22 +1,22 @@
 require "rails_helper"
 
 describe "Navigation", type: :system do
-  context "starting on a runner that's not the first runner" do
+  context "starting on a worker that's not the first worker" do
     describe "clicking a subnav link" do
-      let!(:build) { create(:build) }
+      let!(:test_suite_run) { create(:test_suite_run) }
 
-      let!(:run_1) { create(:run, build:, order_index: 1) }
-      let!(:run_2) { create(:run, build:, order_index: 2) }
+      let!(:task_1) { create(:task, test_suite_run:, order_index: 1) }
+      let!(:task_2) { create(:task, test_suite_run:, order_index: 2) }
 
       before do
-        create(:runner_system_log, run: run_2, content: "runner 2 system logs")
-        login_as(build.project.user)
+        create(:runner_system_log, task: task_2, content: "worker 2 system logs")
+        login_as(test_suite_run.project.user)
       end
 
-      it "does not change which runner you're on" do
-        visit run_path(run_2, "test_output")
+      it "does not change which worker you're on" do
+        visit run_path(task_2, "test_output")
         click_on "System Logs"
-        expect(page).to have_content("runner 2 system logs")
+        expect(page).to have_content("worker 2 system logs")
       end
     end
   end

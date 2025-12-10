@@ -3,7 +3,7 @@ require "rails_helper"
 describe "System logs scrolling", type: :system do
   let!(:run) do
     create(:run) do |run|
-      create(:runner_system_log, run:, content: ("line\n" * 500) + "bottom line")
+      create(:runner_system_log, task: run, content: ("line\n" * 500) + "bottom line")
     end
   end
 

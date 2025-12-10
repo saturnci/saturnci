@@ -7,7 +7,7 @@ describe "task system logs", type: :request do
 
   describe "GET /api/v1/worker_agents/tasks/:task_id/system_logs" do
     context "when system log exists" do
-      let!(:runner_system_log) { create(:runner_system_log, run: task, content: "system log content") }
+      let!(:runner_system_log) { create(:runner_system_log, task:, content: "system log content") }
 
       it "returns the system log content" do
         get(
