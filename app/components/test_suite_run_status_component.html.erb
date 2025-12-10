@@ -1,0 +1,9 @@
+<div class="test-suite-run-status test-suite-run-status-<%= test_suite_run.status.parameterize %>">
+  <%= test_suite_run.status %>
+
+  <% if test_suite_run.status == "Passed" %>
+    (<%= passed_count %>)
+  <% elsif test_suite_run.status == "Failed" %>
+    (<%= failed_count %>/<%= total_count %>)
+  <% end %>
+</div>

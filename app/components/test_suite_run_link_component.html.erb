@@ -20,9 +20,7 @@
       </div>
 
       <div style="width: 90px; text-align: center">
-        <div class="test-suite-run-status test-suite-run-status-<%= test_suite_run.status.parameterize %>">
-          <%= test_suite_run.status %>
-        </div>
+        <%= render TestSuiteRunStatusComponent.new(test_suite_run:) %>
 
         <span style="color: #999" data-controller="elapsed-test-suite-run-time" data-elapsed-test-suite-run-time-test-suite-run-started-at-datetime-value="<%= test_suite_run.started_at %>">
           <% if test_suite_run.status == "Running" %>
