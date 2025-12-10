@@ -15,11 +15,11 @@ module API
               return
             end
 
-            run = Run.find(params[:run_id])
-            runner_system_log = RunnerSystemLog.find_or_create_by(task: run)
-            runner_system_log.update!(content: runner_system_log.content + new_content)
+            task = Task.find(params[:run_id])
+            worker_system_log = WorkerSystemLog.find_or_create_by(task: task)
+            worker_system_log.update!(content: worker_system_log.content + new_content)
 
-            Streaming::RunOutputStream.new(run: run, tab_name: TAB_NAME).broadcast
+            Streaming::RunOutputStream.new(run: task, tab_name: TAB_NAME).broadcast
           rescue StandardError => e
             render(json: { error: e.message }, status: :bad_request)
             return
