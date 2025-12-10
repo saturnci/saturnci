@@ -56,10 +56,10 @@ describe "Test suite run status", type: :system do
 
   describe "test suite run list links" do
     context "test suite run goes from running to finished" do
-      let!(:other_test_suite_run) { create(:build, repository: task.test_suite_run.repository) }
-      let!(:other_task) { create(:run, :with_worker, build: other_test_suite_run) }
+      let!(:other_test_suite_run) { create(:test_suite_run, repository: task.test_suite_run.repository) }
+      let!(:other_task) { create(:task, :with_worker, test_suite_run: other_test_suite_run) }
 
-      it "maintains the currently active build" do
+      it "maintains the currently active test suite run" do
         visit repository_build_path(id: task.test_suite_run.id, repository_id: task.test_suite_run.repository.id)
 
         within ".test-suite-run-list" do
