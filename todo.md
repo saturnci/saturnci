@@ -13,6 +13,7 @@
 - Precompile happens for every deployment
 - In the beginning of a test suite, the horizontal scroll bar gets pushed down in an ugly way
 - Raw errors don't show up on the Overview tab
+- "Worker architecture" needs to be removed from Settings
 
 ## Missing features
 - User that triggered a test suite run should get an email once it finishes
