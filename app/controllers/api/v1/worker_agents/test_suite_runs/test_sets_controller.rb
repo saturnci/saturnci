@@ -17,7 +17,10 @@ module API
 
             test_suite_run.update!(dry_run_example_count: test_set.count)
 
-            render json: test_set.grouped(test_suite_run.tasks.count)
+            render json: {
+              grouped_tests: test_set.grouped(test_suite_run.tasks.count),
+              dry_run_example_count: test_suite_run.reload.dry_run_example_count
+            }
           end
         end
       end
