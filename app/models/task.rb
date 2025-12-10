@@ -107,7 +107,7 @@ class Task < ApplicationRecord
 
   def finish!
     transaction do
-      run_events.create!(type: "run_finished")
+      run_events.create!(type: "task_finished")
       update!(exit_code: parsed_exit_code || 1)
 
       create_charge!(
@@ -137,10 +137,10 @@ class Task < ApplicationRecord
   end
 
   def ended_at
-    run_finished_event&.created_at
+    task_finished_event&.created_at
   end
 
-  def run_finished_event
-    run_events.run_finished.first
+  def task_finished_event
+    run_events.task_finished.first
   end
 end

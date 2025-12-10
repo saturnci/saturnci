@@ -8,7 +8,7 @@ describe "Test suite run duration", type: :system do
 
     create(
       :run_event,
-      type: :run_finished,
+      type: :task_finished,
       run: run,
       created_at: run.created_at + ((5 * 60) + 10).seconds
     )

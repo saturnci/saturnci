@@ -11,7 +11,7 @@ class TaskEvent < ApplicationRecord
     :worker_requested,
     :worker_ready,
     :task_started,
-    :run_finished,
+    :task_finished,
     :pre_script_started,
     :pre_script_finished,
     :test_suite_started,
