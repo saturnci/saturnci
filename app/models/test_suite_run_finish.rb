@@ -5,6 +5,7 @@ class TestSuiteRunFinish
 
   def process
     @test_suite_run.check_test_case_run_integrity!
+    @test_suite_run.cache_status
     TestSuiteRunLinkComponent.refresh(@test_suite_run)
     GitHubCheckRun.find_by(test_suite_run: @test_suite_run)&.finish!
 
