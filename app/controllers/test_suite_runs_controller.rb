@@ -30,7 +30,7 @@ class TestSuiteRunsController < ApplicationController
     authorize test_suite_run
 
     test_suite_run.start!
-    redirect_to run_path(test_suite_run.runs.first, "test_output")
+    redirect_to run_path(test_suite_run.runs.first, "system_logs")
   end
 
   def show

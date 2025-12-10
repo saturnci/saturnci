@@ -10,8 +10,8 @@
 
     <ul class="run-menu-secondary tab-menu thick-black-bottom-border">
       <% test_suite_run_navigation(@run, current_tab_name) do |nav| %>
-        <%= nav.item "Test Output", "test_output" %>
         <%= nav.item "System Logs", "system_logs" %>
+        <%= nav.item "Test Output", "test_output" %>
         <%= nav.item "Events", "events" %>
       <% end %>
     </ul>

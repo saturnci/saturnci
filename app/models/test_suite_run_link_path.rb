@@ -1,6 +1,6 @@
 class TestSuiteRunLinkPath
   include Rails.application.routes.url_helpers
-  DEFAULT_PARTIAL = "test_output"
+  DEFAULT_PARTIAL = "system_logs"
 
   def initialize(test_suite_run)
     @test_suite_run = test_suite_run
