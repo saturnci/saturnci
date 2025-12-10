@@ -10,7 +10,7 @@ RSpec.describe "task events", type: :request do
       expect {
         post(
           api_v1_worker_agents_task_task_events_path(task),
-          params: { type: "runner_ready" },
+          params: { type: "worker_ready" },
           headers: worker_agents_api_authorization_headers(worker)
         )
       }.to change(TaskEvent, :count).by(1)
@@ -19,7 +19,7 @@ RSpec.describe "task events", type: :request do
     it "returns an empty 200 response" do
       post(
         api_v1_worker_agents_task_task_events_path(task),
-        params: { type: "runner_ready" },
+        params: { type: "worker_ready" },
         headers: worker_agents_api_authorization_headers(worker)
       )
       expect(response).to have_http_status(200)
