@@ -38,9 +38,7 @@ class TestSuiteRun < ApplicationRecord
   end
 
   def status
-    Rails.cache.fetch(status_cache_key) do
-      calculated_status
-    end
+    calculated_status
   end
 
   def calculated_status
