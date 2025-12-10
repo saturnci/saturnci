@@ -49,7 +49,7 @@ class Task < ApplicationRecord
   def cancel!
     transaction do
       delete_runner
-      run_events.create!(type: :run_cancelled)
+      run_events.create!(type: :task_cancelled)
       update!(test_output: "Run cancelled")
       finish!
     end
@@ -75,7 +75,7 @@ class Task < ApplicationRecord
   end
 
   def cancelled?
-    run_events.run_cancelled.any?
+    run_events.task_cancelled.any?
   end
 
   def provision_worker

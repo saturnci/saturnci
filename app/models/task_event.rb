@@ -16,6 +16,6 @@ class TaskEvent < ApplicationRecord
     :pre_script_finished,
     :test_suite_started,
     :repository_cloned,
-    :run_cancelled,
+    :task_cancelled,
   ]
 end

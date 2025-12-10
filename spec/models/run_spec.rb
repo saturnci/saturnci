@@ -8,9 +8,9 @@ describe Run, type: :model do
       allow(run).to receive(:delete_runner)
     end
 
-    it "creates a new run_event with type run_cancelled" do
+    it "creates a new run_event with type task_cancelled" do
       expect { run.cancel! }
-        .to change { run.run_events.where(type: "run_cancelled").count }.by(1)
+        .to change { run.run_events.where(type: "task_cancelled").count }.by(1)
     end
 
     it "sets the status to 'Cancelled'" do
