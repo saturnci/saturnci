@@ -2,7 +2,7 @@
 
 I can reproduce this bug quite consistently now. Instructions:
 
-1. Select some test suite run
+1. Select some test suite run (for example, the first or second item in the list)
 2. Perform a git push
 3. Let the new test suite run load
 4. Wait no more than about 10 seconds
