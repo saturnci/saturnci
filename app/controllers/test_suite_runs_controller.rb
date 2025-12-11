@@ -1,6 +1,6 @@
 class TestSuiteRunsController < ApplicationController
   def index
-    repository = Repository.find(params[:project_id] || params[:repository_id])
+    repository = Repository.find(params[:repository_id])
     authorize repository, :show?
 
     test_suite_run_list_query = TestSuiteRunListQuery.new(
