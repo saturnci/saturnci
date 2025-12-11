@@ -64,14 +64,14 @@ describe Worker do
   end
 
   describe "#to_json" do
-    it "includes the worker assignment's run's commit message" do
-      run = create(:run) do |r|
-        r.test_suite_run.update!(commit_message: "Add stuff.")
+    it "includes the task's commit message" do
+      task = create(:task) do |t|
+        t.test_suite_run.update!(commit_message: "Add stuff.")
       end
 
-      create(:worker_assignment, run:)
+      create(:worker, task:)
 
-      expect(JSON.parse(run.worker.to_json)["commit_message"]).to eq("Add stuff.")
+      expect(JSON.parse(task.worker.to_json)["commit_message"]).to eq("Add stuff.")
     end
   end
 end
