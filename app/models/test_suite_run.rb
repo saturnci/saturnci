@@ -95,7 +95,7 @@ class TestSuiteRun < ApplicationRecord
       [repository, repository.user, "test_suite_runs"],
       target: "test-suite-run-list",
       partial: "test_suite_runs/test_suite_run_link",
-      locals: { build: self, active_build: nil }
+      locals: { test_suite_run: self, active_test_suite_run: nil }
     )
   end
 
