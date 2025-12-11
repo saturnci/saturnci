@@ -30,9 +30,8 @@ module GitHubEvents
         test_suite_run.start!
       else
         test_suite_run.save!
+        test_suite_run.broadcast
       end
-
-      test_suite_run.broadcast
     end
   end
 end
