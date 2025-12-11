@@ -1,3 +1,3 @@
 <li id="test_suite_run_<%= build.id %>" class="<%= build.id == active_build&.id ? "active" : "" %>">
-  <%= render TestSuiteRunLinkComponent.new(build, active_test_suite_run: active_build) %>
+  <%= render TestSuiteRunLinkComponent.new(build) %>
 </li>
