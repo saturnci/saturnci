@@ -15,3 +15,7 @@ https://app.saturnci.com/repositories/f60ca0ad-89c8-440e-9373-ed639d2dd662/test_
 7. Observe that now no test suite run is selected
 
 If you wait more than 10 seconds or so, the bug will not be reproducible.
+
+A probably-related clue: when I delete a test suite run immediately after it
+was created, it often reappears in the list, even though I can't actually click
+it since it doesn't actually exist.
