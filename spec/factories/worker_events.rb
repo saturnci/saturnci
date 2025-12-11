@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :worker_event do
     association :worker, factory: :worker
-    type { 1 }
+    name { "ready_signal_received" }
   end
 end

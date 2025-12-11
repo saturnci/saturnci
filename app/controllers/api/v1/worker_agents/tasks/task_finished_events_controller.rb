@@ -8,7 +8,7 @@ module API
 
             ActiveRecord::Base.transaction do
               task.finish!
-              task.worker.worker_events.create!(type: :task_finished)
+              task.worker.worker_events.create!(name: "task_finished")
             end
 
             if task.test_suite_run.tasks.all?(&:finished?)

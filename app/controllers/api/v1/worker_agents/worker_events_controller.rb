@@ -5,7 +5,6 @@ module API
         def create
           worker = Worker.find(params[:worker_id])
           worker.worker_events.create!(
-            type: params[:type],
             name: params[:type],
             notes: params[:notes]
           )

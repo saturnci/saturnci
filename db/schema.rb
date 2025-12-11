@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_11_165838) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_11_174119) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -280,7 +280,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_11_165838) do
     t.uuid "worker_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "type"
     t.string "name"
     t.text "notes"
     t.index ["worker_id"], name: "index_worker_events_on_worker_id"
