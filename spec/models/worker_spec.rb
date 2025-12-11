@@ -8,17 +8,6 @@ describe Worker do
     allow(User).to receive(:find_by).and_return(admin_user)
   end
 
-  describe "#assign" do
-    it "assigns a run to the worker" do
-      worker = create(:worker)
-      run = create(:run)
-
-      expect { worker.assign(run) }
-        .to change { worker.worker_assignment.present? }
-        .from(false).to(true)
-    end
-  end
-
   describe "scope available" do
     context "when the worker is available" do
       it "includes the worker" do
@@ -67,7 +56,7 @@ describe Worker do
       it "is not included" do
         worker = create(:worker)
         run = create(:run)
-        worker.assign(run)
+        WorkerAssignment.create!(worker:, run:)
 
         expect(Worker.unassigned).not_to include(worker)
       end

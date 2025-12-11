@@ -5,9 +5,7 @@ class WorkerEvent < ApplicationRecord
 
   enum :type, [
     :ready_signal_received,
-    :assignment_acknowledged,
     :error,
     :task_finished,
-    :assignment_made,
   ]
 end

@@ -22,11 +22,6 @@ class Worker < ApplicationRecord
       )")
   end
 
-  scope :running, -> do
-    joins(:worker_events)
-      .where(worker_events: { type: WorkerEvent.types[:assignment_acknowledged] })
-  end
-
   scope :error, -> do
     joins(:worker_events)
       .where(worker_events: { type: WorkerEvent.types[:error] })
@@ -42,8 +37,6 @@ class Worker < ApplicationRecord
 
     {
       "ready_signal_received" => "Available",
-      "assignment_made" => "Assigned",
-      "assignment_acknowledged" => "Running",
       "error" => "Error",
       "task_finished" => "Finished",
     }[most_recent_event.type]
@@ -62,10 +55,4 @@ class Worker < ApplicationRecord
     )
   end
 
-  def assign(run)
-    transaction do
-      worker_events.create!(type: :assignment_made)
-      WorkerAssignment.create!(worker: self, run:)
-    end
-  end
 end
