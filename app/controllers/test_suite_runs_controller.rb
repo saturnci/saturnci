@@ -1,10 +1,10 @@
 class TestSuiteRunsController < ApplicationController
   def index
-    project = Project.find(params[:project_id] || params[:repository_id])
-    authorize project, :show?
+    repository = Repository.find(params[:project_id] || params[:repository_id])
+    authorize repository, :show?
 
     test_suite_run_list_query = TestSuiteRunListQuery.new(
-      project: project,
+      repository: repository,
       branch_name: params[:branch_name],
       statuses: params[:statuses]
     )

@@ -1,14 +1,14 @@
 class TestSuiteRunListQuery
   CHUNK_SIZE = 20
 
-  def initialize(project:, branch_name:, statuses:)
-    @project = project
+  def initialize(repository:, branch_name:, statuses:)
+    @repository = repository
     @branch_name = branch_name
     @statuses = statuses
   end
 
   def test_suite_runs
-    test_suite_runs = @project.test_suite_runs.order("created_at desc")
+    test_suite_runs = @repository.test_suite_runs.order("created_at desc")
 
     if @branch_name.present?
       test_suite_runs = test_suite_runs.where(branch_name: @branch_name)

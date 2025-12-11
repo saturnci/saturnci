@@ -8,7 +8,7 @@ class TestSuiteRunListComponent < ViewComponent::Base
 
   def test_suite_runs
     TestSuiteRunListQuery.new(
-      project: @test_suite_run.project,
+      repository: @test_suite_run.repository,
       branch_name: @test_suite_run_filter_component.branch_name,
       statuses: @test_suite_run_filter_component.checked_statuses
     ).test_suite_runs
