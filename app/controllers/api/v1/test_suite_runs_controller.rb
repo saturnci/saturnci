@@ -34,6 +34,13 @@ module API
               exception_message: test_case_run.exception_message,
               exception_backtrace: test_case_run.exception_backtrace
             }
+          end,
+          tasks: test_suite_run.tasks.map do |task|
+            {
+              worker_events: task.worker&.worker_events&.map do |worker_event|
+                { name: worker_event.name }
+              end || []
+            }
           end
         }
       end

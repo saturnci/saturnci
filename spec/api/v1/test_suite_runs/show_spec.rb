@@ -13,6 +13,22 @@ describe "GET /api/v1/test_suite_runs/:id", type: :request do
     )
   end
 
+  context "with worker events" do
+    let!(:worker) { create(:worker) }
+    let!(:worker_assignment) { create(:worker_assignment, task: run, worker:) }
+    let!(:worker_event) { create(:worker_event, worker:, name: "task_fetched") }
+
+    it "includes the worker event name in the response" do
+      get(
+        api_v1_test_suite_run_path(test_suite_run.id[0..8]),
+        headers: { "Authorization" => credentials }
+      )
+
+      body = JSON.parse(response.body)
+      expect(body["tasks"].first["worker_events"].first["name"]).to eq("task_fetched")
+    end
+  end
+
   context "with a failed test" do
     let!(:failed_test_case_run) do
       create(
