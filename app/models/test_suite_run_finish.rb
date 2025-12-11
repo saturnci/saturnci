@@ -1,4 +1,6 @@
 class TestSuiteRunFinish
+  RETRY_LIMIT = 3
+
   def initialize(test_suite_run)
     @test_suite_run = test_suite_run
   end
@@ -11,6 +13,7 @@ class TestSuiteRunFinish
 
     failed_test_case_runs = @test_suite_run.test_case_runs.failed
     return unless failed_test_case_runs.any?
+    return if retry_count >= RETRY_LIMIT
 
     rerun_test_suite_run = TestSuiteRun.create!(
       repository: @test_suite_run.repository,
@@ -31,5 +34,17 @@ class TestSuiteRunFinish
     Nova.start_test_suite_run(rerun_test_suite_run, [task])
     rerun_test_suite_run.broadcast
     rerun_test_suite_run
+  end
+
+  private
+
+  def retry_count
+    count = 0
+    current_test_suite_run = @test_suite_run
+    while (failure_rerun = FailureRerun.find_by(test_suite_run: current_test_suite_run))
+      count += 1
+      current_test_suite_run = failure_rerun.original_test_suite_run
+    end
+    count
   end
 end

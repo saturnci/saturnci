@@ -66,6 +66,31 @@ describe TestSuiteRunFinish do
           expect(rerun_test_suite_run.started_by_user).to eq(user)
         end
       end
+
+      context "when the test suite run has already been retried 3 times" do
+        let!(:original_tsr) { create(:test_suite_run) }
+
+        let!(:retry_1) { create(:test_suite_run, repository: original_tsr.repository) }
+        let!(:failure_rerun_1) { create(:failure_rerun, original_test_suite_run: original_tsr, test_suite_run: retry_1) }
+
+        let!(:retry_2) { create(:test_suite_run, repository: original_tsr.repository) }
+        let!(:failure_rerun_2) { create(:failure_rerun, original_test_suite_run: retry_1, test_suite_run: retry_2) }
+
+        let!(:retry_3) { create(:test_suite_run, repository: original_tsr.repository) }
+        let!(:failure_rerun_3) { create(:failure_rerun, original_test_suite_run: retry_2, test_suite_run: retry_3) }
+
+        let!(:task) { create(:run, test_suite_run: retry_3) }
+        let!(:failed_test_case_run) { create(:test_case_run, task:, status: "failed") }
+
+        before do
+          allow(retry_3).to receive(:check_test_case_run_integrity!)
+        end
+
+        it "does not create a new test suite run" do
+          expect { TestSuiteRunFinish.new(retry_3).process }
+            .not_to change { TestSuiteRun.count }
+        end
+      end
     end
   end
 end
