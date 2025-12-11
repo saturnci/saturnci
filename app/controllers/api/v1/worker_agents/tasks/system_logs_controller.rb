@@ -15,24 +15,19 @@ module API
           end
 
           def create
-            begin
-              new_content = Base64.decode64(request.body.read).force_encoding('UTF-8')
+            task = Task.find(params[:task_id])
+            new_content = Base64.decode64(request.body.read).force_encoding('UTF-8')
 
-              if new_content.blank?
-                head :ok
-                return
-              end
+            WorkerSystemLog.find_or_create_by!(task: task)
+            WorkerSystemLog.connection.execute(
+              WorkerSystemLog.sanitize_sql([
+                "UPDATE worker_system_logs SET content = COALESCE(content, '') || ? WHERE task_id = ?",
+                new_content,
+                task.id
+              ])
+            )
 
-              task = Task.find(params[:task_id])
-              runner_system_log = RunnerSystemLog.find_or_create_by(task: task)
-              runner_system_log.update!(content: runner_system_log.content + new_content)
-
-              Streaming::WorkerOutputStream.new(task: task, tab_name: TAB_NAME).broadcast
-            rescue StandardError => e
-              render(json: { error: e.message }, status: :bad_request)
-              return
-            end
-
+            Streaming::WorkerOutputStream.new(task: task, tab_name: TAB_NAME).broadcast
             head :ok
           end
         end
