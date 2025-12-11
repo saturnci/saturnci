@@ -19,3 +19,5 @@ If you wait more than 10 seconds or so, the bug will not be reproducible.
 A probably-related clue: when I delete a test suite run immediately after it
 was created, it often reappears in the list, even though I can't actually click
 it since it doesn't actually exist.
+
+Note: the active test suite run is determined by `active_test_suite_run`.
