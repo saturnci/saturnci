@@ -15,10 +15,6 @@ class TestSuiteRunListComponent < ViewComponent::Base
   end
 
   def initial_chunk_of_test_suite_runs
-    chunk = test_suite_runs.limit(TestSuiteRunListQuery::CHUNK_SIZE).to_a
-    if test_suite_run.present? && !chunk.include?(test_suite_run)
-      chunk << test_suite_run
-    end
-    chunk
+    test_suite_runs.limit(TestSuiteRunListQuery::CHUNK_SIZE)
   end
 end
