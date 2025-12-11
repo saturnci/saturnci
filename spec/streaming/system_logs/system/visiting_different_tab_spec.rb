@@ -18,7 +18,7 @@ describe "Visiting different tab", type: :system do
   context "visiting a different tab" do
     context "after log update occurs" do
       before do
-        visit run_path(run, "test_output")
+        visit run_path(run, "events")
 
         http_request(
           api_authorization_headers: worker_agents_api_authorization_headers(run.worker),

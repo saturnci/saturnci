@@ -1,9 +1,10 @@
 require "rails_helper"
 
 describe "Test suite run navigation stickiness", type: :system do
-  let!(:run) do
-    test_output = ("asdf\n" * 1000) + "bottom of test output"
-    create(:run, test_output: test_output)
+  let!(:run) { create(:run) }
+  let!(:runner_system_log) do
+    content = ("asdf\n" * 1000) + "bottom of system logs"
+    create(:runner_system_log, task: run, content: content)
   end
 
   before do
@@ -12,7 +13,7 @@ describe "Test suite run navigation stickiness", type: :system do
 
   context "the log pane is scrolled all the way to the bottom" do
     it "keeps the test suite run navigation visible" do
-      visit run_path(run, "test_output")
+      visit run_path(run, "system_logs")
 
       page.execute_script('document.querySelector(".run-details").scrollTop = document.querySelector(".run-details").scrollHeight')
 
@@ -24,7 +25,7 @@ describe "Test suite run navigation stickiness", type: :system do
       JS
 
       expect(scrollable).to eq(true), "The log pane is not scrollable"
-      expect(page).to have_content("Test Output")
+      expect(page).to have_content("System Logs")
     end
   end
 end

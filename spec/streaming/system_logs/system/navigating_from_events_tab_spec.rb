@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Navigating from test output tab", type: :system do
+describe "Navigating from events tab", type: :system do
   include SaturnAPIHelper
   include NavigationHelper
 
@@ -12,7 +12,7 @@ describe "Navigating from test output tab", type: :system do
 
   before do
     login_as(run.build.project.user, scope: :user)
-    visit run_path(run, "test_output")
+    visit run_path(run, "events")
   end
 
   context "navigating to the system logs tab" do
