@@ -38,36 +38,6 @@ class Worker < ApplicationRecord
       .where("worker_assignments.created_at > ?", 10.seconds.ago)
   end
 
-  def self.provision
-    access_token = AccessToken.create!
-    name = "tr-#{SecureRandom.uuid[0..7]}-#{SillyName.random.gsub(/ /, "-")}"
-
-    create!(name:, access_token:).tap do |worker|
-      create_vm(worker, name)
-      worker.worker_events.create!(type: :provision_request_sent)
-    end
-  end
-
-  def self.create_vm(worker, name)
-    worker_droplet_specification = WorkerDropletSpecification.new(
-      worker:,
-      name:,
-    )
-
-    droplet = worker_droplet_specification.execute
-
-    worker.update!(
-      rsa_key: worker_droplet_specification.rsa_key,
-      cloud_id: droplet.id
-    )
-  end
-
-  def deprovision(client = DropletKitClientFactory.client)
-    client.droplets.delete(id: cloud_id)
-  rescue DropletKit::Error => e
-    Rails.logger.error "Error deleting worker: #{e.message}"
-  end
-
   def status
     return "" if most_recent_event.blank?
 
