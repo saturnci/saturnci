@@ -45,34 +45,6 @@ describe Worker do
     end
   end
 
-  describe ".provision" do
-    before do
-      allow(Worker).to receive(:create_vm)
-    end
-
-    it "creates a worker" do
-      expect { Worker.provision }
-        .to change { Worker.count }
-        .from(0).to(1)
-    end
-
-    it "sets the worker's status to Provisioning" do
-      worker = Worker.provision
-      expect(worker.status).to eq("Provisioning")
-    end
-
-    it "creates an access token" do
-      expect { Worker.provision }
-        .to change { AccessToken.count }
-        .from(0).to(1)
-    end
-
-    it "assigns the access token to the worker" do
-      worker = Worker.provision
-      expect(worker.access_token).to be_present
-    end
-  end
-
   describe "status" do
     context "ready" do
       it "returns ready" do

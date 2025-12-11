@@ -8,7 +8,6 @@ class Worker < ApplicationRecord
   has_one :worker_assignment, inverse_of: :worker, dependent: :destroy
   has_one :task, through: :worker_assignment
   alias_method :run, :task
-  before_destroy :deprovision
 
   scope :unassigned, -> do
     left_joins(:worker_assignment).where(worker_assignments: { task_id: nil })
@@ -38,41 +37,10 @@ class Worker < ApplicationRecord
       .where("worker_assignments.created_at > ?", 10.seconds.ago)
   end
 
-  def self.provision
-    access_token = AccessToken.create!
-    name = "tr-#{SecureRandom.uuid[0..7]}-#{SillyName.random.gsub(/ /, "-")}"
-
-    create!(name:, access_token:).tap do |worker|
-      create_vm(worker, name)
-      worker.worker_events.create!(type: :provision_request_sent)
-    end
-  end
-
-  def self.create_vm(worker, name)
-    worker_droplet_specification = WorkerDropletSpecification.new(
-      worker:,
-      name:,
-    )
-
-    droplet = worker_droplet_specification.execute
-
-    worker.update!(
-      rsa_key: worker_droplet_specification.rsa_key,
-      cloud_id: droplet.id
-    )
-  end
-
-  def deprovision(client = DropletKitClientFactory.client)
-    client.droplets.delete(id: cloud_id)
-  rescue DropletKit::Error => e
-    Rails.logger.error "Error deleting worker: #{e.message}"
-  end
-
   def status
     return "" if most_recent_event.blank?
 
     {
-      "provision_request_sent" => "Provisioning",
       "ready_signal_received" => "Available",
       "assignment_made" => "Assigned",
       "assignment_acknowledged" => "Running",
