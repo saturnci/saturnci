@@ -56,5 +56,10 @@ describe Nova do
       worker = Nova.create_worker(task)
       expect(worker.name).to include(task.id[0..7])
     end
+
+    it "sets task_id on the worker" do
+      worker = Nova.create_worker(task)
+      expect(worker.task_id).to eq(task.id)
+    end
   end
 end
