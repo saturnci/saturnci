@@ -1,6 +1,7 @@
 # Active test suite run bug
 
-I can reproduce this bug quite consistently now. Instructions:
+I can reproduce this bug quite consistently now, at least on production. The
+bug seems not to occur locally. Instructions:
 
 1. Visit a page like
 https://app.saturnci.com/runs/5962b5bc-d6e7-44aa-b076-5fb205c2e982/system_logs
