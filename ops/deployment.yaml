@@ -136,6 +136,8 @@ spec:
               key: GITHUB_PRIVATE_PEM
         - name: RAILS_SERVE_STATIC_FILES
           value: "true"
+        - name: RAILS_LOG_TO_STDOUT
+          value: "true"
         - name: DIGITALOCEAN_ACCESS_TOKEN
           valueFrom:
             secretKeyRef:
@@ -327,6 +329,8 @@ spec:
               name: saturn-secrets
               key: GITHUB_PRIVATE_PEM
         - name: RAILS_SERVE_STATIC_FILES
+          value: "true"
+        - name: RAILS_LOG_TO_STDOUT
           value: "true"
         - name: DIGITALOCEAN_ACCESS_TOKEN
           valueFrom:
