@@ -17,7 +17,7 @@ class TestSuiteRunComponent < ViewComponent::Base
 
   def test_suite_run_filter_component
     @test_suite_run_filter_component ||= TestSuiteRunFilterComponent.new(
-      test_suite_run: @build,
+      test_suite_run: @test_suite_run,
       branch_name: @branch_name,
       checked_statuses: @statuses,
       current_tab_name: @current_tab_name
@@ -26,7 +26,7 @@ class TestSuiteRunComponent < ViewComponent::Base
 
   def repository_component
     @repository_component ||= RepositoryComponent.new(
-      @build.repository,
+      @test_suite_run.repository,
       extra_css_classes: "repository-home"
     )
   end
