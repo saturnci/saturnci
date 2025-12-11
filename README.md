@@ -37,4 +37,3 @@ RunnerSnapshot.generate!
 
 It will take a while for the snapshot to show up in the Snapshots area of Digital Ocean.
 
-
