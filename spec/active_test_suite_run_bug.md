@@ -6,4 +6,4 @@ I can reproduce this bug quite consistently now. Instructions:
 2. Perform a git push
 3. Let the new test suite run load
 4. Refresh the page
-5. Observe that whatever test suite run was originally selected is no longer selected
+5. Observe that now no test suite run is selected
