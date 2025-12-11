@@ -15,7 +15,7 @@ class Worker < ApplicationRecord
 
   scope :available, -> do
     unassigned.joins(:worker_events)
-      .where(worker_events: { type: :ready_signal_received })
+      .where(worker_events: { name: "ready_signal_received" })
       .where("worker_events.created_at = (
         SELECT MAX(created_at) FROM worker_events
         WHERE worker_events.worker_id = workers.id
@@ -24,7 +24,7 @@ class Worker < ApplicationRecord
 
   scope :error, -> do
     joins(:worker_events)
-      .where(worker_events: { type: WorkerEvent.types[:error] })
+      .where(worker_events: { name: "error" })
   end
 
   scope :recently_assigned, -> do
@@ -39,7 +39,7 @@ class Worker < ApplicationRecord
       "ready_signal_received" => "Available",
       "error" => "Error",
       "task_finished" => "Finished",
-    }[most_recent_event.type]
+    }[most_recent_event.name]
   end
 
   def most_recent_event

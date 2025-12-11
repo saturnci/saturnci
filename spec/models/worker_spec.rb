@@ -12,7 +12,7 @@ describe Worker do
     context "when the worker is available" do
       it "includes the worker" do
         worker = create(:worker)
-        create(:worker_event, worker: worker, type: :ready_signal_received)
+        create(:worker_event, worker:, name: "ready_signal_received")
         expect(Worker.available).to include(worker)
       end
     end
@@ -20,8 +20,8 @@ describe Worker do
     context "when the worker has an assignment" do
       it "does not include the worker" do
         worker = create(:worker)
-        create(:worker_event, worker: worker, type: :ready_signal_received)
-        create(:worker_assignment, worker: worker)
+        create(:worker_event, worker:, name: "ready_signal_received")
+        create(:worker_assignment, worker:)
         expect(Worker.available).not_to include(worker)
       end
     end
@@ -38,7 +38,7 @@ describe Worker do
     context "ready" do
       it "returns ready" do
         worker = create(:worker)
-        worker.worker_events.create!(type: :ready_signal_received)
+        worker.worker_events.create!(name: "ready_signal_received")
         expect(worker.status).to eq("Available")
       end
     end
