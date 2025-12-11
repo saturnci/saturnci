@@ -10,7 +10,7 @@ https://app.saturnci.com/repositories/f60ca0ad-89c8-440e-9373-ed639d2dd662/test_
 2. Select some test suite run (for example, the first or second item in the list)
 3. Perform a git push
 4. Let the new test suite run load (as in wait for it to appear)
-5. Wait no more than about 10 seconds (or 5s or 15s, I'm not sure)
+5. Wait no more than about 20 seconds (could be more, I'm not sure)
 6. Refresh the page
 7. Observe that now no test suite run is selected
 
