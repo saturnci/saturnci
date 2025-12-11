@@ -2,7 +2,7 @@
   <%= render "test_suite_runs/header", build: @build %>
 
   <%= turbo_frame_tag "test_suite_run_body", class: "test-suite-run-body", data: { turbo_action: "advance" } do %>
-    <%= render "builds/menu",
+    <%= render "test_suite_runs/menu",
       test_suite_run: @build,
       run: @run,
       current_tab_name: current_tab_name,
