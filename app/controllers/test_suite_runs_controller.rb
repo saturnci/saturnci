@@ -65,7 +65,6 @@ class TestSuiteRunsController < ApplicationController
     end
 
     @test_suite_run_component = TestSuiteRunComponent.new(
-      build: @test_suite_run,
       test_suite_run: @test_suite_run,
       current_tab_name: params[:partial],
       branch_name: params[:branch_name],

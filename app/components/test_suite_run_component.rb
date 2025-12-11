@@ -1,9 +1,8 @@
 class TestSuiteRunComponent < ViewComponent::Base
   renders_one :body
-  attr_reader :build
+  attr_reader :test_suite_run
 
-  def initialize(build:, test_suite_run:, current_tab_name: nil, branch_name: nil, statuses: nil, clear: false)
-    @build = build
+  def initialize(test_suite_run:, current_tab_name: nil, branch_name: nil, statuses: nil, clear: false)
     @test_suite_run = test_suite_run
     @current_tab_name = current_tab_name
     @branch_name = branch_name

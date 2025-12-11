@@ -29,11 +29,10 @@ class TestCaseRunsController < ApplicationController
       return
     end
 
-    @build = @test_case_run.run.build
+    @test_suite_run = @test_case_run.task.test_suite_run
 
     @test_suite_run_component = TestSuiteRunComponent.new(
-      build: @build,
-      test_suite_run: @build,
+      test_suite_run: @test_suite_run,
       current_tab_name: "overview",
       branch_name: params[:branch_name],
       statuses: params[:statuses],
