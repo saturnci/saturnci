@@ -5,13 +5,14 @@
       <th>Timestamp</th>
       <th>Duration (s)</th>
     </tr>
-    <% run.run_events.order(:created_at).each_with_index do |run_event, index| %>
+    <% events = run.worker&.worker_events&.order(:created_at) || [] %>
+    <% events.each_with_index do |event, index| %>
       <tr>
-        <td><%= run_event.type %></td>
-        <td><%= run_event.created_at %></td>
+        <td><%= event.name %></td>
+        <td><%= event.created_at %></td>
         <td class="number">
           <% if index > 0 %>
-            <%= (run_event.created_at - run.run_events.order(:created_at)[index - 1].created_at).round(2) %>
+            <%= (event.created_at - events[index - 1].created_at).round(2) %>
           <% end %>
         </td>
       </tr>
