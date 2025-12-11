@@ -90,19 +90,17 @@ class TestSuiteRun < ApplicationRecord
   end
 
   def broadcast
-    channel = [repository, repository.user, "test_suite_runs"]
-
-    broadcast_remove_to(
-      channel,
-      target: ActionView::RecordIdentifier.dom_id(self)
-    )
+    cache_key = "test_suite_run/#{id}/broadcasted"
+    return if Rails.cache.exist?(cache_key)
 
     broadcast_prepend_to(
-      channel,
+      [repository, repository.user, "test_suite_runs"],
       target: "test-suite-run-list",
       partial: "test_suite_runs/test_suite_run_link",
       locals: { build: self, active_build: nil }
     )
+
+    Rails.cache.write(cache_key, true)
   end
 
   def check_test_case_run_integrity!
