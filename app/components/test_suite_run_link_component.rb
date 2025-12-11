@@ -1,9 +1,8 @@
 class TestSuiteRunLinkComponent < ViewComponent::Base
   attr_reader :test_suite_run
 
-  def initialize(test_suite_run, active_test_suite_run: nil)
+  def initialize(test_suite_run)
     @test_suite_run = test_suite_run
-    @active_test_suite_run = active_test_suite_run
   end
 
   def self.refresh(test_suite_run)

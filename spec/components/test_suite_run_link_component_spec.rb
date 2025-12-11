@@ -7,7 +7,7 @@ describe TestSuiteRunLinkComponent, type: :component do
     let!(:build) { create(:build, :with_failed_run) }
 
     it "links to overview page" do
-      component = TestSuiteRunLinkComponent.new(build, active_test_suite_run: nil)
+      component = TestSuiteRunLinkComponent.new(build)
       expect(render_inline(component).to_html).to include(repository_test_suite_run_path(build.repository, build))
     end
   end
@@ -16,7 +16,7 @@ describe TestSuiteRunLinkComponent, type: :component do
     let!(:build) { create(:build) }
 
     it "returns the repository test suite run path" do
-      component = TestSuiteRunLinkComponent.new(build, active_test_suite_run: nil)
+      component = TestSuiteRunLinkComponent.new(build)
       expect(render_inline(component).to_html).to include(repository_test_suite_run_path(build.repository, build))
     end
   end
@@ -28,7 +28,7 @@ describe TestSuiteRunLinkComponent, type: :component do
 
     context "no failed runs" do
       it "links to the first run" do
-        component = TestSuiteRunLinkComponent.new(build, active_test_suite_run: nil)
+        component = TestSuiteRunLinkComponent.new(build)
         expect(render_inline(component).to_html).to include(run_1.id.to_s)
       end
     end
@@ -39,19 +39,19 @@ describe TestSuiteRunLinkComponent, type: :component do
       end
 
       it "links to the failed run" do
-        component = TestSuiteRunLinkComponent.new(build, active_test_suite_run: nil)
+        component = TestSuiteRunLinkComponent.new(build)
         expect(render_inline(component).to_html).to include(run_2.id.to_s)
       end
     end
 
     context "successful run followed by failed run" do
       it "works" do
-        component = TestSuiteRunLinkComponent.new(build, active_test_suite_run: nil)
+        component = TestSuiteRunLinkComponent.new(build)
         expect(render_inline(component).to_html).to include(run_1.id.to_s)
 
         travel_to(1.minute.from_now) do
           run_2.update!(exit_code: 1)
-          component = TestSuiteRunLinkComponent.new(build, active_test_suite_run: nil)
+          component = TestSuiteRunLinkComponent.new(build)
           expect(render_inline(component).to_html).to include(run_2.id.to_s)
         end
       end
