@@ -77,19 +77,6 @@ class Task < ApplicationRecord
     run_events.task_cancelled.any?
   end
 
-  def provision_worker
-    worker_agent_script = WorkerAgentScript.new(self, test_suite_run.project.github_account.github_installation_id)
-
-    worker = Worker.provision(
-      client: DropletKitClientFactory.client,
-      user_data: worker_agent_script.content,
-    )
-
-    RunWorker.create!(worker:, run: self)
-  end
-
-  alias_method :assign_worker, :provision_worker
-
   def delete_runner
     return unless worker.present?
     Nova.delete_k8s_job(worker.name)

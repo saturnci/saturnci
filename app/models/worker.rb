@@ -8,7 +8,6 @@ class Worker < ApplicationRecord
   has_one :worker_assignment, inverse_of: :worker, dependent: :destroy
   has_one :task, through: :worker_assignment
   alias_method :run, :task
-  before_destroy :deprovision
 
   scope :unassigned, -> do
     left_joins(:worker_assignment).where(worker_assignments: { task_id: nil })
@@ -42,7 +41,6 @@ class Worker < ApplicationRecord
     return "" if most_recent_event.blank?
 
     {
-      "provision_request_sent" => "Provisioning",
       "ready_signal_received" => "Available",
       "assignment_made" => "Assigned",
       "assignment_acknowledged" => "Running",
