@@ -7,6 +7,7 @@ module API
         authorize test_suite_run, :create?
 
         test_suite_run.start!
+        test_suite_run.broadcast
 
         render json: {
           id: test_suite_run.id,

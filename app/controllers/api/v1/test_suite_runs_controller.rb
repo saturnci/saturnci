@@ -59,6 +59,7 @@ module API
         authorize test_suite_run
 
         test_suite_run.start!
+        test_suite_run.broadcast
 
         render json: {
           id: test_suite_run.id,
