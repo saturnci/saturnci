@@ -7,6 +7,8 @@ class RunsController < ApplicationController
     @build = @run.build
     @project = @build.project
 
+    Rails.logger.info "[DEBUG runs#show] run_id=#{@run.id} build_id=#{@build&.id} build_class=#{@build.class} turbo_frame=#{turbo_frame_request?}"
+
     @worker_output_stream = Streaming::WorkerOutputStream.new(
       task: @run,
       tab_name: @current_tab_name
