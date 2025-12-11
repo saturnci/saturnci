@@ -13,7 +13,7 @@ class Task < ApplicationRecord
   has_one :task_worker
   alias_method :run_worker, :task_worker
   has_one :worker_assignment, dependent: :destroy
-  has_one :worker, through: :worker_assignment, source: :worker
+  has_one :worker
   alias_attribute :started_at, :created_at
   delegate :project, to: :build
   delegate :repository, to: :test_suite_run

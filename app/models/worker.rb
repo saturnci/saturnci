@@ -3,10 +3,10 @@ class Worker < ApplicationRecord
 
   belongs_to :rsa_key, class_name: "Cloud::RSAKey", optional: true
   belongs_to :access_token
+  belongs_to :task, optional: true
   has_many :worker_events, inverse_of: :worker, dependent: :destroy
   has_one :run_worker
   has_one :worker_assignment, inverse_of: :worker, dependent: :destroy
-  has_one :task, through: :worker_assignment
   alias_method :run, :task
 
   scope :unassigned, -> do
