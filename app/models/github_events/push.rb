@@ -31,8 +31,6 @@ module GitHubEvents
       else
         test_suite_run.save!
       end
-
-      test_suite_run.broadcast
     end
   end
 end
