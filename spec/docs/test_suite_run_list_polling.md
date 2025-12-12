@@ -4,6 +4,11 @@ As we complete items on this list, we should move them to a "finished" section.
 
 Remember to follow the TDD instructions described in the /implement command.
 
+We want to make these changes in small, atomic units of work while keeping all
+existing features working the whole time. We'll do our work on a series of
+feature branches, merging to main and deploying frequently in order to minimize
+risk.
+
 ## Problem
 
 The test suite run list uses ActionCable/Solid Cable to push updates. With multiple K8s replicas, this causes race conditions where broadcasts are delivered to the wrong page (after a redirect), causing the active selection to be lost.
