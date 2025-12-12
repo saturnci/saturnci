@@ -40,4 +40,8 @@ I can reproduce this bug quite consistently (although not always) in
 production. I have NOT been able to reproduce it even a single time in
 development.
 
+As an experiment, I reduced the number of K8s replicas to just one worker and
+one web server (down from 4 and 2). Under these conditions I was NOT able to
+reproduce the bug.
+
 The active test suite run is determined by `active_test_suite_run`.
