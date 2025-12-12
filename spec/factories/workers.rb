@@ -4,6 +4,9 @@ FactoryBot.define do
     cloud_id { Faker::Number.number(digits: 10) }
     rsa_key
     access_token
-    task
+
+    trait :with_task do
+      association :task
+    end
   end
 end
