@@ -53,8 +53,6 @@ export default class extends Controller {
   }
 
   fingerprint(container) {
-    return Array.from(container.querySelectorAll("li")).map(li =>
-      `${li.id}:${li.textContent.trim()}`
-    ).join("|");
+    return Array.from(container.querySelectorAll("li")).map(li => li.id).join("|");
   }
 }
