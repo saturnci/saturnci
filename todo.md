@@ -1,9 +1,7 @@
 ## Bugs
-- New commits don't always show up at the top of the list
 - Flash message shows up in Settings even when it has nothing to do with settings
 - Don't allow adding same repo twice
 - If you're on the Overview tab when the test suite run finishes, the Overview tab doesn't update
-- Newer test suite runs sometimes show up behind older ones
 - Sometimes, in the system logs, autoscrolling mysteriously stops working
 - Each deploy causes a 503 blip
 - When restarting a retry, it should only run the retry's tests, but instead it runs all the tests
