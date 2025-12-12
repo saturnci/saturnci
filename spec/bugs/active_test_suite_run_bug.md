@@ -34,4 +34,10 @@ https://app.saturnci.com/repositories/f60ca0ad-89c8-440e-9373-ed639d2dd662/test_
   3. The new test suite run appears selected
   4. The new test suite run appears unselected
 
-Note: the active test suite run is determined by `active_test_suite_run`.
+## Notes
+
+I can reproduce this bug quite consistently (although not always) in
+production. I have NOT been able to reproduce it even a single time in
+development.
+
+The active test suite run is determined by `active_test_suite_run`.
