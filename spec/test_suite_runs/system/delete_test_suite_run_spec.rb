@@ -2,8 +2,7 @@ require "rails_helper"
 
 describe "Delete test suite run", type: :system do
   let!(:task) { create(:task) }
-  let!(:worker) { create(:worker) }
-  let!(:worker_assignment) { create(:worker_assignment, task:, worker:) }
+  let!(:worker) { create(:worker, task:) }
 
   before do
     allow(Nova).to receive(:delete_k8s_job)

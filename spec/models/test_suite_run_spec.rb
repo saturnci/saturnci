@@ -45,8 +45,7 @@ describe TestSuiteRun, type: :model do
 
   describe "#cancel!" do
     let!(:task) { create(:task) }
-    let!(:worker) { create(:worker) }
-    let!(:worker_assignment) { create(:worker_assignment, task:, worker:) }
+    let!(:worker) { create(:worker, task:) }
 
     before do
       allow(Nova).to receive(:delete_k8s_job)
