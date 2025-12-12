@@ -20,6 +20,16 @@ class TestSuiteRunsController < ApplicationController
           }
         )
       end
+
+      format.html do
+        render(
+          partial: "test_suite_runs/list_items",
+          locals: {
+            test_suite_runs: test_suite_run_list_query.test_suite_runs.limit(params[:limit] || TestSuiteRunListQuery::CHUNK_SIZE),
+            active_test_suite_run: nil
+          }
+        )
+      end
     end
   end
 

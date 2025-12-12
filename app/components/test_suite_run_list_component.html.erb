@@ -1,6 +1,6 @@
 <div class="left-pane"
-     data-controller="left-pane test-suite-run-list"
-     data-test-suite-run-list-url="<%= repository_builds_path(repository_id: test_suite_run.repository_id) %>">
+     data-controller="left-pane test-suite-run-list test-suite-run-list-polling test-suite-run-list-scroll"
+     data-url="<%= repository_builds_path(repository_id: test_suite_run.repository_id) %>">
 
   <% if test_suite_runs.any? %>
     <div class="test-suite-run-list-header">
@@ -18,7 +18,7 @@
     <%= render test_suite_run_filter_component %>
 
     <div class="test-suite-run-list-wrapper">
-      <div data-test-suite-run-list-target="list" class="test-suite-run-list">
+      <div class="test-suite-run-list">
 
         <ul id="test-suite-run-list">
           <%= render partial: "test_suite_runs/list_items",
