@@ -21,4 +21,17 @@ A probably-related clue: when I delete a test suite run immediately after it
 was created, it often reappears in the list, even though I can't actually click
 it since it doesn't actually exist.
 
+Here's another reproduction sequence:
+
+1. Visit a page like
+https://app.saturnci.com/repositories/f60ca0ad-89c8-440e-9373-ed639d2dd662/test_suite_runs/f514851d-3084-47a9-8d06-478702716f6b
+
+2. Select some test suite run (for example, the first or second item in the list)
+3. Click rerun
+4. The following happens:
+  1. A new test suite run appears (and it's not selected)
+  2. The page refreshes
+  3. The new test suite run appears selected
+  4. The new test suite run appears unselected
+
 Note: the active test suite run is determined by `active_test_suite_run`.
