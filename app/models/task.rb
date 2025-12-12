@@ -12,7 +12,6 @@ class Task < ApplicationRecord
   has_one :rsa_key, class_name: "Cloud::RSAKey", foreign_key: "run_id"
   has_one :task_worker
   alias_method :run_worker, :task_worker
-  has_one :worker_assignment, dependent: :destroy
   has_one :worker
   alias_attribute :started_at, :created_at
   delegate :project, to: :build
@@ -32,13 +31,6 @@ class Task < ApplicationRecord
 
   scope :running, -> do
     not_finished.order("test_suite_runs.created_at desc, tasks.order_index asc")
-  end
-
-  scope :unassigned, -> do
-    not_finished
-      .left_joins(:worker_assignment)
-      .where(worker_assignments: { task_id: nil })
-      .where(exit_code: nil)
   end
 
   def name

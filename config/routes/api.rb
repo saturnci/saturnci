@@ -25,7 +25,6 @@ namespace :api do
 
       resources :workers, only: [] do
         resources :worker_events, only: :create
-        resources :worker_assignments, only: :index
       end
 
       resources :github_tokens, only: :create

@@ -1,9 +1,8 @@
 require "rails_helper"
 
 describe "Worker Agents Authentication", type: :request do
-  describe "GET /api/v1/worker_agents/workers/:worker_id/worker_assignments" do
-    let!(:worker_assignment) { create(:worker_assignment) }
-    let!(:worker) { worker_assignment.worker }
+  describe "POST /api/v1/worker_agents/workers/:worker_id/worker_events" do
+    let!(:worker) { create(:worker) }
 
     context "with valid worker credentials" do
       it "returns success" do
@@ -12,11 +11,12 @@ describe "Worker Agents Authentication", type: :request do
           worker.access_token.value
         )
 
-        get(
-          api_v1_worker_agents_worker_worker_assignments_path(
+        post(
+          api_v1_worker_agents_worker_worker_events_path(
             worker_id: worker.id,
             format: :json
           ),
+          params: { type: "test_event" },
           headers: { "Authorization" => credentials }
         )
 

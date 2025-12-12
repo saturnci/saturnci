@@ -10,9 +10,7 @@ module Nova
   end
 
   def self.create_worker(task)
-    worker = Worker.create!(name: worker_name(task), access_token: AccessToken.create!, task:)
-    WorkerAssignment.create!(worker:, task:)
-    worker
+    Worker.create!(name: worker_name(task), access_token: AccessToken.create!, task:)
   end
 
   def self.worker_name(task)

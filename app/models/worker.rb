@@ -6,31 +6,7 @@ class Worker < ApplicationRecord
   belongs_to :task, optional: true
   has_many :worker_events, inverse_of: :worker, dependent: :destroy
   has_one :run_worker
-  has_one :worker_assignment, inverse_of: :worker, dependent: :destroy
   alias_method :run, :task
-
-  scope :unassigned, -> do
-    left_joins(:worker_assignment).where(worker_assignments: { task_id: nil })
-  end
-
-  scope :available, -> do
-    unassigned.joins(:worker_events)
-      .where(worker_events: { name: "ready_signal_received" })
-      .where("worker_events.created_at = (
-        SELECT MAX(created_at) FROM worker_events
-        WHERE worker_events.worker_id = workers.id
-      )")
-  end
-
-  scope :error, -> do
-    joins(:worker_events)
-      .where(worker_events: { name: "error" })
-  end
-
-  scope :recently_assigned, -> do
-    joins(:worker_assignment)
-      .where("worker_assignments.created_at > ?", 10.seconds.ago)
-  end
 
   def status
     return "" if most_recent_event.blank?
