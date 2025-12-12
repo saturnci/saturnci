@@ -34,7 +34,11 @@ class Task < ApplicationRecord
   end
 
   def name
-    "Worker #{order_index}"
+    if test_suite_run.tasks.count <= 8 || order_index == 1
+      "Worker #{order_index}"
+    else
+      order_index.to_s
+    end
   end
 
   def cancel!
