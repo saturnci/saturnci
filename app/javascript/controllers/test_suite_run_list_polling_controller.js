@@ -27,13 +27,23 @@ export default class extends Controller {
   updateList(html) {
     const list = this.element.querySelector("#test-suite-run-list");
     const activeId = list.querySelector("li.active")?.id;
-
     const additionalItems = list.querySelector("#additional_test_suite_runs");
-    list.querySelectorAll(":scope > li").forEach(li => li.remove());
-    additionalItems.insertAdjacentHTML("beforebegin", html);
 
+    // Build new content in a fragment first
+    const template = document.createElement("template");
+    template.innerHTML = html;
+    const newItems = template.content;
+
+    // Mark active item before insertion
     if (activeId) {
-      list.querySelector(`#${activeId}`)?.classList.add("active");
+      const activeItem = newItems.querySelector(`#${activeId}`);
+      if (activeItem) {
+        activeItem.classList.add("active");
+      }
     }
+
+    // Atomic swap: remove old, insert new
+    list.querySelectorAll(":scope > li").forEach(li => li.remove());
+    list.insertBefore(newItems, additionalItems);
   }
 }
