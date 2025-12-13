@@ -13,7 +13,7 @@ describe "Start test suite run", type: :system do
 
   it "starts the test suite run" do
     perform_enqueued_jobs do
-      visit repository_test_suite_run_task_path(id: test_suite_run.id, repository_id: test_suite_run.repository.id)
+      visit repository_test_suite_run_path(test_suite_run.repository, test_suite_run)
       expect(page).to have_content("Not Started")
 
       click_on "Start"

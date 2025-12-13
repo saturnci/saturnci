@@ -16,7 +16,7 @@ describe "Test suite run navigation", type: :system do
 
       before do
         login_as(run.repository.user)
-        visit repository_test_suite_run_task_path(run.repository, run.test_suite_run)
+        visit task_path(run, "system_logs")
       end
 
       it "stays selected after refresh" do
@@ -47,7 +47,7 @@ describe "Test suite run navigation", type: :system do
     end
 
     before do
-      visit repository_test_suite_run_task_path(first_test_suite_run.repository, first_test_suite_run)
+      visit task_path(first_test_suite_run.runs.first, "system_logs")
       click_on "test_suite_run_link_#{second_test_suite_run.id}"
       expect(page).to have_content(pane_heading(second_test_suite_run)) # to prevent race condition
     end

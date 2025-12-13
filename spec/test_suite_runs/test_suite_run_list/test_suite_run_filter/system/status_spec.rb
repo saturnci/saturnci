@@ -113,7 +113,7 @@ describe "Status filtering", type: :system do
     end
 
     before do
-      visit repository_test_suite_run_task_path(failed_task.test_suite_run.repository, failed_task.test_suite_run)
+      visit task_path(failed_task, "system_logs")
       click_on "Filters"
       check "Passed"
       click_on "Apply"
