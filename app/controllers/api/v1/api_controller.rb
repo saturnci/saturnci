@@ -9,7 +9,9 @@ module API
       after_action :verify_authorized
 
       def authenticate_api_user!
-        authenticate_or_request_with_http_basic do |user_id, api_token|
+        user_id, api_token = ActionController::HttpAuthentication::Basic.user_name_and_password(request)
+
+        if user_id.present? && api_token.present?
           access_token = AccessToken.find_by(value: api_token)
 
           if access_token.present?
@@ -18,9 +20,14 @@ module API
               personal_access_tokens: { access_token: access_token }
             )
           end
-
-          @current_user.present?
         end
+
+        return if @current_user.present?
+
+        render json: {
+          error: "Unauthorized",
+          message: "Valid credentials required. Find your user_id and api_token in ~/.saturnci/credentials.json"
+        }, status: :unauthorized
       end
 
       def current_user
