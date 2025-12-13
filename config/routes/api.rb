@@ -5,6 +5,7 @@ namespace :api do
     resources :debug_messages, only: :create
 
     # CLI endpoints
+    resources :tasks, only: :show
     resources :runs, only: %i[index show]
     resources :workers, only: %i[index show update destroy]
     resources :test_suite_runs, only: %i[index show create]
