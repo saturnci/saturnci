@@ -4,8 +4,8 @@ class RunsController < ApplicationController
     authorize @run
 
     @current_tab_name = params[:partial]
-    @build = @run.build
-    @project = @build.project
+    @test_suite_run = @run.test_suite_run
+    @project = @test_suite_run.project
 
     @worker_output_stream = Streaming::WorkerOutputStream.new(
       task: @run,
@@ -24,8 +24,8 @@ class RunsController < ApplicationController
     end
 
     @test_suite_run_component = TestSuiteRunComponent.new(
-      build: @build,
-      test_suite_run: @build,
+      build: @test_suite_run,
+      test_suite_run: @test_suite_run,
       current_tab_name: params[:partial],
       branch_name: params[:branch_name],
       statuses: params[:statuses],

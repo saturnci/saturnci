@@ -1,9 +1,9 @@
 <%= turbo_frame_tag "test_suite_run", class: "test-suite-run", data: { turbo_action: "advance" } do %>
-  <%= render "test_suite_runs/header", build: @build %>
+  <%= render "test_suite_runs/header", build: @test_suite_run %>
 
   <%= turbo_frame_tag "test_suite_run_body", class: "test-suite-run-body", data: { turbo_action: "advance" } do %>
     <%= render "test_suite_runs/menu",
-      test_suite_run: @build,
+      test_suite_run: @test_suite_run,
       run: @run,
       current_tab_name: current_tab_name,
       target_tab_name: current_tab_name %>
