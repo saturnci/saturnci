@@ -5,7 +5,7 @@ class RunsController < ApplicationController
 
     @current_tab_name = params[:partial]
     @test_suite_run = @run.test_suite_run
-    @project = @test_suite_run.project
+    @repository = @test_suite_run.repository
 
     @worker_output_stream = Streaming::WorkerOutputStream.new(
       task: @run,
