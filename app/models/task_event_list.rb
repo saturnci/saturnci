@@ -1,8 +1,8 @@
 class TaskEventList
   attr_reader :events
 
-  def initialize(events)
-    @events = events
+  def initialize(task)
+    @events = task.worker&.worker_events&.order(:created_at) || []
   end
 
   def duration_since_previous(index)

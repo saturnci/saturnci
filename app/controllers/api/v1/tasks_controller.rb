@@ -5,15 +5,15 @@ module API
         task = Task.find(params[:id])
         authorize task
 
-        event_list = TaskEventList.new(task.worker&.worker_events&.order(:created_at) || [])
+        task_event_list = TaskEventList.new(task)
 
         render json: {
-          events: event_list.events.each_with_index.map do |event, index|
+          events: task_event_list.events.each_with_index.map do |event, index|
             {
               name: event.name,
               timestamp: event.created_at,
               notes: event.notes,
-              duration_since_previous: event_list.duration_since_previous(index)
+              duration_since_previous: task_event_list.duration_since_previous(index)
             }
           end
         }
