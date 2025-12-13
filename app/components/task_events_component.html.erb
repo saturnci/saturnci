@@ -1,0 +1,16 @@
+<div class="run-info-container non-terminal-run-info">
+  <table border>
+    <tr>
+      <th>Event</th>
+      <th>Timestamp</th>
+      <th>Duration (s)</th>
+    </tr>
+    <% events.each_with_index do |event, index| %>
+      <tr>
+        <td><%= event.name %></td>
+        <td><%= event.created_at %></td>
+        <td class="number"><%= interval_since_previous_event(event, index) %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
