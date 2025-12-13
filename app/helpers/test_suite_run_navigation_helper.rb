@@ -9,7 +9,7 @@ class TestSuiteRunNavigation
     @view_context.content_tag(:li) do
       @view_context.link_to(
         text,
-        @view_context.run_path(@run, current_tab_name),
+        @view_context.task_path(@run, current_tab_name),
         class: @current_tab_name == current_tab_name ? "active" : "",
         data: { turbo_frame: "test_suite_run_body" }
       )
