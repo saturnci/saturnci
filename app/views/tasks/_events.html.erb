@@ -1,0 +1,21 @@
+<div class="run-info-container non-terminal-run-info">
+  <table border>
+    <tr>
+      <th>Event</th>
+      <th>Timestamp</th>
+      <th>Duration (s)</th>
+    </tr>
+    <% events = task.worker&.worker_events&.order(:created_at) || [] %>
+    <% events.each_with_index do |event, index| %>
+      <tr>
+        <td><%= event.name %></td>
+        <td><%= event.created_at %></td>
+        <td class="number">
+          <% if index > 0 %>
+            <%= (event.created_at - events[index - 1].created_at).round(2) %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>

@@ -1,0 +1,7 @@
+<%= render @test_suite_run_component do |component| %>
+  <%= component.with_body do %>
+    <%= render "tasks/detail",
+      current_tab_name: @current_tab_name,
+      worker_output_stream: @worker_output_stream %>
+  <% end %>
+<% end %>

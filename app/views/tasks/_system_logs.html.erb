@@ -1,0 +1,1 @@
+<%= render TerminalOutputComponent.new(run: task, current_tab_name:, body: SystemLogBody.new(task.runner_system_log&.content).scrub) %>
