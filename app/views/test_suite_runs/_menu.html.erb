@@ -9,7 +9,7 @@
     <li>
       <%= link_to run.name,
         task_path(run, target_tab_name),
-        class: run == @run ? "active" : "" %>
+        class: run == (@task || @run) ? "active" : "" %>
     </li>
   <% end %>
 </ul>
