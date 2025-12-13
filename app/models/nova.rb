@@ -126,7 +126,7 @@ module Nova
               }
             ],
             volumes: [
-              { name: "dind-storage", hostPath: { path: "/var/lib/saturnci-docker", type: "DirectoryOrCreate" } },
+              { name: "dind-storage", emptyDir: {} },
               { name: "repository", emptyDir: {} },
               { name: "docker-config", emptyDir: {} }
             ]
