@@ -65,6 +65,11 @@ module Nova
     http.request(req)
   end
 
+  def self.dind_storage_path(task)
+    repo_id = task.test_suite_run.repository.id[0..7]
+    "/var/lib/saturnci-docker/#{repo_id}/#{task.order_index}"
+  end
+
   def self.job_spec(worker, task)
     {
       apiVersion: "batch/v1",
@@ -126,7 +131,7 @@ module Nova
               }
             ],
             volumes: [
-              { name: "dind-storage", emptyDir: {} },
+              { name: "dind-storage", hostPath: { path: dind_storage_path(task), type: "DirectoryOrCreate" } },
               { name: "repository", emptyDir: {} },
               { name: "docker-config", emptyDir: {} }
             ]
