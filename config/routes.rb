@@ -17,7 +17,6 @@ Rails.application.routes.draw do
     resources :test_case_runs, only: :index
   end
 
-  get "runs/:id/:partial", to: "runs#show", as: "run"
   get "tasks/:id/:partial", to: "tasks#show", as: "task"
   get "builds/:id(/:partial)", to: "test_suite_runs#show", as: "build"
 
@@ -30,10 +29,6 @@ Rails.application.routes.draw do
     end
 
     resources :test_suite_runs, only: %i(index show create destroy) do
-      resources :runs, only: :show do
-        get ":partial", to: "runs#show", on: :member, as: "run_detail_content"
-      end
-
       resources :tasks, only: :show do
         get ":partial", to: "tasks#show", on: :member, as: "task_detail_content"
       end
@@ -42,10 +37,6 @@ Rails.application.routes.draw do
     end
 
     resources :builds, only: %i(index show create), controller: "test_suite_runs" do
-      resources :runs, only: :show do
-        get ":partial", to: "runs#show", on: :member, as: "run_detail_content"
-      end
-
       resources :tasks, only: :show do
         get ":partial", to: "tasks#show", on: :member, as: "task_detail_content"
       end
@@ -65,10 +56,6 @@ Rails.application.routes.draw do
     end
 
     resources :test_suite_runs, only: %i(index show create destroy) do
-      resources :runs, only: :show do
-        get ":partial", to: "runs#show", on: :member, as: "run_detail_content"
-      end
-
       resources :tasks, only: :show do
         get ":partial", to: "tasks#show", on: :member, as: "task_detail_content"
       end
@@ -77,10 +64,6 @@ Rails.application.routes.draw do
     end
 
     resources :builds, only: %i(index show create), controller: "test_suite_runs" do
-      resources :runs, only: :show do
-        get ":partial", to: "runs#show", on: :member, as: "run_detail_content"
-      end
-
       resources :tasks, only: :show do
         get ":partial", to: "tasks#show", on: :member, as: "task_detail_content"
       end
