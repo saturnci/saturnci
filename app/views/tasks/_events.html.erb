@@ -13,5 +13,9 @@
         <td class="number"><%= task_event_list.interval_since_previous_event(index) %></td>
       </tr>
     <% end %>
+    <tr>
+      <td colspan="2"><strong>Total Runtime</strong></td>
+      <td class="number"><strong><%= task_event_list.total_runtime %></strong></td>
+    </tr>
   </table>
 </div>

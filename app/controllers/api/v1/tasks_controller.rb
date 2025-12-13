@@ -8,6 +8,7 @@ module API
         task_event_list = TaskEventList.new(task)
 
         render json: {
+          total_runtime: task_event_list.total_runtime,
           events: task_event_list.events.each_with_index.map do |event, index|
             {
               name: event.name,

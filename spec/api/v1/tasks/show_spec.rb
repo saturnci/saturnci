@@ -6,8 +6,8 @@ describe "GET /api/v1/tasks/:id", type: :request do
   let!(:test_suite_run) { create(:build) }
   let!(:task) { create(:task, test_suite_run:) }
   let!(:worker) { create(:worker, task:) }
-  let!(:event1) { create(:worker_event, worker:, name: "task_fetched", created_at: Time.zone.parse("2025-01-01 12:00:00")) }
-  let!(:event2) { create(:worker_event, worker:, name: "docker_ready", notes: "14.5", created_at: Time.zone.parse("2025-01-01 12:00:10")) }
+  let!(:event1) { create(:worker_event, worker:, name: "worker_started", created_at: Time.zone.parse("2025-01-01 12:00:00")) }
+  let!(:event2) { create(:worker_event, worker:, name: "task_finished", notes: "14.5", created_at: Time.zone.parse("2025-01-01 12:00:10")) }
 
   let(:credentials) do
     ActionController::HttpAuthentication::Basic.encode_credentials(
@@ -23,10 +23,11 @@ describe "GET /api/v1/tasks/:id", type: :request do
     body = JSON.parse(response.body)
 
     expect(body["events"].length).to eq(2)
-    expect(body["events"][0]["name"]).to eq("task_fetched")
+    expect(body["events"][0]["name"]).to eq("worker_started")
     expect(body["events"][0]["interval_since_previous_event"]).to be_nil
-    expect(body["events"][1]["name"]).to eq("docker_ready")
+    expect(body["events"][1]["name"]).to eq("task_finished")
     expect(body["events"][1]["notes"]).to eq("14.5")
-    expect(body["events"][1]["interval_since_previous_event"]).to eq(10.0)
+    expect(body["events"][1]["interval_since_previous_event"]).to eq("10.00")
+    expect(body["total_runtime"]).to eq("10.00")
   end
 end
