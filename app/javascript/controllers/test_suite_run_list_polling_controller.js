@@ -52,7 +52,11 @@ export default class extends Controller {
     list.insertBefore(newItems, additionalItems);
   }
 
+  initialItemIds(container) {
+    return Array.from(container.children).filter(el => el.tagName === "LI").map(li => li.id);
+  }
+
   fingerprint(container) {
-    return Array.from(container.querySelectorAll("li")).map(li => li.id).join("|");
+    return this.initialItemIds(container).join("|");
   }
 }
