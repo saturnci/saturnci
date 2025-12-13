@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: docker-image-registry-service
+  namespace: default
+spec:
+  type: ClusterIP
+  selector:
+    app: docker-image-registry
+  ports:
+  - protocol: TCP
+    port: 5000
+    targetPort: 5000

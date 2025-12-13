@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: docker-image-registry-deployment
+  namespace: default
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: docker-image-registry
+  template:
+    metadata:
+      labels:
+        app: docker-image-registry
+    spec:
+      containers:
+      - name: registry
+        image: registry:2
+        ports:
+        - containerPort: 5000
+        env:
+        - name: REGISTRY_STORAGE_DELETE_ENABLED
+          value: "true"
+        - name: REGISTRY_HTTP_CLIENT_TIMEOUT
+          value: "600s"
+        - name: REGISTRY_HTTP_REQUESTTIMEOUT
+          value: "600s"
+        - name: REGISTRY_HTTP_RESPONSEHEADER_TIMEOUT
+          value: "600s"
+        - name: REGISTRY_AUTH
+          value: "htpasswd"
+        - name: REGISTRY_AUTH_HTPASSWD_REALM
+          value: "Registry Realm"
+        - name: REGISTRY_AUTH_HTPASSWD_PATH
+          value: "/auth/htpasswd"
+        volumeMounts:
+        - name: registry-data
+          mountPath: /var/lib/registry
+        - name: auth-volume
+          mountPath: /auth
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+      volumes:
+      - name: registry-data
+        persistentVolumeClaim:
+          claimName: docker-image-registry-pvc
+      - name: auth-volume
+        secret:
+          secretName: docker-image-registry-secrets
