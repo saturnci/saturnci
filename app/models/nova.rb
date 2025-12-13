@@ -71,6 +71,11 @@ module Nova
     "/var/lib/saturnci-docker/#{repository.abbreviated_hash}/#{test_suite_run.abbreviated_hash}/#{task.abbreviated_hash}"
   end
 
+  def self.buildx_cache_path(task)
+    repository = task.test_suite_run.repository
+    "/var/lib/saturnci-buildx-cache/#{repository.abbreviated_hash}/#{task.order_index}"
+  end
+
   def self.job_spec(worker, task)
     {
       apiVersion: "batch/v1",
@@ -102,11 +107,13 @@ module Nova
                   { name: "WORKER_ID", value: worker.id },
                   { name: "WORKER_ACCESS_TOKEN", value: worker.access_token.value },
                   { name: "TASK_ID", value: task.id },
-                  { name: "DOCKER_HOST", value: "tcp://localhost:2375" }
+                  { name: "DOCKER_HOST", value: "tcp://localhost:2375" },
+                  { name: "BUILDX_CACHE_PATH", value: "/buildx-cache" }
                 ],
                 volumeMounts: [
                   { name: "repository", mountPath: "/repository" },
-                  { name: "docker-config", mountPath: "/root/.docker" }
+                  { name: "docker-config", mountPath: "/root/.docker" },
+                  { name: "buildx-cache", mountPath: "/buildx-cache" }
                 ]
               },
               {
@@ -133,6 +140,7 @@ module Nova
             ],
             volumes: [
               { name: "dind-storage", hostPath: { path: dind_storage_path(task), type: "DirectoryOrCreate" } },
+              { name: "buildx-cache", hostPath: { path: buildx_cache_path(task), type: "DirectoryOrCreate" } },
               { name: "repository", emptyDir: {} },
               { name: "docker-config", emptyDir: {} }
             ]
