@@ -2,31 +2,31 @@
 // Run that command whenever you add a new controller or create them with
 // ./bin/rails generate stimulus controllerName
 
-import { application } from "./application"
+import { application } from "controllers/application"
 
-import ElapsedTestSuiteRunTimeController from "./elapsed_test_suite_run_time_controller"
+import ElapsedTestSuiteRunTimeController from "controllers/elapsed_test_suite_run_time_controller"
 application.register("elapsed-test-suite-run-time", ElapsedTestSuiteRunTimeController)
 
-import HelloController from "./hello_controller"
+import HelloController from "controllers/hello_controller"
 application.register("hello", HelloController)
 
-import LeftPaneController from "./left_pane_controller"
+import LeftPaneController from "controllers/left_pane_controller"
 application.register("left-pane", LeftPaneController)
 
-import RunDetailsController from "./run_details_controller"
+import RunDetailsController from "controllers/run_details_controller"
 application.register("run-details", RunDetailsController)
 
-import TerminalOutputController from "./terminal_output_controller"
+import TerminalOutputController from "controllers/terminal_output_controller"
 application.register("terminal-output", TerminalOutputController)
 
-import TestCaseRunListController from "./test_case_run_list_controller"
+import TestCaseRunListController from "controllers/test_case_run_list_controller"
 application.register("test-case-run-list", TestCaseRunListController)
 
-import TestSuiteRunListController from "./test_suite_run_list_controller"
+import TestSuiteRunListController from "controllers/test_suite_run_list_controller"
 application.register("test-suite-run-list", TestSuiteRunListController)
 
-import TestSuiteRunListPollingController from "./test_suite_run_list_polling_controller"
+import TestSuiteRunListPollingController from "controllers/test_suite_run_list_polling_controller"
 application.register("test-suite-run-list-polling", TestSuiteRunListPollingController)
 
-import TestSuiteRunListScrollController from "./test_suite_run_list_scroll_controller"
+import TestSuiteRunListScrollController from "controllers/test_suite_run_list_scroll_controller"
 application.register("test-suite-run-list-scroll", TestSuiteRunListScrollController)
