@@ -66,8 +66,9 @@ module Nova
   end
 
   def self.dind_storage_path(task)
-    repo_id = task.test_suite_run.repository.id[0..7]
-    "/var/lib/saturnci-docker/#{repo_id}/#{task.order_index}"
+    repository = task.test_suite_run.repository
+    test_suite_run = task.test_suite_run
+    "/var/lib/saturnci-docker/#{repository.abbreviated_hash}/#{test_suite_run.abbreviated_hash}/#{task.abbreviated_hash}"
   end
 
   def self.job_spec(worker, task)
