@@ -5,11 +5,11 @@
       <th>Timestamp</th>
       <th>Duration (s)</th>
     </tr>
-    <% events.each_with_index do |event, index| %>
+    <% event_list.events.each_with_index do |event, index| %>
       <tr>
         <td><%= event.name %></td>
         <td><%= event.created_at %></td>
-        <td class="number"><%= interval_since_previous_event(event, index) %></td>
+        <td class="number"><%= event_list.duration_since_previous(index) %></td>
       </tr>
     <% end %>
   </table>
