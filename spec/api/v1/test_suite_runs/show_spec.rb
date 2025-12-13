@@ -40,4 +40,23 @@ describe "GET /api/v1/test_suite_runs/:id", type: :request do
       expect(body["failed_tests"].first["exception_message"]).to eq("expected nil to be present")
     end
   end
+
+  context "_links" do
+    before do
+      get(
+        api_v1_test_suite_run_path(test_suite_run.id[0..8]),
+        headers: { "Authorization" => credentials }
+      )
+    end
+
+    it "includes self link" do
+      body = JSON.parse(response.body)
+      expect(body["_links"]["self"]["href"]).to include("/api/v1/test_suite_runs/#{test_suite_run.id}")
+    end
+
+    it "includes task links" do
+      body = JSON.parse(response.body)
+      expect(body["_links"]["tasks"].first["href"]).to include("/api/v1/tasks/#{run.id}")
+    end
+  end
 end
