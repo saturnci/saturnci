@@ -81,7 +81,7 @@ services:
       driver: none
 
   chrome:
-    image: seleniarm/standalone-chromium
+    image: selenium/standalone-chrome
     hostname: chrome
     shm_size: 2g
     ports:
