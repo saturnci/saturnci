@@ -134,7 +134,8 @@ module Nova
                 volumeMounts: [
                   { name: "dind-storage", mountPath: "/var/lib/docker" },
                   { name: "repository", mountPath: "/repository" },
-                  { name: "docker-config", mountPath: "/root/.docker" }
+                  { name: "docker-config", mountPath: "/root/.docker" },
+                  { name: "buildx-cache", mountPath: "/buildx-cache" }
                 ]
               }
             ],
