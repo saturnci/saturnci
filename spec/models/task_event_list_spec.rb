@@ -1,10 +1,10 @@
 require "rails_helper"
 
-describe EventList do
+describe TaskEventList do
   describe "#duration_since_previous" do
     let!(:event1) { create(:worker_event, created_at: Time.zone.parse("2025-01-01 12:00:00")) }
     let!(:event2) { create(:worker_event, created_at: Time.zone.parse("2025-01-01 12:00:10")) }
-    let!(:event_list) { EventList.new([event1, event2]) }
+    let!(:event_list) { TaskEventList.new([event1, event2]) }
 
     context "when index is 0" do
       it "returns nil" do

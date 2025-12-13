@@ -1,4 +1,4 @@
-class EventList
+class TaskEventList
   attr_reader :events
 
   def initialize(events)

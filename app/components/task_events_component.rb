@@ -14,6 +14,6 @@ class TaskEventsComponent < ViewComponent::Base
   private
 
   def event_list
-    @event_list ||= EventList.new(@task.worker&.worker_events&.order(:created_at) || [])
+    @event_list ||= TaskEventList.new(@task.worker&.worker_events&.order(:created_at) || [])
   end
 end
