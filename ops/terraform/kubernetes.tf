@@ -1,12 +1,12 @@
 resource "digitalocean_kubernetes_cluster" "workers" {
   name    = "saturnci-workers-cluster"
   region  = "nyc2"
-  version = "1.32.10-do.0"
+  version = "1.32.10-do.1"
 
   node_pool {
-    name       = "worker-pool"
-    size       = "s-4vcpu-8gb"
-    node_count = 2
+    name       = "worker-pool-v4"
+    size       = "s-8vcpu-16gb"
+    node_count = 3
     auto_scale = true
     min_nodes  = 1
     max_nodes  = 10
