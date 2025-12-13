@@ -5,17 +5,20 @@
       <th>Event</th>
       <th>Timestamp</th>
       <th>Duration (s)</th>
+      <th>%</th>
     </tr>
     <% task_event_list.events.each_with_index do |event, index| %>
       <tr>
         <td><%= event.name %></td>
         <td><%= event.created_at %></td>
         <td class="number"><%= task_event_list.interval_since_previous_event(index) %></td>
+        <td class="number"><%= task_event_list.percentage_of_total(index) %></td>
       </tr>
     <% end %>
     <tr>
       <td colspan="2"><strong>Total Runtime</strong></td>
       <td class="number"><strong><%= task_event_list.total_runtime %></strong></td>
+      <td></td>
     </tr>
   </table>
 </div>

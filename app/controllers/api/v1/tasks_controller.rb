@@ -14,7 +14,8 @@ module API
               name: event.name,
               timestamp: event.created_at,
               notes: event.notes,
-              interval_since_previous_event: task_event_list.interval_since_previous_event(index)
+              interval_since_previous_event: task_event_list.interval_since_previous_event(index),
+              percentage_of_total: task_event_list.percentage_of_total(index)
             }
           end
         }

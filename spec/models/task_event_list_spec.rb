@@ -30,6 +30,41 @@ describe TaskEventList do
     end
   end
 
+  describe "#percentage_of_total" do
+    let!(:task) { create(:task) }
+    let!(:worker) { create(:worker, task:) }
+
+    context "when index is 0" do
+      let!(:worker_started) { create(:worker_event, worker:, name: "worker_started", created_at: Time.zone.parse("2025-01-01 12:00:00")) }
+      let!(:task_finished) { create(:worker_event, worker:, name: "task_finished", created_at: Time.zone.parse("2025-01-01 12:00:20")) }
+
+      it "returns nil" do
+        expect(TaskEventList.new(task).percentage_of_total(0)).to be_nil
+      end
+    end
+
+    context "when total_runtime is nil" do
+      let!(:event1) { create(:worker_event, worker:, created_at: Time.zone.parse("2025-01-01 12:00:00")) }
+      let!(:event2) { create(:worker_event, worker:, created_at: Time.zone.parse("2025-01-01 12:00:10")) }
+
+      it "returns nil" do
+        expect(TaskEventList.new(task).percentage_of_total(1)).to be_nil
+      end
+    end
+
+    context "when index is greater than 0 and total_runtime exists" do
+      let!(:worker_started) { create(:worker_event, worker:, name: "worker_started", created_at: Time.zone.parse("2025-01-01 12:00:00")) }
+      let!(:middle_event) { create(:worker_event, worker:, name: "docker_ready", created_at: Time.zone.parse("2025-01-01 12:00:05")) }
+      let!(:task_finished) { create(:worker_event, worker:, name: "task_finished", created_at: Time.zone.parse("2025-01-01 12:00:20")) }
+
+      it "returns the percentage of total runtime" do
+        task_event_list = TaskEventList.new(task)
+        expect(task_event_list.percentage_of_total(1)).to eq("25.00")
+        expect(task_event_list.percentage_of_total(2)).to eq("75.00")
+      end
+    end
+  end
+
   describe "#total_runtime" do
     let!(:task) { create(:task) }
     let!(:worker) { create(:worker, task:) }

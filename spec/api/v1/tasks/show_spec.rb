@@ -28,6 +28,8 @@ describe "GET /api/v1/tasks/:id", type: :request do
     expect(body["events"][1]["name"]).to eq("task_finished")
     expect(body["events"][1]["notes"]).to eq("14.5")
     expect(body["events"][1]["interval_since_previous_event"]).to eq("10.00")
+    expect(body["events"][0]["percentage_of_total"]).to be_nil
+    expect(body["events"][1]["percentage_of_total"]).to eq("100.00")
     expect(body["total_runtime"]).to eq("10.00")
   end
 end
