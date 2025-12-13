@@ -6,6 +6,10 @@
       Branch: <code><%= build.branch_name %></code>
       Commit: <code><%= abbreviated_hash(build.commit_hash) %></code>
     </h3>
+
+    <p>
+      API endpoint: <code><%= api_v1_test_suite_run_url(build) %></code>
+    </p>
   </div>
 
   <div class="test-suite-run-action-buttons">
