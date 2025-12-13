@@ -9,7 +9,7 @@ resource "digitalocean_kubernetes_cluster" "workers" {
     node_count = 3
     auto_scale = true
     min_nodes  = 1
-    max_nodes  = 10
+    max_nodes  = 8
   }
 }
 
