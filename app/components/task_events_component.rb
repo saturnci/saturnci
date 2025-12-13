@@ -4,12 +4,16 @@ class TaskEventsComponent < ViewComponent::Base
   end
 
   def events
-    @task.worker&.worker_events&.order(:created_at) || []
+    event_list.events
   end
 
-  def interval_since_previous_event(event, index)
-    return nil if index.zero?
+  def interval_since_previous_event(_event, index)
+    event_list.duration_since_previous(index)
+  end
 
-    (event.created_at - events[index - 1].created_at).round(2)
+  private
+
+  def event_list
+    @event_list ||= EventList.new(@task.worker&.worker_events&.order(:created_at) || [])
   end
 end
