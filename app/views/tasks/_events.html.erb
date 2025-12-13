@@ -10,7 +10,7 @@
       <tr>
         <td><%= event.name %></td>
         <td><%= event.created_at %></td>
-        <td class="number"><%= task_event_list.duration_since_previous(index) %></td>
+        <td class="number"><%= task_event_list.interval_since_previous_event(index) %></td>
       </tr>
     <% end %>
   </table>

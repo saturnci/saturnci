@@ -13,7 +13,7 @@ module API
               name: event.name,
               timestamp: event.created_at,
               notes: event.notes,
-              duration_since_previous: task_event_list.duration_since_previous(index)
+              interval_since_previous_event: task_event_list.interval_since_previous_event(index)
             }
           end
         }

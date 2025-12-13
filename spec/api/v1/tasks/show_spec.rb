@@ -24,9 +24,9 @@ describe "GET /api/v1/tasks/:id", type: :request do
 
     expect(body["events"].length).to eq(2)
     expect(body["events"][0]["name"]).to eq("task_fetched")
-    expect(body["events"][0]["duration_since_previous"]).to be_nil
+    expect(body["events"][0]["interval_since_previous_event"]).to be_nil
     expect(body["events"][1]["name"]).to eq("docker_ready")
     expect(body["events"][1]["notes"]).to eq("14.5")
-    expect(body["events"][1]["duration_since_previous"]).to eq(10.0)
+    expect(body["events"][1]["interval_since_previous_event"]).to eq(10.0)
   end
 end
