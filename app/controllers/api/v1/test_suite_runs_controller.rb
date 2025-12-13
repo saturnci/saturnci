@@ -34,7 +34,11 @@ module API
               exception_message: test_case_run.exception_message,
               exception_backtrace: test_case_run.exception_backtrace
             }
-          end
+          end,
+          _links: {
+            self: { href: api_v1_test_suite_run_url(test_suite_run) },
+            tasks: test_suite_run.tasks.map { |task| { href: api_v1_task_url(task) } }
+          }
         }
       end
 
