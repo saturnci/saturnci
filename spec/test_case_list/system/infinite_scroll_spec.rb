@@ -26,7 +26,10 @@ describe "Infinite scroll", type: :system do
 
     login_as(test_suite_run.repository.user)
 
-    visit task_path(task, "system_logs")
+    visit repository_test_suite_run_path(
+      id: test_suite_run.id,
+      repository_id: test_suite_run.repository.id
+    )
   end
 
   it "initially shows only the first 100 test case runs" do
