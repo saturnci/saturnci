@@ -22,7 +22,7 @@ describe "Active link", type: :system do
   before do
     allow(repository.user).to receive(:can_access_repository?).and_return(true)
     login_as(repository.user)
-    visit repository_test_suite_run_path(repository, test_suite_run_1)
+    visit repository_test_suite_run_task_path(repository, test_suite_run_1)
   end
 
   context "link clicked" do

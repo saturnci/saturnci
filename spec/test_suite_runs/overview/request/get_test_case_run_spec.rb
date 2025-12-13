@@ -28,7 +28,7 @@ describe "test case run", type: :request do
 
   context "going straight to the test case run page" do
     it "includes the test case run description" do
-      get repository_test_case_run_path(run.build.repository, passed_test_case_run)
+      get repository_test_case_task_path(run.build.repository, passed_test_case_run)
       expect(response.body).to include("My passed test")
     end
   end
@@ -38,7 +38,7 @@ describe "test case run", type: :request do
       get repository_build_path(run.build.repository, run.build)
 
       expect(response).to redirect_to(
-        repository_test_case_run_path(run.build.repository, failed_test_case_run)
+        repository_test_case_task_path(run.build.repository, failed_test_case_run)
       )
     end
 

@@ -11,7 +11,7 @@ describe "Delete test suite run", type: :system do
   end
 
   it "removes the test suite run" do
-    visit repository_test_suite_run_path(task.test_suite_run.repository, task.test_suite_run)
+    visit repository_test_suite_run_task_path(task.test_suite_run.repository, task.test_suite_run)
     click_on "Delete"
     expect(page).not_to have_content(task.test_suite_run.commit_hash)
   end
@@ -22,7 +22,7 @@ describe "Delete test suite run", type: :system do
     end
 
     before do
-      visit repository_test_suite_run_path(task.test_suite_run.repository, task.test_suite_run)
+      visit repository_test_suite_run_task_path(task.test_suite_run.repository, task.test_suite_run)
       click_on "Delete"
     end
 
@@ -41,7 +41,7 @@ describe "Delete test suite run", type: :system do
     end
 
     it "still works" do
-      visit repository_test_suite_run_path(task.test_suite_run.repository, task.test_suite_run)
+      visit repository_test_suite_run_task_path(task.test_suite_run.repository, task.test_suite_run)
       click_on "Delete"
       expect(page).not_to have_content(task.test_suite_run.commit_hash)
       expect(page).to have_content("SaturnCI")

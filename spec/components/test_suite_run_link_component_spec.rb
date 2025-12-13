@@ -8,7 +8,7 @@ describe TestSuiteRunLinkComponent, type: :component do
 
     it "links to overview page" do
       component = TestSuiteRunLinkComponent.new(build)
-      expect(render_inline(component).to_html).to include(repository_test_suite_run_path(build.repository, build))
+      expect(render_inline(component).to_html).to include(repository_test_suite_run_task_path(build.repository, build))
     end
   end
 
@@ -17,7 +17,7 @@ describe TestSuiteRunLinkComponent, type: :component do
 
     it "returns the repository test suite run path" do
       component = TestSuiteRunLinkComponent.new(build)
-      expect(render_inline(component).to_html).to include(repository_test_suite_run_path(build.repository, build))
+      expect(render_inline(component).to_html).to include(repository_test_suite_run_task_path(build.repository, build))
     end
   end
 

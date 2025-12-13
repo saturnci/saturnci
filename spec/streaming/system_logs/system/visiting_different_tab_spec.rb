@@ -12,13 +12,13 @@ describe "Visiting different tab", type: :system do
 
   before do
     login_as(run.build.project.user, scope: :user)
-    visit run_path(run, "system_logs")
+    visit task_path(run, "system_logs")
   end
 
   context "visiting a different tab" do
     context "after log update occurs" do
       before do
-        visit run_path(run, "events")
+        visit task_path(run, "events")
 
         http_request(
           api_authorization_headers: worker_agents_api_authorization_headers(run.worker),

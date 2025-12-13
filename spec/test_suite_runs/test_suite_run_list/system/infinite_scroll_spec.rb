@@ -16,7 +16,7 @@ describe "Test suite run infinite scroll", type: :system do
 
     before do
       login_as(repository.user)
-      visit repository_test_suite_run_path(repository, test_suite_runs.first)
+      visit repository_test_suite_run_task_path(repository, test_suite_runs.first)
     end
 
     it "initially only shows the first 20 test suite runs" do
@@ -63,7 +63,7 @@ describe "Test suite run infinite scroll", type: :system do
 
     before do
       login_as(repository.user, scope: :user)
-      visit repository_test_suite_run_path(repository, test_suite_runs.first)
+      visit repository_test_suite_run_task_path(repository, test_suite_runs.first)
     end
 
     context "before scrolling to the bottom" do
@@ -101,7 +101,7 @@ describe "Test suite run infinite scroll", type: :system do
       TestSuiteRun.all.each(&:status) # to prime cache
 
       login_as(repository.user)
-      visit repository_test_suite_run_path(repository, passed_runs.first.test_suite_run)
+      visit repository_test_suite_run_task_path(repository, passed_runs.first.test_suite_run)
       click_on "Filters"
       check "Passed"
       click_on "Apply"

@@ -7,7 +7,7 @@ describe "Polling", type: :system do
   before do
     allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
     login_as(repository.user)
-    visit repository_test_suite_run_path(repository, test_suite_run)
+    visit repository_test_suite_run_task_path(repository, test_suite_run)
   end
 
   context "when content changes" do

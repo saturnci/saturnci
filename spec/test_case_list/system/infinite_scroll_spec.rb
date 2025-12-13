@@ -26,7 +26,7 @@ describe "Infinite scroll", type: :system do
 
     login_as(test_suite_run.repository.user)
 
-    visit repository_test_suite_run_path(
+    visit repository_test_suite_run_task_path(
       id: test_suite_run.id,
       repository_id: test_suite_run.repository.id
     )

@@ -12,7 +12,7 @@ describe "Navigating from events tab", type: :system do
 
   before do
     login_as(run.build.project.user, scope: :user)
-    visit run_path(run, "events")
+    visit task_path(run, "events")
   end
 
   context "navigating to the system logs tab" do

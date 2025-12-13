@@ -9,7 +9,7 @@ describe "System logs scrolling", type: :system do
 
   before do
     login_as(run.build.project.user)
-    visit run_path(run, "system_logs")
+    visit task_path(run, "system_logs")
   end
 
   it "scrolls to the bottom" do
