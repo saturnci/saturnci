@@ -5,7 +5,7 @@
     <% cache build do %>
       <%= render "test_suite_runs/menu",
         test_suite_run: build,
-        run: nil,
+        active_task: nil,
         current_tab_name: "overview",
         target_tab_name: "system_logs" %>
     <% end %>

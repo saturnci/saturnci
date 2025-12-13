@@ -5,11 +5,11 @@
       class: current_tab_name == "overview" ? "active" : "" %>
   </li>
 
-  <% test_suite_run.runs.sorted.each do |run| %>
+  <% test_suite_run.runs.sorted.each do |task| %>
     <li>
-      <%= link_to run.name,
-        task_path(run, target_tab_name),
-        class: run == @run ? "active" : "" %>
+      <%= link_to task.name,
+        task_path(task, target_tab_name),
+        class: task.id == active_task&.id ? "active" : "" %>
     </li>
   <% end %>
 </ul>

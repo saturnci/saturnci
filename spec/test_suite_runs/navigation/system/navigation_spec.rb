@@ -20,4 +20,19 @@ describe "Navigation", type: :system do
       end
     end
   end
+
+  context "visiting via task_path" do
+    let!(:test_suite_run) { create(:test_suite_run) }
+    let!(:task_1) { create(:task, test_suite_run:, order_index: 1) }
+    let!(:task_2) { create(:task, test_suite_run:, order_index: 2) }
+
+    before do
+      login_as(test_suite_run.project.user)
+    end
+
+    it "shows the correct worker tab as active" do
+      visit task_path(task_2, "system_logs")
+      expect(page).to have_css(".run-menu a.active", text: task_2.name)
+    end
+  end
 end
