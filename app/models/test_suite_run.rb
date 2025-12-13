@@ -24,7 +24,6 @@ class TestSuiteRun < ApplicationRecord
 
     cache_status
     Nova.start_test_suite_run(self, tasks)
-    broadcast
   end
 
   def cache_status
