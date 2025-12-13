@@ -13,7 +13,7 @@ describe "Test suite run navigation stickiness", type: :system do
 
   context "the log pane is scrolled all the way to the bottom" do
     it "keeps the test suite run navigation visible" do
-      visit run_path(run, "system_logs")
+      visit task_path(run, "system_logs")
 
       page.execute_script('document.querySelector(".run-details").scrollTop = document.querySelector(".run-details").scrollHeight')
 

@@ -13,7 +13,7 @@ describe "Visiting different build", type: :system do
 
   before do
     login_as(original_run.build.project.user, scope: :user)
-    visit run_path(original_run, "system_logs")
+    visit task_path(original_run, "system_logs")
   end
 
   context "visiting a different build" do

@@ -1,6 +1,6 @@
 module NavigationHelper
   def visit_build_tab(tab_slug, run:)
-    visit run_path(run, tab_slug)
+    visit task_path(run, tab_slug)
   end
 
   def navigate_to_build(build)

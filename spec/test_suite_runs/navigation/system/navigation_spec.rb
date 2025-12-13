@@ -14,7 +14,7 @@ describe "Navigation", type: :system do
       end
 
       it "does not change which worker you're on" do
-        visit run_path(task_2, "events")
+        visit task_path(task_2, "events")
         click_on "System Logs"
         expect(page).to have_content("worker 2 system logs")
       end

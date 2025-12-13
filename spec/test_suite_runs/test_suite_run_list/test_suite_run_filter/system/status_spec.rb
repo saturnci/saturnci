@@ -14,7 +14,7 @@ describe "Status filtering", type: :system do
   before do
     allow_any_instance_of(User).to receive(:can_access_repository?).and_return(true)
     login_as(passed_task.test_suite_run.repository.user)
-    visit run_path(passed_task, "system_logs")
+    visit task_path(passed_task, "system_logs")
     click_on "Filters"
   end
 

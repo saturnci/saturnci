@@ -11,7 +11,7 @@ describe "Cancel test suite run", type: :system do
   end
 
   it "sets the status to 'Cancelled'" do
-    visit run_path(task, "system_logs")
+    visit task_path(task, "system_logs")
 
     click_on "Cancel"
     expect(page).to have_content("Cancelled")
